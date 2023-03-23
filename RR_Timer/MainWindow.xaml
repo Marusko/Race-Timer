@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RR_Timer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="RR_Timer" Height="450" Width="800">
     <Grid>
-        <Label Content="00:00:00" HorizontalAlignment="Left" Margin="369,182,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="OpenTimerButton" Content="Open Timer" HorizontalAlignment="Center" VerticalAlignment="Center" Click="OpenTimer"/>
+        <TextBox x:Name="EventNameText" HorizontalAlignment="Center" Margin="0,79,0,0" TextWrapping="Wrap" Text="EventName" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="StartTime" HorizontalAlignment="Center" Margin="0,176,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="EventTypeComboBox" HorizontalAlignment="Center" Margin="0,128,0,0" VerticalAlignment="Top" Width="120"/>
+
 
     </Grid>
+
+
 </Window>
