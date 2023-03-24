@@ -5,9 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RR_Timer"
         mc:Ignorable="d"
-        Title="MiniClockWindow" Height="100" Width="{x:Static SystemParameters.PrimaryScreenWidth}" WindowStyle="None" ShowInTaskbar="False" Topmost="True" Left="0" Top="0">
+        Title="MiniClockWindow" Height="100" Width="{x:Static SystemParameters.PrimaryScreenWidth}" WindowStyle="None" ShowInTaskbar="False" Topmost="True" Left="0" Top="0"
+        
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+
+
+
     <Grid>
-        <Label x:Name="EventNameMini" Content="EventName" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top" FontSize="40"/>
+        <Label x:Name="EventNameMini" Content="EventName" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" FontSize="30"/>
         <Label x:Name="TimerMini" Content="00:00:00" HorizontalAlignment="Left" Margin="1724,-10,0,0" VerticalAlignment="Center" FontSize="40"/>
 
     </Grid>

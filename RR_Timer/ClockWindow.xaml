@@ -5,7 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RR_Timer"
         mc:Ignorable="d"
-        Title="Clock" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" ShowInTaskbar="False">
+        Title="Clock" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" ShowInTaskbar="False"
+        
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
         <Label x:Name="MainClockLabel" Content="00:00:00" HorizontalAlignment="Center" FontSize="70" Margin="0,250,0,0" VerticalAlignment="Center"/>
         <Label x:Name="TimerClockLabel" Content="00:00:00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="150"/>

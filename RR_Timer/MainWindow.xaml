@@ -5,7 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RR_Timer"
         mc:Ignorable="d"
-        Title="RR_Timer" Height="450" Width="800">
+        Title="RR_Timer" Height="450" Width="800"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
         <Button x:Name="OpenTimerButton" Content="Open Timer" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OpenTimer" Margin="563,209,0,0"/>
         <TextBox x:Name="EventNameText" HorizontalAlignment="Left" Margin="536,81,0,0" TextWrapping="Wrap" Text="EventName" VerticalAlignment="Top" Width="120"/>
