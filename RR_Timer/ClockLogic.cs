@@ -4,14 +4,37 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace RR_Timer
 {
-    internal class ClockLogic
+    public class ClockLogic
     {
         private DateTime ClockDateTime;
         private DateTime NowDateTime = DateTime.Now;
-        private DateTime StartTime;
+        public DateTime StartTime { get; set; }
+
+        public string EventName { get; set; }
+        public string EventType { get; set; }
+
+        private APIHandler APIHandler;
+        private Window clockWindow;
+
+        public void SetClockWindow(string APILink, ClockWindow cw)
+        {
+            APIHandler = new APIHandler(APILink, this);
+            clockWindow = cw;
+        }
+        public void SetClockWindow(Window cw)
+        {
+            clockWindow = cw;
+            SetLabels(EventName, EventType);
+        }
+        public void SetClockWindow(Window cw, string name, string type)
+        {
+            clockWindow = cw;
+            SetLabels(name, type);
+        }
 
         public void ShowClockOrTimer(ref System.Windows.Controls.Label timer, ref System.Windows.Controls.Label clock)
         {
@@ -28,6 +51,21 @@ namespace RR_Timer
             
         }
 
+        public void SetLabels(string name, string type)
+        {
+            EventName = name;
+            EventType = type;
+            
+            if (clockWindow.GetType() == typeof(ClockWindow))
+            {
+                ((ClockWindow)clockWindow).SetEventName(name);
+                ((ClockWindow)clockWindow).SetEventType(type);
+            } else if (clockWindow.GetType() == typeof(MiniClockWindow))
+            {
+                ((MiniClockWindow)clockWindow).SetEventName(name);
+            }
+        }
+
         public void StringToDateTime(string s)
         {
             string[] splitted = s.Split(':');
@@ -40,14 +78,14 @@ namespace RR_Timer
         {
             ClockDateTime = DateTime.Now;
             var clock = ClockDateTime.TimeOfDay.ToString();
-            var clockLength = clock.Length - (clock.Length - clock.LastIndexOf("."));
+            var clockLength = clock.LastIndexOf(".");
             var clockString = clock.Substring(0, clockLength);
             return clockString;
         }
         public string FormatStartTime()
         {
             var clock = ClockDateTime.Subtract(StartTime).ToString();
-            var tmp = clock.Length - (clock.Length - clock.LastIndexOf("."));
+            var tmp = clock.LastIndexOf(".");
             var timerClock = clock.Substring(0, tmp);
             return timerClock;
         }

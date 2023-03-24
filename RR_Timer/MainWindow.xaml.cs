@@ -22,7 +22,9 @@ namespace RR_Timer
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        private ClockLogic ClockLogic = new ClockLogic();
+        private Window clockWindow;
+        private bool openedTimer = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -31,8 +33,55 @@ namespace RR_Timer
 
         private void OpenTimer(object sender, RoutedEventArgs e)
         {
-            ClockWindow clockWindow = new ClockWindow(EventNameText.Text, EventTypeComboBox.Text, StartTime.Text);
-            clockWindow.Show();
+            if (!openedTimer)
+            {
+                clockWindow = new ClockWindow(EventNameText.Text, EventTypeComboBox.Text, StartTime.Text, ClockLogic);
+                ClockLogic.SetClockWindow((ClockWindow)clockWindow, EventNameText.Text, EventTypeComboBox.Text);
+                clockWindow.Show();
+                openedTimer = true;
+            }
+        }
+
+        private void OpenAPITimer(object sender, RoutedEventArgs e)
+        {
+            if (!openedTimer)
+            {
+                clockWindow = new ClockWindow(APITimerStartTimeText.Text, ClockLogic);
+                ClockLogic.SetClockWindow(EventAPILinkText.Text, (ClockWindow)clockWindow);
+                clockWindow.Show();
+                openedTimer = true;
+            }
+        }
+
+        private void MinimizeTimer(object sender, RoutedEventArgs e)
+        {
+            if (openedTimer)
+            {
+                clockWindow.Close();
+                clockWindow = new MiniClockWindow(ClockLogic);
+                ClockLogic.SetClockWindow((MiniClockWindow)clockWindow);
+                clockWindow.Show();
+            }
+        }
+
+        private void MaximizeTimer(object sender, RoutedEventArgs e)
+        {
+            if (openedTimer)
+            {
+                clockWindow.Close();
+                clockWindow = new ClockWindow(ClockLogic);
+                ClockLogic.SetClockWindow((ClockWindow)clockWindow);
+                clockWindow.Show();
+            }
+        }
+
+        private void CloseTimer(object sender, RoutedEventArgs e)
+        {
+            if (openedTimer)
+            {
+                clockWindow.Close();
+                openedTimer = false;
+            }
         }
     }
 }

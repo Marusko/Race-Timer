@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RR_Timer"
         mc:Ignorable="d"
-        Title="Clock" Height="450" Width="800" WindowState="Maximized" WindowStyle="None">
+        Title="Clock" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" ShowInTaskbar="False">
     <Grid>
         <Label x:Name="MainClockLabel" Content="00:00:00" HorizontalAlignment="Center" FontSize="70" Margin="0,250,0,0" VerticalAlignment="Center"/>
         <Label x:Name="TimerClockLabel" Content="00:00:00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="150"/>

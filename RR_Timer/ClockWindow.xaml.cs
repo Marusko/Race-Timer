@@ -21,20 +21,55 @@ namespace RR_Timer
     {
         private System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
 
-        private ClockLogic clockLogic = new();
+        private ClockLogic clockLogic;
 
-        public ClockWindow(string name, string type, string startTime)
+        public ClockWindow(string name, string type, string startTime, ClockLogic cl)
         {
             InitializeComponent();
             PreviewKeyDown += HandleEsc;
             EventNameLabel.Content = name;
             EventTypeLabel.Content = type;
+            clockLogic = cl;
 
             clockLogic.StringToDateTime(startTime);
 
             Timer.Tick += ClockTick;
             Timer.Interval = new TimeSpan(0, 0, 1);
             Timer.Start();
+        }
+
+        public ClockWindow(string startTime, ClockLogic cl)
+        {
+            InitializeComponent();
+            PreviewKeyDown += HandleEsc;
+            clockLogic = cl;
+
+            clockLogic.StringToDateTime(startTime);
+
+            Timer.Tick += ClockTick;
+            Timer.Interval = new TimeSpan(0, 0, 1);
+            Timer.Start();
+        }
+
+        public ClockWindow(ClockLogic cl)
+        {
+            InitializeComponent();
+            PreviewKeyDown += HandleEsc;
+            clockLogic = cl;
+
+            Timer.Tick += ClockTick;
+            Timer.Interval = new TimeSpan(0, 0, 1);
+            Timer.Start();
+        }
+
+        public void SetEventName(string name)
+        {
+            EventNameLabel.Content = name;
+        }
+
+        public void SetEventType(string type)
+        {
+            EventTypeLabel.Content = type;
         }
 
         private void ClockTick(object sender, EventArgs e)
