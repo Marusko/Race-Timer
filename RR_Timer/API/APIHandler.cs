@@ -65,11 +65,6 @@ namespace RR_Timer.API
                 {
                     ClockLogic.AutoMinimizeTimer();
                 }
-                /*for (var i = 0; i < splittedAsRacers.Length; i++)
-                {
-                    splittedAsRacers[i] = splittedAsRacers[i].Replace("{", "").Replace("}", "").Replace("\"", "");
-                }*/
-
             }
         }
 
