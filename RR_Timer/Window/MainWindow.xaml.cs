@@ -25,17 +25,21 @@ namespace RR_Timer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ClockLogic _clockLogic = new ClockLogic();
+        private readonly ClockLogic _clockLogic;
         private readonly ScreenHandler _screenHandler;
         private Window _clockWindow;
         private bool _openedTimer = false;
+        public bool MinimizedTimer { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
             _screenHandler = new ScreenHandler(this);
+            _clockLogic = new ClockLogic(this);
             EventTypeComboBox.ItemsSource = Enum.GetValues(typeof(EventType));
             ScreenComboBox.ItemsSource = _screenHandler.GetScreens();
             ScreenComboBox.SelectionChanged += SelectScreen;
+            MinimizedTimer = false;
         }
 
         private void OpenTimer(object sender, RoutedEventArgs e)
@@ -46,6 +50,7 @@ namespace RR_Timer
                 _clockLogic.SetClockWindow((ClockWindow)_clockWindow, EventNameText.Text, EventTypeComboBox.Text);
                 _clockWindow.Show();
                 _openedTimer = true;
+                MinimizedTimer = false;
             }
         }
 
@@ -54,24 +59,24 @@ namespace RR_Timer
             if (!_openedTimer)
             {
                 _clockWindow = new ClockWindow(APITimerStartTimeText.Text, _clockLogic, _screenHandler);
-                _clockLogic.SetClockWindow(EventAPILinkText.Text, (ClockWindow)_clockWindow);
+                _clockLogic.SetClockWindow(EventAPILinkText.Text, ListAPILinkText.Text, (ClockWindow)_clockWindow);
                 _clockWindow.Show();
                 _openedTimer = true;
+                MinimizedTimer = false;
             }
         }
 
-        private void MinimizeTimer(object sender, RoutedEventArgs e)
+        private void MinimizeTimerHandler(object sender, RoutedEventArgs e)
         {
-            if (_openedTimer)
-            {
-                _clockWindow.Close();
-                _clockWindow = new MiniClockWindow(_clockLogic, _screenHandler);
-                _clockLogic.SetClockWindow((MiniClockWindow)_clockWindow);
-                _clockWindow.Show();
-            }
+            MinimizeTimer();
         }
 
-        private void MaximizeTimer(object sender, RoutedEventArgs e)
+        private void MaximizeTimerHandler(object sender, RoutedEventArgs e)
+        {
+            MaximizeTimer();
+        }
+
+        public void MaximizeTimer()
         {
             if (_openedTimer)
             {
@@ -79,6 +84,19 @@ namespace RR_Timer
                 _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
                 _clockLogic.SetClockWindow((ClockWindow)_clockWindow);
                 _clockWindow.Show();
+                MinimizedTimer = false;
+            }
+        }
+
+        public void MinimizeTimer()
+        {
+            if (_openedTimer)
+            {
+                _clockWindow.Close();
+                _clockWindow = new MiniClockWindow(_clockLogic, _screenHandler);
+                _clockLogic.SetClockWindow((MiniClockWindow)_clockWindow);
+                _clockWindow.Show();
+                MinimizedTimer = true;
             }
         }
 
@@ -88,6 +106,7 @@ namespace RR_Timer
             {
                 _clockWindow.Close();
                 _openedTimer = false;
+                MinimizedTimer = false;
             }
         }
 
@@ -100,5 +119,5 @@ namespace RR_Timer
         {
             ScreenComboBox.ItemsSource = s;
         }
-     }
+    }
 }

@@ -20,10 +20,16 @@ namespace RR_Timer.Logic
 
         private APIHandler APIHandler;
         private Window clockWindow;
+        private MainWindow mainWindow;
 
-        public void SetClockWindow(string APILink, ClockWindow cw)
+        public ClockLogic(MainWindow mw)
         {
-            APIHandler = new APIHandler(APILink, this);
+            mainWindow = mw;
+        }
+
+        public void SetClockWindow(string APILink, string listLink, ClockWindow cw)
+        {
+            APIHandler = new APIHandler(APILink, listLink, this);
             clockWindow = cw;
         }
         public void SetClockWindow(Window cw)
@@ -92,5 +98,14 @@ namespace RR_Timer.Logic
             return timerClock;
         }
 
+        public void AutoMinimizeTimer()
+        {
+            mainWindow.MinimizeTimer();
+        }
+
+        public bool IsTimerMinimized()
+        {
+            return mainWindow.MinimizedTimer;
+        }
     }
 }

@@ -16,17 +16,18 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button x:Name="OpenTimerButton" Content="Open Timer" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OpenTimer" Margin="563,209,0,0"/>
+        <Button x:Name="OpenTimerButton" Content="Open Timer" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OpenTimer" Margin="544,236,0,0"/>
         <TextBox x:Name="EventNameText" HorizontalAlignment="Left" Margin="536,81,0,0" TextWrapping="Wrap" Text="EventName" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="StartTime" HorizontalAlignment="Left" Margin="536,178,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="EventTypeComboBox" HorizontalAlignment="Left" Margin="536,130,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="EventAPILinkText" HorizontalAlignment="Left" Margin="161,81,0,0" TextWrapping="Wrap" Text="API link" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="OpenAPITimerButton" Content="Open Timer" HorizontalAlignment="Left" Margin="188,209,0,0" VerticalAlignment="Top" Click="OpenAPITimer"/>
+        <Button x:Name="OpenAPITimerButton" Content="Open Timer" HorizontalAlignment="Left" Margin="169,236,0,0" VerticalAlignment="Top" Click="OpenAPITimer"/>
         <TextBox x:Name="APITimerStartTimeText" HorizontalAlignment="Left" Margin="161,178,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="MinimizeTimerButton" Content="Minimize" HorizontalAlignment="Left" Margin="312,297,0,0" VerticalAlignment="Top" Click="MinimizeTimer"/>
-        <Button x:Name="MaximizeTimerButton" Content="Maximize" HorizontalAlignment="Left" Margin="426,297,0,0" VerticalAlignment="Top" Click="MaximizeTimer"/>
-        <Button x:Name="CloseTimerButton" Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CloseTimer"/>
-        <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,115,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="MinimizeTimerButton" Content="Minimize" HorizontalAlignment="Left" Margin="300,329,0,0" VerticalAlignment="Top" Click="MinimizeTimerHandler"/>
+        <Button x:Name="MaximizeTimerButton" Content="Maximize" HorizontalAlignment="Left" Margin="429,329,0,0" VerticalAlignment="Top" Click="MaximizeTimerHandler"/>
+        <Button x:Name="CloseTimerButton" Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="CloseTimer" Margin="0,236,0,0"/>
+        <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="ListAPILinkText" HorizontalAlignment="Left" Margin="161,130,0,0" TextWrapping="Wrap" Text="List link" VerticalAlignment="Top" Width="120"/>
 
 
     </Grid>

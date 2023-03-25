@@ -14,20 +14,27 @@ namespace RR_Timer.API
 {
     class APIHandler
     {
-        private string APIlink;
+        private string mainAPIlink;
+        private string listAPIlink;
         private ClockLogic ClockLogic;
+        private System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
 
-        public APIHandler(string APILink, ClockLogic cl)
+        public APIHandler(string APILink, string listLink, ClockLogic cl)
         {
-            APIlink = APILink;
+            mainAPIlink = APILink;
+            listAPIlink = listLink;
             ClockLogic = cl;
-            ReadAPI();
+            ReadMainAPI();
+
+            Timer.Tick += RefreshListAPI;
+            Timer.Interval = new TimeSpan(0, 0, 30);
+            Timer.Start();
         }
 
-        private async void ReadAPI()
+        private async void ReadMainAPI()
         {
             var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync(APIlink);
+            var response = await httpClient.GetAsync(mainAPIlink);
 
             if (response.IsSuccessStatusCode)
             {
@@ -42,8 +49,33 @@ namespace RR_Timer.API
                 }
                 ClockLogic.SetLabels(doubleSplitted[(int)APIItemIndex.EventName, 1], ((EventType)int.Parse(doubleSplitted[(int)APIItemIndex.EventType, 1])).ToString());
             }
+        }
 
+        private async void ReadListAPI()
+        {
+            var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync(listAPIlink);
 
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                responseString = responseString.Replace("[", "").Replace("]", "");
+                var splittedAsRacers = responseString.Split(",");
+                if (!String.IsNullOrEmpty(splittedAsRacers[0]) && !ClockLogic.IsTimerMinimized())
+                {
+                    ClockLogic.AutoMinimizeTimer();
+                }
+                /*for (var i = 0; i < splittedAsRacers.Length; i++)
+                {
+                    splittedAsRacers[i] = splittedAsRacers[i].Replace("{", "").Replace("}", "").Replace("\"", "");
+                }*/
+
+            }
+        }
+
+        private void RefreshListAPI(object sender, EventArgs e)
+        {
+            ReadListAPI();
         }
     }
 }
