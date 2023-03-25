@@ -14,7 +14,7 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}">
+        FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen">
     <Grid>
         <Button x:Name="OpenTimerButton" Content="Open Timer" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OpenTimer" Margin="563,209,0,0"/>
         <TextBox x:Name="EventNameText" HorizontalAlignment="Left" Margin="536,81,0,0" TextWrapping="Wrap" Text="EventName" VerticalAlignment="Top" Width="120"/>

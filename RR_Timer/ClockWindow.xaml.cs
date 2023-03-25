@@ -26,7 +26,6 @@ namespace RR_Timer
         public ClockWindow(string name, string type, string startTime, ClockLogic cl)
         {
             InitializeComponent();
-            PreviewKeyDown += HandleEsc;
             EventNameLabel.Content = name;
             EventTypeLabel.Content = type;
             clockLogic = cl;
@@ -41,7 +40,6 @@ namespace RR_Timer
         public ClockWindow(string startTime, ClockLogic cl)
         {
             InitializeComponent();
-            PreviewKeyDown += HandleEsc;
             clockLogic = cl;
 
             clockLogic.StringToDateTime(startTime);
@@ -54,7 +52,6 @@ namespace RR_Timer
         public ClockWindow(ClockLogic cl)
         {
             InitializeComponent();
-            PreviewKeyDown += HandleEsc;
             clockLogic = cl;
 
             Timer.Tick += ClockTick;
@@ -75,12 +72,6 @@ namespace RR_Timer
         private void ClockTick(object sender, EventArgs e)
         {
             clockLogic.ShowClockOrTimer(ref TimerClockLabel, ref MainClockLabel);
-        }
-
-        private void HandleEsc(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-                Close();
         }
     }
     

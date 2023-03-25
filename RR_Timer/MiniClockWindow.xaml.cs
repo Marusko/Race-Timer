@@ -27,7 +27,6 @@ namespace RR_Timer
         public MiniClockWindow(ClockLogic cl)
         {
             InitializeComponent();
-            PreviewKeyDown += HandleEsc;
             clockLogic = cl;
 
             Timer.Tick += ClockTick;
@@ -44,12 +43,5 @@ namespace RR_Timer
         {
             TimerMini.Content = clockLogic.FormatStartTime();
         }
-
-        private void HandleEsc(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-                Close();
-        }
-
     }
 }
