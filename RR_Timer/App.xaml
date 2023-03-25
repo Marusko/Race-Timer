@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:RR_Timer"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             StartupUri="MainWindow.xaml">
+             StartupUri="/Window/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

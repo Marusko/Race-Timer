@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RR_Timer
+namespace RR_Timer.Data
 {
-    enum APIItemIndex
+    internal class Racer
     {
-        EventName,
-        EventType
+        public int Bib { get; set; }
+        public string Name { get; set; }
+
     }
 }

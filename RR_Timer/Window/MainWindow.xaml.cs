@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
+using RR_Timer.Data;
+using RR_Timer.Logic;
 
 namespace RR_Timer
 {
@@ -24,12 +26,13 @@ namespace RR_Timer
     public partial class MainWindow : Window
     {
         private readonly ClockLogic _clockLogic = new ClockLogic();
-        private readonly ScreenHandler _screenHandler = new ScreenHandler();
+        private readonly ScreenHandler _screenHandler;
         private Window _clockWindow;
         private bool _openedTimer = false;
         public MainWindow()
         {
             InitializeComponent();
+            _screenHandler = new ScreenHandler(this);
             EventTypeComboBox.ItemsSource = Enum.GetValues(typeof(EventType));
             ScreenComboBox.ItemsSource = _screenHandler.GetScreens();
             ScreenComboBox.SelectionChanged += SelectScreen;
@@ -91,6 +94,11 @@ namespace RR_Timer
         private void SelectScreen(object sender, RoutedEventArgs e)
         {
             _screenHandler.SelectedScreen = (Screen)ScreenComboBox.SelectedItem;
+        }
+
+        public void ShowReloadedScreens(Screen[] s)
+        {
+            ScreenComboBox.ItemsSource = s;
         }
      }
 }

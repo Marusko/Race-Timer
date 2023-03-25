@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RR_Timer
+namespace RR_Timer.Data
 {
     public enum EventType
     {

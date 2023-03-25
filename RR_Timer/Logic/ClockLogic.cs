@@ -5,8 +5,9 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using RR_Timer.API;
 
-namespace RR_Timer
+namespace RR_Timer.Logic
 {
     public class ClockLogic
     {
@@ -48,19 +49,20 @@ namespace RR_Timer
                 timer.Content = FormatStartTime();
                 clock.Content = FormatTime();
             }
-            
+
         }
 
         public void SetLabels(string name, string type)
         {
             EventName = name;
             EventType = type;
-            
+
             if (clockWindow.GetType() == typeof(ClockWindow))
             {
                 ((ClockWindow)clockWindow).SetEventName(name);
                 ((ClockWindow)clockWindow).SetEventType(type);
-            } else if (clockWindow.GetType() == typeof(MiniClockWindow))
+            }
+            else if (clockWindow.GetType() == typeof(MiniClockWindow))
             {
                 ((MiniClockWindow)clockWindow).SetEventName(name);
             }
