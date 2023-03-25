@@ -23,11 +23,15 @@ namespace RR_Timer
         private System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
 
         private ClockLogic clockLogic;
+        private ScreenHandler screenHandler;
 
-        public MiniClockWindow(ClockLogic cl)
+        public MiniClockWindow(ClockLogic cl, ScreenHandler sh)
         {
             InitializeComponent();
             clockLogic = cl;
+            screenHandler = sh;
+
+            Loaded += WindowLoaded;
 
             Timer.Tick += ClockTick;
             Timer.Interval = new TimeSpan(0, 0, 1);
@@ -42,6 +46,13 @@ namespace RR_Timer
         private void ClockTick(object sender, EventArgs e)
         {
             TimerMini.Content = clockLogic.FormatStartTime();
+        }
+        private void WindowLoaded(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Normal;
+            this.Left = screenHandler.SelectedScreen.WorkingArea.Left;
+            this.Top = screenHandler.SelectedScreen.WorkingArea.Top;
+            this.Width = screenHandler.SelectedScreen.WorkingArea.Width;
         }
     }
 }

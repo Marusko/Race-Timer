@@ -26,6 +26,7 @@
         <Button x:Name="MinimizeTimerButton" Content="Minimize" HorizontalAlignment="Left" Margin="312,297,0,0" VerticalAlignment="Top" Click="MinimizeTimer"/>
         <Button x:Name="MaximizeTimerButton" Content="Maximize" HorizontalAlignment="Left" Margin="426,297,0,0" VerticalAlignment="Top" Click="MaximizeTimer"/>
         <Button x:Name="CloseTimerButton" Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CloseTimer"/>
+        <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,115,0,0" VerticalAlignment="Top" Width="120"/>
 
 
     </Grid>
