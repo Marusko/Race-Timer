@@ -18,12 +18,14 @@ namespace RR_Timer.API
         private string listAPIlink;
         private ClockLogic ClockLogic;
         private System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
+        private HttpClient httpClient;
 
         public APIHandler(string APILink, string listLink, ClockLogic cl)
         {
             mainAPIlink = APILink;
             listAPIlink = listLink;
             ClockLogic = cl;
+            httpClient = new HttpClient();
             ReadMainAPI();
 
             Timer.Tick += RefreshListAPI;
@@ -33,7 +35,6 @@ namespace RR_Timer.API
 
         private async void ReadMainAPI()
         {
-            var httpClient = new HttpClient();
             var response = await httpClient.GetAsync(mainAPIlink);
 
             if (response.IsSuccessStatusCode)
@@ -48,12 +49,11 @@ namespace RR_Timer.API
                     doubleSplitted[i, 1] = splitted[i].Split(':')[1];
                 }
                 ClockLogic.SetLabels(doubleSplitted[(int)APIItemIndex.EventName, 1], ((EventType)int.Parse(doubleSplitted[(int)APIItemIndex.EventType, 1])).ToString());
-            }
+            } 
         }
 
         private async void ReadListAPI()
         {
-            var httpClient = new HttpClient();
             var response = await httpClient.GetAsync(listAPIlink);
 
             if (response.IsSuccessStatusCode)

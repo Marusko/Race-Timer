@@ -38,8 +38,11 @@ namespace RR_Timer
             _clockLogic = new ClockLogic(this);
             EventTypeComboBox.ItemsSource = Enum.GetValues(typeof(EventType));
             ScreenComboBox.ItemsSource = _screenHandler.GetScreens();
+            ScreenComboBox.SelectedIndex = 0;
+            _screenHandler.SelectedScreen = (Screen)ScreenComboBox.SelectedItem;
             ScreenComboBox.SelectionChanged += SelectScreen;
             MinimizedTimer = false;
+            Closing += CloseTimer;
         }
 
         private void OpenTimer(object sender, RoutedEventArgs e)
@@ -101,6 +104,15 @@ namespace RR_Timer
         }
 
         private void CloseTimer(object sender, RoutedEventArgs e)
+        {
+            if (_openedTimer)
+            {
+                _clockWindow.Close();
+                _openedTimer = false;
+                MinimizedTimer = false;
+            }
+        }
+        private void CloseTimer(object sender, EventArgs e)
         {
             if (_openedTimer)
             {

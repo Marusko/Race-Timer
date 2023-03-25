@@ -77,9 +77,18 @@ namespace RR_Timer.Logic
         public void StringToDateTime(string s)
         {
             string[] splitted = s.Split(':');
+            if (String.IsNullOrEmpty(splitted[0]))
+            {
+                StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, 0, 0, 0);
+                return;
+            }
             int hour = int.Parse(splitted[0]);
             int minute = int.Parse(splitted[1]);
             StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, hour, minute, 0);
+            if (StartTime == null)
+            {
+                StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, 0, 0, 0);
+            }
         }
 
         public string FormatTime()

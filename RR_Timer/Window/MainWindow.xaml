@@ -15,22 +15,46 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Button x:Name="OpenTimerButton" Content="Open Timer" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OpenTimer" Margin="544,236,0,0"/>
-        <TextBox x:Name="EventNameText" HorizontalAlignment="Left" Margin="536,81,0,0" TextWrapping="Wrap" Text="EventName" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="StartTime" HorizontalAlignment="Left" Margin="536,178,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="EventTypeComboBox" HorizontalAlignment="Left" Margin="536,130,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="EventAPILinkText" HorizontalAlignment="Left" Margin="161,81,0,0" TextWrapping="Wrap" Text="API link" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="OpenAPITimerButton" Content="Open Timer" HorizontalAlignment="Left" Margin="169,236,0,0" VerticalAlignment="Top" Click="OpenAPITimer"/>
-        <TextBox x:Name="APITimerStartTimeText" HorizontalAlignment="Left" Margin="161,178,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="MinimizeTimerButton" Content="Minimize" HorizontalAlignment="Left" Margin="300,329,0,0" VerticalAlignment="Top" Click="MinimizeTimerHandler"/>
-        <Button x:Name="MaximizeTimerButton" Content="Maximize" HorizontalAlignment="Left" Margin="429,329,0,0" VerticalAlignment="Top" Click="MaximizeTimerHandler"/>
-        <Button x:Name="CloseTimerButton" Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="CloseTimer" Margin="0,236,0,0"/>
-        <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="ListAPILinkText" HorizontalAlignment="Left" Margin="161,130,0,0" TextWrapping="Wrap" Text="List link" VerticalAlignment="Top" Width="120"/>
 
+    <DockPanel>
+        <TabControl>
+            <TabItem Header="Timer">
+                <Grid>
+                    <Button x:Name="OpenTimerButton" Content="Open Timer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTimer" Margin="0,272,0,0"/>
+                    <TextBox x:Name="EventNameText" HorizontalAlignment="Center" Margin="0,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" HorizontalScrollBarVisibility="Auto" InputScope="RegularExpression" HorizontalContentAlignment="Center" ToolTip="Event Name"/>
+                    <TextBox x:Name="StartTime" HorizontalAlignment="Center" Margin="0,220,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="68" HorizontalContentAlignment="Center" InputScope="Time"/>
+                    <ComboBox x:Name="EventTypeComboBox" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top" Width="200"/>
+                    <Label x:Name="EventNameLabel" Content="Event Name" HorizontalAlignment="Center" Margin="0,54,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="EventTypeLabel" Content="Event Type" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="EventStartTimeLabel" Content="Start Time" HorizontalAlignment="Center" Margin="0,193,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="API Timer">
+                <Grid>
+                    <TextBox x:Name="EventAPILinkText" HorizontalAlignment="Center" Margin="0,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" HorizontalContentAlignment="Center" InputScope="Url"/>
+                    <TextBox x:Name="ListAPILinkText" HorizontalAlignment="Center" Margin="0,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" HorizontalContentAlignment="Center" InputScope="Url"/>
+                    <Button x:Name="OpenAPITimerButton" Content="Open Timer" HorizontalAlignment="Center" Margin="0,272,0,0" VerticalAlignment="Top" Click="OpenAPITimer"/>
+                    <TextBox x:Name="APITimerStartTimeText" HorizontalAlignment="Center" Margin="0,220,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="68" HorizontalContentAlignment="Center" InputScope="Time"/>
+                    <Label x:Name="APILinkLabel" Content="API Link" HorizontalAlignment="Center" Margin="0,54,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="ListLinkLabel" Content="List Link" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="APIEventStartTimeLabel" Content="Start Time" HorizontalAlignment="Center" Margin="0,193,0,0" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Settings">
+                <Grid>
+                    <Button x:Name="MinimizeTimerButton" Content="Minimize" HorizontalAlignment="Left" Margin="415,0,0,0" VerticalAlignment="Center" Click="MinimizeTimerHandler"/>
+                    <Button x:Name="MaximizeTimerButton" Content="Maximize" HorizontalAlignment="Left" Margin="285,0,0,0" VerticalAlignment="Center" Click="MaximizeTimerHandler"/>
+                    <Button x:Name="CloseTimerButton" Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="CloseTimer" Margin="0,240,0,0"/>
+                    <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,80,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Label x:Name="DisplayLabel" Content="Display" HorizontalAlignment="Center" Margin="0,53,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="TimerLabel" Content="Timer" HorizontalAlignment="Center" Margin="0,140,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,0"/>
+                </Grid>
+            </TabItem>
 
-    </Grid>
+        </TabControl>
+
+    </DockPanel>
+
 
 
 </Window>
