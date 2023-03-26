@@ -29,7 +29,26 @@ namespace RR_Timer.Logic
 
         public void SetClockWindow(string APILink, string listLink, ClockWindow cw)
         {
-            APIHandler = new APIHandler(APILink, listLink, this);
+            if (!String.IsNullOrEmpty(APILink))
+            {
+                if (String.IsNullOrEmpty(listLink))
+                {
+                    var warning = new WarningWindow(WarningWindow.LIST_LINK_WARNING);
+                    warning.ShowDialog();
+                    APIHandler = new APIHandler(APILink, this);
+                }
+                else
+                {
+                    APIHandler = new APIHandler(APILink, listLink, this);
+                }
+            }
+            else
+            {
+                var warning = new WarningWindow(WarningWindow.API_LINK_WARNING);
+                warning.ShowDialog();
+                SetClockWindow(cw, "", "");
+            }
+
             clockWindow = cw;
         }
         public void SetClockWindow(Window cw)
@@ -79,14 +98,29 @@ namespace RR_Timer.Logic
             string[] splitted = s.Split(':');
             if (String.IsNullOrEmpty(splitted[0]))
             {
+                var warning = new WarningWindow(WarningWindow.TIME_WARNING);
+                warning.ShowDialog();
                 StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, 0, 0, 0);
                 return;
             }
-            int hour = int.Parse(splitted[0]);
-            int minute = int.Parse(splitted[1]);
-            StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, hour, minute, 0);
+
+            if (splitted.Length > 1)
+            {
+                int hour = int.Parse(splitted[0]);
+                int minute = int.Parse(splitted[1]);
+                StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, hour, minute, 0);
+            }
+            else
+            {
+                var warning = new WarningWindow(WarningWindow.TIME_WARNING);
+                warning.ShowDialog();
+                StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, 0, 0, 0);
+            }
+            
             if (StartTime == null)
             {
+                var warning = new WarningWindow(WarningWindow.TIME_WARNING);
+                warning.ShowDialog();
                 StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, 0, 0, 0);
             }
         }
@@ -96,7 +130,12 @@ namespace RR_Timer.Logic
             ClockDateTime = DateTime.Now;
             var clock = ClockDateTime.TimeOfDay.ToString();
             var clockLength = clock.LastIndexOf(".");
-            var clockString = clock.Substring(0, clockLength);
+            var clockString = clock;
+            if (clockLength > 0)
+            {
+                clockString = clock.Substring(0, clockLength);
+            }
+            
             return clockString;
         }
         public string FormatStartTime()

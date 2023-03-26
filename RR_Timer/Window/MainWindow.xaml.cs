@@ -42,7 +42,7 @@ namespace RR_Timer
             _screenHandler.SelectedScreen = (Screen)ScreenComboBox.SelectedItem;
             ScreenComboBox.SelectionChanged += SelectScreen;
             MinimizedTimer = false;
-            Closing += CloseTimer;
+            Closing += OnCloseCloseTimerWindow;
         }
 
         private void OpenTimer(object sender, RoutedEventArgs e)
@@ -112,7 +112,7 @@ namespace RR_Timer
                 MinimizedTimer = false;
             }
         }
-        private void CloseTimer(object sender, EventArgs e)
+        private void OnCloseCloseTimerWindow(object sender, EventArgs e)
         {
             if (_openedTimer)
             {

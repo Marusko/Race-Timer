@@ -33,6 +33,15 @@ namespace RR_Timer.API
             Timer.Start();
         }
 
+        public APIHandler(string APILink, ClockLogic cl)
+        {
+            mainAPIlink = APILink;
+            listAPIlink = null;
+            ClockLogic = cl;
+            httpClient = new HttpClient();
+            ReadMainAPI();
+        }
+
         private async void ReadMainAPI()
         {
             var response = await httpClient.GetAsync(mainAPIlink);
@@ -49,7 +58,13 @@ namespace RR_Timer.API
                     doubleSplitted[i, 1] = splitted[i].Split(':')[1];
                 }
                 ClockLogic.SetLabels(doubleSplitted[(int)APIItemIndex.EventName, 1], ((EventType)int.Parse(doubleSplitted[(int)APIItemIndex.EventType, 1])).ToString());
-            } 
+            }
+            else
+            {
+                var warning = new WarningWindow("Oops, something went wrong with main API!\nError code: [" + response.StatusCode + "]");
+                warning.ShowDialog();
+                ClockLogic.SetLabels("", "");
+            }
         }
 
         private async void ReadListAPI()
@@ -65,6 +80,11 @@ namespace RR_Timer.API
                 {
                     ClockLogic.AutoMinimizeTimer();
                 }
+            }
+            else
+            {
+                var warning = new WarningWindow("Oops, something went wrong with list API!\nError code: [" + response.StatusCode + "]");
+                warning.ShowDialog();
             }
         }
 
