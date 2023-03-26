@@ -22,7 +22,7 @@ namespace RR_Timer.Logic
             _mainWindow = mw;
             _screenNames = new string[_screens.Length];
             Timer.Tick += ReloadScreens;
-            Timer.Interval = new TimeSpan(0, 0, 30);
+            Timer.Interval = new TimeSpan(0, 0, 20);
             Timer.Start();
             SetScreenNames();
         }
@@ -39,10 +39,13 @@ namespace RR_Timer.Logic
 
         private void ReloadScreens(object sender, EventArgs e)
         {
-            _screens = Screen.AllScreens;
-            _screenNames = new string[_screens.Length];
-            SetScreenNames();
-            _mainWindow.ShowReloadedScreens(_screenNames);
+            if (!_mainWindow.OpenedTimer)
+            {
+                _screens = Screen.AllScreens;
+                _screenNames = new string[_screens.Length];
+                SetScreenNames();
+                _mainWindow.ShowReloadedScreens(_screenNames);
+            }
         }
 
         private void SetScreenNames()

@@ -31,7 +31,7 @@ namespace RR_Timer
         private readonly ClockLogic _clockLogic;
         private readonly ScreenHandler _screenHandler;
         private Window _clockWindow;
-        private bool _openedTimer = false;
+        public bool OpenedTimer { get; set; }
         public bool MinimizedTimer { get; set; }
 
         public MainWindow()
@@ -51,24 +51,24 @@ namespace RR_Timer
 
         private void OpenTimer(object sender, RoutedEventArgs e)
         {
-            if (!_openedTimer)
+            if (!OpenedTimer)
             {
                 _clockWindow = new ClockWindow(EventNameText.Text, EventTypeComboBox.Text, StartTime.Text, _clockLogic, _screenHandler);
                 _clockLogic.SetClockWindow((ClockWindow)_clockWindow, EventNameText.Text, EventTypeComboBox.Text);
                 _clockWindow.Show();
-                _openedTimer = true;
+                OpenedTimer = true;
                 MinimizedTimer = false;
             }
         }
 
         private void OpenAPITimer(object sender, RoutedEventArgs e)
         {
-            if (!_openedTimer)
+            if (!OpenedTimer)
             {
                 _clockWindow = new ClockWindow(APITimerStartTimeText.Text, _clockLogic, _screenHandler);
                 _clockLogic.SetClockWindow(EventAPILinkText.Text, ListAPILinkText.Text, (ClockWindow)_clockWindow);
                 _clockWindow.Show();
-                _openedTimer = true;
+                OpenedTimer = true;
                 MinimizedTimer = false;
             }
         }
@@ -85,7 +85,7 @@ namespace RR_Timer
 
         public void MaximizeTimer()
         {
-            if (_openedTimer)
+            if (OpenedTimer)
             {
                 _clockWindow.Close();
                 _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
@@ -97,7 +97,7 @@ namespace RR_Timer
 
         public void MinimizeTimer()
         {
-            if (_openedTimer)
+            if (OpenedTimer)
             {
                 _clockWindow.Close();
                 _clockWindow = new MiniClockWindow(_clockLogic, _screenHandler);
@@ -109,19 +109,19 @@ namespace RR_Timer
 
         private void CloseTimer(object sender, RoutedEventArgs e)
         {
-            if (_openedTimer)
+            if (OpenedTimer)
             {
                 _clockWindow.Close();
-                _openedTimer = false;
+                OpenedTimer = false;
                 MinimizedTimer = false;
             }
         }
         private void OnCloseCloseTimerWindow(object sender, EventArgs e)
         {
-            if (_openedTimer)
+            if (OpenedTimer)
             {
                 _clockWindow.Close();
-                _openedTimer = false;
+                OpenedTimer = false;
                 MinimizedTimer = false;
             }
         }

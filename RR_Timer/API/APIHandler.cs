@@ -29,7 +29,7 @@ namespace RR_Timer.API
             ReadMainAPI();
 
             Timer.Tick += RefreshListAPI;
-            Timer.Interval = new TimeSpan(0, 0, 30);
+            Timer.Interval = new TimeSpan(0, 0, 15);
             Timer.Start();
         }
 
@@ -69,22 +69,29 @@ namespace RR_Timer.API
 
         private async void ReadListAPI()
         {
-            var response = await httpClient.GetAsync(listAPIlink);
-
-            if (response.IsSuccessStatusCode)
+            if (!ClockLogic.IsTimerMinimized())
             {
-                var responseString = await response.Content.ReadAsStringAsync();
-                responseString = responseString.Replace("[", "").Replace("]", "");
-                var splittedAsRacers = responseString.Split(",");
-                if (!String.IsNullOrEmpty(splittedAsRacers[0]) && !ClockLogic.IsTimerMinimized())
+                var response = await httpClient.GetAsync(listAPIlink);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    ClockLogic.AutoMinimizeTimer();
+                    var responseString = await response.Content.ReadAsStringAsync();
+                    responseString = responseString.Replace("[", "").Replace("]", "");
+                    var splittedAsRacers = responseString.Split(",");
+                    if (!String.IsNullOrEmpty(splittedAsRacers[0]) && !ClockLogic.IsTimerMinimized())
+                    {
+                        ClockLogic.AutoMinimizeTimer();
+                    }
+                }
+                else
+                {
+                    var warning = new WarningWindow("Oops, something went wrong with list API!\nError code: [" + response.StatusCode + "]");
+                    warning.ShowDialog();
                 }
             }
             else
             {
-                var warning = new WarningWindow("Oops, something went wrong with list API!\nError code: [" + response.StatusCode + "]");
-                warning.ShowDialog();
+                Timer.Stop();
             }
         }
 
