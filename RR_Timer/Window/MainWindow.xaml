@@ -20,34 +20,49 @@
         <TabControl>
             <TabItem Header="Timer">
                 <Grid>
-                    <Button x:Name="OpenTimerButton" Content="Open Timer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTimer" Margin="0,272,0,0"/>
-                    <TextBox x:Name="EventNameText" HorizontalAlignment="Center" Margin="0,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" HorizontalScrollBarVisibility="Auto" InputScope="RegularExpression" HorizontalContentAlignment="Center" ToolTip="Event Name"/>
-                    <TextBox x:Name="StartTime" HorizontalAlignment="Center" Margin="0,220,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="68" HorizontalContentAlignment="Center" InputScope="Time"/>
-                    <ComboBox x:Name="EventTypeComboBox" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top" Width="200"/>
-                    <Label x:Name="EventNameLabel" Content="Event Name" HorizontalAlignment="Center" Margin="0,54,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="EventTypeLabel" Content="Event Type" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="EventStartTimeLabel" Content="Start Time" HorizontalAlignment="Center" Margin="0,193,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="OpenTimerButton" Content="Open Timer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTimer" Margin="0,272,0,0" FontSize="16"/>
+                    <TextBox x:Name="EventNameText" HorizontalAlignment="Center" Margin="0,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" HorizontalScrollBarVisibility="Auto" InputScope="RegularExpression" HorizontalContentAlignment="Center" ToolTip="Event Name" FontSize="14"/>
+                    <TextBox x:Name="StartTime" HorizontalAlignment="Center" Margin="0,220,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="68" HorizontalContentAlignment="Center" InputScope="Time" FontSize="16"/>
+                    <ComboBox x:Name="EventTypeComboBox" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top" Width="200" FontSize="14"/>
+                    <Label x:Name="EventNameLabel" Content="Event Name" HorizontalAlignment="Center" Margin="0,49,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label x:Name="EventTypeLabel" Content="Event Type" HorizontalAlignment="Center" Margin="0,118,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label x:Name="EventStartTimeLabel" Content="Start Time" HorizontalAlignment="Center" Margin="0,188,0,0" VerticalAlignment="Top" FontSize="16"/>
                 </Grid>
             </TabItem>
             <TabItem Header="API Timer">
                 <Grid>
-                    <TextBox x:Name="EventAPILinkText" HorizontalAlignment="Center" Margin="0,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" HorizontalContentAlignment="Center" InputScope="Url"/>
-                    <TextBox x:Name="ListAPILinkText" HorizontalAlignment="Center" Margin="0,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" HorizontalContentAlignment="Center" InputScope="Url"/>
-                    <Button x:Name="OpenAPITimerButton" Content="Open Timer" HorizontalAlignment="Center" Margin="0,272,0,0" VerticalAlignment="Top" Click="OpenAPITimer"/>
-                    <TextBox x:Name="APITimerStartTimeText" HorizontalAlignment="Center" Margin="0,220,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="68" HorizontalContentAlignment="Center" InputScope="Time"/>
-                    <Label x:Name="APILinkLabel" Content="API Link" HorizontalAlignment="Center" Margin="0,54,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="ListLinkLabel" Content="List Link" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="APIEventStartTimeLabel" Content="Start Time" HorizontalAlignment="Center" Margin="0,193,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="EventAPILinkText" HorizontalAlignment="Center" Margin="0,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" HorizontalContentAlignment="Center" InputScope="Url" FontSize="14"/>
+                    <TextBox x:Name="ListAPILinkText" HorizontalAlignment="Center" Margin="0,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" HorizontalContentAlignment="Center" InputScope="Url" FontSize="14"/>
+                    <Button x:Name="OpenAPITimerButton" Content="Open Timer" HorizontalAlignment="Center" Margin="0,272,0,0" VerticalAlignment="Top" Click="OpenAPITimer" FontSize="16"/>
+                    <TextBox x:Name="APITimerStartTimeText" HorizontalAlignment="Center" Margin="0,220,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="68" HorizontalContentAlignment="Center" InputScope="Time" FontSize="16"/>
+                    <Label x:Name="APILinkLabel" Content="API Link" HorizontalAlignment="Center" Margin="0,49,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label x:Name="ListLinkLabel" Content="List Link" HorizontalAlignment="Center" Margin="0,118,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label x:Name="APIEventStartTimeLabel" Content="Start Time" HorizontalAlignment="Center" Margin="0,188,0,0" VerticalAlignment="Top" FontSize="16"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Timer control">
+                <Grid>
+                    <Button x:Name="MinimizeTimerButton" Content="Minimize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MinimizeTimerHandler" Margin="0,0,0,100" FontSize="16"/>
+                    <Button x:Name="MaximizeTimerButton" Content="Maximize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MaximizeTimerHandler" FontSize="16"/>
+                    <Button x:Name="CloseTimerButton" Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CloseTimer" Margin="0,100,0,0" FontSize="16"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Settings">
                 <Grid>
-                    <Button x:Name="MinimizeTimerButton" Content="Minimize" HorizontalAlignment="Left" Margin="415,0,0,0" VerticalAlignment="Center" Click="MinimizeTimerHandler"/>
-                    <Button x:Name="MaximizeTimerButton" Content="Maximize" HorizontalAlignment="Left" Margin="285,0,0,0" VerticalAlignment="Center" Click="MaximizeTimerHandler"/>
-                    <Button x:Name="CloseTimerButton" Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="CloseTimer" Margin="0,240,0,0"/>
-                    <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,80,0,0" VerticalAlignment="Top" Width="120"/>
-                    <Label x:Name="DisplayLabel" Content="Display" HorizontalAlignment="Center" Margin="0,53,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="TimerLabel" Content="Timer" HorizontalAlignment="Center" Margin="0,140,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,0,0"/>
+                    <Label x:Name="DisplayLabel" Content="Display" HorizontalAlignment="Center" Margin="0,53,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" Width="260" FontSize="14"/>
+                    <Label x:Name="InfoLabel" Content="Info" HorizontalAlignment="Center" Margin="0,209,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="GithubLinkLabel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,70">
+                        <Hyperlink Click="OpenGithub">Github</Hyperlink>
+                    </Label>
+                    <Label x:Name="JsonLinkLabel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,30">
+                        <Hyperlink Click="OpenJsonPage">JSON processing framework</Hyperlink>
+                    </Label>
+                    <Label x:Name="UILinkLabel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10">
+                        <Hyperlink Click="OpenUIPage">Material design themes</Hyperlink>
+                    </Label>
+                    <Label x:Name="CopyLabel" Content="Used external NuGet:" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,50"/>
+                    <Label x:Name="MoreOnLabel" Content="More on:" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,90"/>
                 </Grid>
             </TabItem>
 

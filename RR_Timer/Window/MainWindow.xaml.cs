@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
@@ -25,6 +26,8 @@ namespace RR_Timer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string author = "Matúš Suský";
+        private const string version = "0.0.0";
         private readonly ClockLogic _clockLogic;
         private readonly ScreenHandler _screenHandler;
         private Window _clockWindow;
@@ -43,6 +46,7 @@ namespace RR_Timer
             ScreenComboBox.SelectionChanged += SelectScreen;
             MinimizedTimer = false;
             Closing += OnCloseCloseTimerWindow;
+            SetInfoLabel();
         }
 
         private void OpenTimer(object sender, RoutedEventArgs e)
@@ -130,6 +134,28 @@ namespace RR_Timer
         public void ShowReloadedScreens(Screen[] s)
         {
             ScreenComboBox.ItemsSource = s;
+        }
+
+        private void SetInfoLabel()
+        {
+            InfoLabel.Content = "Made by: " + author + "\nVersion: " + version;
+        }
+
+        private void OpenGithub(object sender, RoutedEventArgs e)
+        {
+            string url = "https://github.com/Marusko/RR_Timer";
+            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+        }
+
+        private void OpenJsonPage(object sender, RoutedEventArgs e)
+        {
+            string url = "https://www.newtonsoft.com/json";
+            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+        }
+        private void OpenUIPage(object sender, RoutedEventArgs e)
+        {
+            string url = "https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit";
+            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
         }
     }
 }
