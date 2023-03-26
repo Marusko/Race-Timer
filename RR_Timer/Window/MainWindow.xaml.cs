@@ -27,7 +27,7 @@ namespace RR_Timer
     public partial class MainWindow : Window
     {
         private const string author = "Matúš Suský";
-        private const string version = "0.0.0";
+        private const string version = "0.7.0";
         private readonly ClockLogic _clockLogic;
         private readonly ScreenHandler _screenHandler;
         private Window _clockWindow;
