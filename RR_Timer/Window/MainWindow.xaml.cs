@@ -40,9 +40,9 @@ namespace RR_Timer
             _screenHandler = new ScreenHandler(this);
             _clockLogic = new ClockLogic(this);
             EventTypeComboBox.ItemsSource = Enum.GetValues(typeof(EventType));
-            ScreenComboBox.ItemsSource = _screenHandler.GetScreens();
+            ScreenComboBox.ItemsSource = _screenHandler.GetScreenNames();
             ScreenComboBox.SelectedIndex = 0;
-            _screenHandler.SelectedScreen = (Screen)ScreenComboBox.SelectedItem;
+            _screenHandler.SelectedScreen = _screenHandler.GetScreens()[ScreenComboBox.SelectedIndex];
             ScreenComboBox.SelectionChanged += SelectScreen;
             MinimizedTimer = false;
             Closing += OnCloseCloseTimerWindow;
@@ -128,10 +128,10 @@ namespace RR_Timer
 
         private void SelectScreen(object sender, RoutedEventArgs e)
         {
-            _screenHandler.SelectedScreen = (Screen)ScreenComboBox.SelectedItem;
+            _screenHandler.SelectedScreen = _screenHandler.GetScreens()[ScreenComboBox.SelectedIndex];
         }
 
-        public void ShowReloadedScreens(Screen[] s)
+        public void ShowReloadedScreens(string[] s)
         {
             ScreenComboBox.ItemsSource = s;
         }
