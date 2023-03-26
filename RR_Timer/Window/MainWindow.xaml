@@ -1,4 +1,4 @@
-﻿<Window x:Class="RR_Timer.MainWindow"
+﻿<Window x:Name="Main" x:Class="RR_Timer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,7 +14,7 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen">
+        FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" Icon="/Window/hourglass.png">
 
     <DockPanel>
         <TabControl>
@@ -51,18 +51,25 @@
                 <Grid>
                     <Label x:Name="DisplayLabel" Content="Display" HorizontalAlignment="Center" Margin="0,53,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" Width="260" FontSize="14"/>
-                    <Label x:Name="InfoLabel" Content="Info" HorizontalAlignment="Center" Margin="0,209,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="GithubLinkLabel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,70">
-                        <Hyperlink Click="OpenGithub">Github</Hyperlink>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Information">
+                <Grid>
+                    <Label x:Name="InfoLabel" Content="Info" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="GithubLinkLabel" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Hyperlink Click="OpenGithub" Foreground="#FF30E433">Github</Hyperlink>
                     </Label>
-                    <Label x:Name="JsonLinkLabel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,30">
-                        <Hyperlink Click="OpenJsonPage">JSON processing framework</Hyperlink>
+                    <Label x:Name="JsonLinkLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,80,0,0">
+                        <Hyperlink Click="OpenJsonPage" Foreground="#FF30E433">JSON processing framework</Hyperlink>
                     </Label>
-                    <Label x:Name="UILinkLabel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10">
-                        <Hyperlink Click="OpenUIPage">Material design themes</Hyperlink>
+                    <Label x:Name="UILinkLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,110,0,0">
+                        <Hyperlink Click="OpenUIPage" Foreground="#FF30E433">Material design themes</Hyperlink>
                     </Label>
-                    <Label x:Name="CopyLabel" Content="Used external NuGet:" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,50"/>
-                    <Label x:Name="MoreOnLabel" Content="More on:" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,90"/>
+                    <Label x:Name="IconLinkLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,140,0,0">
+                        <Hyperlink Click="OpenIconPage" Foreground="#FF30E433">App Icon</Hyperlink>
+                    </Label>
+                    <Label x:Name="CopyLabel" Content="Used external NuGet:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"/>
+                    <Label x:Name="MoreOnLabel" Content="More on:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,30"/>
                 </Grid>
             </TabItem>
 

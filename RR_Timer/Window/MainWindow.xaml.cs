@@ -157,5 +157,10 @@ namespace RR_Timer
             string url = "https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit";
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
         }
+        private void OpenIconPage(object sender, RoutedEventArgs e)
+        {
+            string url = "https://www.flaticon.com/free-icon/hourglass_9182366";
+            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+        }
     }
 }

@@ -7,10 +7,18 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Window\hourglass.png" />
+  </ItemGroup>
+
 	<ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.8.1-ci204" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Window\hourglass.png" />
+	</ItemGroup>
 	<PropertyGroup>
 		<TargetFramework>net7.0-windows</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
