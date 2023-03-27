@@ -1,89 +1,86 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using RR_Timer.API;
+using RR_Timer.UI;
 
 namespace RR_Timer.Logic
 {
     public class ClockLogic
     {
-        private System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
+        private readonly System.Windows.Threading.DispatcherTimer _timer = new();
 
-        private DateTime ClockDateTime;
-        private DateTime NowDateTime = DateTime.Now;
-        public DateTime StartTime { get; set; }
+        private DateTime _clockDateTime;
+        private readonly DateTime _nowDateTime = DateTime.Now;
+        private DateTime StartTime { get; set; }
+        private string? EventName { get; set; }
+        private string? EventType { get; set; }
 
-        public string EventName { get; set; }
-        public string EventType { get; set; }
-
-        private APIHandler APIHandler;
-        private Window clockWindow;
-        private MainWindow mainWindow;
+        private Window? _clockWindow;
+        private readonly MainWindow _mainWindow;
 
         public ClockLogic(MainWindow mw)
         {
-            mainWindow = mw;
+            _mainWindow = mw;
         }
 
         public void StartTimer()
         {
-            Timer.Tick += ClockTick;
-            Timer.Interval = new TimeSpan(0, 0, 1);
-            Timer.Start();
+            _timer.Tick += ClockTick;
+            _timer.Interval = new TimeSpan(0, 0, 1);
+            _timer.Start();
         }
 
         public void StopTimer()
         {
-            Timer.Stop();
+            _timer.Stop();
         }
-        private void ClockTick(object sender, EventArgs e)
+        private void ClockTick(object? sender, EventArgs e)
         {
-            if (clockWindow.GetType() == typeof(ClockWindow))
+            if (_clockWindow == null) return;
+            if (_clockWindow.GetType() == typeof(ClockWindow))
             {
-                ((ClockWindow)clockWindow).OnTimerClick();
+                ((ClockWindow)_clockWindow).OnTimerClick();
             }
-            else if (clockWindow.GetType() == typeof(MiniClockWindow))
+            else if (_clockWindow.GetType() == typeof(MiniClockWindow))
             {
-                ((MiniClockWindow)clockWindow).OnTimerClick();
+                ((MiniClockWindow)_clockWindow).OnTimerClick();
             }
         }
 
-        public void SetClockWindow(string APILink, string listLink, ClockWindow cw)
+        public void SetClockWindow(string mainLink, string listLink, ClockWindow cw)
         {
-            if (!String.IsNullOrEmpty(APILink))
+            if (!string.IsNullOrEmpty(mainLink))
             {
-                if (String.IsNullOrEmpty(listLink))
+                if (string.IsNullOrEmpty(listLink))
                 {
-                    var warning = new WarningWindow(WarningWindow.LIST_LINK_WARNING);
+                    var warning = new WarningWindow(WarningWindow.ListLinkWarning);
                     warning.ShowDialog();
-                    APIHandler = new APIHandler(APILink, this);
+                    var unusedLinkHandler = new LinkHandler(mainLink, this);
                 }
                 else
                 {
-                    APIHandler = new APIHandler(APILink, listLink, this);
+                    var unusedLinkHandler = new LinkHandler(mainLink, listLink, this);
                 }
             }
             else
             {
-                var warning = new WarningWindow(WarningWindow.API_LINK_WARNING);
+                var warning = new WarningWindow(WarningWindow.ApiLinkWarning);
                 warning.ShowDialog();
                 SetClockWindow(cw, "", "");
             }
 
-            clockWindow = cw;
+            _clockWindow = cw;
         }
         public void SetClockWindow(Window cw)
         {
-            clockWindow = cw;
-            SetLabels(EventName, EventType);
+            _clockWindow = cw;
+            if (EventName == null) return;
+            if (EventType != null)
+                SetLabels(EventName, EventType);
         }
         public void SetClockWindow(Window cw, string name, string type)
         {
-            clockWindow = cw;
+            _clockWindow = cw;
             SetLabels(name, type);
         }
 
@@ -99,9 +96,7 @@ namespace RR_Timer.Logic
                 clock.Content = FormatTime();
                 timer.Content = FormatStartTime();
             }
-
         }
-
         public void ShowMiniClockOrTimer(ref System.Windows.Controls.Label timer)
         {
             if (DateTime.Now.Subtract(StartTime).TotalSeconds < 0)
@@ -110,7 +105,7 @@ namespace RR_Timer.Logic
             }
             else
             {
-                ClockDateTime = DateTime.Now;
+                _clockDateTime = DateTime.Now;
                 timer.Content = FormatStartTime();
             }
         }
@@ -120,80 +115,78 @@ namespace RR_Timer.Logic
             EventName = name;
             EventType = type;
 
-            if (clockWindow.GetType() == typeof(ClockWindow))
+            if (_clockWindow != null && _clockWindow.GetType() == typeof(ClockWindow))
             {
-                ((ClockWindow)clockWindow).SetEventName(name);
-                ((ClockWindow)clockWindow).SetEventType(type);
+                ((ClockWindow)_clockWindow).SetEventName(name);
+                ((ClockWindow)_clockWindow).SetEventType(type);
             }
-            else if (clockWindow.GetType() == typeof(MiniClockWindow))
+            else if (_clockWindow != null && _clockWindow.GetType() == typeof(MiniClockWindow))
             {
-                ((MiniClockWindow)clockWindow).SetEventName(name);
+                ((MiniClockWindow)_clockWindow).SetEventName(name);
             }
         }
 
         public void StringToDateTime(string s)
         {
-            string[] splitted = s.Split(':');
-            if (String.IsNullOrEmpty(splitted[0]))
+            var split = s.Split(':');
+            if (string.IsNullOrEmpty(split[0]))
             {
-                var warning = new WarningWindow(WarningWindow.TIME_WARNING);
+                var warning = new WarningWindow(WarningWindow.TimeWarning);
                 warning.ShowDialog();
-                StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, 0, 0, 0);
+                StartTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, 0, 0, 0);
                 return;
             }
 
-            if (splitted.Length > 1)
+            if (split.Length > 1)
             {
-                int hour = int.Parse(splitted[0]);
-                int minute = int.Parse(splitted[1]);
+                var hour = int.Parse(split[0]);
+                var minute = int.Parse(split[1]);
                 try
                 {
-                    StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, hour, minute, 0);
+                    StartTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, hour, minute, 0);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    var warning = new WarningWindow(WarningWindow.TIME_WARNING);
+                    var warning = new WarningWindow(WarningWindow.TimeWarning);
                     warning.ShowDialog();
-                    StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, 0, 0, 0);
+                    StartTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, 0, 0, 0);
                 }
             }
             else
             {
-                var warning = new WarningWindow(WarningWindow.TIME_WARNING);
+                var warning = new WarningWindow(WarningWindow.TimeWarning);
                 warning.ShowDialog();
-                StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, 0, 0, 0);
+                StartTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, 0, 0, 0);
             }
         }
 
-        public string FormatTime()
+        private string FormatTime()
         {
-            ClockDateTime = DateTime.Now;
-            var clock = ClockDateTime.TimeOfDay.ToString();
-            var clockLength = clock.LastIndexOf(".");
+            _clockDateTime = DateTime.Now;
+            var clock = _clockDateTime.TimeOfDay.ToString();
+            var clockLength = clock.LastIndexOf(".", StringComparison.Ordinal);
             var clockString = clock;
             if (clockLength > 0)
             {
-                clockString = clock.Substring(0, clockLength);
+                clockString = clock[..clockLength];
             }
-            
             return clockString;
         }
-        public string FormatStartTime()
+        private string FormatStartTime()
         {
-            var clock = ClockDateTime.Subtract(StartTime).ToString();
-            var tmp = clock.LastIndexOf(".");
+            var clock = _clockDateTime.Subtract(StartTime).ToString();
+            var tmp = clock.LastIndexOf(".", StringComparison.Ordinal);
             var timerClock = clock.Substring(0, tmp);
             return timerClock;
         }
 
         public void AutoMinimizeTimer()
         {
-            mainWindow.MinimizeTimer();
+            _mainWindow.MinimizeTimer();
         }
-
         public bool IsTimerMinimized()
         {
-            return mainWindow.MinimizedTimer;
+            return _mainWindow.MinimizedTimer;
         }
     }
 }
