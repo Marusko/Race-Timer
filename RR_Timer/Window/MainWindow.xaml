@@ -17,7 +17,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" Icon="/Window/hourglass.png">
 
     <DockPanel>
-        <TabControl>
+        <TabControl TabStripPlacement="Left">
             <TabItem Header="Timer" ToolTip="Timer setup">
                 <Grid>
                     <Button x:Name="OpenTimerButton" Content="Open Timer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTimer" Margin="0,272,0,0" FontSize="16" ToolTip="Start the timer"/>

@@ -15,7 +15,7 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}">
+        FontFamily="{DynamicResource MaterialDesignFont}" Icon="/Window/hourglass.png">
     <Grid>
         <Label x:Name="MainClockLabel" Content="00:00:00" HorizontalAlignment="Center" FontSize="70" Margin="0,250,0,0" VerticalAlignment="Center"/>
         <Label x:Name="TimerClockLabel" Content="00:00:00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="150"/>
