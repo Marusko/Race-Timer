@@ -121,16 +121,18 @@ namespace RR_Timer.Logic
             {
                 int hour = int.Parse(splitted[0]);
                 int minute = int.Parse(splitted[1]);
-                StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, hour, minute, 0);
+                try
+                {
+                    StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, hour, minute, 0);
+                }
+                catch (Exception e)
+                {
+                    var warning = new WarningWindow(WarningWindow.TIME_WARNING);
+                    warning.ShowDialog();
+                    StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, 0, 0, 0);
+                }
             }
             else
-            {
-                var warning = new WarningWindow(WarningWindow.TIME_WARNING);
-                warning.ShowDialog();
-                StartTime = new DateTime(NowDateTime.Year, NowDateTime.Month, NowDateTime.Day, 0, 0, 0);
-            }
-            
-            if (StartTime == null)
             {
                 var warning = new WarningWindow(WarningWindow.TIME_WARNING);
                 warning.ShowDialog();
