@@ -71,8 +71,8 @@ namespace RR_Timer.Logic
             }
             else
             {
-                timer.Content = FormatStartTime();
                 clock.Content = FormatTime();
+                timer.Content = FormatStartTime();
             }
 
         }
