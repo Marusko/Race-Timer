@@ -6,6 +6,9 @@ using RR_Timer.UI;
 
 namespace RR_Timer.API
 {
+    /// <summary>
+    /// Handles retrieving data from links
+    /// </summary>
     internal class LinkHandler
     {
         private readonly string _mainLink;
@@ -14,6 +17,12 @@ namespace RR_Timer.API
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private readonly HttpClient _httpClient;
 
+        /// <summary>
+        /// When both links are entered, this constructor will be called and main, list links will be read
+        /// </summary>
+        /// <param name="mainLink">For event name and type</param>
+        /// <param name="listLink">For list of participants that already finished</param>
+        /// <param name="cl"></param>
         public LinkHandler(string mainLink, string listLink, ClockLogic cl)
         {
             _mainLink = mainLink;
@@ -26,7 +35,11 @@ namespace RR_Timer.API
             _timer.Interval = new TimeSpan(0, 0, 15);
             _timer.Start();
         }
-
+        /// <summary>
+        /// When list link is not entered, this constructor will be called and main link will be read
+        /// </summary>
+        /// <param name="mainLink">For event name and type</param>
+        /// <param name="cl">For clock logic object</param>
         public LinkHandler(string mainLink, ClockLogic cl)
         {
             _mainLink = mainLink;
@@ -36,6 +49,9 @@ namespace RR_Timer.API
             ReadMainLink();
         }
 
+        /// <summary>
+        /// Reads main link and sets name and type of event in ClockLogic
+        /// </summary>
         private async void ReadMainLink()
         {
             var response = await _httpClient.GetAsync(_mainLink);
@@ -61,6 +77,9 @@ namespace RR_Timer.API
             }
         }
 
+        /// <summary>
+        /// Reads list link and if one or mor participants finished, it minimizes timer
+        /// </summary>
         private async void ReadListLink()
         {
             if (!_clockLogic.IsTimerMinimized())
@@ -89,6 +108,11 @@ namespace RR_Timer.API
             }
         }
 
+        /// <summary>
+        /// Timer calls this method, which calls ReadListLink()
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RefreshListLink(object? sender, EventArgs e)
         {
             ReadListLink();

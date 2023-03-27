@@ -1,5 +1,8 @@
 ﻿namespace RR_Timer.Data;
 
+/// <summary>
+/// Represents different types of sport, based on index
+/// </summary>
 public enum EventType
 {
     Beh = 0,

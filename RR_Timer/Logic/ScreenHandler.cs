@@ -6,6 +6,9 @@ using RR_Timer.UI;
 
 namespace RR_Timer.Logic
 {
+    /// <summary>
+    /// Handles loading and switching between PC screens
+    /// </summary>
     public class ScreenHandler
     {
         private Screen[] _screens = Screen.AllScreens;
@@ -14,6 +17,10 @@ namespace RR_Timer.Logic
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private readonly MainWindow _mainWindow;
 
+        /// <summary>
+        /// Sets up timer, names
+        /// </summary>
+        /// <param name="mw">Already created MainWindow object</param>
         public ScreenHandler(MainWindow mw)
         {
             _mainWindow = mw;
@@ -24,16 +31,29 @@ namespace RR_Timer.Logic
             SetScreenNames();
         }
 
+        /// <summary>
+        /// Returns screens that are connected to PC
+        /// </summary>
+        /// <returns>Array of screens</returns>
         public Screen[] GetScreens()
         {
             return _screens;
         }
 
+        /// <summary>
+        /// Returns edited names of screens, the screen numbers does not match with Windows numbers
+        /// </summary>
+        /// <returns>Array of screen names</returns>
         public IEnumerable<string> GetScreenNames()
         {
             return _screenNames;
         }
 
+        /// <summary>
+        /// Called by timer, to check if screen got connected or disconnected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ReloadScreens(object? sender, EventArgs e)
         {
             if (_mainWindow.OpenedTimer) return;
@@ -43,6 +63,9 @@ namespace RR_Timer.Logic
             _mainWindow.ShowReloadedScreens(_screenNames);
         }
 
+        /// <summary>
+        /// Setting screen names for displaying
+        /// </summary>
         private void SetScreenNames()
         {
             for (var i = 0; i < _screens.Length; i++)

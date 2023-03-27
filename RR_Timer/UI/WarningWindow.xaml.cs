@@ -11,18 +11,30 @@ namespace RR_Timer.UI
         public const int ListLinkWarning = 1;
         public const int TimeWarning = 2;
 
+        /// <summary>
+        /// When one of the constants is passed this constructor will be called
+        /// </summary>
+        /// <param name="type">Type of message</param>
         public WarningWindow(int type)
         {
             InitializeComponent();
             SetLabel(type);
         }
 
+        /// <summary>
+        /// When message is passed, this constructor will be called
+        /// </summary>
+        /// <param name="message">Message to show as warning</param>
         public WarningWindow(string message)
         {
             InitializeComponent();
             WarningLabel.Content = message;
         }
 
+        /// <summary>
+        /// If constant is passed to constructor, this method sets the message to show
+        /// </summary>
+        /// <param name="type">Type of message</param>
         private void SetLabel(int type)
         {
             WarningLabel.Content = type switch

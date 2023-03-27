@@ -5,6 +5,9 @@ using RR_Timer.UI;
 
 namespace RR_Timer.Logic
 {
+    /// <summary>
+    /// Handles all logic for clocks
+    /// </summary>
     public class ClockLogic
     {
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
@@ -23,6 +26,9 @@ namespace RR_Timer.Logic
             _mainWindow = mw;
         }
 
+        /// <summary>
+        /// Sets the called method for timer, sets the interval and starts the timer
+        /// </summary>
         public void StartTimer()
         {
             _timer.Tick += ClockTick;
@@ -30,10 +36,18 @@ namespace RR_Timer.Logic
             _timer.Start();
         }
 
+        /// <summary>
+        /// Stops the timer
+        /// </summary>
         public void StopTimer()
         {
             _timer.Stop();
         }
+        /// <summary>
+        /// Method called by timer, calls method in windows to update clocks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClockTick(object? sender, EventArgs e)
         {
             if (_clockWindow == null) return;
@@ -47,6 +61,12 @@ namespace RR_Timer.Logic
             }
         }
 
+        /// <summary>
+        /// When opening clock with API links, opens the clock and sets the clock window
+        /// </summary>
+        /// <param name="mainLink">Link for event name and type</param>
+        /// <param name="listLink">Link for finished participants list</param>
+        /// <param name="cw">To update or open clock window with API parameters</param>
         public void SetClockWindow(string mainLink, string listLink, ClockWindow cw)
         {
             if (!string.IsNullOrEmpty(mainLink))
@@ -71,6 +91,10 @@ namespace RR_Timer.Logic
 
             _clockWindow = cw;
         }
+        /// <summary>
+        /// When switching from minimized to fullscreen or backwards
+        /// </summary>
+        /// <param name="cw">To update _clockWindow</param>
         public void SetClockWindow(Window cw)
         {
             _clockWindow = cw;
@@ -78,12 +102,24 @@ namespace RR_Timer.Logic
             if (EventType != null)
                 SetLabels(EventName, EventType);
         }
+        /// <summary>
+        /// When opening clock with manually set name and type, sets the labels
+        /// </summary>
+        /// <param name="cw">To open or update clock window</param>
+        /// <param name="name">Name of the event</param>
+        /// <param name="type">Type of event</param>
         public void SetClockWindow(Window cw, string name, string type)
         {
             _clockWindow = cw;
             SetLabels(name, type);
         }
 
+        /// <summary>
+        /// If current time is less than start time show big clock, else show big timer and small clock under
+        /// in fullscreen clock
+        /// </summary>
+        /// <param name="timer">Timer label from fullscreen clock</param>
+        /// <param name="clock">Clock label from fullscreen clock</param>
         public void ShowClockOrTimer(ref System.Windows.Controls.Label timer, ref System.Windows.Controls.Label clock)
         {
             if (DateTime.Now.Subtract(StartTime).TotalSeconds < 0)
@@ -97,6 +133,10 @@ namespace RR_Timer.Logic
                 timer.Content = FormatStartTime();
             }
         }
+        /// <summary>
+        /// If current time is less than start time show clock, else show timer in minimized clock
+        /// </summary>
+        /// <param name="timer">Timer label from minimized clock</param>
         public void ShowMiniClockOrTimer(ref System.Windows.Controls.Label timer)
         {
             if (DateTime.Now.Subtract(StartTime).TotalSeconds < 0)
@@ -110,6 +150,11 @@ namespace RR_Timer.Logic
             }
         }
 
+        /// <summary>
+        /// Check what window is opening and sets the labels, and updates the properties
+        /// </summary>
+        /// <param name="name">Name of the event</param>
+        /// <param name="type">Type of event</param>
         public void SetLabels(string name, string type)
         {
             EventName = name;
@@ -126,6 +171,10 @@ namespace RR_Timer.Logic
             }
         }
 
+        /// <summary>
+        /// Converts string to DateTime, when something goes wrong, show warning window and sets time to 00:00
+        /// </summary>
+        /// <param name="s">Time in string format</param>
         public void StringToDateTime(string s)
         {
             var split = s.Split(':');
@@ -160,6 +209,10 @@ namespace RR_Timer.Logic
             }
         }
 
+        /// <summary>
+        /// Formats clock time to 00:00:00
+        /// </summary>
+        /// <returns>Formatted time to show as clock</returns>
         private string FormatTime()
         {
             _clockDateTime = DateTime.Now;
@@ -172,6 +225,10 @@ namespace RR_Timer.Logic
             }
             return clockString;
         }
+        /// <summary>
+        /// Formats timer time to 00:00:00
+        /// </summary>
+        /// <returns>Formatted time to show as timer</returns>
         private string FormatStartTime()
         {
             var clock = _clockDateTime.Subtract(StartTime).ToString();
@@ -180,6 +237,9 @@ namespace RR_Timer.Logic
             return timerClock;
         }
 
+        /// <summary>
+        /// Calls minimize method from main widow
+        /// </summary>
         public void AutoMinimizeTimer()
         {
             _mainWindow.MinimizeTimer();
