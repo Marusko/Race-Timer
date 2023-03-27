@@ -11,6 +11,8 @@ namespace RR_Timer.Logic
 {
     public class ClockLogic
     {
+        private System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
+
         private DateTime ClockDateTime;
         private DateTime NowDateTime = DateTime.Now;
         public DateTime StartTime { get; set; }
@@ -25,6 +27,29 @@ namespace RR_Timer.Logic
         public ClockLogic(MainWindow mw)
         {
             mainWindow = mw;
+        }
+
+        public void StartTimer()
+        {
+            Timer.Tick += ClockTick;
+            Timer.Interval = new TimeSpan(0, 0, 1);
+            Timer.Start();
+        }
+
+        public void StopTimer()
+        {
+            Timer.Stop();
+        }
+        private void ClockTick(object sender, EventArgs e)
+        {
+            if (clockWindow.GetType() == typeof(ClockWindow))
+            {
+                ((ClockWindow)clockWindow).OnTimerClick();
+            }
+            else if (clockWindow.GetType() == typeof(MiniClockWindow))
+            {
+                ((MiniClockWindow)clockWindow).OnTimerClick();
+            }
         }
 
         public void SetClockWindow(string APILink, string listLink, ClockWindow cw)

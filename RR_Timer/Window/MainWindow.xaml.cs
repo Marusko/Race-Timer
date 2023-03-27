@@ -58,6 +58,7 @@ namespace RR_Timer
                 _clockWindow.Show();
                 OpenedTimer = true;
                 MinimizedTimer = false;
+                _clockLogic.StartTimer();
             }
         }
 
@@ -70,6 +71,7 @@ namespace RR_Timer
                 _clockWindow.Show();
                 OpenedTimer = true;
                 MinimizedTimer = false;
+                _clockLogic.StartTimer();
             }
         }
 
@@ -114,6 +116,7 @@ namespace RR_Timer
                 _clockWindow.Close();
                 OpenedTimer = false;
                 MinimizedTimer = false;
+                _clockLogic.StopTimer();
             }
         }
         private void OnCloseCloseTimerWindow(object sender, EventArgs e)
@@ -123,6 +126,7 @@ namespace RR_Timer
                 _clockWindow.Close();
                 OpenedTimer = false;
                 MinimizedTimer = false;
+                _clockLogic.StopTimer();
             }
         }
 

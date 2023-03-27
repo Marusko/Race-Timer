@@ -21,8 +21,6 @@ namespace RR_Timer
     /// </summary>
     public partial class MiniClockWindow : Window
     {
-        private System.Windows.Threading.DispatcherTimer Timer = new System.Windows.Threading.DispatcherTimer();
-
         private ClockLogic clockLogic;
         private ScreenHandler screenHandler;
 
@@ -33,10 +31,6 @@ namespace RR_Timer
             screenHandler = sh;
 
             Loaded += WindowLoaded;
-
-            Timer.Tick += ClockTick;
-            Timer.Interval = new TimeSpan(0, 0, 1);
-            Timer.Start();
         }
 
         public void SetEventName(string name)
@@ -44,10 +38,9 @@ namespace RR_Timer
             EventNameMini.Content = name;
         }
 
-        private void ClockTick(object sender, EventArgs e)
+        public void OnTimerClick()
         {
             clockLogic.ShowMiniClockOrTimer(ref TimerMini);
-            //TimerMini.Content = clockLogic.FormatStartTime();
         }
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
