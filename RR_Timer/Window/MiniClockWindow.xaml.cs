@@ -46,7 +46,8 @@ namespace RR_Timer
 
         private void ClockTick(object sender, EventArgs e)
         {
-            TimerMini.Content = clockLogic.FormatStartTime();
+            clockLogic.ShowMiniClockOrTimer(ref TimerMini);
+            //TimerMini.Content = clockLogic.FormatStartTime();
         }
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {

@@ -77,6 +77,19 @@ namespace RR_Timer.Logic
 
         }
 
+        public void ShowMiniClockOrTimer(ref System.Windows.Controls.Label timer)
+        {
+            if (DateTime.Now.Subtract(StartTime).TotalSeconds < 0)
+            {
+                timer.Content = FormatTime();
+            }
+            else
+            {
+                ClockDateTime = DateTime.Now;
+                timer.Content = FormatStartTime();
+            }
+        }
+
         public void SetLabels(string name, string type)
         {
             EventName = name;
