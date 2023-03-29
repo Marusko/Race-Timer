@@ -19,6 +19,7 @@ namespace RR_Timer.UI
         private Window? _clockWindow;
         public bool OpenedTimer { get; private set; }
         public bool MinimizedTimer { get; private set; }
+        public bool CanOpenTimer { get; set; }
 
         /// <summary>
         /// Initializes and shows the main window, creates new ScreenHandler and ClockLogic,
@@ -36,6 +37,7 @@ namespace RR_Timer.UI
             _screenHandler.SelectedScreen = _screenHandler.GetScreens()[ScreenComboBox.SelectedIndex];
             ScreenComboBox.SelectionChanged += SelectScreen;
             MinimizedTimer = false;
+            CanOpenTimer = true;
             Closing += OnCloseCloseTimerWindow;
             SetInfoLabel();
         }
@@ -49,11 +51,17 @@ namespace RR_Timer.UI
         private void OpenTimer(object sender, RoutedEventArgs e)
         {
             if (OpenedTimer) return;
-            _clockWindow = new ClockWindow(EventNameText.Text, EventTypeComboBox.Text, StartTime.Text, _clockLogic, _screenHandler);
-            _clockLogic.SetClockWindow((ClockWindow)_clockWindow, EventNameText.Text, EventTypeComboBox.Text);
-            _clockWindow.Show();
             OpenedTimer = true;
             MinimizedTimer = false;
+            _clockWindow = new ClockWindow(EventNameText.Text, EventTypeComboBox.Text, StartTime.Text, _clockLogic, _screenHandler);
+            _clockLogic.SetClockWindow((ClockWindow)_clockWindow, EventNameText.Text, EventTypeComboBox.Text);
+            if (!CanOpenTimer)
+            {
+                OpenedTimer = false;
+                CanOpenTimer = true;
+                return;
+            }
+            _clockWindow.Show();
             _clockLogic.StartTimer();
         }
 
@@ -66,11 +74,17 @@ namespace RR_Timer.UI
         private void OpenLinkTimer(object sender, RoutedEventArgs e)
         {
             if (OpenedTimer) return;
-            _clockWindow = new ClockWindow(LinkTimerStartTimeText.Text, _clockLogic, _screenHandler);
-            _clockLogic.SetClockWindow(EventLinkText.Text, ListLinkText.Text, (ClockWindow)_clockWindow);
-            _clockWindow.Show();
             OpenedTimer = true;
             MinimizedTimer = false;
+            _clockWindow = new ClockWindow(LinkTimerStartTimeText.Text, _clockLogic, _screenHandler);
+            _clockLogic.SetClockWindow(EventLinkText.Text, ListLinkText.Text, (ClockWindow)_clockWindow);
+            if (!CanOpenTimer)
+            {
+                OpenedTimer = false;
+                CanOpenTimer = true;
+                return;
+            }
+            _clockWindow.Show();
             _clockLogic.StartTimer();
         }
 
@@ -142,13 +156,14 @@ namespace RR_Timer.UI
         private void OnCloseCloseTimerWindow(object? sender, EventArgs e)
         {
             OnClose();
+            _screenHandler.StopTimer();
         }
 
         /// <summary>
         /// Only if clock window is opened closes the clock window,
         /// sets both properties to false and stops the timer
         /// </summary>
-        private void OnClose()
+        public void OnClose()
         {
             if (!OpenedTimer) return;
             if (_clockWindow == null) return;

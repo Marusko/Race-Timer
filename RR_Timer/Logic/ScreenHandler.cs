@@ -73,5 +73,13 @@ namespace RR_Timer.Logic
                 _screenNames[i] = "Display " + Regex.Match(_screens[i].DeviceName, @"\d+").Value;
             }
         }
+
+        /// <summary>
+        /// Stops the timer
+        /// </summary>
+        public void StopTimer()
+        {
+            _timer.Stop();
+        }
     }
 }

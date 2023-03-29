@@ -39,9 +39,9 @@ namespace RR_Timer.UI
         {
             WarningLabel.Content = type switch
             {
-                0 => "API link was not entered or incorrect!\nEvent name and type are not set",
+                0 => "API link was not entered or incorrect!\nClosing the timer window!",
                 1 => "List link was not entered or incorrect!\nMaking the timer smaller is now manual",
-                2 => "Time was not entered or incorrect!\nTime has been set to 00:00",
+                2 => "Time was not entered or incorrect!\nClosing the timer window!",
                 _ => WarningLabel.Content
             };
         }

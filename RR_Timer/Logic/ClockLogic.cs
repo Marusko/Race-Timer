@@ -19,11 +19,12 @@ namespace RR_Timer.Logic
         private string? EventType { get; set; }
 
         private Window? _clockWindow;
-        private readonly MainWindow _mainWindow;
+        public MainWindow MainWindow { get; }
+        private LinkHandler _linkHandler;
 
         public ClockLogic(MainWindow mw)
         {
-            _mainWindow = mw;
+            MainWindow = mw;
         }
 
         /// <summary>
@@ -42,6 +43,7 @@ namespace RR_Timer.Logic
         public void StopTimer()
         {
             _timer.Stop();
+            _linkHandler.StopTimer();
         }
         /// <summary>
         /// Method called by timer, calls method in windows to update clocks
@@ -75,18 +77,19 @@ namespace RR_Timer.Logic
                 {
                     var warning = new WarningWindow(WarningWindow.ListLinkWarning);
                     warning.ShowDialog();
-                    var unusedLinkHandler = new LinkHandler(mainLink, this);
+                    _linkHandler = new LinkHandler(mainLink, this);
                 }
                 else
                 {
-                    var unusedLinkHandler = new LinkHandler(mainLink, listLink, this);
+                    _linkHandler = new LinkHandler(mainLink, listLink, this);
                 }
             }
             else
             {
                 var warning = new WarningWindow(WarningWindow.ApiLinkWarning);
                 warning.ShowDialog();
-                SetClockWindow(cw, "", "");
+                MainWindow.CanOpenTimer = false;
+                MainWindow.OnClose();
             }
 
             _clockWindow = cw;
@@ -172,7 +175,7 @@ namespace RR_Timer.Logic
         }
 
         /// <summary>
-        /// Converts string to DateTime, when something goes wrong, show warning window and sets time to 00:00
+        /// Converts string to DateTime, when something goes wrong, show warning window and closes the clock window
         /// </summary>
         /// <param name="s">Time in string format</param>
         public void StringToDateTime(string s)
@@ -182,7 +185,7 @@ namespace RR_Timer.Logic
             {
                 var warning = new WarningWindow(WarningWindow.TimeWarning);
                 warning.ShowDialog();
-                StartTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, 0, 0, 0);
+                MainWindow.CanOpenTimer = false;
                 return;
             }
 
@@ -198,14 +201,14 @@ namespace RR_Timer.Logic
                 {
                     var warning = new WarningWindow(WarningWindow.TimeWarning);
                     warning.ShowDialog();
-                    StartTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, 0, 0, 0);
+                    MainWindow.CanOpenTimer = false;
                 }
             }
             else
             {
                 var warning = new WarningWindow(WarningWindow.TimeWarning);
                 warning.ShowDialog();
-                StartTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, 0, 0, 0);
+                MainWindow.CanOpenTimer = false;
             }
         }
 
@@ -242,11 +245,11 @@ namespace RR_Timer.Logic
         /// </summary>
         public void AutoMinimizeTimer()
         {
-            _mainWindow.MinimizeTimer();
+            MainWindow.MinimizeTimer();
         }
         public bool IsTimerMinimized()
         {
-            return _mainWindow.MinimizedTimer;
+            return MainWindow.MinimizedTimer;
         }
     }
 }

@@ -50,11 +50,23 @@ namespace RR_Timer.API
         }
 
         /// <summary>
-        /// Reads main link and sets name and type of event in ClockLogic
+        /// Reads main link and sets name and type of event in ClockLogic, if something went wrong shows error
+        /// and closes clock window
         /// </summary>
         private async void ReadMainLink()
         {
-            var response = await _httpClient.GetAsync(_mainLink);
+            HttpResponseMessage response;
+            try
+            {
+                response = await _httpClient.GetAsync(_mainLink);
+            }
+            catch (Exception e)
+            {
+                var warning = new WarningWindow("Oops, something went wrong with main API!\nError code: \n[" + e.Message + "]");
+                warning.ShowDialog();
+                _clockLogic.MainWindow.CanOpenTimer = false;
+                return;
+            }
 
             if (response.IsSuccessStatusCode)
             {
@@ -73,18 +85,30 @@ namespace RR_Timer.API
             {
                 var warning = new WarningWindow("Oops, something went wrong with main API!\nError code: [" + response.StatusCode + "]");
                 warning.ShowDialog();
-                _clockLogic.SetLabels("", "");
+                _clockLogic.MainWindow.OnClose();
             }
         }
 
         /// <summary>
-        /// Reads list link and if one or mor participants finished, it minimizes timer
+        /// Reads list link and if one or mor participants finished, it minimizes timer, if something went wrong shows error
+        /// and stops the timer for refreshing list link
         /// </summary>
         private async void ReadListLink()
         {
             if (!_clockLogic.IsTimerMinimized())
             {
-                var response = await _httpClient.GetAsync(_listLink);
+                HttpResponseMessage response;
+                try
+                {
+                    response = await _httpClient.GetAsync(_listLink);
+                }
+                catch (Exception e)
+                {
+                    _timer.Stop();
+                    var warning = new WarningWindow("Oops, something went wrong with list API!\nError code: \n[" + e.Message + "]");
+                    warning.ShowDialog();
+                    return;
+                }
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -98,6 +122,7 @@ namespace RR_Timer.API
                 }
                 else
                 {
+                    _timer.Stop();
                     var warning = new WarningWindow("Oops, something went wrong with list API!\nError code: [" + response.StatusCode + "]");
                     warning.ShowDialog();
                 }
@@ -116,6 +141,14 @@ namespace RR_Timer.API
         private void RefreshListLink(object? sender, EventArgs e)
         {
             ReadListLink();
+        }
+
+        /// <summary>
+        /// Stops the timer
+        /// </summary>
+        public void StopTimer()
+        {
+            _timer.Stop();
         }
     }
 }
