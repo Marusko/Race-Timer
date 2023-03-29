@@ -32,7 +32,7 @@ namespace RR_Timer.Logic
         public void StartTimer()
         {
             _timer.Tick += ClockTick;
-            _timer.Interval = new TimeSpan(0, 0, 1);
+            _timer.Interval = TimeSpan.FromMilliseconds(950);
             _timer.Start();
         }
 

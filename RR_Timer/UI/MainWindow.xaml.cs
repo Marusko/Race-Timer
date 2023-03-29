@@ -125,28 +125,30 @@ namespace RR_Timer.UI
         }
 
         /// <summary>
-        /// Method called by Close timer button, only if clock window is opened closes the clock window,
-        /// sets both properties to false and stops the timer
+        /// Method called by Close timer button, calls OnCLose()
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CloseTimer(object sender, RoutedEventArgs e)
         {
-            if (!OpenedTimer) return;
-            if (_clockWindow == null) return;
-            _clockWindow.Close();
-            OpenedTimer = false;
-            MinimizedTimer = false;
-            _clockLogic.StopTimer();
+            OnClose();
         }
 
         ///<summary>
-        /// Method called when main window is closed, only if clock window is opened closes the clock window,
-        /// sets both properties to false and stops the timer
+        /// Method called when main window is closed, calls OnCLose()
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnCloseCloseTimerWindow(object? sender, EventArgs e)
+        {
+            OnClose();
+        }
+
+        /// <summary>
+        /// Only if clock window is opened closes the clock window,
+        /// sets both properties to false and stops the timer
+        /// </summary>
+        private void OnClose()
         {
             if (!OpenedTimer) return;
             if (_clockWindow == null) return;
