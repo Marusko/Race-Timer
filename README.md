@@ -5,7 +5,7 @@ Application to show elapsed time from entered start time, with clock, on user-se
 ### Fullscreen timer after the start
 ![image](https://user-images.githubusercontent.com/93376571/228545556-b42deb23-0bb5-4f5d-a0bc-56c5bbab02f0.png)
 
-
+---
 # Features
 * Show big timer with even name on result presenting screens when no one has finished
 * Show smalll timer when someone has finished
@@ -16,18 +16,24 @@ Application to show elapsed time from entered start time, with clock, on user-se
 ## Automatic switching
   When someone finishes the race, custom output in RR is updated, cashed on second API link. App checks this second link every 15 seconds. When clock switches to small clock, app stops checking the second link. Required custom output list in RR and second API link.
 ## Choosing screen
-  User can choose on which screen will the timer be shown, list of screens is refreshed every 20 seconds. If timer is open, refreshing list of screens is paused.
+  You can choose on which screen will the timer be shown, list of screens is refreshed every 20 seconds. If timer is open, refreshing list of screens is paused.
+  
+---  
+# Dependencies
+App requires .NET7 to be installed. Most probably you already have it. You can install it when installing the RR_Timer
   
 # Installation
   1. Download zip file and extract
   2. Double click on `setup.exe`
   3. You will get `Unknown publisher` warning, press install[^1]
   4. That's it!
-
+  
+---
 # Preparation
 ## Using the Timer
 If you don't time the race with RaceResult, or don't want to create links simply use the `Timer` tab to setup the timer. Automatic switching of timer windows is disabled. You can still manually switch the windows.
 ## Using the API Timer
+> Only works with RaceResult Simple API
 ### Main API link
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
  2. Select settings from the left dropdown menu, in the details write `EventName,EventType`(see the picture)
@@ -44,8 +50,8 @@ If you don't time the race with RaceResult, or don't want to create links simply
  6. Create another API **Type**>`List`, **Details**>`APIlist`(the list we created before), click on `TEXT` and select `JSON`
 ![Both API links created](https://user-images.githubusercontent.com/93376571/228541684-c9a911d9-743f-4c72-ab33-cae9c19d63ab.png)
   7. Click the blue icon on this API under the `Link` column on the left, then copy the link and paste it in `API Timer` tab in the `List link` text box
-
-
+  
+---
 # Using the app
 ## Left side menu
 ![Left side menu](https://user-images.githubusercontent.com/93376571/228530691-c5b4fb90-9af8-4f51-9b6f-24476a0c22fe.png)
@@ -79,5 +85,9 @@ If you don't time the race with RaceResult, or don't want to create links simply
 ![image](https://user-images.githubusercontent.com/93376571/228534331-986c8708-b147-4177-9cdc-33a0cc21fdd1.png)
   * **Display** - List of connected displays to choose on which the timer window will be opened. Display names here **AREN'T** the same as in Windows settings
 
+---
+**Disclaimers** "RR" and "RaceResult" are trademarked by and belong to race result AG I make no claims to these or any assets belonging to race result AG and use them purely for informational purposes only.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
 [^1]: This app does't collect anything from PC or RR. I don't have signning certificate
