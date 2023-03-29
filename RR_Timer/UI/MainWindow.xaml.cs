@@ -38,7 +38,7 @@ namespace RR_Timer.UI
             ScreenComboBox.SelectionChanged += SelectScreen;
             MinimizedTimer = false;
             CanOpenTimer = true;
-            Closing += OnCloseCloseTimerWindow;
+            Closed += ShutDownApp;
             SetInfoLabel();
         }
 
@@ -148,17 +148,6 @@ namespace RR_Timer.UI
             OnClose();
         }
 
-        ///<summary>
-        /// Method called when main window is closed, calls OnCLose()
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnCloseCloseTimerWindow(object? sender, EventArgs e)
-        {
-            OnClose();
-            _screenHandler.StopTimer();
-        }
-
         /// <summary>
         /// Only if clock window is opened closes the clock window,
         /// sets both properties to false and stops the timer
@@ -171,6 +160,19 @@ namespace RR_Timer.UI
             OpenedTimer = false;
             MinimizedTimer = false;
             _clockLogic.StopTimer();
+        }
+
+        /// <summary>
+        /// Called when main window is closed, shuts down the application, closes clock window calls OnCLose(),
+        /// stops the screen handler timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ShutDownApp(object? sender, EventArgs e)
+        {
+            OnClose();
+            _screenHandler.StopTimer();
+            Application.Current.Shutdown();
         }
 
         /// <summary>
