@@ -24,7 +24,7 @@ namespace RR_Timer.UI
         {
             InitializeComponent();
             
-            EventNameLabel.Content = name;
+            EventNameLabel.Text = name;
             EventTypeLabel.Content = type;
             _clockLogic = cl;
             _screenHandler = sh;
@@ -85,7 +85,7 @@ namespace RR_Timer.UI
         /// <param name="name">Event name to show</param>
         public void SetEventName(string name)
         {
-            EventNameLabel.Content = name;
+            EventNameLabel.Text = name;
         }
 
         /// <summary>
