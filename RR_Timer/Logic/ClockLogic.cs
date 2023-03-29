@@ -43,7 +43,10 @@ namespace RR_Timer.Logic
         public void StopTimer()
         {
             _timer.Stop();
-            _linkHandler.StopTimer();
+            if (_linkHandler != null)
+            {
+                _linkHandler.StopTimer();
+            }
         }
         /// <summary>
         /// Method called by timer, calls method in windows to update clocks
