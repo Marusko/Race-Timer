@@ -20,7 +20,7 @@ namespace RR_Timer.Logic
 
         private Window? _clockWindow;
         public MainWindow MainWindow { get; }
-        private LinkHandler _linkHandler;
+        private LinkHandler? _linkHandler;
 
         public ClockLogic(MainWindow mw)
         {
@@ -43,10 +43,7 @@ namespace RR_Timer.Logic
         public void StopTimer()
         {
             _timer.Stop();
-            if (_linkHandler != null)
-            {
-                _linkHandler.StopTimer();
-            }
+            _linkHandler?.StopTimer();
         }
         /// <summary>
         /// Method called by timer, calls method in windows to update clocks
