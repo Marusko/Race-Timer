@@ -23,7 +23,7 @@ Application to show elapsed time from entered start time, with clock, on user-se
 App requires .NET7 to be installed. Most probably you already have it. You can install it when installing the RR_Timer
   
 # Installation
-  1. Download zip file and extract
+  1. Download [zip file](https://github.com/Marusko/RaceResult_UI_Timer/releases) and extract
   2. Double click on `setup.exe`
   3. You will get `Unknown publisher` warning, press install[^1]
   4. That's it!
