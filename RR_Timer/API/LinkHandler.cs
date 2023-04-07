@@ -74,12 +74,22 @@ namespace RR_Timer.API
                 responseString = responseString.Replace("{", "").Replace("}", "").Replace("\"", "");
                 var split = responseString.Split(',');
                 var doubleSplit = new string[split.Length, 2];
+                var name = 0;
+                var type = 0;
                 for (var i = 0; i < split.Length; i++)
                 {
                     doubleSplit[i, 0] = split[i].Split(':')[0];
                     doubleSplit[i, 1] = split[i].Split(':')[1];
+                    if (doubleSplit[i, 0] == "EventName")
+                    {
+                        name = i;
+                    }
+                    else if (doubleSplit[i, 0] == "EventType")
+                    {
+                        type = i;
+                    }
                 }
-                _clockLogic.SetLabels(doubleSplit[(int)MainLinkItemIndex.EventName, 1], ((EventType)int.Parse(doubleSplit[(int)MainLinkItemIndex.EventType, 1])).ToString());
+                _clockLogic.SetLabels(doubleSplit[name, 1], ((EventType)int.Parse(doubleSplit[type, 1])).ToString());
             }
             else
             {
