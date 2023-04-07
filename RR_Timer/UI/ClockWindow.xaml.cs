@@ -134,7 +134,7 @@ namespace RR_Timer.UI
             }
         }
 
-        public void SetCodeImage(BitmapImage image)
+        public void SetCodeImage(BitmapSource image)
         {
             if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
             {

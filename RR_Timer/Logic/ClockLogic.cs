@@ -22,7 +22,7 @@ namespace RR_Timer.Logic
         private string? EventName { get; set; }
         private string? EventType { get; set; }
         public BitmapImage? LogoImage { get; set; }
-        public BitmapImage? CodeImage { get; set; }
+        public BitmapSource? CodeImage { get; set; }
 
         private Window? _clockWindow;
         public MainWindow MainWindow { get; }

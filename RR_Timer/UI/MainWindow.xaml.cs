@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using RR_Timer.API;
 using RR_Timer.ClockUserControl;
 using RR_Timer.Data;
 using RR_Timer.Logic;
@@ -311,6 +312,8 @@ namespace RR_Timer.UI
         private void GenerateCode(object sender, RoutedEventArgs e)
         {
             DeleteCodeButton.IsEnabled = true;
+            _clockLogic.CodeImage = CodeGenerator.GenerateCode(CodeLinkText.Text);
+            CodeName.Content = "QR code generated!";
         }
 
         /// <summary>
@@ -371,6 +374,12 @@ namespace RR_Timer.UI
         private void OpenIconPage(object sender, RoutedEventArgs e)
         {
             const string url = "https://www.flaticon.com/free-icon/hourglass_9182366";
+            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+        }
+
+        private void OpenQRPage(object sender, RoutedEventArgs e)
+        {
+            const string url = "https://github.com/codebude/QRCoder";
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
         }
     }

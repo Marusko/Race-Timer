@@ -48,8 +48,8 @@
                     <Label Content="Generate QR code" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <TextBox x:Name="CodeLinkText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" HorizontalContentAlignment="Center" InputScope="Url" FontSize="14" ToolTip="Link for event API"/>
                     <Button Content="Generate QR" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Top" Click="GenerateCode"/>
-                    <Label Content="Select QR code" HorizontalAlignment="Center" Margin="0,170,0,0" VerticalAlignment="Top" FontSize="16"/>
-                    <Label x:Name="CodeName" Content="" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label Content="Select QR code" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" FontSize="16"/>
+                    <Label x:Name="CodeName" Content="" HorizontalAlignment="Center" Margin="0,170,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <Button Content="Select QR" HorizontalAlignment="Center" Margin="0,230,100,0" VerticalAlignment="Top" Click="OpenCode"/>
                     <Button x:Name="DeleteCodeButton" Content="Delete QR" HorizontalAlignment="Center" Margin="100,230,0,0" VerticalAlignment="Top" Click="DeleteCode" IsEnabled="False"/>
                 </Grid>
@@ -82,6 +82,9 @@
                         <Hyperlink Click="OpenMaterialDesignPage" Foreground="#FF30E433">Material design themes</Hyperlink>
                     </Label>
                     <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,140,0,0">
+                        <Hyperlink Click="OpenQRPage" Foreground="#FF30E433">QR code generator</Hyperlink>
+                    </Label>
+                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,170,0,0">
                         <Hyperlink Click="OpenIconPage" Foreground="#FF30E433">App Icon</Hyperlink>
                     </Label>
                     <Label Content="Used external content:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"/>
