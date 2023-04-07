@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using RR_Timer.API;
+using RR_Timer.ClockUserControl;
 using RR_Timer.UI;
 
 namespace RR_Timer.Logic
@@ -23,10 +26,21 @@ namespace RR_Timer.Logic
         private Window? _clockWindow;
         public MainWindow MainWindow { get; }
         private LinkHandler? _linkHandler;
+        private readonly ObservableCollection<string> _timerAlignmentNames = new();
+        public UserControl? SelectedAlignment { get; set; }
 
         public ClockLogic(MainWindow mw)
         {
             MainWindow = mw;
+            SetAlignmentList();
+            SelectedAlignment = new TimerTop();
+        }
+
+        private void SetAlignmentList()
+        {
+            _timerAlignmentNames.Add("Timer on top");
+            _timerAlignmentNames.Add("Timer on left");
+            _timerAlignmentNames.Add("Timer on right");
         }
 
         /// <summary>
@@ -99,6 +113,11 @@ namespace RR_Timer.Logic
             {
                 if (_clockWindow.GetType() == typeof(ClockWindow))
                 {
+                    if (SelectedAlignment != null)
+                    {
+                        ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
+                        ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
+                    }
                     ((ClockWindow)_clockWindow).SetImage(LogoImage);
                 }
                 else if (_clockWindow.GetType() == typeof(MiniClockWindow))
@@ -119,6 +138,11 @@ namespace RR_Timer.Logic
             {
                 if (_clockWindow.GetType() == typeof(ClockWindow))
                 {
+                    if (SelectedAlignment != null)
+                    {
+                        ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
+                        ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
+                    }
                     ((ClockWindow)_clockWindow).SetImage(LogoImage);
                 }
                 else if (_clockWindow.GetType() == typeof(MiniClockWindow))
@@ -143,6 +167,11 @@ namespace RR_Timer.Logic
             {
                 if (_clockWindow.GetType() == typeof(ClockWindow))
                 {
+                    if (SelectedAlignment != null)
+                    {
+                        ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
+                        ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
+                    }
                     ((ClockWindow)_clockWindow).SetImage(LogoImage);
                 }
                 else if (_clockWindow.GetType() == typeof(MiniClockWindow))
@@ -286,6 +315,11 @@ namespace RR_Timer.Logic
         public bool IsTimerMinimized()
         {
             return MainWindow.MinimizedTimer;
+        }
+
+        public ObservableCollection<string> GetAlignments()
+        {
+            return _timerAlignmentNames;
         }
     }
 }

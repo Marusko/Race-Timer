@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        xmlns:UC="clr-namespace:RR_Timer.ClockUserControl"
         Title="Clock" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" ShowInTaskbar="False"
 
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -18,13 +19,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Label x:Name="MainClockLabel" Content="00:00:00" HorizontalAlignment="Center" FontSize="70" VerticalAlignment="Top" Grid.Row="3"/>
-        <Label x:Name="TimerClockLabel" Content="00:00:00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="150" Grid.Row="2" Margin="0,50,0,0"/>
-        <Label x:Name="EventTypeLabel" Content="EventTypeLabel" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="50" Grid.Row="1"/>
         <TextBlock x:Name="EventNameLabel" Text="EventNameLabel" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="150" Margin="0,100,0,0" TextAlignment="Center" TextWrapping="Wrap" Grid.Row="0"/>
-        <Image x:Name="TimerImage" Grid.Row="4" MaxHeight="150" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"></Image>
+        <Label x:Name="EventTypeLabel" Content="EventTypeLabel" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="50" Grid.Row="1"/>
+        <StackPanel x:Name="TimerPanel"  Grid.Row="2" HorizontalAlignment="Center">
+        </StackPanel>
     </Grid>
 </Window>

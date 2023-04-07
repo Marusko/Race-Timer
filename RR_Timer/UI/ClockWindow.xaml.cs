@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media.Imaging;
 using RR_Timer.Logic;
+using RR_Timer.ClockUserControl;
 
 namespace RR_Timer.UI
 {
@@ -103,12 +104,34 @@ namespace RR_Timer.UI
         /// </summary>
         public void OnTimerClick()
         {
-            _clockLogic.ShowClockOrTimer(ref TimerClockLabel, ref MainClockLabel);
+            if (TimerPanel.Children[0].GetType() == typeof(TimerTop))
+            {
+                _clockLogic.ShowClockOrTimer(ref ((TimerTop)TimerPanel.Children[0]).TimerClockLabel, ref ((TimerTop)TimerPanel.Children[0]).MainClockLabel);
+            }
+            else if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
+            {
+                _clockLogic.ShowClockOrTimer(ref ((TimerLeft)TimerPanel.Children[0]).TimerClockLabel, ref ((TimerLeft)TimerPanel.Children[0]).MainClockLabel);
+            }
+            else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
+            {
+                _clockLogic.ShowClockOrTimer(ref ((TimerRight)TimerPanel.Children[0]).TimerClockLabel, ref ((TimerRight)TimerPanel.Children[0]).MainClockLabel);
+            }
         }
 
         public void SetImage(BitmapImage image)
         {
-            TimerImage.Source = image;
+            if (TimerPanel.Children[0].GetType() == typeof(TimerTop))
+            {
+                ((TimerTop)TimerPanel.Children[0]).TimerImage.Source = image;
+            }
+            else if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
+            {
+                ((TimerLeft)TimerPanel.Children[0]).TimerImage.Source = image;
+            }
+            else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
+            {
+                ((TimerRight)TimerPanel.Children[0]).TimerImage.Source = image;
+            }
         }
     }
     

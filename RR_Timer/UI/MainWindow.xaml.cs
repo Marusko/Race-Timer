@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using RR_Timer.ClockUserControl;
 using RR_Timer.Data;
 using RR_Timer.Logic;
 using Application = System.Windows.Application;
@@ -35,11 +36,15 @@ namespace RR_Timer.UI
             InitializeComponent();
             _screenHandler = new ScreenHandler(this);
             _clockLogic = new ClockLogic(this);
+
             EventTypeComboBox.ItemsSource = Enum.GetValues(typeof(EventType));
             ScreenComboBox.ItemsSource = _screenHandler.GetScreenNames();
             ScreenComboBox.SelectedIndex = 0;
             _screenHandler.SelectedScreen = _screenHandler.GetScreens()[ScreenComboBox.SelectedIndex];
             ScreenComboBox.SelectionChanged += SelectScreen;
+            AlignmentComboBox.ItemsSource = _clockLogic.GetAlignments();
+            AlignmentComboBox.SelectedIndex = 0;
+            AlignmentComboBox.SelectionChanged += SelectAlignment;
             MinimizedTimer = false;
             CanOpenTimer = true;
             Closed += ShutDownApp;
@@ -189,6 +194,20 @@ namespace RR_Timer.UI
         private void SelectScreen(object sender, RoutedEventArgs e)
         {
             _screenHandler.SelectedScreen = _screenHandler.GetScreens()[ScreenComboBox.SelectedIndex];
+        }
+
+        private void SelectAlignment(object sender, RoutedEventArgs e)
+        {
+            switch (AlignmentComboBox.SelectedIndex)
+            {
+                case 0: _clockLogic.SelectedAlignment = new TimerTop();
+                    break;
+                case 1: _clockLogic.SelectedAlignment = new TimerLeft();
+                    break;
+                case 2: _clockLogic.SelectedAlignment = new TimerRight();
+                    break;
+            }
+            
         }
 
         private void OpenImage(object sender, RoutedEventArgs e)

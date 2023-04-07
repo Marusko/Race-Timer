@@ -12,7 +12,7 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" Icon="/UI/hourglass.png">
+        FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" Icon="/UI/hourglass.png" ResizeMode="CanMinimize">
     <DockPanel>
         <TabControl TabStripPlacement="Left">
             <TabItem Header="Timer" ToolTip="Timer setup">
@@ -54,6 +54,8 @@
                 <Grid>
                     <Label Content="Display" HorizontalAlignment="Center" Margin="0,53,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" Width="260" FontSize="14" ToolTip="Choose on which screen the timer will be displayed"/>
+                    <Label Content="Timer and image alignment" HorizontalAlignment="Center" Margin="0, 200, 0, 0" FontSize="16" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="AlignmentComboBox" HorizontalAlignment="Center" Margin="0, 240, 0, 0" VerticalAlignment="Top" Width="200" FontSize="14"></ComboBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Information" ToolTip="Information about app">
