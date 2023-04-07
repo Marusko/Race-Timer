@@ -95,14 +95,19 @@ namespace RR_Timer.Logic
             }
 
             _clockWindow = cw;
-            if (_clockWindow.GetType() == typeof(ClockWindow))
+            if (LogoImage != null)
             {
-                if (LogoImage != null)
+                if (_clockWindow.GetType() == typeof(ClockWindow))
                 {
                     ((ClockWindow)_clockWindow).SetImage(LogoImage);
                 }
+                else if (_clockWindow.GetType() == typeof(MiniClockWindow))
+                {
+                    ((MiniClockWindow)_clockWindow).SetImage(LogoImage);
+                }
             }
         }
+
         /// <summary>
         /// When switching from minimized to fullscreen or backwards
         /// </summary>
@@ -110,11 +115,15 @@ namespace RR_Timer.Logic
         public void SetClockWindow(Window cw)
         {
             _clockWindow = cw;
-            if (_clockWindow.GetType() == typeof(ClockWindow))
+            if (LogoImage != null)
             {
-                if (LogoImage != null)
+                if (_clockWindow.GetType() == typeof(ClockWindow))
                 {
                     ((ClockWindow)_clockWindow).SetImage(LogoImage);
+                }
+                else if (_clockWindow.GetType() == typeof(MiniClockWindow))
+                {
+                    ((MiniClockWindow)_clockWindow).SetImage(LogoImage);
                 }
             }
             if (EventName == null) return;
@@ -130,11 +139,15 @@ namespace RR_Timer.Logic
         public void SetClockWindow(Window cw, string name, string type)
         {
             _clockWindow = cw;
-            if (_clockWindow.GetType() == typeof(ClockWindow))
+            if (LogoImage != null)
             {
-                if (LogoImage != null)
+                if (_clockWindow.GetType() == typeof(ClockWindow))
                 {
                     ((ClockWindow)_clockWindow).SetImage(LogoImage);
+                }
+                else if (_clockWindow.GetType() == typeof(MiniClockWindow))
+                {
+                    ((MiniClockWindow)_clockWindow).SetImage(LogoImage);
                 }
             }
             SetLabels(name, type);

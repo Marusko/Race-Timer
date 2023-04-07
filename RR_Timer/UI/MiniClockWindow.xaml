@@ -16,5 +16,6 @@
     <Grid>
         <Label x:Name="EventNameMini" Content="EventName" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" FontSize="30"/>
         <Label x:Name="TimerMini" Content="00:00:00" HorizontalAlignment="Left" Margin="1724,-10,0,0" VerticalAlignment="Center" FontSize="40"/>
+        <Image x:Name="TimerImage" HorizontalAlignment="Center" VerticalAlignment="Top"/>
     </Grid>
 </Window>

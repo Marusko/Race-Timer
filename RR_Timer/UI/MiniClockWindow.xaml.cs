@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media.Imaging;
 using RR_Timer.Logic;
 
 namespace RR_Timer.UI
@@ -54,6 +55,10 @@ namespace RR_Timer.UI
             Left = _screenHandler.SelectedScreen.WorkingArea.Left;
             Top = _screenHandler.SelectedScreen.WorkingArea.Top;
             Width = _screenHandler.SelectedScreen.WorkingArea.Width;
+        }
+        public void SetImage(BitmapImage image)
+        {
+            TimerImage.Source = image;
         }
     }
 }
