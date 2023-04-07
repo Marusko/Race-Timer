@@ -22,6 +22,7 @@ namespace RR_Timer.Logic
         private string? EventName { get; set; }
         private string? EventType { get; set; }
         public BitmapImage? LogoImage { get; set; }
+        public BitmapImage? CodeImage { get; set; }
 
         private Window? _clockWindow;
         public MainWindow MainWindow { get; }
@@ -125,6 +126,10 @@ namespace RR_Timer.Logic
                     ((MiniClockWindow)_clockWindow).SetImage(LogoImage);
                 }
             }
+            if (CodeImage != null && SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
+            {
+                ((ClockWindow)_clockWindow).SetCodeImage(CodeImage);
+            }
         }
 
         /// <summary>
@@ -149,6 +154,10 @@ namespace RR_Timer.Logic
                 {
                     ((MiniClockWindow)_clockWindow).SetImage(LogoImage);
                 }
+            }
+            if (CodeImage != null && SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
+            {
+                ((ClockWindow)_clockWindow).SetCodeImage(CodeImage);
             }
             if (EventName == null) return;
             if (EventType != null)
@@ -178,6 +187,10 @@ namespace RR_Timer.Logic
                 {
                     ((MiniClockWindow)_clockWindow).SetImage(LogoImage);
                 }
+            }
+            if (CodeImage != null && SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
+            {
+                ((ClockWindow)_clockWindow).SetCodeImage(CodeImage);
             }
             SetLabels(name, type);
         }

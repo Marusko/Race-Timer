@@ -133,6 +133,18 @@ namespace RR_Timer.UI
                 ((TimerRight)TimerPanel.Children[0]).TimerImage.Source = image;
             }
         }
+
+        public void SetCodeImage(BitmapImage image)
+        {
+            if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
+            {
+                ((TimerLeft)TimerPanel.Children[0]).CodeImage.Source = image;
+            }
+            else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
+            {
+                ((TimerRight)TimerPanel.Children[0]).CodeImage.Source = image;
+            }
+        }
     }
     
 }

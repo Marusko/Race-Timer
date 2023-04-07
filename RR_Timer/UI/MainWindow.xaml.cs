@@ -81,6 +81,7 @@ namespace RR_Timer.UI
             TimerTab.IsEnabled = false;
             SettingsTab.IsEnabled = false;
             ControlTab.IsEnabled = true;
+            CodeTab.IsEnabled = false;
             TabControl.SelectedItem = ControlTab;
             _openedLinkTimer = false;
         }
@@ -112,6 +113,7 @@ namespace RR_Timer.UI
             TimerTab.IsEnabled = false;
             SettingsTab.IsEnabled = false;
             ControlTab.IsEnabled = true;
+            CodeTab.IsEnabled = false;
             TabControl.SelectedItem = ControlTab;
             _openedLinkTimer = true;
         }
@@ -201,6 +203,7 @@ namespace RR_Timer.UI
             TimerTab.IsEnabled = true;
             SettingsTab.IsEnabled = true;
             ControlTab.IsEnabled = false;
+            CodeTab.IsEnabled = true;
             if (_openedLinkTimer)
             {
                 TabControl.SelectedItem = LinkTimerTab;
@@ -278,6 +281,36 @@ namespace RR_Timer.UI
             ImageName.Content = "";
             LinkDeleteImageButton.IsEnabled = false;
             LinkImageName.Content = "";
+        }
+
+        private void OpenCode(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                        "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                        "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                _clockLogic.CodeImage = new BitmapImage(new Uri(op.FileName));
+                var tmp = op.FileName;
+                var index = tmp.LastIndexOf(Path.DirectorySeparatorChar) + 1;
+                var name = tmp.Substring(index, tmp.Length - index);
+                CodeName.Content = name;
+                DeleteCodeButton.IsEnabled = true;
+            }
+        }
+
+        private void DeleteCode(object sender, RoutedEventArgs e)
+        {
+            _clockLogic.CodeImage = null;
+            CodeName.Content = "";
+            DeleteCodeButton.IsEnabled = false;
+        }
+
+        private void GenerateCode(object sender, RoutedEventArgs e)
+        {
+            DeleteCodeButton.IsEnabled = true;
         }
 
         /// <summary>
