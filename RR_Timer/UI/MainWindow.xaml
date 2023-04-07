@@ -50,7 +50,7 @@
                     <Button Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CloseTimer" Margin="0,100,0,0" FontSize="16" ToolTip="Stop and close the timer"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Settings" ToolTip="Settings">
+            <TabItem Header="Display settings" ToolTip="Settings">
                 <Grid>
                     <Label Content="Display" HorizontalAlignment="Center" Margin="0,53,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" Width="260" FontSize="14" ToolTip="Choose on which screen the timer will be displayed"/>

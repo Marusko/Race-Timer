@@ -120,6 +120,7 @@ namespace RR_Timer.UI
         {
             if (!OpenedTimer) return;
             if (_clockWindow == null) return;
+            if (!MinimizedTimer) return;
             _clockWindow.Close();
             _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
             _clockLogic.SetClockWindow((ClockWindow)_clockWindow);
@@ -135,6 +136,7 @@ namespace RR_Timer.UI
         {
             if (!OpenedTimer) return;
             if (_clockWindow == null) return;
+            if (MinimizedTimer) return;
             _clockWindow.Close();
             _clockWindow = new MiniClockWindow(_clockLogic, _screenHandler);
             _clockLogic.SetClockWindow((MiniClockWindow)_clockWindow);
