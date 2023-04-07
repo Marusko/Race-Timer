@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using RR_Timer.Logic;
 
 namespace RR_Timer.UI
@@ -103,6 +105,11 @@ namespace RR_Timer.UI
         public void OnTimerClick()
         {
             _clockLogic.ShowClockOrTimer(ref TimerClockLabel, ref MainClockLabel);
+        }
+
+        public void SetImage(BitmapImage image)
+        {
+            TimerImage.Source = image;
         }
     }
     

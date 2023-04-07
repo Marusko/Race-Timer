@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using RR_Timer.API;
 using RR_Timer.UI;
 
@@ -17,6 +18,7 @@ namespace RR_Timer.Logic
         private DateTime StartTime { get; set; }
         private string? EventName { get; set; }
         private string? EventType { get; set; }
+        public BitmapImage? LogoImage { get; set; }
 
         private Window? _clockWindow;
         public MainWindow MainWindow { get; }
@@ -93,6 +95,13 @@ namespace RR_Timer.Logic
             }
 
             _clockWindow = cw;
+            if (_clockWindow.GetType() == typeof(ClockWindow))
+            {
+                if (LogoImage != null)
+                {
+                    ((ClockWindow)_clockWindow).SetImage(LogoImage);
+                }
+            }
         }
         /// <summary>
         /// When switching from minimized to fullscreen or backwards
@@ -101,6 +110,13 @@ namespace RR_Timer.Logic
         public void SetClockWindow(Window cw)
         {
             _clockWindow = cw;
+            if (_clockWindow.GetType() == typeof(ClockWindow))
+            {
+                if (LogoImage != null)
+                {
+                    ((ClockWindow)_clockWindow).SetImage(LogoImage);
+                }
+            }
             if (EventName == null) return;
             if (EventType != null)
                 SetLabels(EventName, EventType);
@@ -114,6 +130,13 @@ namespace RR_Timer.Logic
         public void SetClockWindow(Window cw, string name, string type)
         {
             _clockWindow = cw;
+            if (_clockWindow.GetType() == typeof(ClockWindow))
+            {
+                if (LogoImage != null)
+                {
+                    ((ClockWindow)_clockWindow).SetImage(LogoImage);
+                }
+            }
             SetLabels(name, type);
         }
 

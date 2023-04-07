@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 using RR_Timer.Data;
 using RR_Timer.Logic;
+using Application = System.Windows.Application;
 
 namespace RR_Timer.UI
 {
@@ -183,6 +187,35 @@ namespace RR_Timer.UI
         private void SelectScreen(object sender, RoutedEventArgs e)
         {
             _screenHandler.SelectedScreen = _screenHandler.GetScreens()[ScreenComboBox.SelectedIndex];
+        }
+
+        private void OpenImage(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                        "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                        "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                _clockLogic.LogoImage = new BitmapImage(new Uri(op.FileName));
+                DeleteImageButton.IsEnabled = true;
+                LinkDeleteImageButton.IsEnabled = true;
+                var tmp = op.FileName;
+                var index = tmp.LastIndexOf(Path.DirectorySeparatorChar) + 1;
+                var name = tmp.Substring(index, tmp.Length - index);
+                ImageName.Content = name;
+                LinkImageName.Content = name;
+            }
+        }
+
+        private void DeleteImage(object sender, RoutedEventArgs e)
+        {
+            _clockLogic.LogoImage = null;
+            DeleteImageButton.IsEnabled = false;
+            ImageName.Content = "";
+            LinkDeleteImageButton.IsEnabled = false;
+            LinkImageName.Content = "";
         }
 
         /// <summary>

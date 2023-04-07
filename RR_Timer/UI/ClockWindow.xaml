@@ -19,10 +19,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label x:Name="MainClockLabel" Content="00:00:00" HorizontalAlignment="Center" FontSize="70" VerticalAlignment="Top" Grid.Row="3"/>
         <Label x:Name="TimerClockLabel" Content="00:00:00" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="150" Grid.Row="2" Margin="0,50,0,0"/>
         <Label x:Name="EventTypeLabel" Content="EventTypeLabel" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="50" Grid.Row="1"/>
         <TextBlock x:Name="EventNameLabel" Text="EventNameLabel" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="150" Margin="0,100,0,0" TextAlignment="Center" TextWrapping="Wrap" Grid.Row="0"/>
+        <Image x:Name="TimerImage" Grid.Row="4" MaxHeight="150" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"></Image>
     </Grid>
 </Window>
