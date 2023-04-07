@@ -109,7 +109,7 @@ namespace RR_Timer.UI
                 _clockLogic.ShowClockOrTimer(ref ((TimerTop)TimerPanel.Children[0]).TimerClockLabel, ref ((TimerTop)TimerPanel.Children[0]).MainClockLabel);
             }
             else if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
-            {
+            { 
                 _clockLogic.ShowClockOrTimer(ref ((TimerLeft)TimerPanel.Children[0]).TimerClockLabel, ref ((TimerLeft)TimerPanel.Children[0]).MainClockLabel);
             }
             else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
@@ -117,7 +117,7 @@ namespace RR_Timer.UI
                 _clockLogic.ShowClockOrTimer(ref ((TimerRight)TimerPanel.Children[0]).TimerClockLabel, ref ((TimerRight)TimerPanel.Children[0]).MainClockLabel);
             }
         }
-
+        
         public void SetImage(BitmapImage image)
         {
             if (TimerPanel.Children[0].GetType() == typeof(TimerTop))

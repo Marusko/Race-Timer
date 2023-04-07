@@ -109,15 +109,15 @@ namespace RR_Timer.Logic
             }
 
             _clockWindow = cw;
+            if (SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
+            {
+                ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
+                ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
+            }
             if (LogoImage != null)
             {
                 if (_clockWindow.GetType() == typeof(ClockWindow))
                 {
-                    if (SelectedAlignment != null)
-                    {
-                        ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
-                        ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
-                    }
                     ((ClockWindow)_clockWindow).SetImage(LogoImage);
                 }
                 else if (_clockWindow.GetType() == typeof(MiniClockWindow))
@@ -134,15 +134,15 @@ namespace RR_Timer.Logic
         public void SetClockWindow(Window cw)
         {
             _clockWindow = cw;
+            if (SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
+            {
+                ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
+                ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
+            }
             if (LogoImage != null)
             {
                 if (_clockWindow.GetType() == typeof(ClockWindow))
                 {
-                    if (SelectedAlignment != null)
-                    {
-                        ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
-                        ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
-                    }
                     ((ClockWindow)_clockWindow).SetImage(LogoImage);
                 }
                 else if (_clockWindow.GetType() == typeof(MiniClockWindow))
@@ -163,15 +163,15 @@ namespace RR_Timer.Logic
         public void SetClockWindow(Window cw, string name, string type)
         {
             _clockWindow = cw;
+            if (SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
+            {
+                ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
+                ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
+            }
             if (LogoImage != null)
             {
                 if (_clockWindow.GetType() == typeof(ClockWindow))
                 {
-                    if (SelectedAlignment != null)
-                    {
-                        ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
-                        ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
-                    }
                     ((ClockWindow)_clockWindow).SetImage(LogoImage);
                 }
                 else if (_clockWindow.GetType() == typeof(MiniClockWindow))

@@ -44,7 +44,7 @@ namespace RR_Timer.UI
             ScreenComboBox.SelectionChanged += SelectScreen;
             AlignmentComboBox.ItemsSource = _clockLogic.GetAlignments();
             AlignmentComboBox.SelectedIndex = 0;
-            AlignmentComboBox.SelectionChanged += SelectAlignment;
+            AlignmentComboBox.SelectionChanged += SelectAlignmentHandler;
             MinimizedTimer = false;
             CanOpenTimer = true;
             Closed += ShutDownApp;
@@ -63,6 +63,8 @@ namespace RR_Timer.UI
             OpenedTimer = true;
             MinimizedTimer = false;
             _clockWindow = new ClockWindow(EventNameText.Text, EventTypeComboBox.Text, StartTime.Text, _clockLogic, _screenHandler);
+            _clockLogic.SelectedAlignment = null;
+            SelectAlignment();
             _clockLogic.SetClockWindow((ClockWindow)_clockWindow, EventNameText.Text, EventTypeComboBox.Text);
             if (!CanOpenTimer)
             {
@@ -86,6 +88,8 @@ namespace RR_Timer.UI
             OpenedTimer = true;
             MinimizedTimer = false;
             _clockWindow = new ClockWindow(LinkTimerStartTimeText.Text, _clockLogic, _screenHandler);
+            _clockLogic.SelectedAlignment = null;
+            SelectAlignment();
             _clockLogic.SetClockWindow(EventLinkText.Text, ListLinkText.Text, (ClockWindow)_clockWindow);
             if (!CanOpenTimer)
             {
@@ -128,6 +132,8 @@ namespace RR_Timer.UI
             if (!MinimizedTimer) return;
             _clockWindow.Close();
             _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
+            _clockLogic.SelectedAlignment = null;
+            SelectAlignment();
             _clockLogic.SetClockWindow((ClockWindow)_clockWindow);
             _clockWindow.Show();
             MinimizedTimer = false;
@@ -171,6 +177,7 @@ namespace RR_Timer.UI
             OpenedTimer = false;
             MinimizedTimer = false;
             _clockLogic.StopTimer();
+            _clockLogic.SelectedAlignment = null;
         }
 
         /// <summary>
@@ -196,7 +203,11 @@ namespace RR_Timer.UI
             _screenHandler.SelectedScreen = _screenHandler.GetScreens()[ScreenComboBox.SelectedIndex];
         }
 
-        private void SelectAlignment(object sender, RoutedEventArgs e)
+        private void SelectAlignmentHandler(object sender, RoutedEventArgs e)
+        {
+            SelectAlignment();
+        }
+        private void SelectAlignment()
         {
             switch (AlignmentComboBox.SelectedIndex)
             {
