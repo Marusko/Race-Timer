@@ -17,7 +17,7 @@ namespace RR_Timer.UI
     public partial class MainWindow
     {
         private const string Author = "Matúš Suský";
-        private const string Version = "1.4.1";
+        private const string Version = "1.5.2";
         private readonly ClockLogic _clockLogic;
         private readonly ScreenHandler _screenHandler;
         private Window? _clockWindow;
