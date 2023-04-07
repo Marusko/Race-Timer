@@ -56,6 +56,10 @@ namespace RR_Timer.UI
             Top = _screenHandler.SelectedScreen.WorkingArea.Top;
             Width = _screenHandler.SelectedScreen.WorkingArea.Width;
         }
+        /// <summary>
+        /// Method sets chosen image to TimerImage, best used for rectangle logo
+        /// </summary>
+        /// <param name="image">Image to be shown</param>
         public void SetImage(BitmapImage image)
         {
             TimerImage.Source = image;

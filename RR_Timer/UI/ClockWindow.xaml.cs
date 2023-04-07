@@ -117,7 +117,11 @@ namespace RR_Timer.UI
                 _clockLogic.ShowClockOrTimer(ref ((TimerRight)TimerPanel.Children[0]).TimerClockLabel, ref ((TimerRight)TimerPanel.Children[0]).MainClockLabel);
             }
         }
-        
+
+        /// <summary>
+        /// Method sets chosen image to TimerImage, best used for rectangle logo
+        /// </summary>
+        /// <param name="image">Image to be shown</param>
         public void SetImage(BitmapImage image)
         {
             if (TimerPanel.Children[0].GetType() == typeof(TimerTop))
@@ -134,6 +138,10 @@ namespace RR_Timer.UI
             }
         }
 
+        /// <summary>
+        /// Method sets chosen/generated image/QR code to CodeImage
+        /// </summary>
+        /// <param name="image">Image/QR code to be shown</param>
         public void SetCodeImage(BitmapSource image)
         {
             if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))

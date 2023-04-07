@@ -37,6 +37,9 @@ namespace RR_Timer.Logic
             SelectedAlignment = new TimerTop();
         }
 
+        /// <summary>
+        /// Creates list of different alignment names for timer
+        /// </summary>
         private void SetAlignmentList()
         {
             _timerAlignmentNames.Add("Timer on top");
@@ -81,7 +84,8 @@ namespace RR_Timer.Logic
         }
 
         /// <summary>
-        /// When opening clock with API links, opens the clock and sets the clock window
+        /// When opening clock with API links, opens the clock and sets the clock window,
+        /// sets alignment, and both images
         /// </summary>
         /// <param name="mainLink">Link for event name and type</param>
         /// <param name="listLink">Link for finished participants list</param>
@@ -133,7 +137,8 @@ namespace RR_Timer.Logic
         }
 
         /// <summary>
-        /// When switching from minimized to fullscreen or backwards
+        /// When switching from minimized to fullscreen or backwards,
+        /// sets alignment, and both images
         /// </summary>
         /// <param name="cw">To update _clockWindow</param>
         public void SetClockWindow(Window cw)
@@ -164,7 +169,8 @@ namespace RR_Timer.Logic
                 SetLabels(EventName, EventType);
         }
         /// <summary>
-        /// When opening clock with manually set name and type, sets the labels
+        /// When opening clock with manually set name and type, sets the labels,
+        /// sets alignment, and both images
         /// </summary>
         /// <param name="cw">To open or update clock window</param>
         /// <param name="name">Name of the event</param>
@@ -201,7 +207,7 @@ namespace RR_Timer.Logic
         /// </summary>
         /// <param name="timer">Timer label from fullscreen clock</param>
         /// <param name="clock">Clock label from fullscreen clock</param>
-        public void ShowClockOrTimer(ref System.Windows.Controls.Label timer, ref System.Windows.Controls.Label clock)
+        public void ShowClockOrTimer(ref Label timer, ref Label clock)
         {
             if (DateTime.Now.Subtract(StartTime).TotalSeconds < 0)
             {
@@ -218,7 +224,7 @@ namespace RR_Timer.Logic
         /// If current time is less than start time show clock, else show timer in minimized clock
         /// </summary>
         /// <param name="timer">Timer label from minimized clock</param>
-        public void ShowMiniClockOrTimer(ref System.Windows.Controls.Label timer)
+        public void ShowMiniClockOrTimer(ref Label timer)
         {
             if (DateTime.Now.Subtract(StartTime).TotalSeconds < 0)
             {

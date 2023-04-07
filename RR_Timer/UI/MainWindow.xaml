@@ -82,7 +82,7 @@
                         <Hyperlink Click="OpenMaterialDesignPage" Foreground="#FF30E433">Material design themes</Hyperlink>
                     </Label>
                     <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,140,0,0">
-                        <Hyperlink Click="OpenQRPage" Foreground="#FF30E433">QR code generator</Hyperlink>
+                        <Hyperlink Click="OpenCodePage" Foreground="#FF30E433">QR code generator</Hyperlink>
                     </Label>
                     <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,170,0,0">
                         <Hyperlink Click="OpenIconPage" Foreground="#FF30E433">App Icon</Hyperlink>

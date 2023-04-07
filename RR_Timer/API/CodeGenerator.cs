@@ -9,7 +9,12 @@ namespace RR_Timer.API
 {
     internal static class CodeGenerator
     {
-        public static BitmapSource GenerateCode(string link)
+        /// <summary>
+        /// Method will encode link or any text and returns QR code
+        /// </summary>
+        /// <param name="link">Link that will be encoded</param>
+        /// <returns>QR code image as BitmapSource</returns>
+        public static BitmapSource? GenerateCode(string link)
         {
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(link, QRCodeGenerator.ECCLevel.Q);
@@ -17,14 +22,19 @@ namespace RR_Timer.API
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
             return Bitmap2BitmapImage(qrCodeImage);
         }
-        private static BitmapSource Bitmap2BitmapImage(Bitmap bitmap)
+        /// <summary>
+        /// Converts Bitmap to BitmapSource, copied from https://stackoverflow.com/a/71676333
+        /// </summary>
+        /// <param name="bitmap">Bitmap to convert</param>
+        /// <returns></returns>
+        private static BitmapSource? Bitmap2BitmapImage(Bitmap bitmap)
         {
             var hBitmap = bitmap.GetHbitmap();
-            BitmapSource? retval = null;
+            BitmapSource? bitmapSource = null;
 
             try
             {
-                retval = Imaging.CreateBitmapSourceFromHBitmap(
+                bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
                     hBitmap,
                     IntPtr.Zero,
                     Int32Rect.Empty,
@@ -35,7 +45,7 @@ namespace RR_Timer.API
                 MessageBox.Show(ex.Message);
             }
 
-            return retval;
+            return bitmapSource;
         }
 
     }

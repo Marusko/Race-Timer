@@ -23,7 +23,7 @@ namespace RR_Timer.UI
         private readonly ClockLogic _clockLogic;
         private readonly ScreenHandler _screenHandler;
         private Window? _clockWindow;
-        private bool _openedLinkTimer = false;
+        private bool _openedLinkTimer;
         public bool OpenedTimer { get; private set; }
         public bool MinimizedTimer { get; private set; }
         public bool CanOpenTimer { get; set; }
@@ -32,6 +32,7 @@ namespace RR_Timer.UI
         /// Initializes and shows the main window, creates new ScreenHandler and ClockLogic,
         /// sets values for event type combobox and screen combobox from screen handler and selects first screen in list
         /// sets OnCloseCloseTimerWindow to be called when closing main window and calls SetInfoLabel() method
+        /// Sets ControlTab as disabled
         /// </summary>
         public MainWindow()
         {
@@ -58,6 +59,7 @@ namespace RR_Timer.UI
         /// <summary>
         /// Method called by Open timer button, only if clock window is not opened creates and shows new fullscreen clock window,
         /// sets it in clock logic, sets the properties and starts the timer
+        /// Disables Timer, API timer, Display settings, QR tabs as disabled, enables control tab and selects it
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -90,6 +92,7 @@ namespace RR_Timer.UI
         /// <summary>
         /// Method called by Open timer button in API timer menu, only if clock window is not opened creates and shows
         /// new fullscreen clock window, sets it in clock logic, sets the properties and starts the timer
+        /// Disables Timer, API timer, Display settings, QR tabs, enables control tab and selects it
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -142,6 +145,7 @@ namespace RR_Timer.UI
         /// <summary>
         /// Closes the minimized clock window and open new fullscreen clock window, sets it in ClockLogic,
         /// sets the MinimizedTimer property to false
+        /// Disables maximize button, enables minimize button
         /// </summary>
         private void MaximizeTimer()
         {
@@ -162,6 +166,7 @@ namespace RR_Timer.UI
         /// <summary>
         /// Closes the maximized clock window and open new minimized clock window, sets it in ClockLogic,
         /// sets the MinimizedTimer property to true
+        /// Disables minimize button, enables maximize button
         /// </summary>
         public void MinimizeTimer()
         {
@@ -190,6 +195,8 @@ namespace RR_Timer.UI
         /// <summary>
         /// Only if clock window is opened closes the clock window,
         /// sets both properties to false and stops the timer
+        /// Enables Timer, API timer, Display settings, QR tabs, disables control tab and
+        /// selects timer tab from which the timer was started
         /// </summary>
         public void OnClose()
         {
@@ -205,14 +212,7 @@ namespace RR_Timer.UI
             SettingsTab.IsEnabled = true;
             ControlTab.IsEnabled = false;
             CodeTab.IsEnabled = true;
-            if (_openedLinkTimer)
-            {
-                TabControl.SelectedItem = LinkTimerTab;
-            }
-            else
-            {
-                TabControl.SelectedItem = TimerTab;
-            }
+            TabControl.SelectedItem = _openedLinkTimer ? LinkTimerTab : TimerTab;
         }
 
         /// <summary>
@@ -238,43 +238,59 @@ namespace RR_Timer.UI
             _screenHandler.SelectedScreen = _screenHandler.GetScreens()[ScreenComboBox.SelectedIndex];
         }
 
+        /// <summary>
+        /// Calls SelectAlignment, used with buttons
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SelectAlignmentHandler(object sender, RoutedEventArgs e)
         {
             SelectAlignment();
         }
+        /// <summary>
+        /// Method selects alignment and sets it in ClockLogic
+        /// </summary>
         private void SelectAlignment()
         {
-            switch (AlignmentComboBox.SelectedIndex)
+            _clockLogic.SelectedAlignment = AlignmentComboBox.SelectedIndex switch
             {
-                case 0: _clockLogic.SelectedAlignment = new TimerTop();
-                    break;
-                case 1: _clockLogic.SelectedAlignment = new TimerLeft();
-                    break;
-                case 2: _clockLogic.SelectedAlignment = new TimerRight();
-                    break;
-            }
+                0 => new TimerTop(),
+                1 => new TimerLeft(),
+                2 => new TimerRight(),
+                _ => _clockLogic.SelectedAlignment
+            };
         }
 
+        /// <summary>
+        /// Opens file dialog where user chooses image to show, saves it in ClockLogic.LogoImage
+        /// updates necessary labels
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenImage(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog op = new OpenFileDialog();
+            var op = new OpenFileDialog();
             op.Title = "Select a picture";
             op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
                         "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
                         "Portable Network Graphic (*.png)|*.png";
-            if (op.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                _clockLogic.LogoImage = new BitmapImage(new Uri(op.FileName));
-                DeleteImageButton.IsEnabled = true;
-                LinkDeleteImageButton.IsEnabled = true;
-                var tmp = op.FileName;
-                var index = tmp.LastIndexOf(Path.DirectorySeparatorChar) + 1;
-                var name = tmp.Substring(index, tmp.Length - index);
-                ImageName.Content = name;
-                LinkImageName.Content = name;
-            }
+            if (op.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+            _clockLogic.LogoImage = new BitmapImage(new Uri(op.FileName));
+            DeleteImageButton.IsEnabled = true;
+            LinkDeleteImageButton.IsEnabled = true;
+            var tmp = op.FileName;
+            var index = tmp.LastIndexOf(Path.DirectorySeparatorChar) + 1;
+            var name = tmp.Substring(index, tmp.Length - index);
+            ImageName.Content = name;
+            LinkImageName.Content = name;
         }
 
+        /// <summary>
+        /// Delete the image from ClockLogic.LogoImage
+        /// updates necessary labels
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteImage(object sender, RoutedEventArgs e)
         {
             _clockLogic.LogoImage = null;
@@ -284,6 +300,12 @@ namespace RR_Timer.UI
             LinkImageName.Content = "";
         }
 
+        /// <summary>
+        /// Opens file dialog where user chooses QR code/image to show, saves it in ClockLogic.CodeImage
+        /// updates necessary labels
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenCode(object sender, RoutedEventArgs e)
         {
             OpenFileDialog op = new OpenFileDialog();
@@ -302,6 +324,12 @@ namespace RR_Timer.UI
             }
         }
 
+        /// <summary>
+        /// Delete the image from ClockLogic.CodeImage
+        /// updates necessary labels
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteCode(object sender, RoutedEventArgs e)
         {
             _clockLogic.CodeImage = null;
@@ -309,11 +337,20 @@ namespace RR_Timer.UI
             DeleteCodeButton.IsEnabled = false;
         }
 
+        /// <summary>
+        /// Generates code from link entered in CodeLinkText and saves it in ClockLogic.CodeImage
+        /// updates necessary labels
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GenerateCode(object sender, RoutedEventArgs e)
         {
             DeleteCodeButton.IsEnabled = true;
             _clockLogic.CodeImage = CodeGenerator.GenerateCode(CodeLinkText.Text);
             CodeName.Content = "QR code generated!";
+            if (_clockLogic.CodeImage != null) return;
+            var ww = new WarningWindow("Something went wrong! QR code was not generated");
+            ww.ShowDialog();
         }
 
         /// <summary>
@@ -377,7 +414,12 @@ namespace RR_Timer.UI
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
         }
 
-        private void OpenQRPage(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Method called by QR code generator hyperlink, opens QR code generator page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenCodePage(object sender, RoutedEventArgs e)
         {
             const string url = "https://github.com/codebude/QRCoder";
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
