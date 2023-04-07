@@ -22,6 +22,7 @@ namespace RR_Timer.UI
         private readonly ClockLogic _clockLogic;
         private readonly ScreenHandler _screenHandler;
         private Window? _clockWindow;
+        private bool _openedLinkTimer = false;
         public bool OpenedTimer { get; private set; }
         public bool MinimizedTimer { get; private set; }
         public bool CanOpenTimer { get; set; }
@@ -47,6 +48,8 @@ namespace RR_Timer.UI
             AlignmentComboBox.SelectionChanged += SelectAlignmentHandler;
             MinimizedTimer = false;
             CanOpenTimer = true;
+            ControlTab.IsEnabled = false;
+            MaximizeButton.IsEnabled = false;
             Closed += ShutDownApp;
             SetInfoLabel();
         }
@@ -74,6 +77,12 @@ namespace RR_Timer.UI
             }
             _clockWindow.Show();
             _clockLogic.StartTimer();
+            LinkTimerTab.IsEnabled = false;
+            TimerTab.IsEnabled = false;
+            SettingsTab.IsEnabled = false;
+            ControlTab.IsEnabled = true;
+            TabControl.SelectedItem = ControlTab;
+            _openedLinkTimer = false;
         }
 
         /// <summary>
@@ -99,6 +108,12 @@ namespace RR_Timer.UI
             }
             _clockWindow.Show();
             _clockLogic.StartTimer();
+            LinkTimerTab.IsEnabled = false;
+            TimerTab.IsEnabled = false;
+            SettingsTab.IsEnabled = false;
+            ControlTab.IsEnabled = true;
+            TabControl.SelectedItem = ControlTab;
+            _openedLinkTimer = true;
         }
 
         /// <summary>
@@ -137,6 +152,8 @@ namespace RR_Timer.UI
             _clockLogic.SetClockWindow((ClockWindow)_clockWindow);
             _clockWindow.Show();
             MinimizedTimer = false;
+            MinimizeButton.IsEnabled = true;
+            MaximizeButton.IsEnabled = false;
         }
 
         /// <summary>
@@ -153,6 +170,8 @@ namespace RR_Timer.UI
             _clockLogic.SetClockWindow((MiniClockWindow)_clockWindow);
             _clockWindow.Show();
             MinimizedTimer = true;
+            MinimizeButton.IsEnabled = false;
+            MaximizeButton.IsEnabled = true;
         }
 
         /// <summary>
@@ -178,6 +197,18 @@ namespace RR_Timer.UI
             MinimizedTimer = false;
             _clockLogic.StopTimer();
             _clockLogic.SelectedAlignment = null;
+            LinkTimerTab.IsEnabled = true;
+            TimerTab.IsEnabled = true;
+            SettingsTab.IsEnabled = true;
+            ControlTab.IsEnabled = false;
+            if (_openedLinkTimer)
+            {
+                TabControl.SelectedItem = LinkTimerTab;
+            }
+            else
+            {
+                TabControl.SelectedItem = TimerTab;
+            }
         }
 
         /// <summary>

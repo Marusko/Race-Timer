@@ -14,8 +14,8 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" Icon="/UI/hourglass.png" ResizeMode="CanMinimize">
     <DockPanel>
-        <TabControl TabStripPlacement="Left">
-            <TabItem Header="Timer" ToolTip="Timer setup">
+        <TabControl x:Name="TabControl" TabStripPlacement="Left">
+            <TabItem x:Name="TimerTab" Header="Timer" ToolTip="Timer setup">
                 <Grid>
                     <Button Content="Open Timer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTimer" Margin="0,350,0,0" FontSize="16" ToolTip="Start the timer"/>
                     <TextBox x:Name="EventNameText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" HorizontalScrollBarVisibility="Auto" InputScope="RegularExpression" HorizontalContentAlignment="Center" ToolTip="Event Name" FontSize="14"/>
@@ -29,7 +29,7 @@
                     <Label x:Name="ImageName" Content="" HorizontalAlignment="Center" Margin="0,260,0,0" VerticalAlignment="Top" FontSize="16"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="API Timer" ToolTip="API timer setup">
+            <TabItem x:Name="LinkTimerTab" Header="API Timer" ToolTip="API timer setup">
                 <Grid>
                     <TextBox x:Name="EventLinkText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" HorizontalContentAlignment="Center" InputScope="Url" FontSize="14" ToolTip="Link for event API"/>
                     <TextBox x:Name="ListLinkText" HorizontalAlignment="Center" Margin="0,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" HorizontalContentAlignment="Center" InputScope="Url" FontSize="14" ToolTip="Link for list API"/>
@@ -43,14 +43,14 @@
                     <Label x:Name="LinkImageName" Content="" HorizontalAlignment="Center" Margin="0,260,0,0" VerticalAlignment="Top" FontSize="16"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Timer control" ToolTip="Control size or close the timer">
+            <TabItem x:Name="ControlTab" Header="Timer control" ToolTip="Control size or close the timer">
                 <Grid>
-                    <Button Content="Minimize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MinimizeTimerHandler" Margin="0,0,0,100" FontSize="16" ToolTip="Make the timer small in the upper side of screen"/>
-                    <Button Content="Maximize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MaximizeTimerHandler" FontSize="16" ToolTip="Make the timer big and on fullscreen"/>
+                    <Button x:Name="MinimizeButton" Content="Minimize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MinimizeTimerHandler" Margin="0,0,0,100" FontSize="16" ToolTip="Make the timer small in the upper side of screen"/>
+                    <Button x:Name="MaximizeButton" Content="Maximize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MaximizeTimerHandler" FontSize="16" ToolTip="Make the timer big and on fullscreen"/>
                     <Button Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CloseTimer" Margin="0,100,0,0" FontSize="16" ToolTip="Stop and close the timer"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Display settings" ToolTip="Settings">
+            <TabItem x:Name="SettingsTab" Header="Display settings" ToolTip="Settings">
                 <Grid>
                     <Label Content="Display" HorizontalAlignment="Center" Margin="0,53,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" Width="260" FontSize="14" ToolTip="Choose on which screen the timer will be displayed"/>
