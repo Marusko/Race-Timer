@@ -11,9 +11,10 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" WindowStyle="None" HorizontalAlignment="Center" Icon="/UI/hourglass.png" IsTabStop="False" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" VerticalAlignment="Top">
+        FontFamily="{DynamicResource MaterialDesignFont}" WindowStyle="None" HorizontalAlignment="Center" 
+        Icon="/UI/hourglass.png" IsTabStop="False" ResizeMode="NoResize" ShowInTaskbar="False" 
+        Topmost="True" VerticalAlignment="Top">
     <Grid>
         <Image x:Name="CodeForMinimized" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="300" Margin="10,10,0,0"/>
-
     </Grid>
 </Window>

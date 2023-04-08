@@ -33,6 +33,7 @@ namespace RR_Timer.UI
         /// sets values for event type combobox and screen combobox from screen handler and selects first screen in list
         /// sets OnCloseCloseTimerWindow to be called when closing main window and calls SetInfoLabel() method
         /// Sets ControlTab as disabled
+        /// Sets alignment and Qr code time events
         /// </summary>
         public MainWindow()
         {
@@ -288,7 +289,7 @@ namespace RR_Timer.UI
             LinkDeleteImageButton.IsEnabled = true;
             var tmp = op.FileName;
             var index = tmp.LastIndexOf(Path.DirectorySeparatorChar) + 1;
-            var name = tmp.Substring(index, tmp.Length - index);
+            var name = tmp[index..];
             ImageName.Content = name;
             LinkImageName.Content = name;
         }
@@ -316,20 +317,18 @@ namespace RR_Timer.UI
         /// <param name="e"></param>
         private void OpenCode(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog op = new OpenFileDialog();
+            var op = new OpenFileDialog();
             op.Title = "Select a picture";
             op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
                         "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
                         "Portable Network Graphic (*.png)|*.png";
-            if (op.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                _clockLogic.CodeImage = new BitmapImage(new Uri(op.FileName));
-                var tmp = op.FileName;
-                var index = tmp.LastIndexOf(Path.DirectorySeparatorChar) + 1;
-                var name = tmp.Substring(index, tmp.Length - index);
-                CodeName.Content = name;
-                DeleteCodeButton.IsEnabled = true;
-            }
+            if (op.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+            _clockLogic.CodeImage = new BitmapImage(new Uri(op.FileName));
+            var tmp = op.FileName;
+            var index = tmp.LastIndexOf(Path.DirectorySeparatorChar) + 1;
+            var name = tmp.Substring(index, tmp.Length - index);
+            CodeName.Content = name;
+            DeleteCodeButton.IsEnabled = true;
         }
 
         /// <summary>
@@ -378,12 +377,21 @@ namespace RR_Timer.UI
             InfoLabel.Content = "Made by: " + Author + "\nVersion: " + Version;
         }
 
+        /// <summary>
+        /// Returns if the QR code on mini timer check box is checked or not
+        /// </summary>
+        /// <returns>Returns value of QR code on mini timer checkbox</returns>
         public bool IsCodeOnMinimized()
         {
             if(CodeCheckBoxForMinimized.IsChecked == null) return false;
             return (bool)CodeCheckBoxForMinimized.IsChecked;
         }
 
+        /// <summary>
+        /// Returns values from QR code menu bottom two text boxes when check box is checked,
+        /// for showing and hiding QR code when timer is small
+        /// </summary>
+        /// <returns>Pair of int as minutes</returns>
         public (int, int) GetCodeForMiniTimes()
         {
             var show = int.Parse(MinimizedCodeTimes.HowLongTimeText.Text);
@@ -391,25 +399,26 @@ namespace RR_Timer.UI
             return (show, every);
         }
 
+        /// <summary>
+        /// Checks if values from QR code menu bottom two text boxes can be converted into int,
+        /// if it is not a number shows warning window and sets the text box value to "1",
+        /// also checks if it is between 1 and 60, if not sets text box value to one which is closer [1/60]
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckIfInt(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (sender.GetType().Name == "TextBox")
+                if (sender.GetType().Name != "TextBox") return;
+                if (((System.Windows.Controls.TextBox)sender).Text.Length <= 0) return;
+                var i = int.Parse(((System.Windows.Controls.TextBox)sender).Text);
+                ((System.Windows.Controls.TextBox)sender).Text = i switch
                 {
-                    if (((System.Windows.Controls.TextBox)sender).Text.Length > 0)
-                    {
-                        var i = int.Parse(((System.Windows.Controls.TextBox)sender).Text);
-                        if (i > 60)
-                        {
-                            ((System.Windows.Controls.TextBox)sender).Text = "60";
-                        }
-                        else if(i <= 0)
-                        {
-                            ((System.Windows.Controls.TextBox)sender).Text = "1";
-                        }
-                    }
-                }
+                    > 60 => "60",
+                    <= 0 => "1",
+                    _ => ((System.Windows.Controls.TextBox)sender).Text
+                };
             }
             catch (Exception exception)
             {

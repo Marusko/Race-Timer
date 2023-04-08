@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MiniClockWindow" Height="100" Width="{x:Static SystemParameters.PrimaryScreenWidth}" WindowStyle="None" ShowInTaskbar="False" Topmost="True" Left="0" Top="0"
+        Title="MiniClockWindow" Height="100" Width="{x:Static SystemParameters.PrimaryScreenWidth}" 
+        WindowStyle="None" ShowInTaskbar="False" Topmost="True" Left="0" Top="0"
 
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -12,7 +13,8 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" Icon="/UI/hourglass.png" IsTabStop="False" ResizeMode="NoResize">
+        FontFamily="{DynamicResource MaterialDesignFont}" Icon="/UI/hourglass.png" IsTabStop="False" 
+        ResizeMode="NoResize">
     <Grid>
         <Label x:Name="EventNameMini" Content="EventName" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" FontSize="30"/>
         <Label x:Name="TimerMini" Content="00:00:00" HorizontalAlignment="Left" Margin="1724,-10,0,0" VerticalAlignment="Center" FontSize="40"/>

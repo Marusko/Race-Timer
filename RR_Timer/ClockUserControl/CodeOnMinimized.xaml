@@ -11,6 +11,5 @@
         <TextBox x:Name="HowLongTimeText" HorizontalAlignment="Left" Margin="195,0,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="50" TextAlignment="Center" FontSize="16" MaxLength="2" MaxLines="1"/>
         <TextBox x:Name="EveryTimeText" HorizontalAlignment="Left" Margin="365,0,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="50" TextAlignment="Center" FontSize="16" MaxLength="2" MaxLines="1"/>
         <Label Content="minute/s" HorizontalAlignment="Left" Margin="420,2,0,0" VerticalAlignment="Top" FontSize="16"/>
-
     </Grid>
 </UserControl>

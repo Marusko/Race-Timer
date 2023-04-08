@@ -1,5 +1,4 @@
-﻿<Window
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -8,7 +7,6 @@
         x:Class="RR_Timer.UI.MainWindow"
         mc:Ignorable="d"
         Title="RR_Timer" Height="450" Width="800"
-        
 
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -16,7 +14,8 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" Icon="/UI/hourglass.png" ResizeMode="CanMinimize">
+        FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" 
+        Icon="/UI/hourglass.png" ResizeMode="CanMinimize">
     <DockPanel>
         <TabControl x:Name="TabControl" TabStripPlacement="Left">
             <TabItem x:Name="TimerTab" Header="Timer" ToolTip="Timer setup">
@@ -107,11 +106,6 @@
                     <Label Content="More on:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,30"/>
                 </Grid>
             </TabItem>
-
         </TabControl>
-
     </DockPanel>
-
-
-
 </Window>
