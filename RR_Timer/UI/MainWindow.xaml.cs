@@ -38,7 +38,7 @@ namespace RR_Timer.UI
         {
             InitializeComponent();
             _screenHandler = new ScreenHandler(this);
-            _clockLogic = new ClockLogic(this);
+            _clockLogic = new ClockLogic(this, _screenHandler);
 
             EventTypeComboBox.ItemsSource = Enum.GetValues(typeof(EventType));
             ScreenComboBox.ItemsSource = _screenHandler.GetScreenNames();
@@ -48,6 +48,8 @@ namespace RR_Timer.UI
             AlignmentComboBox.ItemsSource = _clockLogic.GetAlignments();
             AlignmentComboBox.SelectedIndex = 0;
             AlignmentComboBox.SelectionChanged += SelectAlignmentHandler;
+            MinimizedCodeTimes.EveryTimeText.TextChanged += CheckIfInt;
+            MinimizedCodeTimes.HowLongTimeText.TextChanged += CheckIfInt;
             MinimizedTimer = false;
             CanOpenTimer = true;
             ControlTab.IsEnabled = false;
@@ -157,6 +159,8 @@ namespace RR_Timer.UI
             _clockLogic.SelectedAlignment = null;
             SelectAlignment();
             _clockLogic.SetClockWindow((ClockWindow)_clockWindow);
+            _clockLogic.CodeWindowForMinimized?.Close();
+            _clockLogic.CodeWindowForMinimized = null;
             _clockWindow.Show();
             MinimizedTimer = false;
             MinimizeButton.IsEnabled = true;
@@ -207,12 +211,16 @@ namespace RR_Timer.UI
             MinimizedTimer = false;
             _clockLogic.StopTimer();
             _clockLogic.SelectedAlignment = null;
+            _clockLogic.CodeWindowForMinimized?.Close();
+            _clockLogic.CodeWindowForMinimized = null;
             LinkTimerTab.IsEnabled = true;
             TimerTab.IsEnabled = true;
             SettingsTab.IsEnabled = true;
             ControlTab.IsEnabled = false;
             CodeTab.IsEnabled = true;
             TabControl.SelectedItem = _openedLinkTimer ? LinkTimerTab : TimerTab;
+            MinimizeButton.IsEnabled = true;
+            MaximizeButton.IsEnabled = false;
         }
 
         /// <summary>
@@ -368,6 +376,55 @@ namespace RR_Timer.UI
         private void SetInfoLabel()
         {
             InfoLabel.Content = "Made by: " + Author + "\nVersion: " + Version;
+        }
+
+        public bool IsCodeOnMinimized()
+        {
+            if(CodeCheckBoxForMinimized.IsChecked == null) return false;
+            return (bool)CodeCheckBoxForMinimized.IsChecked;
+        }
+
+        public (int, int) GetCodeForMiniTimes()
+        {
+            var show = int.Parse(MinimizedCodeTimes.HowLongTimeText.Text);
+            var every = int.Parse(MinimizedCodeTimes.EveryTimeText.Text);
+            return (show, every);
+        }
+
+        private void CheckIfInt(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (sender.GetType().Name == "TextBox")
+                {
+                    if (((System.Windows.Controls.TextBox)sender).Text.Length > 0)
+                    {
+                        var i = int.Parse(((System.Windows.Controls.TextBox)sender).Text);
+                        if (i > 60)
+                        {
+                            ((System.Windows.Controls.TextBox)sender).Text = "60";
+                        }
+                        else if(i <= 0)
+                        {
+                            ((System.Windows.Controls.TextBox)sender).Text = "1";
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                if (sender.GetType().Name == "TextBox")
+                {
+                    var w = new WarningWindow($"Oops, cannot convert this [{((System.Windows.Controls.TextBox)sender).Text}] to number\n[{exception.Message}]");
+                    w.ShowDialog();
+                    ((System.Windows.Controls.TextBox)sender).Text = "1";
+                }
+                else
+                {
+                    var w = new WarningWindow($"Oops, cannot convert this to number\n[{exception.Message}]");
+                    w.ShowDialog();
+                }
+            }
         }
 
         /// <summary>

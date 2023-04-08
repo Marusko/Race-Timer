@@ -25,14 +25,21 @@ namespace RR_Timer.Logic
         public BitmapSource? CodeImage { get; set; }
 
         private Window? _clockWindow;
+        public CodeWindowForMinimized? CodeWindowForMinimized { get; set; }
         public MainWindow MainWindow { get; }
+        private readonly ScreenHandler _screenHandler;
         private LinkHandler? _linkHandler;
         private readonly ObservableCollection<string> _timerAlignmentNames = new();
         public UserControl? SelectedAlignment { get; set; }
 
-        public ClockLogic(MainWindow mw)
+        private DateTime _showCodeTime;
+        private DateTime _hideCodeTime;
+        private DateTime _showTime;
+
+        public ClockLogic(MainWindow mw, ScreenHandler sh)
         {
             MainWindow = mw;
+            _screenHandler = sh;
             SetAlignmentList();
             SelectedAlignment = new TimerTop();
         }
@@ -80,6 +87,41 @@ namespace RR_Timer.Logic
             else if (_clockWindow.GetType() == typeof(MiniClockWindow))
             {
                 ((MiniClockWindow)_clockWindow).OnTimerClick();
+                if (MainWindow.IsCodeOnMinimized() && CodeImage != null)
+                {
+                    if (CodeWindowForMinimized == null)
+                    {
+                        CodeWindowForMinimized = new CodeWindowForMinimized(_screenHandler);
+                        CodeWindowForMinimized.SetImage(CodeImage);
+                        _hideCodeTime = DateTime.Now;
+                        _showTime = DateTime.Now;
+                        CodeWindowForMinimized.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        if (_hideCodeTime >= _showTime.AddMinutes(MainWindow.GetCodeForMiniTimes().Item2))
+                        {
+                            if (CodeWindowForMinimized.Visibility == Visibility.Hidden)
+                            {
+                                CodeWindowForMinimized.Show();
+                                _showCodeTime = DateTime.Now;
+                            }
+                            _showCodeTime = _showCodeTime.Add(DateTime.Now - _showCodeTime);
+                            if (_showCodeTime >= _showTime.AddMinutes(MainWindow.GetCodeForMiniTimes().Item1 + MainWindow.GetCodeForMiniTimes().Item2))
+                            {
+                                CodeWindowForMinimized.Hide();
+                                _hideCodeTime = DateTime.Now;
+                                _showCodeTime = DateTime.Now;
+                                _showTime = DateTime.Now;
+                            }
+                        }
+                        else
+                        {
+                            _hideCodeTime = _hideCodeTime.Add(DateTime.Now - _hideCodeTime);
+                        }
+                    }
+                }
+                
             }
         }
 

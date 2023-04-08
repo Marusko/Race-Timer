@@ -12,7 +12,7 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" Icon="/UI/hourglass.png">
+        FontFamily="{DynamicResource MaterialDesignFont}" Icon="/UI/hourglass.png" ResizeMode="NoResize" IsTabStop="False">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
