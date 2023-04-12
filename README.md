@@ -110,11 +110,6 @@ The result:
       * Timer on right - Timer and clock on the right side, logo and QR code on the left side
 
 ---
-# Q&A :question:
-### I can't see everything when using the timer
-  * Go to Windows settings and check if the screen on which you are trying to diplay timer has resolution atleast 1920x1080 or higher. 
-  * If you don't have screen with high resolution, then please create **Issue**, I am working on it.
----
 :exclamation: **Disclaimers** "RR" and "RaceResult" are trademarked by and belong to race result AG I make no claims to these or any assets belonging to race result AG and use them purely for informational purposes only.
 
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
