@@ -16,8 +16,8 @@
         FontFamily="{DynamicResource MaterialDesignFont}" Icon="/UI/hourglass.png" IsTabStop="False" 
         ResizeMode="NoResize">
     <Grid>
-        <Label x:Name="EventNameMini" Content="EventName" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" FontSize="30"/>
-        <Label x:Name="TimerMini" Content="00:00:00" HorizontalAlignment="Left" Margin="1724,-10,0,0" VerticalAlignment="Center" FontSize="40"/>
+        <TextBlock x:Name="EventNameMini" Text="EventName" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" FontSize="{DynamicResource ControlFontSize}" MaxWidth="{DynamicResource ControlWidth}" TextWrapping="Wrap"/>
+        <Label x:Name="TimerMini" Content="00:00:00" HorizontalAlignment="Right" Margin="0,-10,40,0" VerticalAlignment="Center" FontSize="{DynamicResource ControlTimeFontSize}"/>
         <Image x:Name="TimerImage" HorizontalAlignment="Center" VerticalAlignment="Top"/>
     </Grid>
 </Window>

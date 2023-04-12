@@ -46,7 +46,8 @@ namespace RR_Timer.Logic
             MainWindow = mw;
             _screenHandler = sh;
             SetAlignmentList();
-            SelectedAlignment = new TimerTop();
+            if (_screenHandler.SelectedScreen != null)
+                SelectedAlignment = new TimerTop(_screenHandler.SelectedScreen.WorkingArea.Width);
         }
 
         /// <summary>

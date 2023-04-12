@@ -261,13 +261,16 @@ namespace RR_Timer.UI
         /// </summary>
         private void SelectAlignment()
         {
-            _clockLogic.SelectedAlignment = AlignmentComboBox.SelectedIndex switch
+            if (_screenHandler.SelectedScreen != null)
             {
-                0 => new TimerTop(),
-                1 => new TimerLeft(),
-                2 => new TimerRight(),
-                _ => _clockLogic.SelectedAlignment
-            };
+                _clockLogic.SelectedAlignment = AlignmentComboBox.SelectedIndex switch
+                {
+                    0 => new TimerTop(_screenHandler.SelectedScreen.WorkingArea.Width),
+                    1 => new TimerLeft(_screenHandler.SelectedScreen.WorkingArea.Width),
+                    2 => new TimerRight(_screenHandler.SelectedScreen.WorkingArea.Width),
+                    _ => _clockLogic.SelectedAlignment
+                };
+            }
         }
 
         /// <summary>

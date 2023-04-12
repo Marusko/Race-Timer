@@ -123,8 +123,7 @@ namespace RR_Timer.API
                 if (response.IsSuccessStatusCode)
                 {
                     var responseString = await response.Content.ReadAsStringAsync();
-                    responseString = responseString.Replace("[", "").Replace("]", "");
-                    var asRacers = responseString.Split(",");
+                    var asRacers = responseString.Split("\r\n");
                     if (!string.IsNullOrEmpty(asRacers[0]) && !_clockLogic.IsTimerMinimized())
                     {
                         _clockLogic.AutoMinimizeTimer();

@@ -20,8 +20,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock x:Name="EventNameLabel" Text="EventNameLabel" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="150" Margin="0,70,0,0" TextAlignment="Center" TextWrapping="Wrap" Grid.Row="0"/>
-        <Label x:Name="EventTypeLabel" Content="EventTypeLabel" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="50" Grid.Row="1"/>
+        <TextBlock x:Name="EventNameLabel" Text="EventNameLabel" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="{DynamicResource ControlFontSize}" Margin="0,70,0,0" TextAlignment="Center" TextWrapping="Wrap" Grid.Row="0"/>
+        <Label x:Name="EventTypeLabel" Content="EventTypeLabel" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="{DynamicResource ControlSmallFontSize}" Grid.Row="1"/>
         <StackPanel x:Name="TimerPanel"  Grid.Row="2" HorizontalAlignment="Center">
         </StackPanel>
     </Grid>

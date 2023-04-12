@@ -32,7 +32,7 @@ namespace RR_Timer.UI
         /// <param name="name">Event name to show</param>
         public void SetEventName(string name)
         {
-            EventNameMini.Content = name;
+            EventNameMini.Text = name;
         }
 
         /// <summary>
@@ -55,6 +55,18 @@ namespace RR_Timer.UI
             Left = _screenHandler.SelectedScreen.WorkingArea.Left;
             Top = _screenHandler.SelectedScreen.WorkingArea.Top;
             Width = _screenHandler.SelectedScreen.WorkingArea.Width;
+
+            var controlSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
+            Application.Current.Resources.Remove("ControlFontSize");
+            Application.Current.Resources.Add("ControlFontSize", controlSize * 3 - 5);
+
+            var controlTimeSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
+            Application.Current.Resources.Remove("ControlTimeFontSize");
+            Application.Current.Resources.Add("ControlTimeFontSize", controlTimeSize * 3);
+
+            var controlWidth = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 3 - 50;
+            Application.Current.Resources.Remove("ControlWidth");
+            Application.Current.Resources.Add("ControlWidth", controlWidth );
         }
         /// <summary>
         /// Method sets chosen image to TimerImage, best used for rectangle logo

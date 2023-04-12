@@ -79,6 +79,12 @@ namespace RR_Timer.UI
             Width = _screenHandler.SelectedScreen.WorkingArea.Width;
             Height = _screenHandler.SelectedScreen.WorkingArea.Height;
             WindowState = WindowState.Maximized;
+
+            var controlSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
+            Application.Current.Resources.Remove("ControlFontSize");
+            Application.Current.Resources.Add("ControlFontSize", controlSize * 10);
+            Application.Current.Resources.Remove("ControlSmallFontSize");
+            Application.Current.Resources.Add("ControlSmallFontSize", controlSize * 5);
         }
 
         /// <summary>
