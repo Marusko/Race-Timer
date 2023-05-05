@@ -1,9 +1,9 @@
 # RR_Timer :stopwatch:
 Application to show elapsed time from entered start time, with clock, on user-selected screen. Best used with RaceResult presenter as this app can automatically make the timer smaller, so it can fit over the presenter window without pressing `F11` on the presenter window.
 ### Small timer over the RR presenter after the start
-![image](https://user-images.githubusercontent.com/93376571/228545144-ff334b8e-0398-4462-b26d-dd55c3ca1d69.png)
+![Small timer](https://user-images.githubusercontent.com/93376571/231474167-d6fef6d4-5f84-4a07-8235-e185eabd58f1.png)
 ### Fullscreen timer after the start
-![image](https://user-images.githubusercontent.com/93376571/228545556-b42deb23-0bb5-4f5d-a0bc-56c5bbab02f0.png)
+![Fullscreen timer](https://user-images.githubusercontent.com/93376571/231473878-d7227c38-7b78-4fc7-a69a-0356eda6dd0b.png)
 
 ---
 # Features :star:
@@ -39,21 +39,21 @@ If you don't time the race with RaceResult, or don't want to create links, simpl
 > Only works with RaceResult Simple API
 ### Main API link :link:
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
- 2. Select settings from the left dropdown menu, in the details write `EventName,EventType`(see the picture)
+ 2. Select **Settings** from the left dropdown menu, in the details write `EventName,EventType`(see the picture)
 ![Creating main API link](https://user-images.githubusercontent.com/93376571/228536613-721357e7-d342-403c-9e85-fb77a9ba8633.png)
  3. Click the blue icon on this API under the `Link` column on the left, then copy the link and paste it in `API Timer` tab in the `API link` text box
 ### List API link :link:
-> You can use any other output, if it shows only finished racers. If you don't enter the List link, the automatic switching of timer windows will be disabled. You can still manually switch the windows.
- 1. Open the event in RR website > Output
- 2. Copy `Overall results` list and rename it to `APIlist` to not confusing it with other lists
- 3. Delete all columns except `Name` and `Bib`
- 4. Delete all filters and add **Field**>`Finished`, **Operator**>`=`, **Value**>`1`
-![image](https://user-images.githubusercontent.com/93376571/228540036-2f3f8100-1d2b-4020-81ad-52e421be1b04.png)
- 5. Go to Main Window > Access Rights/Simple API > Simple API 
- 6. Create another API **Type**>`List`, **Details**>`APIlist`(the list we created before), click on `TEXT` and select `JSON`
-![Both API links created](https://user-images.githubusercontent.com/93376571/228541684-c9a911d9-743f-4c72-ab33-cae9c19d63ab.png)
-  7. Click the blue icon on this API under the `Link` column on the left, then copy the link and paste it in `API Timer` tab in the `List link` text box
-  
+> If you don't enter the List link, the automatic switching of timer windows will be disabled. You can still manually switch the windows.
+ 1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
+ 2. Select **Custom** from the left dropdown menu, in the details write or copy                                          
+ `data/list?&fields=DisplayName,Bib&filter=[Finished]=1&listformat=CSV`(see the picture)
+![Creating list API link](https://user-images.githubusercontent.com/93376571/231474800-6a6ee8b3-abef-43d6-b3e0-c5db0518bf66.png)
+ 3. Click the blue icon on this API under the `Link` column on the left, then copy the link and paste it in `API Timer` tab in the `List link` text box
+
+The result:
+
+![Both API links created](https://user-images.githubusercontent.com/93376571/231475126-e2dcf0e8-1e55-491b-a289-f7e1293c755a.png)
+
 ---
 # Using the app :computer:
 ## Left side menu :fleur_de_lis:
@@ -109,11 +109,6 @@ If you don't time the race with RaceResult, or don't want to create links, simpl
       * Timer on left - Timer and clock on the left side, logo and QR code on the right side
       * Timer on right - Timer and clock on the right side, logo and QR code on the left side
 
----
-# Q&A :question:
-### I can't see everything when using the timer
-  * Go to Windows settings and check if the screen on which you are trying to diplay timer has resolution atleast 1920x1080 or higher. 
-  * If you don't have screen with high resolution, then please create **Issue**, I am working on it.
 ---
 :exclamation: **Disclaimers** "RR" and "RaceResult" are trademarked by and belong to race result AG I make no claims to these or any assets belonging to race result AG and use them purely for informational purposes only.
 
