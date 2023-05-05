@@ -1,4 +1,4 @@
-# RR_Timer :stopwatch:
+# Race Timer :stopwatch:
 Application to show elapsed time from entered start time, with clock, on user-selected screen. Best used with RaceResult presenter as this app can automatically make the timer smaller, so it can fit over the presenter window without pressing `F11` on the presenter window.
 ### Small timer over the RR presenter after the start
 ![Small timer](https://user-images.githubusercontent.com/93376571/231474167-d6fef6d4-5f84-4a07-8235-e185eabd58f1.png)
