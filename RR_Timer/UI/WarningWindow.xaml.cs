@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RR_Timer.UI
+namespace Race_timer.UI
 {
     /// <summary>
     /// Interaction logic for WarningWindow.xaml

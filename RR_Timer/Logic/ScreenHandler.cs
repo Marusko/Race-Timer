@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using RR_Timer.UI;
+using Race_timer.UI;
 
-namespace RR_Timer.Logic
+namespace Race_timer.Logic
 {
     /// <summary>
     /// Handles loading and switching between PC screens

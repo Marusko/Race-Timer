@@ -1,4 +1,4 @@
-﻿namespace RR_Timer.Data;
+﻿namespace Race_timer.Data;
 
 /// <summary>
 /// Represents different types of sport, based on index

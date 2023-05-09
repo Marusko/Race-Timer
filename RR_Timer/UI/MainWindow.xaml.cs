@@ -5,13 +5,13 @@ using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
-using RR_Timer.API;
-using RR_Timer.ClockUserControl;
-using RR_Timer.Data;
-using RR_Timer.Logic;
+using Race_timer.API;
+using Race_timer.ClockUserControl;
+using Race_timer.Data;
+using Race_timer.Logic;
 using Application = System.Windows.Application;
 
-namespace RR_Timer.UI
+namespace Race_timer.UI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -1,4 +1,4 @@
-﻿namespace RR_Timer.ClockUserControl
+﻿namespace Race_timer.ClockUserControl
 {
     /// <summary>
     /// Interaction logic for CodeOnMinimized.xaml

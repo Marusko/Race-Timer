@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using RR_Timer.API;
-using RR_Timer.ClockUserControl;
-using RR_Timer.UI;
+using Race_timer.API;
+using Race_timer.ClockUserControl;
+using Race_timer.UI;
 
-namespace RR_Timer.Logic
+namespace Race_timer.Logic
 {
     /// <summary>
     /// Handles all logic for clocks

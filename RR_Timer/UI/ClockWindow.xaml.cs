@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Media.Imaging;
-using RR_Timer.Logic;
-using RR_Timer.ClockUserControl;
+using Race_timer.ClockUserControl;
+using Race_timer.Logic;
 
-namespace RR_Timer.UI
+namespace Race_timer.UI
 {
     /// <summary>
     /// Interaction logic for ClockWindow.xaml

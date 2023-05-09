@@ -1,7 +1,6 @@
-﻿using RR_Timer.Logic;
-using System.Windows;
+﻿using System.Windows;
 
-namespace RR_Timer.ClockUserControl
+namespace Race_timer.ClockUserControl
 {
     /// <summary>
     /// Interaction logic for TimerTop.xaml

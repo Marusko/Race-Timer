@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Net.Http;
-using RR_Timer.Data;
-using RR_Timer.Logic;
-using RR_Timer.UI;
+using Race_timer.Data;
+using Race_timer.Logic;
+using Race_timer.UI;
 
-namespace RR_Timer.API
+namespace Race_timer.API
 {
     /// <summary>
     /// Handles retrieving data from links

@@ -1,11 +1,11 @@
-﻿using QRCoder;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using QRCoder;
 
-namespace RR_Timer.API
+namespace Race_timer.API
 {
     internal static class CodeGenerator
     {

@@ -2,9 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:clockUserControl="clr-namespace:RR_Timer.ClockUserControl"
+        xmlns:clockUserControl="clr-namespace:Race_timer.ClockUserControl"
         x:Name="Main" 
-        x:Class="RR_Timer.UI.MainWindow"
+        x:Class="Race_timer.UI.MainWindow"
         mc:Ignorable="d"
         Title="Race Timer" Height="450" Width="800"
 

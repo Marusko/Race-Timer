@@ -1,8 +1,8 @@
-﻿using RR_Timer.Logic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media.Imaging;
+using Race_timer.Logic;
 
-namespace RR_Timer.UI
+namespace Race_timer.UI
 {
     /// <summary>
     /// Interaction logic for CodeWindowForMinimized.xaml
