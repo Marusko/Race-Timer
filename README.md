@@ -66,27 +66,27 @@ The result:
   * **Informations** - Informations about the app
 
 ## Timer :hourglass_flowing_sand:
-![First tab, with manual settings](https://user-images.githubusercontent.com/93376571/230731257-6a90e409-3abb-4fe5-907f-8ebab6c186cd.png)
+![First tab, with manual settings](https://github.com/Marusko/Race-Timer/assets/93376571/da10697d-25c3-4f10-8a28-cc9ca8d04157)
   * **Event name** - Event name that will be displayed with timer
   * **Event type** - Event type that will be dipslayed on big fullscreen clock
-  * **Start time** - Define starting time for timer in `HH:MM` format
+  * **Start time** - Define starting time for timer in `HH:MM:SS` format
   * **Select image** - Choose image from PC to be displayed as logo, best works with rectangle logo, 
                        above the button will be showed name of the image, enables delete button (shared with **API Timer**)
   * **Delete image** - Clear the selected image (shared with **API Timer**)
   * **Open timer** - Open fullscreen timer, disables all settings and enables **Timer control**
   
 ## API Timer :watch:
-![Second tab, with API settings](https://user-images.githubusercontent.com/93376571/230731402-ec35e965-4210-462e-8cdc-7bec217f3050.png)
+![Second tab, with API settings](https://github.com/Marusko/Race-Timer/assets/93376571/a969a73a-3b82-4280-b9a4-6c14c6ea8a91)
   * **API Link** - Here enter the main link to get name and type of the event
   * **List Link** - Here enter the link which points to the output list, for automatic switching of the timer windows
-  * **Start Time** - Define starting time for timer in `HH:MM` format
+  * **Start Time** - Define starting time for timer in `HH:MM:SS` format
   * **Select image** - Choose image from PC to be displayed as logo, best works with rectangle logo, 
                        above the button will be showed name of the image, enables delete button (shared with **Timer**)
   * **Delete image** - Clear the selected image (shared with **Timer**)
   * **Open timer** - Open fullscreen timer, disables all settings and enables **Timer control**
   
 ## QR code :framed_picture:
-![Third tab, with QR code settings](https://user-images.githubusercontent.com/93376571/230731543-92e096e0-58f3-49c5-abfa-60dcdab6ac20.png)
+![Third tab, with QR code settings](https://github.com/Marusko/Race-Timer/assets/93376571/f5f44404-456f-4d72-919c-3fb656e45092)
   * **Generate QR code** - Here enter link to convert to QR code
   * **Generate QR** - Generates the QR code and sets it
   * **Select QR** - Choose image from PC to be displayed as QR code, above the button will be showed name of the image, enables delete button
@@ -96,13 +96,13 @@ The result:
 ## Timer control :wrench:
 > Tab is enabled when timer is open
 
-![Fourth tab, timer control](https://user-images.githubusercontent.com/93376571/230731967-12806b3f-0cee-45c0-b32f-028cf60fa9e6.png)
+![Fourth tab, timer control](https://github.com/Marusko/Race-Timer/assets/93376571/e5a41fc9-cfc0-4962-935e-f3eed6d29f78)
   * **Minimize** - To manually switch from fullscreen to small timer
   * **Maximize** - To manually switch from small to fullscreen timer
   * **Close timer** - To close the timer window, timer window also close when closing the main window
 
 ## Display settings :hammer_and_wrench:
-![Fifth tab, display settings](https://user-images.githubusercontent.com/93376571/230732033-6d9b08f7-11d8-4c1d-9fc5-4e82508e432c.png)
+![Fifth tab, display settings](https://github.com/Marusko/Race-Timer/assets/93376571/b00156b0-5de0-40df-8e31-5d90c1d19dfc)
   * **Display** - List of connected displays to choose on which the timer window will be opened. Display names here **AREN'T** the same as in Windows settings
   * **Timer and image alignment** - List of available alignments 
       * Timer on top - Timer on top, clock in the middle, logo on the bottom, QR code **NOT** displayed
