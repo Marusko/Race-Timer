@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="WarningWindow" Height="300" Width="400"
+        Title="WarningWindow" Height="300" Width="400" Topmost="True"
 
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -15,7 +15,8 @@
         FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" 
         ResizeMode="NoResize" WindowStyle="None" ShowInTaskbar="False" IsTabStop="False">
     <Grid>
-        <Button Content="OK" HorizontalAlignment="Center" Margin="0,186,0,0" VerticalAlignment="Top" Click="CloseWindow"/>
-        <TextBlock x:Name="WarningLabel" HorizontalAlignment="Center" Margin="0,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center"/>
+        <Label Content="WARNING" HorizontalAlignment="Center" FontSize="40" FontWeight="SemiBold" Margin="0, 20, 0, 0"/>
+        <Button Content="OK" HorizontalAlignment="Center" Margin="0,216,0,0" VerticalAlignment="Top" Click="CloseWindow"/>
+        <TextBlock x:Name="WarningLabel" HorizontalAlignment="Center" Margin="0,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center"/>
     </Grid>
 </Window>
