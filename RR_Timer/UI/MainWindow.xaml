@@ -15,7 +15,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" 
-        Icon="/UI/hourglass.png" ResizeMode="CanMinimize">
+        Icon="/UI/onlyRmini.png" ResizeMode="CanMinimize">
     <DockPanel>
         <TabControl x:Name="TabControl" TabStripPlacement="Left">
             <TabItem x:Name="TimerTab" Header="Timer" ToolTip="Timer setup">
@@ -96,11 +96,6 @@
                     <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,140,0,0">
                         <Hyperlink Click="OpenCodePage" Foreground="#FF30E433">
                             <Run Text="QR code generator"/>
-                        </Hyperlink>
-                    </Label>
-                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,170,0,0">
-                        <Hyperlink Click="OpenIconPage" Foreground="#FF30E433">
-                            <Run Text="App Icon"/>
                         </Hyperlink>
                     </Label>
                     <Label Content="Used external content:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"/>

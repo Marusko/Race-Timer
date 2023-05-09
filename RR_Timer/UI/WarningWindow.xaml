@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" 
-        ResizeMode="NoResize" WindowStyle="None" ShowInTaskbar="False" IsTabStop="False">
+        ResizeMode="NoResize" WindowStyle="None" ShowInTaskbar="False" IsTabStop="False" Icon="/UI/onlyRmini.png">
     <Grid>
         <Label Content="WARNING" HorizontalAlignment="Center" FontSize="40" FontWeight="SemiBold" Margin="0, 20, 0, 0"/>
         <Button Content="OK" HorizontalAlignment="Center" Margin="0,216,0,0" VerticalAlignment="Top" Click="CloseWindow"/>

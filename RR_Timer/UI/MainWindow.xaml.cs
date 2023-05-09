@@ -473,17 +473,6 @@ namespace RR_Timer.UI
         }
 
         /// <summary>
-        /// Method called by App icon hyperlink, opens page with the icon
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenIconPage(object sender, RoutedEventArgs e)
-        {
-            const string url = "https://www.flaticon.com/free-icon/hourglass_9182366";
-            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
-        }
-
-        /// <summary>
         /// Method called by QR code generator hyperlink, opens QR code generator page
         /// </summary>
         /// <param name="sender"></param>

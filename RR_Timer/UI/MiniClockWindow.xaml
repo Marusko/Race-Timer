@@ -13,7 +13,7 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" Icon="/UI/hourglass.png" IsTabStop="False" 
+        FontFamily="{DynamicResource MaterialDesignFont}" Icon="/UI/onlyRmini.png" IsTabStop="False" 
         ResizeMode="NoResize">
     <Grid>
         <TextBlock x:Name="EventNameMini" Text="EventName" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" FontSize="{DynamicResource ControlFontSize}" MaxWidth="{DynamicResource ControlWidth}" TextWrapping="Wrap"/>
