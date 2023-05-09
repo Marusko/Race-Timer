@@ -22,7 +22,7 @@
                 <Grid>
                     <TextBox x:Name="EventNameText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" HorizontalScrollBarVisibility="Auto" InputScope="RegularExpression" HorizontalContentAlignment="Center" ToolTip="Event Name" FontSize="14"/>
                     <Button Content="Open Timer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTimer" Margin="0,350,0,0" FontSize="16" ToolTip="Start the timer"/>
-                    <TextBox x:Name="StartTime" HorizontalAlignment="Center" Margin="0,210,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="68" HorizontalContentAlignment="Center" InputScope="Time" FontSize="16" ToolTip="Event start time"/>
+                    <TextBox x:Name="StartTime" HorizontalAlignment="Center" Margin="0,210,0,0" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" Width="75" HorizontalContentAlignment="Center" InputScope="Time" FontSize="16" ToolTip="Event start time"/>
                     <ComboBox x:Name="EventTypeComboBox" HorizontalAlignment="Center" Margin="0,140,0,0" VerticalAlignment="Top" Width="200" FontSize="14" ToolTip="Event type"/>
                     <Label Content="Event Name" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <Label Content="Event Type" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Top" FontSize="16"/>
@@ -37,7 +37,7 @@
                     <TextBox x:Name="EventLinkText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" HorizontalContentAlignment="Center" InputScope="Url" FontSize="14" ToolTip="Link for event API"/>
                     <TextBox x:Name="ListLinkText" HorizontalAlignment="Center" Margin="0,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" HorizontalContentAlignment="Center" InputScope="Url" FontSize="14" ToolTip="Link for list API"/>
                     <Button Content="Open Timer" HorizontalAlignment="Center" Margin="0,350,0,0" VerticalAlignment="Top" Click="OpenLinkTimer" FontSize="16" ToolTip="Start the timer"/>
-                    <TextBox x:Name="LinkTimerStartTimeText" HorizontalAlignment="Center" Margin="0,210,0,0" TextWrapping="Wrap" Text="00:00" VerticalAlignment="Top" Width="68" HorizontalContentAlignment="Center" InputScope="Time" FontSize="16" ToolTip="Event start time"/>
+                    <TextBox x:Name="LinkTimerStartTimeText" HorizontalAlignment="Center" Margin="0,210,0,0" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" Width="75" HorizontalContentAlignment="Center" InputScope="Time" FontSize="16" ToolTip="Event start time"/>
                     <Label Content="API Link" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <Label Content="List Link" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <Label Content="Start Time" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" FontSize="16"/>

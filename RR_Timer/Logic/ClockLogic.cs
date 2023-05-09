@@ -330,9 +330,10 @@ namespace RR_Timer.Logic
             {
                 var hour = int.Parse(split[0]);
                 var minute = int.Parse(split[1]);
+                var second = int.Parse(split[2]);
                 try
                 {
-                    StartTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, hour, minute, 0);
+                    StartTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, hour, minute, second);
                 }
                 catch (Exception)
                 {
