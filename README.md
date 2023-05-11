@@ -76,15 +76,19 @@ The result:
   * **Open timer** - Open fullscreen timer, disables all settings and enables **Timer control**
   
 ## API Timer :watch:
-![Second tab, with API settings](https://github.com/Marusko/Race-Timer/assets/93376571/a969a73a-3b82-4280-b9a4-6c14c6ea8a91)
-  * **API Link** - Here enter the main link to get name and type of the event
-  * **List Link** - Here enter the link which points to the output list, for automatic switching of the timer windows
-  * **Start Time** - Define starting time for timer in `HH:MM:SS` format
-  * **Select image** - Choose image from PC to be displayed as logo, best works with rectangle logo, 
+![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/73477f6d-2e0e-4058-a3ae-dd82f8c8a659)
+  * **API Timer** - Tab for entering links and setting up the API timer
+    * **API Link** - Here enter the main link to get name and type of the event
+    * **List Link** - Here enter the link which points to the output list, for automatic switching of the timer windows
+    * **Start Time** - Define starting time for timer in `HH:MM:SS` format
+    * **Select image** - Choose image from PC to be displayed as logo, best works with rectangle logo, 
                        above the button will be showed name of the image, enables delete button (shared with **Timer**)
-  * **Delete image** - Clear the selected image (shared with **Timer**)
-  * **Open timer** - Open fullscreen timer, disables all settings and enables **Timer control**
-  
+    * **Delete image** - Clear the selected image (shared with **Timer**)
+    * **Open timer** - Open fullscreen timer, disables all settings and enables **Timer control**
+
+![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/b38030cc-c6f0-4c80-9653-e61693795820)
+  * **API cheat sheet** - Tab with API settings, to quickly find and paste when creating API in Race Result
+
 ## QR code :framed_picture:
 ![Third tab, with QR code settings](https://github.com/Marusko/Race-Timer/assets/93376571/f5f44404-456f-4d72-919c-3fb656e45092)
   * **Generate QR code** - Here enter link to convert to QR code
