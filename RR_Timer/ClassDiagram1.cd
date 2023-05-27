@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Race_timer.API.CodeGenerator">
+    <Position X="14" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>API\CodeGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Race_timer.API.LinkHandler">
+    <Position X="16.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAiEgAAABAAAAgIAAAAAAAAAAAAAAAEAEA=</HashCode>
+      <FileName>API\LinkHandler.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_clockLogic" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Race_timer.ClockUserControl.CodeOnMinimized" BaseTypeListCollapsed="true">
+    <Position X="20" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ClockUserControl\CodeOnMinimized.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Race_timer.ClockUserControl.TimerLeft" BaseTypeListCollapsed="true">
+    <Position X="15.5" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ClockUserControl\TimerLeft.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Race_timer.ClockUserControl.TimerRight" BaseTypeListCollapsed="true">
+    <Position X="22.25" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ClockUserControl\TimerRight.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Race_timer.ClockUserControl.TimerTop" BaseTypeListCollapsed="true">
+    <Position X="17.75" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ClockUserControl\TimerTop.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Race_timer.Logic.ClockLogic">
+    <Position X="19.75" Y="3.25" Width="2.5" />
+    <AssociationLine Name="_screenHandler" Type="Race_timer.Logic.ScreenHandler" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="19.75" Y="10.25" />
+        <Point X="18.938" Y="10.25" />
+        <Point X="18.938" Y="11.25" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.659" Y="1.164" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>QCAAQABACAEgAAAAEBAEAgBOaohBACgEkAAABgAAAwA=</HashCode>
+      <FileName>Logic\ClockLogic.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_linkHandler" />
+      <Field Name="_screenHandler" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Race_timer.Logic.ScreenHandler">
+    <Position X="18.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAgAAgAAAAAAABAAAIAAAAAAAgSAACAAAAAAA=</HashCode>
+      <FileName>Logic\ScreenHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Race_timer.UI.ClockWindow" BaseTypeListCollapsed="true">
+    <Position X="17" Y="7" Width="1.5" />
+    <InheritanceLine Type="System.Windows.Window" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="18.75" Y="17.062" />
+        <Point X="14.225" Y="17.062" />
+        <Point X="14.225" Y="9.762" />
+        <Point X="16.625" Y="9.762" />
+        <Point X="16.625" Y="8.625" />
+        <Point X="17" Y="8.625" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="_screenHandler" Type="Race_timer.Logic.ScreenHandler" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="17.344" Y="9.387" />
+        <Point X="17.344" Y="12.5" />
+        <Point X="18.25" Y="12.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.299" Y="2.781" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAlEAAAEBAACAAAAAAAAAAA=</HashCode>
+      <FileName>UI\ClockWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_screenHandler" />
+      <Field Name="_clockLogic" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Race_timer.UI.CodeWindowForMinimized" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="12.5" Width="2.25" />
+    <InheritanceLine Type="System.Windows.Window" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="19.25" Y="16.75" />
+        <Point X="19.25" Y="16.663" />
+        <Point X="14.812" Y="16.663" />
+        <Point X="14.812" Y="14.117" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="_screenHandler" Type="Race_timer.Logic.ScreenHandler">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.279" Y="0.091" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAFAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\CodeWindowForMinimized.xaml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_screenHandler" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Race_timer.UI.MainWindow" BaseTypeListCollapsed="true">
+    <Position X="23.5" Y="8" Width="2" />
+    <InheritanceLine Type="System.Windows.Window" FixedFromPoint="true">
+      <Path>
+        <Point X="19.812" Y="17.441" />
+        <Point X="19.812" Y="17.862" />
+        <Point X="23.125" Y="17.862" />
+        <Point X="23.125" Y="11.22" />
+        <Point X="23.5" Y="11.22" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="_screenHandler" Type="Race_timer.Logic.ScreenHandler">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="2.264" Y="0.17" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="_clockWindow" Type="System.Windows.Window" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="24.5" Y="15.905" />
+        <Point X="24.5" Y="18.066" />
+        <Point X="19.5" Y="18.066" />
+        <Point X="19.5" Y="17.441" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-6.343" Y="-1.229" Height="0.182" Width="1.211" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>dAAAAAQh0AAAEBAJgAgAQAhBAIgIACAAACIAKQAQEAA=</HashCode>
+      <FileName>UI\MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_clockLogic" />
+      <Field Name="_screenHandler" />
+      <Field Name="_clockWindow" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Race_timer.UI.MiniClockWindow" BaseTypeListCollapsed="true">
+    <Position X="15.25" Y="14.25" Width="1.5" />
+    <InheritanceLine Type="System.Windows.Window" FixedFromPoint="true">
+      <Path>
+        <Point X="20.25" Y="16.938" />
+        <Point X="20.625" Y="16.938" />
+        <Point X="20.625" Y="15.97" />
+        <Point X="16.75" Y="15.97" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="_clockLogic" Type="Race_timer.Logic.ClockLogic" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="16.75" Y="15.625" />
+        <Point X="21.375" Y="15.625" />
+        <Point X="21.375" Y="10.834" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="5.774" Y="4.758" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="_screenHandler" Type="Race_timer.Logic.ScreenHandler" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="16.75" Y="15.062" />
+        <Point X="18" Y="15.062" />
+        <Point X="18" Y="15.045" />
+        <Point X="18.625" Y="15.045" />
+        <Point X="18.625" Y="14.795" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.42" Y="-0.008" Height="0.182" Width="1.342" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAlEAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>UI\MiniClockWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_clockLogic" />
+      <Field Name="_screenHandler" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Race_timer.UI.WarningWindow" BaseTypeListCollapsed="true">
+    <Position X="14" Y="6.25" Width="2.5" />
+    <InheritanceLine Type="System.Windows.Window" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="18.75" Y="17.25" />
+        <Point X="13.948" Y="17.25" />
+        <Point X="13.948" Y="9.079" />
+        <Point X="15.25" Y="9.079" />
+        <Point X="15.25" Y="8.704" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAEAAAAACAEA=</HashCode>
+      <FileName>UI\WarningWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Windows.Window" Collapsed="true">
+    <Position X="18.75" Y="16.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
