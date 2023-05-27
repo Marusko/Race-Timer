@@ -80,6 +80,7 @@ namespace Race_timer.UI
             Height = _screenHandler.SelectedScreen.WorkingArea.Height;
             WindowState = WindowState.Maximized;
 
+            //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
             var controlSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
             Application.Current.Resources.Remove("ControlFontSize");
             Application.Current.Resources.Add("ControlFontSize", controlSize * 10);

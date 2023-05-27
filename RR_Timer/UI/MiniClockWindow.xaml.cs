@@ -56,14 +56,17 @@ namespace Race_timer.UI
             Top = _screenHandler.SelectedScreen.WorkingArea.Top;
             Width = _screenHandler.SelectedScreen.WorkingArea.Width;
 
+            //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
             var controlSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
             Application.Current.Resources.Remove("ControlFontSize");
             Application.Current.Resources.Add("ControlFontSize", controlSize * 3 - 5);
 
+            //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
             var controlTimeSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
             Application.Current.Resources.Remove("ControlTimeFontSize");
             Application.Current.Resources.Add("ControlTimeFontSize", controlTimeSize * 3);
 
+            //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
             var controlWidth = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 3 - 50;
             Application.Current.Resources.Remove("ControlWidth");
             Application.Current.Resources.Add("ControlWidth", controlWidth );

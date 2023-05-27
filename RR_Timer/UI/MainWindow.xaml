@@ -104,16 +104,11 @@
                         </Hyperlink>
                     </Label>
                     <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,80,0,0">
-                        <Hyperlink Click="OpenJsonPage" Foreground="#FF30E433">
-                            <Run Text="JSON processing framework"/>
-                        </Hyperlink>
-                    </Label>
-                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,110,0,0">
                         <Hyperlink Click="OpenMaterialDesignPage" Foreground="#FF30E433">
                             <Run Text="Material design themes"/>
                         </Hyperlink>
                     </Label>
-                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,140,0,0">
+                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,110,0,0">
                         <Hyperlink Click="OpenCodePage" Foreground="#FF30E433">
                             <Run Text="QR code generator"/>
                         </Hyperlink>
