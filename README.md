@@ -17,13 +17,13 @@ Application to show elapsed time from entered start time, with clock, on user-se
 * You can import your logo, best works for rectangle logo
 * You can import your own QR code or provide a link and app will convert it
 ## Automatic switching :on:
-  When someone finishes the race, custom output in RR is updated, cashed on second API link. App checks this second link every 15 seconds. When clock switches to small clock, app stops checking the second link. Required custom output list in RR and second API link.
+  When someone finishes the race, custom output in RR is updated, cashed on second API link. App checks this second link every 15 seconds. When clock switches to small clock, app stops checking the second link.
 ## Choosing screen :desktop_computer:
   You can choose on which screen will the timer be shown, list of screens is refreshed every 20 seconds. If timer is open, refreshing list of screens is paused.
   
 ---  
 # Dependencies :wood:
-App requires [.NET7](https://dotnet.microsoft.com/en-us/download) to be installed. Most probably you already have it. If not, it will be downloaded and installed when installing the RR_Timer
+App requires [.NET7](https://dotnet.microsoft.com/en-us/download) to be installed. Most probably you already have it. If not, it will be downloaded and installed when installing the Race Timer
   
 # Installation :cd:
   1. Download [zip file](https://github.com/Marusko/RaceResult_UI_Timer/releases) and extract
@@ -41,14 +41,14 @@ If you don't time the race with RaceResult, or don't want to create links, simpl
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
  2. Select **Settings** from the left dropdown menu, in the details write `EventName,EventType`(see the picture)
 ![Creating main API link](https://user-images.githubusercontent.com/93376571/228536613-721357e7-d342-403c-9e85-fb77a9ba8633.png)
- 3. Click the blue icon on this API under the `Link` column on the left, then copy the link and paste it in `API Timer` tab in the `API link` text box
+ 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it in `API Timer` tab in the `API link` text box
 ### List API link :link:
 > If you don't enter the List link, the automatic switching of timer windows will be disabled. You can still manually switch the windows.
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
  2. Select **Custom** from the left dropdown menu, in the details write or copy                                          
  `data/list?&fields=DisplayName,Bib&filter=[Finished]=1&listformat=CSV`(see the picture)
 ![Creating list API link](https://user-images.githubusercontent.com/93376571/231474800-6a6ee8b3-abef-43d6-b3e0-c5db0518bf66.png)
- 3. Click the blue icon on this API under the `Link` column on the left, then copy the link and paste it in `API Timer` tab in the `List link` text box
+ 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it in `API Timer` tab in the `List link` text box
 
 The result:
 
