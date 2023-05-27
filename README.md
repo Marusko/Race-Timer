@@ -17,7 +17,7 @@ Application to show elapsed time from entered start time, with clock, on user-se
 * You can import your logo, best works for rectangle logo
 * You can import your own QR code or provide a link and app will convert it
 ## Automatic switching :on:
-  When someone finishes the race, custom output in RR is updated, cashed on second API link. App checks this second link every 15 seconds. When clock switches to small clock, app stops checking the second link. Required second API link.
+  When someone finishes the race, custom output in RR is updated, cashed on second API link. App checks this second link every 15 seconds. When clock switches to small clock, app stops checking the second link.
 ## Choosing screen :desktop_computer:
   You can choose on which screen will the timer be shown, list of screens is refreshed every 20 seconds. If timer is open, refreshing list of screens is paused.
   
