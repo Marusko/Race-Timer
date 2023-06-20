@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Race_timer.ClockUserControl.MainWindowStartTimes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="440">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="IndexLabel" Grid.Column="0" Content="01:" FontSize="16" Width="30"/>
+        <TextBox x:Name="StartName" Grid.Column="1" Margin="10, 0" FontSize="16" Width="200" TextAlignment="Center" TextWrapping="Wrap" ToolTip="Contest name" HorizontalContentAlignment="Center"/>
+        <TextBox x:Name="StartTime" Grid.Column="2" Margin="0,0,10,0" Text="00:00:00" FontSize="16" Width="75" TextAlignment="Center" ToolTip="Contest start time"/>
+        <Button Grid.Column="3" Content="Remove" Click="Close" ToolTip="Remove this start time"/>
+    </Grid>
+</UserControl>

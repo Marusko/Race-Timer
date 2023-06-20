@@ -66,6 +66,27 @@
                     </TabItem>
                 </TabControl>
             </TabItem>
+            <TabItem x:Name="StartTimesTab" Header="Start times" ToolTip="Setup one or multiple start times">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Number of start times: " FontSize="16"/>
+                        <Label Grid.Column="1" x:Name="TimesNumberLabel" Content="0" FontSize="16" ClipToBounds="True"/>
+                        <Button Grid.Column="2" Content="Add start time" Click="AddStartTime" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0" ToolTip="Adds new start time"/>
+                    </Grid>
+                    <ScrollViewer Grid.Row="1" Margin="5,10,0,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True">
+                        <StackPanel x:Name="StartTimesStackPanel"/>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
             <TabItem x:Name="CodeTab" Header="QR code" >
                 <Grid>
                     <Label Content="Generate QR code" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" FontSize="16"/>
@@ -75,8 +96,8 @@
                     <Label x:Name="CodeName" Content="" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <Button Content="Select QR" HorizontalAlignment="Center" Margin="0,230,100,0" VerticalAlignment="Top" Click="OpenCode" ToolTip="Select QR code/image from PC"/>
                     <Button x:Name="DeleteCodeButton" Content="Delete QR" HorizontalAlignment="Center" Margin="100,230,0,0" VerticalAlignment="Top" Click="DeleteCode" IsEnabled="False" ToolTip="Clear the QR code/image"/>
-                    <CheckBox x:Name="CodeCheckBoxForMinimized" Content="Show QR code when minimized" HorizontalAlignment="Center" Margin="0,288,0,0" VerticalAlignment="Top" FontSize="16" Height="31" Width="265" IsEnabled="{Binding ElementName=DeleteCodeButton, Path=IsEnabled}" ToolTip="If enabled, QR code will be shown in periods when timer is small"/>
-                    <clockUserControl:CodeOnMinimized x:Name="MinimizedCodeTimes" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,320,0,0" IsEnabled="{Binding ElementName=CodeCheckBoxForMinimized, Path=IsChecked}" ToolTip="Sets the intervals"/>
+                    <CheckBox x:Name="CodeCheckBoxForMinimized" Content="Show QR code when minimized" HorizontalAlignment="Center" Margin="0,288,0,0" VerticalAlignment="Top" FontSize="16" Height="31" Width="265" IsEnabled="{Binding IsEnabled, ElementName=DeleteCodeButton}" ToolTip="If enabled, QR code will be shown in periods when timer is small"/>
+                    <clockUserControl:CodeOnMinimized x:Name="MinimizedCodeTimes" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,320,0,0" IsEnabled="{Binding IsChecked, ElementName=CodeCheckBoxForMinimized}" ToolTip="Sets the intervals"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="ControlTab" Header="Timer control" ToolTip="Control size or close the timer">

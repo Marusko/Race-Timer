@@ -27,6 +27,9 @@ namespace Race_timer.UI
         public bool OpenedTimer { get; private set; }
         public bool MinimizedTimer { get; private set; }
         public bool CanOpenTimer { get; set; }
+        public int StartTimeCount { get; set; }
+        public List<int> UsedIndexes { get; }
+        private Dictionary<string,string> StartTimes { get; }
 
         /// <summary>
         /// Initializes and shows the main window, creates new ScreenHandler and ClockLogic,
@@ -55,6 +58,9 @@ namespace Race_timer.UI
             CanOpenTimer = true;
             ControlTab.IsEnabled = false;
             MaximizeButton.IsEnabled = false;
+            StartTimeCount = 0;
+            UsedIndexes = new List<int>();
+            StartTimes = new Dictionary<string,string>();
             Closed += ShutDownApp;
             SetInfoLabel();
         }
@@ -68,6 +74,7 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void OpenTimer(object sender, RoutedEventArgs e)
         {
+            SaveStartTimesToDictionary();
             if (OpenedTimer) return;
             OpenedTimer = true;
             MinimizedTimer = false;
@@ -88,6 +95,7 @@ namespace Race_timer.UI
             SettingsTab.IsEnabled = false;
             ControlTab.IsEnabled = true;
             CodeTab.IsEnabled = false;
+            StartTimesTab.IsEnabled = false;
             TabControl.SelectedItem = ControlTab;
             _openedLinkTimer = false;
         }
@@ -101,6 +109,7 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void OpenLinkTimer(object sender, RoutedEventArgs e)
         {
+            SaveStartTimesToDictionary();
             if (OpenedTimer) return;
             OpenedTimer = true;
             MinimizedTimer = false;
@@ -121,6 +130,7 @@ namespace Race_timer.UI
             SettingsTab.IsEnabled = false;
             ControlTab.IsEnabled = true;
             CodeTab.IsEnabled = false;
+            StartTimesTab.IsEnabled = false;
             TabControl.SelectedItem = ControlTab;
             _openedLinkTimer = true;
         }
@@ -219,6 +229,7 @@ namespace Race_timer.UI
             SettingsTab.IsEnabled = true;
             ControlTab.IsEnabled = false;
             CodeTab.IsEnabled = true;
+            StartTimesTab.IsEnabled = true;
             TabControl.SelectedItem = _openedLinkTimer ? LinkTimerTab : TimerTab;
             MinimizeButton.IsEnabled = true;
             MaximizeButton.IsEnabled = false;
@@ -436,6 +447,51 @@ namespace Race_timer.UI
                     var w = new WarningWindow($"Oops, cannot convert this to number\n[{exception.Message}]");
                     w.ShowDialog();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Returns first unused index of start time
+        /// </summary>
+        /// <returns>First free index</returns>
+        private int GetFirstFreeIndex()
+        {
+            var indexer = 0;
+            while (UsedIndexes.Contains(indexer))
+            {
+                indexer++;
+            }
+            return indexer;
+        }
+
+        /// <summary>
+        /// Adds Start time user control, increments start time count and adds used index to list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddStartTime(object sender, RoutedEventArgs e)
+        {
+            var index = GetFirstFreeIndex();
+            StartTimesStackPanel.Children.Add(new MainWindowStartTimes
+            {
+                Index = index,
+                MainWindow = this
+            });
+            UsedIndexes.Add(index);
+            StartTimeCount++;
+            TimesNumberLabel.Content = StartTimeCount.ToString();
+        }
+
+        /// <summary>
+        /// Copies contests start time and name to Dictionary
+        /// </summary>
+        private void SaveStartTimesToDictionary()
+        {
+            StartTimes.Clear();
+            foreach (UIElement i in StartTimesStackPanel.Children)
+            {
+                var startTime = (MainWindowStartTimes)i;
+                StartTimes.Add(startTime.StartName.Text, startTime.StartTime.Text);
             }
         }
 
