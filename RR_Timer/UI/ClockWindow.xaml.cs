@@ -19,7 +19,7 @@ namespace Race_timer.UI
         /// </summary>
         /// <param name="name">Event name to show</param>
         /// <param name="type">Event type</param>
-        /// <param name="startTime">Event start time in 00:00 format</param>
+        /// <param name="startTime">Event start time in 00:00:00 format</param>
         /// <param name="cl">Already created ClockLogic object</param>
         /// <param name="sh">Already created ScreenHandler object</param>
         public ClockWindow(string name, string type, string startTime, ClockLogic cl, ScreenHandler sh)
@@ -38,7 +38,7 @@ namespace Race_timer.UI
         /// <summary>
         /// Initialize and open the window, converts time string to DateTime and adds method to call after window is loaded
         /// </summary>
-        /// <param name="startTime">Event start time in 00:00 format</param>
+        /// <param name="startTime">Event start time in 00:00:00 format</param>
         /// <param name="cl">Already created ClockLogic object</param>
         /// <param name="sh">Already created ScreenHandler object</param>
         public ClockWindow(string startTime, ClockLogic cl, ScreenHandler sh)
