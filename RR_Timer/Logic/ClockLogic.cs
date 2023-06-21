@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Media.Imaging;
 using Race_timer.API;
 using Race_timer.ClockUserControl;
@@ -130,7 +130,7 @@ namespace Race_timer.Logic
                     {
                         continue;
                     }
-                    ActiveTimers.Add(StartTimes.Keys.ElementAt(i) ,new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width)
+                    ActiveTimers.Add(StartTimes.Keys.ElementAt(i) , new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, false)
                     {
                         Name = StartTimes.Keys.ElementAt(i),
                         StartTime = StartTimes.Values.ElementAt(i)
@@ -303,15 +303,14 @@ namespace Race_timer.Logic
         /// <param name="clock">Clock label from fullscreen clock</param>
         public void ShowClockOrTimer(ref StackPanel timers, ref Label clock)
         {
-            if (ActiveTimers.Values.Count == 0)
+            if (ActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
             {
                 clock.Content = " ";
                 timers.Children.Clear();
                 if (_screenHandler.SelectedScreen == null) return;
-                timers.Children.Add(new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width)
+                timers.Children.Add(new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
                 {
-                    Name = " ",
-                    StartTime = StringToDateTime(FormatTime())
+                    Name = " "
                 });
                 _clockInPanel = true;
             }

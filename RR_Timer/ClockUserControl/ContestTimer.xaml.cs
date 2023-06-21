@@ -1,4 +1,5 @@
 ﻿using System;
+using System.DirectoryServices.ActiveDirectory;
 using System.Windows;
 
 namespace Race_timer.ClockUserControl
@@ -9,6 +10,8 @@ namespace Race_timer.ClockUserControl
     public partial class ContestTimer
     {
         private readonly int _screenWidth;
+        private readonly System.Windows.Threading.DispatcherTimer _timer = new();
+        private bool _isClock;
         public DateTime StartTime { get; set; }
 
         public string Name
@@ -22,11 +25,15 @@ namespace Race_timer.ClockUserControl
         }
 
         private string _name;
-        public ContestTimer(int screenWidth)
+        public ContestTimer(int screenWidth, bool isClock)
         {
             InitializeComponent();
             Loaded += WindowLoaded;
+            _timer.Interval = new TimeSpan(0, 0, 0, 1);
+            _timer.Tick += TimerClick;
+            _timer.Start();
             _screenWidth = screenWidth;
+            _isClock = isClock;
         }
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
@@ -39,15 +46,28 @@ namespace Race_timer.ClockUserControl
         }
 
         /// <summary>
-        /// Formats timer time to 00:00:00
+        /// Formats timer or clock time to 00:00:00 format
         /// </summary>
-        /// <returns>Formatted time to show as timer</returns>
-        private string FormatStartTime()
+        /// <returns>Formatted time to show as timer or clock</returns>
+        private string FormatStartTimeOrClock()
         {
-            var clock = DateTime.Now.Subtract(StartTime).ToString();
+            var now = DateTime.Now;
+            string clock;
+            clock = !_isClock ? now.Subtract(StartTime).ToString() : now.TimeOfDay.ToString();
             var tmp = clock.LastIndexOf(".", StringComparison.Ordinal);
-            var timerClock = clock.Substring(0, tmp);
-            return timerClock;
+            clock = clock.Substring(0, tmp);
+            return clock;
+        }
+
+        private void TimerClick(object? sender, EventArgs e)
+        {
+            var c = FormatStartTimeOrClock();
+            ContestTimeLabel.Content = c;
+        }
+
+        public void StopTimer()
+        {
+            _timer.Stop();
         }
     }
 }
