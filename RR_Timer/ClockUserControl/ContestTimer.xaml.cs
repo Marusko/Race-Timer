@@ -10,7 +10,18 @@ namespace Race_timer.ClockUserControl
     {
         private readonly int _screenWidth;
         public DateTime StartTime { get; set; }
-        public string Name { get; set; }
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                ContestNameLabel.Content = value;
+            }
+        }
+
+        private string _name;
         public ContestTimer(int screenWidth)
         {
             InitializeComponent();
