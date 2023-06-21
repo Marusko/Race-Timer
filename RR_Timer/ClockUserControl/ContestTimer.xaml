@@ -10,7 +10,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" x:Name="ContestNameLabel" Content="Contest" FontSize="{DynamicResource ControlSmallFontSize}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Label Grid.Row="1" x:Name="ContestTimeLabel" Content="00:00:00" FontSize="{DynamicResource ControlFontSize}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Label Grid.Row="0" x:Name="ContestNameLabel" Content="Contest" FontSize="{DynamicResource ControlSmallFontSize}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,0,10,-35"/>
+        <Label Grid.Row="1" x:Name="ContestTimeLabel" Content="00:00:00" FontSize="{DynamicResource ControlFontSize}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,0"/>
     </Grid>
 </UserControl>
