@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Media.Imaging;
 using Race_timer.API;
 using Race_timer.ClockUserControl;
@@ -17,6 +16,10 @@ namespace Race_timer.Logic
     /// </summary>
     public class ClockLogic
     {
+        public const int ScrollBegin = -1;
+        public const int Scrolling = 0;
+        public const int ScrollEnd = 1;
+
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
 
         private DateTime _clockDateTime;
@@ -86,7 +89,7 @@ namespace Race_timer.Logic
         public void StartTimer()
         {
             _timer.Tick += ClockTick;
-            _timer.Interval = TimeSpan.FromMilliseconds(950);
+            _timer.Interval = new TimeSpan(0, 0, 1);
             _timer.Start();
         }
 

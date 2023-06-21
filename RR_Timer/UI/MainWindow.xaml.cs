@@ -462,7 +462,7 @@ namespace Race_timer.UI
         /// <returns>First free index</returns>
         private int GetFirstFreeIndex()
         {
-            var indexer = 0;
+            var indexer = 1;
             while (UsedIndexes.Contains(indexer))
             {
                 indexer++;

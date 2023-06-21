@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using Race_timer.Logic;
 
 namespace Race_timer.ClockUserControl
 {
@@ -8,11 +10,23 @@ namespace Race_timer.ClockUserControl
     public partial class TimerLeft
     {
         private readonly int _screenWidth;
+
+        private readonly System.Windows.Threading.DispatcherTimer _timer = new();
+        private int _stateOfScroll = ClockLogic.ScrollBegin;
+        private int _currentTime;
+        private int _currentDelay;
+
+        private const int ScrollDelay = 500;
+        private const int ScrollTimes = 1000;
+        private const int TimerMillis = 10;
         public TimerLeft(int screenWidth)
         {
             InitializeComponent();
             Loaded += WindowLoaded;
             _screenWidth = screenWidth;
+            _timer.Tick += TimerTick;
+            _timer.Interval = new TimeSpan(0, 0, 0, 0, TimerMillis);
+            _timer.Start();
         }
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
@@ -23,6 +37,44 @@ namespace Race_timer.ClockUserControl
             Application.Current.Resources.Add("ControlSmallFontSize", controlSize * 5);
             Application.Current.Resources.Remove("ControlCodeSize");
             Application.Current.Resources.Add("ControlCodeSize", controlSize * 20);
+        }
+        public void StopTimer()
+        {
+            _timer.Stop();
+        }
+
+        private void TimerTick(object? sender, EventArgs e)
+        {
+            if (_currentDelay != ScrollDelay && (_stateOfScroll == ClockLogic.ScrollBegin || _stateOfScroll == ClockLogic.ScrollEnd))
+            {
+                _currentDelay++;
+            }
+            else
+            {
+                if (_stateOfScroll == ClockLogic.ScrollBegin)
+                {
+                    _stateOfScroll = ClockLogic.Scrolling;
+                }
+                else if (_stateOfScroll == ClockLogic.Scrolling)
+                {
+                    if (_currentTime == ScrollTimes)
+                    {
+                        _currentTime = 0;
+                        _stateOfScroll = ClockLogic.ScrollEnd;
+                    }
+                    else
+                    {
+                        _currentTime++;
+                        TimerScrollViewer.ScrollToVerticalOffset(_currentTime * (TimerScrollViewer.ScrollableHeight / ScrollTimes));
+                    }
+                }
+                else if (_stateOfScroll == ClockLogic.ScrollEnd)
+                {
+                    TimerScrollViewer.ScrollToTop();
+                    _stateOfScroll = ClockLogic.ScrollBegin;
+                }
+                _currentDelay = 0;
+            }
         }
     }
 }

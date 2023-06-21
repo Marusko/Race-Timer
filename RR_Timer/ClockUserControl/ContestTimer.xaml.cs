@@ -29,7 +29,7 @@ namespace Race_timer.ClockUserControl
         {
             InitializeComponent();
             Loaded += WindowLoaded;
-            _timer.Interval = new TimeSpan(0, 0, 0, 1);
+            _timer.Interval = new TimeSpan(0, 0, 1);
             _timer.Tick += TimerClick;
             _timer.Start();
             _screenWidth = screenWidth;

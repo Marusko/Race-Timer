@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using Race_timer.ClockUserControl;
 using Race_timer.Logic;
@@ -34,6 +35,7 @@ namespace Race_timer.UI
             _clockLogic.StringToDateTime(startTime);
 
             Loaded += WindowLoaded;
+            Closed += OnClose;
         }
         /// <summary>
         /// Initialize and open the window, converts time string to DateTime and adds method to call after window is loaded
@@ -50,6 +52,7 @@ namespace Race_timer.UI
             _clockLogic.StringToDateTime(startTime);
 
             Loaded += WindowLoaded;
+            Closed += OnClose;
         }
         /// <summary>
         /// Initialize and open the window, used when switching between fullscreen and minimized clock window
@@ -64,6 +67,7 @@ namespace Race_timer.UI
             _screenHandler = sh;
 
             Loaded += WindowLoaded;
+            Closed += OnClose;
         }
         /// <summary>
         /// Method called after window is loaded, sets the position, state and width and height of window
@@ -86,6 +90,23 @@ namespace Race_timer.UI
             Application.Current.Resources.Add("ControlFontSize", controlSize * 10);
             Application.Current.Resources.Remove("ControlSmallFontSize");
             Application.Current.Resources.Add("ControlSmallFontSize", controlSize * 5);
+        }
+
+        private void OnClose(object? sender, EventArgs e)
+        {
+            if (TimerPanel.Children[0].GetType() == typeof(TimerTop))
+            {
+                ((TimerTop)TimerPanel.Children[0]).StopTimer();
+            }
+            else if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
+            {
+                ((TimerLeft)TimerPanel.Children[0]).StopTimer();
+            }
+            else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
+            {
+                ((TimerRight)TimerPanel.Children[0]).StopTimer();
+            }
+            
         }
 
         /// <summary>
