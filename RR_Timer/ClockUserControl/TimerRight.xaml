@@ -16,7 +16,9 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="1" x:Name="MainClockLabel" Content="00:00:00" HorizontalAlignment="Center" FontSize="{DynamicResource ControlSmallFontSize}" VerticalAlignment="Top" Margin="0,20,0,0"/>
-            <StackPanel Grid.Row="0" x:Name="TimerStackPanel" Orientation="Vertical"/>
+            <ScrollViewer Grid.Row="0" MaxHeight="500" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel x:Name="TimerStackPanel" Orientation="Vertical"/>
+            </ScrollViewer>
         </Grid>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
