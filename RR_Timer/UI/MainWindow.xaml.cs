@@ -235,6 +235,10 @@ namespace Race_timer.UI
             TabControl.SelectedItem = _openedLinkTimer ? LinkTimerTab : TimerTab;
             MinimizeButton.IsEnabled = true;
             MaximizeButton.IsEnabled = false;
+            foreach (var timer in _clockLogic.ActiveTimers)
+            {
+                timer.Value.StopTimer();
+            }
         }
 
         /// <summary>
