@@ -29,7 +29,7 @@ namespace Race_timer.UI
         public bool CanOpenTimer { get; set; }
         public int StartTimeCount { get; set; }
         public List<int> UsedIndexes { get; }
-        private Dictionary<string,string> StartTimes { get; }
+        public Dictionary<string,string> StartTimes { get; }
 
         /// <summary>
         /// Initializes and shows the main window, creates new ScreenHandler and ClockLogic,
@@ -75,6 +75,7 @@ namespace Race_timer.UI
         private void OpenTimer(object sender, RoutedEventArgs e)
         {
             SaveStartTimesToDictionary();
+            _clockLogic.ProcessStartTimes();
             if (OpenedTimer) return;
             OpenedTimer = true;
             MinimizedTimer = false;
@@ -110,6 +111,7 @@ namespace Race_timer.UI
         private void OpenLinkTimer(object sender, RoutedEventArgs e)
         {
             SaveStartTimesToDictionary();
+            _clockLogic.ProcessStartTimes();
             if (OpenedTimer) return;
             OpenedTimer = true;
             MinimizedTimer = false;

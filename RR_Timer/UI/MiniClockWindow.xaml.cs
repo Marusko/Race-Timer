@@ -38,10 +38,10 @@ namespace Race_timer.UI
         /// <summary>
         /// Method to update timer label with correct time
         /// </summary>
-        public void OnTimerClick()
+        /*public void OnTimerClick()
         {
             _clockLogic.ShowMiniClockOrTimer(ref TimerMini);
-        }
+        }*/
 
         /// <summary>
         /// Method called after window is loaded, sets the position, state and width of window

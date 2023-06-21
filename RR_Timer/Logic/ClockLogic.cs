@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.DirectoryServices.ActiveDirectory;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -18,7 +21,8 @@ namespace Race_timer.Logic
 
         private DateTime _clockDateTime;
         private readonly DateTime _nowDateTime = DateTime.Now;
-        private DateTime StartTime { get; set; }
+        private Dictionary<string, DateTime> StartTimes { get; }
+        public Dictionary<string, ContestTimer> ActiveTimers { get; }
         private string? EventName { get; set; }
         private string? EventType { get; set; }
         public BitmapImage? LogoImage { get; set; }
@@ -31,6 +35,8 @@ namespace Race_timer.Logic
         private LinkHandler? _linkHandler;
         private readonly ObservableCollection<string> _timerAlignmentNames = new();
         public UserControl? SelectedAlignment { get; set; }
+
+        private bool _clockInPanel = true;
 
         private DateTime _showCodeTime;
         private DateTime _hideCodeTime;
@@ -45,9 +51,23 @@ namespace Race_timer.Logic
         {
             MainWindow = mw;
             _screenHandler = sh;
+            StartTimes = new Dictionary<string, DateTime>();
+            ActiveTimers = new Dictionary<string, ContestTimer>();
             SetAlignmentList();
             if (_screenHandler.SelectedScreen != null)
                 SelectedAlignment = new TimerTop(_screenHandler.SelectedScreen.WorkingArea.Width);
+        }
+
+        public void ProcessStartTimes()
+        {
+            StartTimes.Clear();
+            ActiveTimers.Clear();
+            _clockInPanel = true;
+            foreach (var time in MainWindow.StartTimes)
+            {
+                StartTimes.Add(time.Key, StringToDateTime(time.Value));
+            }
+            MainWindow.StartTimes.Clear();
         }
 
         /// <summary>
@@ -86,15 +106,36 @@ namespace Race_timer.Logic
         /// <param name="e"></param>
         private void ClockTick(object? sender, EventArgs e)
         {
+            CheckTimers();
             if (_clockWindow == null) return;
             if (_clockWindow.GetType() == typeof(ClockWindow))
             {
                 ((ClockWindow)_clockWindow).OnTimerClick();
             }
-            else if (_clockWindow.GetType() == typeof(MiniClockWindow))
+            /*else if (_clockWindow.GetType() == typeof(MiniClockWindow))
             {
                 ((MiniClockWindow)_clockWindow).OnTimerClick();
                 MiniCodeShow();
+            }*/
+        }
+
+        private void CheckTimers()
+        {
+            for (int i = 0;i < StartTimes.Count; i++)
+            {
+                if (StartTimes.Values.ElementAt(i) < DateTime.Now)
+                {
+                    if (_screenHandler.SelectedScreen == null) return;
+                    if (ActiveTimers.Keys.Contains(StartTimes.Keys.ElementAt(i)))
+                    {
+                        continue;
+                    }
+                    ActiveTimers.Add(StartTimes.Keys.ElementAt(i) ,new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width)
+                    {
+                        Name = StartTimes.Keys.ElementAt(i),
+                        StartTime = StartTimes.Values.ElementAt(i)
+                    });
+                }
             }
         }
 
@@ -258,26 +299,44 @@ namespace Race_timer.Logic
         /// If current time is less than start time show big clock, else show big timer and small clock under
         /// in fullscreen clock
         /// </summary>
-        /// <param name="timer">Timer label from fullscreen clock</param>
+        /// <param name="timers">Timer StackPanel from fullscreen clock</param>
         /// <param name="clock">Clock label from fullscreen clock</param>
-        public void ShowClockOrTimer(ref Label timer, ref Label clock)
+        public void ShowClockOrTimer(ref StackPanel timers, ref Label clock)
         {
-            if (DateTime.Now.Subtract(StartTime).TotalSeconds < 0)
+            if (ActiveTimers.Values.Count == 0)
             {
-                timer.Content = FormatTime();
                 clock.Content = " ";
+                timers.Children.Clear();
+                if (_screenHandler.SelectedScreen == null) return;
+                timers.Children.Add(new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width)
+                {
+                    Name = " ",
+                    StartTime = StringToDateTime(FormatTime())
+                });
+                _clockInPanel = true;
             }
-            else
+            else if(ActiveTimers.Values.Count > 0) 
             {
+                if (_clockInPanel)
+                {
+                    timers.Children.Clear();
+                    _clockInPanel = false;
+                }
                 clock.Content = FormatTime();
-                timer.Content = FormatStartTime();
+                foreach (var contestTimer in ActiveTimers.Values)
+                {
+                    if (!timers.Children.Contains(contestTimer))
+                    {
+                        timers.Children.Add(contestTimer);
+                    }
+                }
             }
         }
         /// <summary>
         /// If current time is less than start time show clock, else show timer in minimized clock
         /// </summary>
         /// <param name="timer">Timer label from minimized clock</param>
-        public void ShowMiniClockOrTimer(ref Label timer)
+        /*public void ShowMiniClockOrTimer(ref Label timer)
         {
             if (DateTime.Now.Subtract(StartTime).TotalSeconds < 0)
             {
@@ -288,7 +347,7 @@ namespace Race_timer.Logic
                 _clockDateTime = DateTime.Now;
                 timer.Content = FormatStartTime();
             }
-        }
+        }*/
 
         /// <summary>
         /// Check what window is opening and sets the labels, and updates the properties
@@ -315,15 +374,16 @@ namespace Race_timer.Logic
         /// Converts string to DateTime, when something goes wrong, show warning window and closes the clock window
         /// </summary>
         /// <param name="s">Time in string format</param>
-        public void StringToDateTime(string s)
+        /// <returns>Date time with values from string</returns>
+        public DateTime StringToDateTime(string s)
         {
+            DateTime returnDateTime = DateTime.Now;
             var split = s.Split(':');
             if (string.IsNullOrEmpty(split[0]))
             {
                 var warning = new WarningWindow(WarningWindow.TimeWarning);
                 warning.ShowDialog();
                 MainWindow.CanOpenTimer = false;
-                return;
             }
 
             if (split.Length > 1)
@@ -333,7 +393,7 @@ namespace Race_timer.Logic
                 var second = int.Parse(split[2]);
                 try
                 {
-                    StartTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, hour, minute, second);
+                    returnDateTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, hour, minute, second);
                 }
                 catch (Exception)
                 {
@@ -348,6 +408,7 @@ namespace Race_timer.Logic
                 warning.ShowDialog();
                 MainWindow.CanOpenTimer = false;
             }
+            return returnDateTime;
         }
 
         /// <summary>
@@ -366,17 +427,7 @@ namespace Race_timer.Logic
             }
             return clockString;
         }
-        /// <summary>
-        /// Formats timer time to 00:00:00
-        /// </summary>
-        /// <returns>Formatted time to show as timer</returns>
-        private string FormatStartTime()
-        {
-            var clock = _clockDateTime.Subtract(StartTime).ToString();
-            var tmp = clock.LastIndexOf(".", StringComparison.Ordinal);
-            var timerClock = clock.Substring(0, tmp);
-            return timerClock;
-        }
+        
 
         /// <summary>
         /// Calls minimize method from main widow

@@ -113,15 +113,15 @@ namespace Race_timer.UI
         {
             if (TimerPanel.Children[0].GetType() == typeof(TimerTop))
             {
-                _clockLogic.ShowClockOrTimer(ref ((TimerTop)TimerPanel.Children[0]).TimerClockLabel, ref ((TimerTop)TimerPanel.Children[0]).MainClockLabel);
+                _clockLogic.ShowClockOrTimer(ref ((TimerTop)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerTop)TimerPanel.Children[0]).MainClockLabel);
             }
             else if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
-            { 
-                _clockLogic.ShowClockOrTimer(ref ((TimerLeft)TimerPanel.Children[0]).TimerClockLabel, ref ((TimerLeft)TimerPanel.Children[0]).MainClockLabel);
+            {
+                _clockLogic.ShowClockOrTimer(ref ((TimerLeft)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerLeft)TimerPanel.Children[0]).MainClockLabel);
             }
             else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
             {
-                _clockLogic.ShowClockOrTimer(ref ((TimerRight)TimerPanel.Children[0]).TimerClockLabel, ref ((TimerRight)TimerPanel.Children[0]).MainClockLabel);
+                _clockLogic.ShowClockOrTimer(ref ((TimerRight)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerRight)TimerPanel.Children[0]).MainClockLabel);
             }
         }
 

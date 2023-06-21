@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="1" x:Name="MainClockLabel" Content="00:00:00" HorizontalAlignment="Center" FontSize="{DynamicResource ControlSmallFontSize}" VerticalAlignment="Top" Margin="0,10,0,0"/>
-        <Label Grid.Row="0" x:Name="TimerClockLabel" Content="00:00:00" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="{DynamicResource ControlFontSize}" Margin="0,30,0,0"/>
+        <StackPanel Grid.Row="0" x:Name="TimerStackPanel" Orientation="Horizontal"/>
         <Image Grid.Row="2" x:Name="TimerImage" MaxHeight="{DynamicResource ControlFontSize}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,25,0,0"></Image>
     </Grid>
 </UserControl>
