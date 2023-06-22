@@ -14,7 +14,7 @@ namespace Race_timer.UI
         private readonly ClockLogic _clockLogic;
         private readonly ScreenHandler _screenHandler;
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
-        private int _showTimerIndex = 0;
+        private int _showTimerIndex;
 
         private const int TimerShownForSeconds = 5;
 

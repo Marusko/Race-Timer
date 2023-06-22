@@ -40,8 +40,8 @@ namespace Race_timer.Logic
         private readonly ObservableCollection<string> _timerAlignmentNames = new();
         public UserControl? SelectedAlignment { get; set; }
 
-        private bool _clockInPanel = false;
-        private bool _clockInMiniPanel = false;
+        private bool _clockInPanel;
+        private bool _clockInMiniPanel;
 
         private DateTime _showCodeTime;
         private DateTime _hideCodeTime;
