@@ -511,7 +511,18 @@ namespace Race_timer.UI
             foreach (UIElement i in StartTimesStackPanel.Children)
             {
                 var startTime = (MainWindowStartTimes)i;
-                StartTimes.Add(startTime.StartName.Text, startTime.StartTime.Text);
+                try
+                {
+                    StartTimes.Add(startTime.StartName.Text, startTime.StartTime.Text);
+                }
+                catch (Exception e)
+                {
+                    var v = new WarningWindow($"Oops, something went wrong when processing start times\n[{e.Message}]");
+                    v.ShowDialog();
+                    CanOpenTimer = false;
+                    OnClose();
+                }
+                
             }
         }
 

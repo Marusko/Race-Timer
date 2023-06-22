@@ -74,7 +74,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="Number of start times: " FontSize="16"/>
+                        <Label Grid.Column="0" Content="Number of contests: " FontSize="16"/>
                         <Label Grid.Column="1" x:Name="TimesNumberLabel" Content="0" FontSize="16" ClipToBounds="True"/>
                         <Button Grid.Column="2" Content="Add start time" Click="AddStartTime" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0" ToolTip="Adds new start time"/>
                     </Grid>

@@ -41,7 +41,7 @@ namespace Race_timer.UI
             {
                 0 => "API link was not entered or incorrect!\nClosing the timer window!",
                 1 => "List link was not entered or incorrect!\nMaking the timer smaller is now manual",
-                2 => "Time was not entered or incorrect!\nClosing the timer window!",
+                2 => "Time was not entered or incorrect in some of the start times!\nClosing the timer window!",
                 _ => WarningLabel.Text
             };
         }

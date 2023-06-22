@@ -414,7 +414,7 @@ namespace Race_timer.Logic
         /// </summary>
         /// <param name="s">Time in string format</param>
         /// <returns>Date time with values from string</returns>
-        public DateTime StringToDateTime(string s)
+        private DateTime StringToDateTime(string s)
         {
             DateTime returnDateTime = DateTime.Now;
             var split = s.Split(':');
@@ -427,11 +427,11 @@ namespace Race_timer.Logic
 
             if (split.Length > 1)
             {
-                var hour = int.Parse(split[0]);
-                var minute = int.Parse(split[1]);
-                var second = int.Parse(split[2]);
                 try
                 {
+                    var hour = int.Parse(split[0]);
+                    var minute = int.Parse(split[1]);
+                    var second = int.Parse(split[2]);
                     returnDateTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, hour, minute, second);
                 }
                 catch (Exception)
@@ -439,6 +439,7 @@ namespace Race_timer.Logic
                     var warning = new WarningWindow(WarningWindow.TimeWarning);
                     warning.ShowDialog();
                     MainWindow.CanOpenTimer = false;
+                    MainWindow.OnClose();
                 }
             }
             else
@@ -446,6 +447,7 @@ namespace Race_timer.Logic
                 var warning = new WarningWindow(WarningWindow.TimeWarning);
                 warning.ShowDialog();
                 MainWindow.CanOpenTimer = false;
+                MainWindow.OnClose();
             }
             return returnDateTime;
         }
