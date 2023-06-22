@@ -79,7 +79,7 @@ namespace Race_timer.UI
             if (OpenedTimer) return;
             OpenedTimer = true;
             MinimizedTimer = false;
-            _clockWindow = new ClockWindow(EventNameText.Text, EventTypeComboBox.Text, StartTime.Text, _clockLogic, _screenHandler);
+            _clockWindow = new ClockWindow(EventNameText.Text, EventTypeComboBox.Text, _clockLogic, _screenHandler);
             _clockLogic.SelectedAlignment = null;
             SelectAlignment();
             _clockLogic.SetClockWindow((ClockWindow)_clockWindow, EventNameText.Text, EventTypeComboBox.Text);
@@ -115,7 +115,7 @@ namespace Race_timer.UI
             if (OpenedTimer) return;
             OpenedTimer = true;
             MinimizedTimer = false;
-            _clockWindow = new ClockWindow(LinkTimerStartTimeText.Text, _clockLogic, _screenHandler);
+            _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
             _clockLogic.SelectedAlignment = null;
             SelectAlignment();
             _clockLogic.SetClockWindow(EventLinkText.Text, ListLinkText.Text, (ClockWindow)_clockWindow);
@@ -167,6 +167,10 @@ namespace Race_timer.UI
             if (!OpenedTimer) return;
             if (_clockWindow == null) return;
             if (!MinimizedTimer) return;
+            foreach (var timer in _clockLogic.ActiveTimers)
+            {
+                timer.Value.StopTimer();
+            }
             _clockWindow.Close();
             _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
             _clockLogic.SelectedAlignment = null;
@@ -191,6 +195,10 @@ namespace Race_timer.UI
             if (!OpenedTimer) return;
             if (_clockWindow == null) return;
             if (MinimizedTimer) return;
+            foreach (var timer in _clockLogic.MiniActiveTimers)
+            {
+                timer.Value.StopTimer();
+            }
             _clockWindow.Close();
             _clockLogic.CheckTimers(true);
             _clockWindow = new MiniClockWindow(_clockLogic, _screenHandler);
