@@ -178,6 +178,7 @@ namespace Race_timer.UI
             MinimizedTimer = false;
             MinimizeButton.IsEnabled = true;
             MaximizeButton.IsEnabled = false;
+            _clockLogic.CheckTimers();
         }
 
         /// <summary>
@@ -191,6 +192,7 @@ namespace Race_timer.UI
             if (_clockWindow == null) return;
             if (MinimizedTimer) return;
             _clockWindow.Close();
+            _clockLogic.CheckTimers(true);
             _clockWindow = new MiniClockWindow(_clockLogic, _screenHandler);
             _clockLogic.SetClockWindow((MiniClockWindow)_clockWindow);
             _clockWindow.Show();
@@ -236,6 +238,10 @@ namespace Race_timer.UI
             MinimizeButton.IsEnabled = true;
             MaximizeButton.IsEnabled = false;
             foreach (var timer in _clockLogic.ActiveTimers)
+            {
+                timer.Value.StopTimer();
+            }
+            foreach (var timer in _clockLogic.MiniActiveTimers)
             {
                 timer.Value.StopTimer();
             }

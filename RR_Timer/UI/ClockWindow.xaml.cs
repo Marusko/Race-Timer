@@ -123,7 +123,6 @@ namespace Race_timer.UI
             {
                 ((TimerRight)TimerPanel.Children[0]).StopTimer();
             }
-            
         }
 
         /// <summary>

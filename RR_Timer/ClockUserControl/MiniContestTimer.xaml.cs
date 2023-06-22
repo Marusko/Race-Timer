@@ -1,12 +1,12 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
+using System;
 
 namespace Race_timer.ClockUserControl
 {
     /// <summary>
-    /// Interaction logic for ContestTimer.xaml
+    /// Interaction logic for MiniContestTimer.xaml
     /// </summary>
-    public partial class ContestTimer
+    public partial class MiniContestTimer
     {
         private readonly int _screenWidth;
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
@@ -24,7 +24,7 @@ namespace Race_timer.ClockUserControl
         }
 
         private string _name = "";
-        public ContestTimer(int screenWidth, bool isClock)
+        public MiniContestTimer(int screenWidth, bool isClock)
         {
             InitializeComponent();
             Loaded += WindowLoaded;
@@ -39,9 +39,7 @@ namespace Race_timer.ClockUserControl
         {
             var controlSize = (double)_screenWidth / 12 / 3 * 2 / 5 * 0.7;
             Application.Current.Resources.Remove("ControlFontSize");
-            Application.Current.Resources.Add("ControlFontSize", controlSize * 10);
-            Application.Current.Resources.Remove("ControlSmallFontSize");
-            Application.Current.Resources.Add("ControlSmallFontSize", controlSize * 5);
+            Application.Current.Resources.Add("ControlFontSize", controlSize * 3);
         }
 
         /// <summary>

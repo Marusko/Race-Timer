@@ -26,6 +26,7 @@ namespace Race_timer.Logic
         private readonly DateTime _nowDateTime = DateTime.Now;
         private Dictionary<string, DateTime> StartTimes { get; }
         public Dictionary<string, ContestTimer> ActiveTimers { get; }
+        public Dictionary<string, MiniContestTimer> MiniActiveTimers { get; }
         private string? EventName { get; set; }
         private string? EventType { get; set; }
         public BitmapImage? LogoImage { get; set; }
@@ -39,7 +40,8 @@ namespace Race_timer.Logic
         private readonly ObservableCollection<string> _timerAlignmentNames = new();
         public UserControl? SelectedAlignment { get; set; }
 
-        private bool _clockInPanel = true;
+        private bool _clockInPanel = false;
+        private bool _clockInMiniPanel = false;
 
         private DateTime _showCodeTime;
         private DateTime _hideCodeTime;
@@ -56,6 +58,7 @@ namespace Race_timer.Logic
             _screenHandler = sh;
             StartTimes = new Dictionary<string, DateTime>();
             ActiveTimers = new Dictionary<string, ContestTimer>();
+            MiniActiveTimers = new Dictionary<string, MiniContestTimer>();
             SetAlignmentList();
             if (_screenHandler.SelectedScreen != null)
                 SelectedAlignment = new TimerTop(_screenHandler.SelectedScreen.WorkingArea.Width);
@@ -115,29 +118,54 @@ namespace Race_timer.Logic
             {
                 ((ClockWindow)_clockWindow).OnTimerClick();
             }
-            /*else if (_clockWindow.GetType() == typeof(MiniClockWindow))
+            else if (_clockWindow.GetType() == typeof(MiniClockWindow))
             {
                 ((MiniClockWindow)_clockWindow).OnTimerClick();
                 MiniCodeShow();
-            }*/
+            }
         }
 
-        private void CheckTimers()
+        public void CheckTimers(bool isSmall = false)
         {
             for (int i = 0;i < StartTimes.Count; i++)
             {
                 if (StartTimes.Values.ElementAt(i) < DateTime.Now)
                 {
                     if (_screenHandler.SelectedScreen == null) return;
-                    if (ActiveTimers.Keys.Contains(StartTimes.Keys.ElementAt(i)))
+
+                    if (_clockWindow == null) return;
+                    if (_clockWindow.GetType() == typeof(ClockWindow) && !isSmall)
                     {
-                        continue;
+                        if (MiniActiveTimers.Count > 0)
+                        {
+                            MiniActiveTimers.Clear();
+                        }
+                        if (ActiveTimers.ContainsKey(StartTimes.Keys.ElementAt(i)))
+                        {
+                            continue;
+                        }
+                        ActiveTimers.Add(StartTimes.Keys.ElementAt(i), new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, false)
+                        {
+                            Name = StartTimes.Keys.ElementAt(i),
+                            StartTime = StartTimes.Values.ElementAt(i)
+                        });
                     }
-                    ActiveTimers.Add(StartTimes.Keys.ElementAt(i) , new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, false)
+                    else if (_clockWindow.GetType() == typeof(MiniClockWindow) || isSmall)
                     {
-                        Name = StartTimes.Keys.ElementAt(i),
-                        StartTime = StartTimes.Values.ElementAt(i)
-                    });
+                        if (ActiveTimers.Count > 0)
+                        {
+                            ActiveTimers.Clear();
+                        }
+                        if (MiniActiveTimers.ContainsKey(StartTimes.Keys.ElementAt(i)))
+                        {
+                            continue;
+                        }
+                        MiniActiveTimers.Add(StartTimes.Keys.ElementAt(i), new MiniContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, false)
+                        {
+                            Name = StartTimes.Keys.ElementAt(i),
+                            StartTime = StartTimes.Values.ElementAt(i)
+                        });
+                    }
                 }
             }
         }
@@ -337,19 +365,28 @@ namespace Race_timer.Logic
         /// <summary>
         /// If current time is less than start time show clock, else show timer in minimized clock
         /// </summary>
-        /// <param name="timer">Timer label from minimized clock</param>
-        /*public void ShowMiniClockOrTimer(ref Label timer)
+        /// <param name="timers">Timer StackPanel from minimized clock</param>
+        public void ShowMiniClockOrTimer(ref StackPanel timers)
         {
-            if (DateTime.Now.Subtract(StartTime).TotalSeconds < 0)
+            if (MiniActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
             {
-                timer.Content = FormatTime();
+                timers.Children.Clear();
+                if (_screenHandler.SelectedScreen == null) return;
+                timers.Children.Add(new MiniContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
+                {
+                    Name = " "
+                });
+                _clockInMiniPanel = true;
             }
-            else
+            else if (MiniActiveTimers.Values.Count > 0)
             {
-                _clockDateTime = DateTime.Now;
-                timer.Content = FormatStartTime();
+                if (_clockInMiniPanel)
+                {
+                    timers.Children.Clear();
+                    _clockInMiniPanel = false;
+                }
             }
-        }*/
+        }
 
         /// <summary>
         /// Check what window is opening and sets the labels, and updates the properties

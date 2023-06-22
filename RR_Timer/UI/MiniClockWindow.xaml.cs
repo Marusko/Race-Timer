@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using Race_timer.Logic;
 
@@ -11,6 +13,10 @@ namespace Race_timer.UI
     {
         private readonly ClockLogic _clockLogic;
         private readonly ScreenHandler _screenHandler;
+        private readonly System.Windows.Threading.DispatcherTimer _timer = new();
+        private int _showTimerIndex = 0;
+
+        private const int TimerShownForSeconds = 5;
 
         /// <summary>
         /// Initializes the window, adds method to call after window is loaded
@@ -24,6 +30,11 @@ namespace Race_timer.UI
             _screenHandler = sh;
 
             Loaded += WindowLoaded;
+            Closed += StopTimer;
+            _timer.Tick += TimerTick;
+            _timer.Interval = new TimeSpan(0, 0, TimerShownForSeconds);
+            TimerTickLogic();
+            _timer.Start();
         }
 
         /// <summary>
@@ -35,13 +46,37 @@ namespace Race_timer.UI
             EventNameMini.Text = name;
         }
 
+        private void StopTimer(object? sender, EventArgs e)
+        {
+            _timer.Stop();
+        }
+
+        private void TimerTick(object? sender, EventArgs e)
+        {
+            TimerTickLogic();
+        }
+
+        private void TimerTickLogic()
+        {
+            if (_clockLogic.MiniActiveTimers.Values.Count > 0)
+            {
+                if (_showTimerIndex >= _clockLogic.MiniActiveTimers.Values.Count)
+                {
+                    _showTimerIndex = 0;
+                }
+                TimerStackPanel.Children.Clear();
+                TimerStackPanel.Children.Add(_clockLogic.MiniActiveTimers.Values.ElementAt(_showTimerIndex));
+                _showTimerIndex++;
+            }
+        }
+
         /// <summary>
         /// Method to update timer label with correct time
         /// </summary>
-        /*public void OnTimerClick()
+        public void OnTimerClick()
         {
-            _clockLogic.ShowMiniClockOrTimer(ref TimerMini);
-        }*/
+            _clockLogic.ShowMiniClockOrTimer(ref TimerStackPanel);
+        }
 
         /// <summary>
         /// Method called after window is loaded, sets the position, state and width of window
@@ -60,11 +95,6 @@ namespace Race_timer.UI
             var controlSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
             Application.Current.Resources.Remove("ControlFontSize");
             Application.Current.Resources.Add("ControlFontSize", controlSize * 3 - 5);
-
-            //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
-            var controlTimeSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
-            Application.Current.Resources.Remove("ControlTimeFontSize");
-            Application.Current.Resources.Add("ControlTimeFontSize", controlTimeSize * 3);
 
             //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
             var controlWidth = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 3 - 50;
