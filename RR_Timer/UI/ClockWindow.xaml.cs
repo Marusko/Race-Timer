@@ -90,6 +90,23 @@ namespace Race_timer.UI
             Application.Current.Resources.Add("ControlFontSize", controlSize * 10);
             Application.Current.Resources.Remove("ControlSmallFontSize");
             Application.Current.Resources.Add("ControlSmallFontSize", controlSize * 5);
+
+            SetTimersMaxHeight();
+        }
+
+        private void SetTimersMaxHeight()
+        {
+            if (EventNameLabel.Text.Length > 26)
+            {
+                if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
+                {
+                    ((TimerLeft)TimerPanel.Children[0]).TimerScrollViewer.MaxHeight = 300;
+                }
+                else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
+                {
+                    ((TimerRight)TimerPanel.Children[0]).TimerScrollViewer.MaxHeight = 300;
+                }
+            }
         }
 
         private void OnClose(object? sender, EventArgs e)
