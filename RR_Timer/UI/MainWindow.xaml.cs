@@ -10,6 +10,7 @@ using Race_timer.ClockUserControl;
 using Race_timer.Data;
 using Race_timer.Logic;
 using Application = System.Windows.Application;
+using Clipboard = System.Windows.Clipboard;
 
 namespace Race_timer.UI
 {
@@ -524,6 +525,21 @@ namespace Race_timer.UI
                 }
                 
             }
+        }
+
+        private void CopyApiLink(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(ApiSetText.Text);
+        }
+
+        private void CopyListLink(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(ListSetText.Text);
+        }
+
+        private void CopyContestLink(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(ContestSetText.Text);
         }
 
         /// <summary>
