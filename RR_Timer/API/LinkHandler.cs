@@ -154,6 +154,12 @@ namespace Race_timer.API
             _timer.Stop();
         }
 
+        /// <summary>
+        /// Reads the contest link and sets start times in main window with correct names and times,
+        /// if something went wrong, shows warning window
+        /// </summary>
+        /// <param name="contestLink">For loading contests</param>
+        /// <param name="mw">Already created main window</param>
         public static async void LoadContest(string contestLink, MainWindow mw)
         {
             var httpClient = new HttpClient();
@@ -206,6 +212,11 @@ namespace Race_timer.API
             httpClient.Dispose();
         }
 
+        /// <summary>
+        /// Converts number of seconds to string in 00:00:00 format, or returns "00:00:00" if something went wrong
+        /// </summary>
+        /// <param name="seconds">Seconds number to convert</param>
+        /// <returns>Time string in 00:00:00 format</returns>
         private static string SecondsToTimeString(int? seconds)
         {
             var timeString = "00:00:00";

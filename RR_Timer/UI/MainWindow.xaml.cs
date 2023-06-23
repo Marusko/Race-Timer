@@ -46,13 +46,15 @@ namespace Race_timer.UI
             _clockLogic = new ClockLogic(this, _screenHandler);
 
             EventTypeComboBox.ItemsSource = Enum.GetValues(typeof(EventType));
+
             ScreenComboBox.ItemsSource = _screenHandler.GetScreenNames();
-            ScreenComboBox.SelectedIndex = 0;
-            _screenHandler.SelectedScreen = _screenHandler.GetScreens()[ScreenComboBox.SelectedIndex];
             ScreenComboBox.SelectionChanged += SelectScreen;
+            ScreenComboBox.SelectedIndex = 0;
+
             AlignmentComboBox.ItemsSource = _clockLogic.GetAlignments();
             AlignmentComboBox.SelectedIndex = 0;
             AlignmentComboBox.SelectionChanged += SelectAlignmentHandler;
+
             MinimizedCodeTimes.EveryTimeText.TextChanged += CheckIfInt;
             MinimizedCodeTimes.HowLongTimeText.TextChanged += CheckIfInt;
             MinimizedTimer = false;
@@ -75,30 +77,17 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void OpenTimer(object sender, RoutedEventArgs e)
         {
-            SaveStartTimesToDictionary();
-            _clockLogic.ProcessStartTimes();
-            if (OpenedTimer) return;
-            OpenedTimer = true;
-            MinimizedTimer = false;
-            _clockWindow = new ClockWindow(EventNameText.Text, EventTypeComboBox.Text, _clockLogic, _screenHandler);
-            _clockLogic.SelectedAlignment = null;
-            SelectAlignment();
-            _clockLogic.SetClockWindow((ClockWindow)_clockWindow, EventNameText.Text, EventTypeComboBox.Text);
             if (!CanOpenTimer)
             {
                 OpenedTimer = false;
                 CanOpenTimer = true;
                 return;
             }
+            OpenTimerStart();
+            if (_clockWindow == null) return;
+            _clockLogic.SetClockWindow((ClockWindow)_clockWindow, EventNameText.Text, EventTypeComboBox.Text);
             _clockWindow.Show();
-            _clockLogic.StartTimer();
-            LinkTimerTab.IsEnabled = false;
-            TimerTab.IsEnabled = false;
-            SettingsTab.IsEnabled = false;
-            ControlTab.IsEnabled = true;
-            CodeTab.IsEnabled = false;
-            StartTimesTab.IsEnabled = false;
-            TabControl.SelectedItem = ControlTab;
+            OpenTimerEnd();
             _openedLinkTimer = false;
         }
 
@@ -111,22 +100,39 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void OpenLinkTimer(object sender, RoutedEventArgs e)
         {
-            SaveStartTimesToDictionary();
-            _clockLogic.ProcessStartTimes();
-            if (OpenedTimer) return;
-            OpenedTimer = true;
-            MinimizedTimer = false;
-            _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
-            _clockLogic.SelectedAlignment = null;
-            SelectAlignment();
-            _clockLogic.SetClockWindow(EventLinkText.Text, CountLinkText.Text, (ClockWindow)_clockWindow);
             if (!CanOpenTimer)
             {
                 OpenedTimer = false;
                 CanOpenTimer = true;
                 return;
             }
+            OpenTimerStart();
+            if (_clockWindow == null) return;
+            _clockLogic.SetClockWindow(EventLinkText.Text, CountLinkText.Text, (ClockWindow)_clockWindow);
             _clockWindow.Show();
+            OpenTimerEnd();
+            _openedLinkTimer = true;
+        }
+
+        /// <summary>
+        /// Process the start times, set clock window and alignment
+        /// </summary>
+        private void OpenTimerStart()
+        {
+            SaveStartTimesToDictionary();
+            _clockLogic.ProcessStartTimes();
+            if (OpenedTimer) return;
+            OpenedTimer = true;
+            _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
+            _clockLogic.SelectedAlignment = null;
+            SelectAlignment();
+        }
+
+        /// <summary>
+        /// Start clock window timer, disable unnecessary tabs
+        /// </summary>
+        private void OpenTimerEnd()
+        {
             _clockLogic.StartTimer();
             LinkTimerTab.IsEnabled = false;
             TimerTab.IsEnabled = false;
@@ -135,7 +141,6 @@ namespace Race_timer.UI
             CodeTab.IsEnabled = false;
             StartTimesTab.IsEnabled = false;
             TabControl.SelectedItem = ControlTab;
-            _openedLinkTimer = true;
         }
 
         /// <summary>
@@ -276,7 +281,15 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void SelectScreen(object sender, RoutedEventArgs e)
         {
-            _screenHandler.SelectedScreen = _screenHandler.GetScreens()[ScreenComboBox.SelectedIndex];
+            try
+            {
+                _screenHandler.SelectedScreen = _screenHandler.GetScreens()[ScreenComboBox.SelectedIndex];
+            }
+            catch (Exception)
+            {
+                _screenHandler.SelectedScreen = _screenHandler.GetScreens()[0];
+                ScreenComboBox.SelectedIndex = 0;
+            }
         }
 
         /// <summary>
@@ -393,15 +406,6 @@ namespace Race_timer.UI
             if (_clockLogic.CodeImage != null) return;
             var ww = new WarningWindow("Something went wrong! QR code was not generated");
             ww.ShowDialog();
-        }
-
-        /// <summary>
-        /// After screen reloading, show new list of screens
-        /// </summary>
-        /// <param name="s">List of screen names</param>
-        public void ShowReloadedScreens(IEnumerable<string> s)
-        {
-            ScreenComboBox.ItemsSource = s;
         }
 
         /// <summary>
@@ -527,21 +531,41 @@ namespace Race_timer.UI
             }
         }
 
+        /// <summary>
+        /// Copy main link settings to system clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CopyApiLink(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(ApiSetText.Text);
         }
 
+        /// <summary>
+        /// Copy count link settings to system clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CopyCountLink(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(CountSetText.Text);
         }
 
+        /// <summary>
+        /// Copy contest link settings to system clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CopyContestLink(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(ContestSetText.Text);
         }
 
+        /// <summary>
+        /// Load contests from contest link
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoadContests(object sender, RoutedEventArgs e)
         {
             LinkHandler.LoadContest(ContestLinkText.Text, this);

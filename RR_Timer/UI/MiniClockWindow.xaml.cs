@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Race_timer.ClockUserControl;
 using Race_timer.Logic;
 
 namespace Race_timer.UI
@@ -17,6 +19,8 @@ namespace Race_timer.UI
         private int _showTimerIndex;
 
         private const int TimerShownForSeconds = 5;
+
+        private bool _clockInMiniPanel;
 
         /// <summary>
         /// Initializes the window, adds method to call after window is loaded
@@ -46,16 +50,29 @@ namespace Race_timer.UI
             EventNameMini.Text = name;
         }
 
+        /// <summary>
+        /// Stops the timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StopTimer(object? sender, EventArgs e)
         {
             _timer.Stop();
         }
 
+        /// <summary>
+        /// Method called by timer, call TimerTickLogic()
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TimerTick(object? sender, EventArgs e)
         {
             TimerTickLogic();
         }
 
+        /// <summary>
+        /// Switches between start times every 5 seconds
+        /// </summary>
         private void TimerTickLogic()
         {
             if (_clockLogic.MiniActiveTimers.Values.Count > 0)
@@ -75,7 +92,33 @@ namespace Race_timer.UI
         /// </summary>
         public void OnTimerClick()
         {
-            _clockLogic.ShowMiniClockOrTimer(ref TimerStackPanel);
+            ShowMiniClockOrTimer(ref TimerStackPanel);
+        }
+
+        /// <summary>
+        /// If current time is less than start time show clock, else show timer in minimized clock
+        /// </summary>
+        /// <param name="timers">Timer StackPanel from minimized clock</param>
+        private void ShowMiniClockOrTimer(ref StackPanel timers)
+        {
+            if (_clockLogic.MiniActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
+            {
+                timers.Children.Clear();
+                if (_screenHandler.SelectedScreen == null) return;
+                timers.Children.Add(new MiniContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
+                {
+                    Name = " "
+                });
+                _clockInMiniPanel = true;
+            }
+            else if (_clockLogic.MiniActiveTimers.Values.Count > 0)
+            {
+                if (_clockInMiniPanel)
+                {
+                    timers.Children.Clear();
+                    _clockInMiniPanel = false;
+                }
+            }
         }
 
         /// <summary>

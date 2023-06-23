@@ -38,11 +38,19 @@ namespace Race_timer.ClockUserControl
             Application.Current.Resources.Add("ControlSmallFontSize", controlSize * 5);
         }
 
+        /// <summary>
+        /// Stops the timer
+        /// </summary>
         public void StopTimer()
         {
             _timer.Stop();
         }
 
+        /// <summary>
+        /// Called by timer, scrolls the contest timers horizontally, waits on beginning and end
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TimerTick(object? sender, EventArgs e)
         {
             if (_currentDelay != ScrollDelay && (_stateOfScroll == ClockLogic.ScrollBegin || _stateOfScroll == ClockLogic.ScrollEnd))

@@ -60,7 +60,7 @@ namespace Race_timer.Logic
             _screens = Screen.AllScreens;
             _screenNames = new string[_screens.Length];
             SetScreenNames();
-            _mainWindow.ShowReloadedScreens(_screenNames);
+            _mainWindow.ScreenComboBox.ItemsSource = _screenNames;
         }
 
         /// <summary>

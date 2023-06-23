@@ -15,6 +15,6 @@
         <ScrollViewer x:Name="TimerScrollViewer" Grid.Row="0" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" CanContentScroll="False">
             <StackPanel x:Name="TimerStackPanel" Orientation="Horizontal"/>
         </ScrollViewer>
-        <Image Grid.Row="2" x:Name="TimerImage" MaxHeight="{DynamicResource ControlFontSize}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,25,0,0"></Image>
+        <Image Grid.Row="2" x:Name="TimerImage" MaxHeight="{DynamicResource ControlFontSize}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,25,0,0"/>
     </Grid>
 </UserControl>

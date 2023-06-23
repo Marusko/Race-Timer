@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Race_timer.ClockUserControl;
 using Race_timer.Logic;
@@ -13,28 +14,8 @@ namespace Race_timer.UI
     {
         private readonly ClockLogic _clockLogic;
         private readonly ScreenHandler _screenHandler;
+        private bool _clockInPanel;
 
-        /// <summary>
-        /// Initialize and open the window, sets label contents and adds method
-        /// to call after window is loaded
-        /// </summary>
-        /// <param name="name">Event name to show</param>
-        /// <param name="type">Event type</param>
-        /// <param name="cl">Already created ClockLogic object</param>
-        /// <param name="sh">Already created ScreenHandler object</param>
-        public ClockWindow(string name, string type, ClockLogic cl, ScreenHandler sh)
-        {
-            InitializeComponent();
-            
-            EventNameLabel.Text = name;
-            EventTypeLabel.Content = type;
-            _clockLogic = cl;
-            _screenHandler = sh;
-
-            Loaded += WindowLoaded;
-            Closed += OnClose;
-        }
-        
         /// <summary>
         /// Initialize and open the window, used when switching between fullscreen and minimized clock window
         /// Initialize and open the window, converts time string to DateTime and adds method to call after window is loaded
@@ -76,6 +57,10 @@ namespace Race_timer.UI
             SetTimersMaxHeight();
         }
 
+        /// <summary>
+        /// If alignments are left and right, and Event name is longer than 26 characters when it starts wrapping,
+        /// timers stack panel needs to be smaller
+        /// </summary>
         private void SetTimersMaxHeight()
         {
             if (EventNameLabel.Text.Length > 26)
@@ -91,6 +76,11 @@ namespace Race_timer.UI
             }
         }
 
+        /// <summary>
+        /// When closing, stop the scroll timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClose(object? sender, EventArgs e)
         {
             if (TimerPanel.Children[0].GetType() == typeof(TimerTop))
@@ -132,16 +122,65 @@ namespace Race_timer.UI
         {
             if (TimerPanel.Children[0].GetType() == typeof(TimerTop))
             {
-                _clockLogic.ShowClockOrTimer(ref ((TimerTop)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerTop)TimerPanel.Children[0]).MainClockLabel);
+                ShowClockOrTimer(ref ((TimerTop)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerTop)TimerPanel.Children[0]).MainClockLabel);
             }
             else if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
             {
-                _clockLogic.ShowClockOrTimer(ref ((TimerLeft)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerLeft)TimerPanel.Children[0]).MainClockLabel);
+                ShowClockOrTimer(ref ((TimerLeft)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerLeft)TimerPanel.Children[0]).MainClockLabel);
             }
             else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
             {
-                _clockLogic.ShowClockOrTimer(ref ((TimerRight)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerRight)TimerPanel.Children[0]).MainClockLabel);
+                ShowClockOrTimer(ref ((TimerRight)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerRight)TimerPanel.Children[0]).MainClockLabel);
             }
+        }
+
+        /// <summary>
+        /// If current time is less than start time show big clock, else show big timer and small clock under
+        /// in fullscreen clock
+        /// </summary>
+        /// <param name="timers">Timer StackPanel from fullscreen clock</param>
+        /// <param name="clock">Clock label from fullscreen clock</param>
+        private void ShowClockOrTimer(ref StackPanel timers, ref Label clock)
+        {
+            if (_clockLogic.ActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
+            {
+                clock.Content = " ";
+                timers.Children.Clear();
+                if (_screenHandler.SelectedScreen == null) return;
+                timers.Children.Add(new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
+                {
+                    Name = " "
+                });
+                _clockInPanel = true;
+            }
+            else if (_clockLogic.ActiveTimers.Values.Count > 0)
+            {
+                if (_clockInPanel)
+                {
+                    timers.Children.Clear();
+                    _clockInPanel = false;
+                }
+                clock.Content = FormatTime();
+                foreach (var contestTimer in _clockLogic.ActiveTimers.Values)
+                {
+                    if (!timers.Children.Contains(contestTimer))
+                    {
+                        timers.Children.Add(contestTimer);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Formats clock time to 00:00:00
+        /// </summary>
+        /// <returns>Formatted time to show as clock</returns>
+        private string FormatTime()
+        {
+            var now = DateTime.Now;
+            TimeSpan time = TimeSpan.FromSeconds(now.TimeOfDay.TotalSeconds);
+            var timeString = time.ToString(@"hh\:mm\:ss");
+            return timeString;
         }
 
         /// <summary>

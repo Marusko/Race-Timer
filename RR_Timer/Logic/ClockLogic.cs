@@ -22,8 +22,6 @@ namespace Race_timer.Logic
 
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
 
-        private DateTime _clockDateTime;
-        private readonly DateTime _nowDateTime = DateTime.Now;
         private Dictionary<string, DateTime> StartTimes { get; }
         public Dictionary<string, ContestTimer> ActiveTimers { get; }
         public Dictionary<string, MiniContestTimer> MiniActiveTimers { get; }
@@ -31,17 +29,14 @@ namespace Race_timer.Logic
         private string? EventType { get; set; }
         public BitmapImage? LogoImage { get; set; }
         public BitmapSource? CodeImage { get; set; }
-
-        private Window? _clockWindow;
         public CodeWindowForMinimized? CodeWindowForMinimized { get; set; }
         public MainWindow MainWindow { get; }
-        private readonly ScreenHandler _screenHandler;
-        private LinkHandler? _linkHandler;
-        private readonly ObservableCollection<string> _timerAlignmentNames = new();
         public UserControl? SelectedAlignment { get; set; }
 
-        private bool _clockInPanel;
-        private bool _clockInMiniPanel;
+        private readonly ScreenHandler _screenHandler;
+        private Window? _clockWindow;
+        private LinkHandler? _linkHandler;
+        private readonly ObservableCollection<string> _timerAlignmentNames = new();
 
         private DateTime _showCodeTime;
         private DateTime _hideCodeTime;
@@ -64,11 +59,13 @@ namespace Race_timer.Logic
                 SelectedAlignment = new TimerTop(_screenHandler.SelectedScreen.WorkingArea.Width);
         }
 
+        /// <summary>
+        /// Converts time string to DateTime for all contest and clears StartTimes list in MainWindow
+        /// </summary>
         public void ProcessStartTimes()
         {
             StartTimes.Clear();
             ActiveTimers.Clear();
-            _clockInPanel = true;
             foreach (var time in MainWindow.StartTimes)
             {
                 StartTimes.Add(time.Key, StringToDateTime(time.Value));
@@ -125,6 +122,12 @@ namespace Race_timer.Logic
             }
         }
 
+        /// <summary>
+        /// Checks if som of the timers are started, if yes then it checks if clock window is small or fullscreen,
+        /// and fills the corresponding Dictionary with started timers
+        /// Is called every second
+        /// </summary>
+        /// <param name="isSmall">Manually set filling to MiniActiveTimers</param>
         public void CheckTimers(bool isSmall = false)
         {
             for (int i = 0;i < StartTimes.Count; i++)
@@ -327,68 +330,6 @@ namespace Race_timer.Logic
         }
 
         /// <summary>
-        /// If current time is less than start time show big clock, else show big timer and small clock under
-        /// in fullscreen clock
-        /// </summary>
-        /// <param name="timers">Timer StackPanel from fullscreen clock</param>
-        /// <param name="clock">Clock label from fullscreen clock</param>
-        public void ShowClockOrTimer(ref StackPanel timers, ref Label clock)
-        {
-            if (ActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
-            {
-                clock.Content = " ";
-                timers.Children.Clear();
-                if (_screenHandler.SelectedScreen == null) return;
-                timers.Children.Add(new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
-                {
-                    Name = " "
-                });
-                _clockInPanel = true;
-            }
-            else if(ActiveTimers.Values.Count > 0) 
-            {
-                if (_clockInPanel)
-                {
-                    timers.Children.Clear();
-                    _clockInPanel = false;
-                }
-                clock.Content = FormatTime();
-                foreach (var contestTimer in ActiveTimers.Values)
-                {
-                    if (!timers.Children.Contains(contestTimer))
-                    {
-                        timers.Children.Add(contestTimer);
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// If current time is less than start time show clock, else show timer in minimized clock
-        /// </summary>
-        /// <param name="timers">Timer StackPanel from minimized clock</param>
-        public void ShowMiniClockOrTimer(ref StackPanel timers)
-        {
-            if (MiniActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
-            {
-                timers.Children.Clear();
-                if (_screenHandler.SelectedScreen == null) return;
-                timers.Children.Add(new MiniContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
-                {
-                    Name = " "
-                });
-                _clockInMiniPanel = true;
-            }
-            else if (MiniActiveTimers.Values.Count > 0)
-            {
-                if (_clockInMiniPanel)
-                {
-                    timers.Children.Clear();
-                    _clockInMiniPanel = false;
-                }
-            }
-        }
-
-        /// <summary>
         /// Check what window is opening and sets the labels, and updates the properties
         /// </summary>
         /// <param name="name">Name of the event</param>
@@ -425,14 +366,15 @@ namespace Race_timer.Logic
                 MainWindow.CanOpenTimer = false;
             }
 
-            if (split.Length > 1)
+            if (split.Length > 2)
             {
                 try
                 {
+                    var date = DateTime.Now;
                     var hour = int.Parse(split[0]);
                     var minute = int.Parse(split[1]);
                     var second = int.Parse(split[2]);
-                    returnDateTime = new DateTime(_nowDateTime.Year, _nowDateTime.Month, _nowDateTime.Day, hour, minute, second);
+                    returnDateTime = new DateTime(date.Year, date.Month, date.Day, hour, minute, second);
                 }
                 catch (Exception)
                 {
@@ -451,24 +393,6 @@ namespace Race_timer.Logic
             }
             return returnDateTime;
         }
-
-        /// <summary>
-        /// Formats clock time to 00:00:00
-        /// </summary>
-        /// <returns>Formatted time to show as clock</returns>
-        private string FormatTime()
-        {
-            _clockDateTime = DateTime.Now;
-            var clock = _clockDateTime.TimeOfDay.ToString();
-            var clockLength = clock.LastIndexOf(".", StringComparison.Ordinal);
-            var clockString = clock;
-            if (clockLength > 0)
-            {
-                clockString = clock[..clockLength];
-            }
-            return clockString;
-        }
-        
 
         /// <summary>
         /// Calls minimize method from main widow

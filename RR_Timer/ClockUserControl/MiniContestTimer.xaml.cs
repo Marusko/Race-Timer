@@ -10,7 +10,7 @@ namespace Race_timer.ClockUserControl
     {
         private readonly int _screenWidth;
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
-        private bool _isClock;
+        private readonly bool _isClock;
         public DateTime StartTime { get; init; }
 
         public new string Name
@@ -49,18 +49,25 @@ namespace Race_timer.ClockUserControl
         private string FormatStartTimeOrClock()
         {
             var now = DateTime.Now;
-            var clock = !_isClock ? now.Subtract(StartTime).ToString() : now.TimeOfDay.ToString();
-            var tmp = clock.LastIndexOf(".", StringComparison.Ordinal);
-            clock = clock.Substring(0, tmp);
-            return clock;
+            TimeSpan time = TimeSpan.FromSeconds(!_isClock ? now.Subtract(StartTime).TotalSeconds : now.TimeOfDay.TotalSeconds);
+            var timeString = time.ToString(@"hh\:mm\:ss");
+            return timeString;
         }
 
+        /// <summary>
+        /// Updates label with correct formatted time
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TimerClick(object? sender, EventArgs e)
         {
             var c = FormatStartTimeOrClock();
             ContestTimeLabel.Content = c;
         }
 
+        /// <summary>
+        /// Stops the timer
+        /// </summary>
         public void StopTimer()
         {
             _timer.Stop();
