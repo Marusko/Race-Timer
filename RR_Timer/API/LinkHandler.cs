@@ -74,25 +74,15 @@ namespace Race_timer.API
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                responseString = responseString.Replace("{", "").Replace("}", "").Replace("\"", "");
-                var split = responseString.Split(',');
-                var doubleSplit = new string[split.Length, 2];
-                var name = 0;
-                var type = 0;
-                for (var i = 0; i < split.Length; i++)
+                var myEvent = JsonConvert.DeserializeObject<Event>(responseString);
+                if (myEvent?.EventName == null || myEvent.EventType == null)
                 {
-                    doubleSplit[i, 0] = split[i].Split(':')[0];
-                    doubleSplit[i, 1] = split[i].Split(':')[1];
-                    if (doubleSplit[i, 0] == "EventName")
-                    {
-                        name = i;
-                    }
-                    else if (doubleSplit[i, 0] == "EventType")
-                    {
-                        type = i;
-                    }
+                    var warning = new WarningWindow("Oops, something went wrong with main API!\nError code: \n[Can't read main API link]");
+                    warning.ShowDialog();
+                    _clockLogic.MainWindow.CanOpenTimer = false;
+                    return;
                 }
-                _clockLogic.SetLabels(doubleSplit[name, 1], ((EventType)int.Parse(doubleSplit[type, 1])).ToString());
+                _clockLogic.SetLabels(myEvent.EventName, ((EventType)int.Parse(myEvent.EventType)).ToString());
             }
             else
             {
@@ -126,8 +116,9 @@ namespace Race_timer.API
                 if (response.IsSuccessStatusCode)
                 {
                     var responseString = await response.Content.ReadAsStringAsync();
-                    var asRacers = responseString.Split("\r\n");
-                    if (!string.IsNullOrEmpty(asRacers[0]) && !_clockLogic.IsTimerMinimized())
+
+                    var asRacers = int.Parse(responseString);
+                    if (asRacers > 0 && !_clockLogic.IsTimerMinimized())
                     {
                         _clockLogic.AutoMinimizeTimer();
                     }

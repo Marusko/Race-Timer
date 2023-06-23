@@ -119,7 +119,7 @@ namespace Race_timer.UI
             _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
             _clockLogic.SelectedAlignment = null;
             SelectAlignment();
-            _clockLogic.SetClockWindow(EventLinkText.Text, ListLinkText.Text, (ClockWindow)_clockWindow);
+            _clockLogic.SetClockWindow(EventLinkText.Text, CountLinkText.Text, (ClockWindow)_clockWindow);
             if (!CanOpenTimer)
             {
                 OpenedTimer = false;
@@ -532,9 +532,9 @@ namespace Race_timer.UI
             Clipboard.SetText(ApiSetText.Text);
         }
 
-        private void CopyListLink(object sender, RoutedEventArgs e)
+        private void CopyCountLink(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(ListSetText.Text);
+            Clipboard.SetText(CountSetText.Text);
         }
 
         private void CopyContestLink(object sender, RoutedEventArgs e)

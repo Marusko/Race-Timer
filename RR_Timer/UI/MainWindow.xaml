@@ -35,10 +35,10 @@
                     <TabItem Header="API Timer" ToolTip="API timer setup">
                         <Grid>
                             <TextBox x:Name="EventLinkText" HorizontalAlignment="Center" Margin="0,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" HorizontalContentAlignment="Center" InputScope="Url" FontSize="14" ToolTip="Link for event API"/>
-                            <TextBox x:Name="ListLinkText" HorizontalAlignment="Center" Margin="0,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" HorizontalContentAlignment="Center" InputScope="Url" FontSize="14" ToolTip="Link for list API"/>
+                            <TextBox x:Name="CountLinkText" HorizontalAlignment="Center" Margin="0,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" HorizontalContentAlignment="Center" InputScope="Url" FontSize="14" ToolTip="Link for count API"/>
                             <Button Content="Open Timer" HorizontalAlignment="Center" Margin="0,300,0,0" VerticalAlignment="Top" Click="OpenLinkTimer" FontSize="16" ToolTip="Start the timer"/>
                             <Label Content="API Link" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" FontSize="16"/>
-                            <Label Content="List Link" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" FontSize="16"/>
+                            <Label Content="Count Link" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" FontSize="16"/>
                             <Button Content="Select Image" HorizontalAlignment="Center" Margin="0,230,120,0" VerticalAlignment="Top" Click="OpenImage" ToolTip="Select logo image from PC"/>
                             <Button x:Name="LinkDeleteImageButton" Content="Delete Image" HorizontalAlignment="Center" Margin="120,230,0,0" VerticalAlignment="Top" Click="DeleteImage" IsEnabled="False" ToolTip="Clear logo image"/>
                             <Label x:Name="LinkImageName" Content="" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" FontSize="16"/>
@@ -67,9 +67,9 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Settings for List link" FontSize="16"/>
-                                <TextBox x:Name="ListSetText" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="data/list?&amp;fields=DisplayName,Bib&amp;filter=[Finished]=1&amp;listformat=CSV"  ToolTip="Copy this into Race Result API with 'Custom' selected to create list which will be used to minimize the timer" IsReadOnly="True" FontFamily="Consolas" FontSize="14" HorizontalContentAlignment="Center" Width="550"/>
-                                <Button Grid.Row="2" Click="CopyListLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for List link"/>
+                                <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Settings for Count link" FontSize="16"/>
+                                <TextBox x:Name="CountSetText" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="data/count?filter=[Finished]=1"  ToolTip="Copy this into Race Result API with 'Custom' selected to create count which will be used to minimize the timer" IsReadOnly="True" FontFamily="Consolas" FontSize="14" HorizontalContentAlignment="Center" Width="260"/>
+                                <Button Grid.Row="2" Click="CopyCountLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for Count link"/>
                             </Grid>
                             <Grid Grid.Row="2" Margin="0,20,0,0">
                                 <Grid.RowDefinitions>
