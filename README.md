@@ -1,112 +1,130 @@
 # Race Timer :stopwatch:
 Application to show elapsed time from entered start time, with clock, on user-selected screen. Best used with RaceResult presenter as this app can automatically make the timer smaller, so it can fit over the presenter window without pressing `F11` on the presenter window.
 ### Small timer over the RR presenter after the start
-![Small timer](https://user-images.githubusercontent.com/93376571/231474167-d6fef6d4-5f84-4a07-8235-e185eabd58f1.png)
+![Small timer](https://github.com/Marusko/Race-Timer/assets/93376571/2749d93a-f3ab-4ba2-9d26-129fcf602039)
+
 ### Fullscreen timer after the start
-![Fullscreen timer](https://user-images.githubusercontent.com/93376571/231473878-d7227c38-7b78-4fc7-a69a-0356eda6dd0b.png)
+![Fullscreen timer](https://github.com/Marusko/Race-Timer/assets/93376571/b97f476e-b3c1-47a5-8714-feb9a815f2aa)
 
 ---
 # Features :star:
-* Show big timer with event name on result presenting screens when no one has finished
-* Show small timer when someone has finished
-* Automatic switch from big fullscreen timer to small timer
+* Show a big timer with the event name on the result presenting screens when no one has finished
+* Show a small timer when someone has finished
+* Automatic switch from the big fullscreen timer to the small timer
 * Manual switching between big and small clock
-* Event name and type can be entered manually or using RaceResult Simple API link
-* When entered start time is `larger` than current time, instead of timer, clock is shown 
-* When clock is on fullscreen, you can choose position of timer
-* You can import your logo, best works for rectangle logo
-* You can import your own QR code or provide a link and app will convert it
+* Event name and type can be entered manually or using the RaceResult Simple API link
+* When start times are `larger` than the current time, instead of a timer, the clock is shown 
+* When the clock is on fullscreen, you can choose the position of the timer
+* You can import your logo, it best works for a rectangle logo
+* You can import your own QR code or provide a link and the app will convert it
+* Multiple contests with start times, manual or from API
 ## Automatic switching :on:
-  When someone finishes the race, custom output in RR is updated, cashed on second API link. App checks this second link every 15 seconds. When clock switches to small clock, app stops checking the second link.
+  When someone finishes the race, the count in RR is updated and cashed on the second API link. The app checks this second link every 15 seconds. When the clock switches to the small clock, the app stops checking the second link.
 ## Choosing screen :desktop_computer:
-  You can choose on which screen will the timer be shown, list of screens is refreshed every 20 seconds. If timer is open, refreshing list of screens is paused.
+  You can choose on which screen the timer will be shown, the list of screens is refreshed every 20 seconds. If the timer is open, refreshing the list of screens is paused.
+## Multiple contests :runner::runner:
+  You can import contests with names and start times from Race Result, edit them, or create them manually. Elapsed times are scrolled through when the timer window is open.
   
 ---  
 # Dependencies :wood:
-App requires [.NET7](https://dotnet.microsoft.com/en-us/download) to be installed. Most probably you already have it. If not, it will be downloaded and installed when installing the Race Timer
+The app requires [.NET7](https://dotnet.microsoft.com/en-us/download) to be installed. Most probably you already have it. If not, it will be downloaded and installed when installing the Race Timer
   
 # Installation :cd:
   1. Download [zip file](https://github.com/Marusko/RaceResult_UI_Timer/releases) and extract
-  2. Double click on `setup.exe`
-  3. You will get `Unknown publisher` warning, press install[^1]
+  2. Double-click on `setup.exe`
+  3. You will get an `Unknown publisher` warning, press install[^1]
   4. That's it!
   
 ---
 # Preparation :gear:
 ## Using the Timer :hourglass:
-If you don't time the race with RaceResult, or don't want to create links, simply use the `Timer` tab to setup the timer. Automatic switching of timer windows is disabled. You can still manually switch the windows.
+If you don't time the race with RaceResult, or don't want to create links, simply use the `Timer` tab to set up the timer. Automatic switching of timer windows is disabled. You can still manually switch the windows.
 ## Using the API Timer :watch:
 > Only works with RaceResult Simple API
 ### Main API link :link:
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
  2. Select **Settings** from the left dropdown menu, in the details write `EventName,EventType`(see the picture)
 ![Creating main API link](https://user-images.githubusercontent.com/93376571/228536613-721357e7-d342-403c-9e85-fb77a9ba8633.png)
- 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it in `API Timer` tab in the `API link` text box
-### List API link :link:
-> If you don't enter the List link, the automatic switching of timer windows will be disabled. You can still manually switch the windows.
+ 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it into the `API Timer` tab in the `API link` text box
+### Count API link :link:
+> If you don't enter the Count link, the automatic switching of timer windows will be disabled. You can still manually switch the windows.
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
- 2. Select **Custom** from the left dropdown menu, in the details write or copy                                          
- `data/list?&fields=DisplayName,Bib&filter=[Finished]=1&listformat=CSV`(see the picture)
-![Creating list API link](https://user-images.githubusercontent.com/93376571/231474800-6a6ee8b3-abef-43d6-b3e0-c5db0518bf66.png)
- 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it in `API Timer` tab in the `List link` text box
+ 2. Select **Custom** from the left dropdown menu, in the details write or copy `data/count?filter=[Finished]=1`(see the picture)
+![Creating count API link](https://github.com/Marusko/Race-Timer/assets/93376571/a815a921-59e7-454e-98ba-30f4314fb850)
+ 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it into the `API Timer` tab in the `Count link` text box
+### Contest API link :link:
+> If you don't enter the Contest link, you will have to add and edit contest and start times manually
+ 1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
+ 2. Select **Custom** from the left dropdown menu, in the details write or copy `contests/get`(see the picture)
+![Creating contest API link](https://github.com/Marusko/Race-Timer/assets/93376571/bd5711f7-ad8f-43c7-a98d-a5cd1be2e273)
+ 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it into the `Start times` tab in the `Contests link` text box
 
 The result:
 
-![Both API links created](https://user-images.githubusercontent.com/93376571/231475126-e2dcf0e8-1e55-491b-a289-f7e1293c755a.png)
+![All API links created](https://github.com/Marusko/Race-Timer/assets/93376571/ebfc47f2-5557-4e51-b435-bdf2d493a3df)
 
 ---
 # Using the app :computer:
 ## Left side menu :fleur_de_lis:
-![Left side menu](https://user-images.githubusercontent.com/93376571/230731126-1956e20c-5936-432f-ac1b-63a3a9583d9b.png)
-  * **Timer** - Menu for entering event name, type and start time, logo image and starting the timer
-  * **API Timer** - Menu for entering API link for name and type, logo image, start time and starting the timer
+![Left side menu](https://github.com/Marusko/Race-Timer/assets/93376571/15ab8463-d381-47e2-b693-a8f8399e73cc)
+  * **Timer** - Menu for entering event name, type and start time, logo image, and starting the timer
+  * **API Timer** - Menu for entering API link for name and type, logo image, start time, and starting the timer
+  * **Start times** - Menu for adding contests with start times, manually or from API, and editing them
   * **QR code** - Menu for setting or generating QR code
   * **Timer control** - Menu for switching between fullscreen and small timer, and closing the timer
-  * **Display settings** - Choosing screen on which will timer be displayed, choosing timer layout
+  * **Display settings** - Choosing the screen on which the will timer be displayed, choosing the timer layout
   * **Informations** - Informations about the app
 
 ## Timer :hourglass_flowing_sand:
-![First tab, with manual settings](https://github.com/Marusko/Race-Timer/assets/93376571/da10697d-25c3-4f10-8a28-cc9ca8d04157)
-  * **Event name** - Event name that will be displayed with timer
-  * **Event type** - Event type that will be dipslayed on big fullscreen clock
-  * **Start time** - Define starting time for timer in `HH:MM:SS` format
-  * **Select image** - Choose image from PC to be displayed as logo, best works with rectangle logo, 
-                       above the button will be showed name of the image, enables delete button (shared with **API Timer**)
+![First tab, with manual settings](https://github.com/Marusko/Race-Timer/assets/93376571/02d47ac1-5aef-4e60-8b14-299c1938cf74)
+  * **Event name** - Event name that will be displayed with the timer
+  * **Event type** - Event type that will be displayed on the big fullscreen clock
+  * **Select image** - Choose an image from the PC to be displayed as the logo, it best works with a rectangle logo, 
+                       above the button will be shown the name of the image, enabling the delete button (shared with **API Timer**)
   * **Delete image** - Clear the selected image (shared with **API Timer**)
   * **Open timer** - Open fullscreen timer, disables all settings and enables **Timer control**
   
 ## API Timer :watch:
-![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/73477f6d-2e0e-4058-a3ae-dd82f8c8a659)
+![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/bc39decb-5de1-42c2-8d7f-bfdbf794668e)
   * **API Timer** - Tab for entering links and setting up the API timer
-    * **API Link** - Here enter the main link to get name and type of the event
+    * **API Link** - Here enter the main link to get the name and type of the event
     * **List Link** - Here enter the link which points to the output list, for automatic switching of the timer windows
-    * **Start Time** - Define starting time for timer in `HH:MM:SS` format
-    * **Select image** - Choose image from PC to be displayed as logo, best works with rectangle logo, 
-                       above the button will be showed name of the image, enables delete button (shared with **Timer**)
+    * **Select image** - Choose an image from the PC to be displayed as the logo, it best works with a rectangle logo, 
+                       above the button will be shown the name of the image, enabling the delete button (shared with **Timer**)
     * **Delete image** - Clear the selected image (shared with **Timer**)
     * **Open timer** - Open fullscreen timer, disables all settings and enables **Timer control**
 
-![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/b38030cc-c6f0-4c80-9653-e61693795820)
+![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/53932dae-83e1-47a7-8a8e-8a690a7be5ba)
   * **API cheat sheet** - Tab with API settings, to quickly find and paste when creating API in Race Result
 
+## Start times :runner::runner:
+![Third tab, creating and editing contests](https://github.com/Marusko/Race-Timer/assets/93376571/2c3c4cef-0551-4634-91eb-227ec378f323)
+  * **Contests link** - Here enter the Contests link to load all contests from RR
+  * **Load** - Reads the Contests link and adds loaded contests to the list below, you can then edit them
+  * **Add start time** - Adds a new line to the list below
+  * **For each start time**
+    * **Name** - Name of the contest which will be shown with elapsed time
+    * **Start time** - Start time of the contest
+    * **Remove** - Removes this contest from the list
+
 ## QR code :framed_picture:
-![Third tab, with QR code settings](https://github.com/Marusko/Race-Timer/assets/93376571/f5f44404-456f-4d72-919c-3fb656e45092)
-  * **Generate QR code** - Here enter link to convert to QR code
+![Fourth tab, with QR code settings](https://github.com/Marusko/Race-Timer/assets/93376571/6b467fc4-efa6-4849-b4b8-472696c2757d)
+  * **Generate QR code** - Here enter the link to convert to a QR code
   * **Generate QR** - Generates the QR code and sets it
-  * **Select QR** - Choose image from PC to be displayed as QR code, above the button will be showed name of the image, enables delete button
+  * **Select QR** - Choose an image from the PC to be displayed as a QR code, above the button will be shown the name of the image, enabling the delete button
   * **Delete QR** - Clear the selected QR code
-  * **Show QR code when minimized** - If checked, minimized timer will periodically shows QR code, based on input from the two text boxes bellow in 1 - 60 range
+  * **Show QR code when minimized** - If checked, minimized timer will periodically show a QR code, based on input from the two text boxes below in the 1 - 60 range
 
 ## Timer control :wrench:
-> Tab is enabled when timer is open
+> Tab is enabled when the timer is open
 
-![Fourth tab, timer control](https://github.com/Marusko/Race-Timer/assets/93376571/e5a41fc9-cfc0-4962-935e-f3eed6d29f78)
-  * **Minimize** - To manually switch from fullscreen to small timer
-  * **Maximize** - To manually switch from small to fullscreen timer
-  * **Close timer** - To close the timer window, timer window also close when closing the main window
+![Fifth tab, timer control](https://github.com/Marusko/Race-Timer/assets/93376571/025fdcc9-f327-4927-8f4f-6c5295d37911)
+  * **Minimize** - To manually switch from fullscreen to the small timer
+  * **Maximize** - To manually switch from the small to the fullscreen timer
+  * **Close timer** - To close the timer window, the timer window also close when closing the main window
 
 ## Display settings :hammer_and_wrench:
-![Fifth tab, display settings](https://github.com/Marusko/Race-Timer/assets/93376571/b00156b0-5de0-40df-8e31-5d90c1d19dfc)
+![Sixth tab, display settings](https://github.com/Marusko/Race-Timer/assets/93376571/f33df989-53b9-4ff1-a43f-b7d1b9f3e846)
   * **Display** - List of connected displays to choose on which the timer window will be opened. Display names here **AREN'T** the same as in Windows settings
   * **Timer and image alignment** - List of available alignments 
       * Timer on top - Timer on top, clock in the middle, logo on the bottom, QR code **NOT** displayed
@@ -116,6 +134,6 @@ The result:
 ---
 :exclamation: **Disclaimers** "RR" and "RaceResult" are trademarked by and belong to race result AG I make no claims to these or any assets belonging to race result AG and use them purely for informational purposes only.
 
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
 
-[^1]: This app does't collect anything from PC or RR. I don't have signning certificate
+[^1]: This app doesn't collect anything from PC or RR. I don't have a signing certificate
