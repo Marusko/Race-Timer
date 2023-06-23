@@ -184,14 +184,14 @@ namespace Race_timer.API
                     warning.ShowDialog();
                     return;
                 }
-                mw.StartTimesStackPanel.Children.Clear();
+                mw.ContestsStackPanel.Children.Clear();
                 mw.StartTimeCount = 0;
                 mw.TimesNumberLabel.Content = mw.StartTimeCount.ToString();
                 mw.UsedIndexes.Clear();
                 foreach (var contest in contests)
                 {
                     var index = mw.GetFirstFreeIndex();
-                    mw.StartTimesStackPanel.Children.Add(new MainWindowStartTimes
+                    mw.ContestsStackPanel.Children.Add(new MainWindowStartTimes
                     {
                         Index = index,
                         MainWindow = mw,

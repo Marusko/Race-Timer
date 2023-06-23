@@ -57,7 +57,7 @@ namespace Race_timer.ClockUserControl
         private void Close(object sender, RoutedEventArgs e)
         {
             if (MainWindow == null) return;
-            var parent = MainWindow.StartTimesStackPanel;
+            var parent = MainWindow.ContestsStackPanel;
             parent.Children.Remove(this);
             MainWindow.UsedIndexes.Remove(Index);
             MainWindow.StartTimeCount--;

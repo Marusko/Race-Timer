@@ -139,7 +139,7 @@ namespace Race_timer.UI
             SettingsTab.IsEnabled = false;
             ControlTab.IsEnabled = true;
             CodeTab.IsEnabled = false;
-            StartTimesTab.IsEnabled = false;
+            ContestsTab.IsEnabled = false;
             TabControl.SelectedItem = ControlTab;
         }
 
@@ -247,7 +247,7 @@ namespace Race_timer.UI
             SettingsTab.IsEnabled = true;
             ControlTab.IsEnabled = false;
             CodeTab.IsEnabled = true;
-            StartTimesTab.IsEnabled = true;
+            ContestsTab.IsEnabled = true;
             TabControl.SelectedItem = _openedLinkTimer ? LinkTimerTab : TimerTab;
             MinimizeButton.IsEnabled = true;
             MaximizeButton.IsEnabled = false;
@@ -497,7 +497,7 @@ namespace Race_timer.UI
         private void AddStartTime(object sender, RoutedEventArgs e)
         {
             var index = GetFirstFreeIndex();
-            StartTimesStackPanel.Children.Add(new MainWindowStartTimes
+            ContestsStackPanel.Children.Add(new MainWindowStartTimes
             {
                 Index = index,
                 MainWindow = this
@@ -513,7 +513,7 @@ namespace Race_timer.UI
         private void SaveStartTimesToDictionary()
         {
             StartTimes.Clear();
-            foreach (UIElement i in StartTimesStackPanel.Children)
+            foreach (UIElement i in ContestsStackPanel.Children)
             {
                 var startTime = (MainWindowStartTimes)i;
                 try

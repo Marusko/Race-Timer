@@ -63,16 +63,17 @@ namespace Race_timer.UI
         /// </summary>
         private void SetTimersMaxHeight()
         {
-            if (EventNameLabel.Text.Length > 26)
+            if (_clockLogic.EventName is { Length: <= 26 })
             {
-                if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
-                {
-                    ((TimerLeft)TimerPanel.Children[0]).TimerScrollViewer.MaxHeight = 300;
-                }
-                else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
-                {
-                    ((TimerRight)TimerPanel.Children[0]).TimerScrollViewer.MaxHeight = 300;
-                }
+                return;
+            }
+            if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
+            {
+                ((TimerLeft)TimerPanel.Children[0]).TimerScrollViewer.MaxHeight = 300;
+            }
+            else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
+            {
+                ((TimerRight)TimerPanel.Children[0]).TimerScrollViewer.MaxHeight = 300;
             }
         }
 

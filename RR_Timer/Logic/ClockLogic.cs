@@ -25,7 +25,7 @@ namespace Race_timer.Logic
         private Dictionary<string, DateTime> StartTimes { get; }
         public Dictionary<string, ContestTimer> ActiveTimers { get; }
         public Dictionary<string, MiniContestTimer> MiniActiveTimers { get; }
-        private string? EventName { get; set; }
+        public string? EventName { get; private set; }
         private string? EventType { get; set; }
         public BitmapImage? LogoImage { get; set; }
         public BitmapSource? CodeImage { get; set; }
