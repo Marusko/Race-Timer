@@ -66,17 +66,17 @@ The result:
 ---
 # Using the app :computer:
 ## Left side menu :fleur_de_lis:
-![Left side menu](https://github.com/Marusko/Race-Timer/assets/93376571/15ab8463-d381-47e2-b693-a8f8399e73cc)
+![Left side menu](https://github.com/Marusko/Race-Timer/assets/93376571/ac4c6759-1ee3-4d91-aa4e-8ce7ddbbfd65)
   * **Timer** - Menu for entering event name, type and start time, logo image, and starting the timer
   * **API Timer** - Menu for entering API link for name and type, logo image, start time, and starting the timer
-  * **Start times** - Menu for adding contests with start times, manually or from API, and editing them
+  * **Contests** - Menu for adding contests with start times, manually or from API, and editing them
   * **QR code** - Menu for setting or generating QR code
   * **Timer control** - Menu for switching between fullscreen and small timer, and closing the timer
   * **Display settings** - Choosing the screen on which the will timer be displayed, choosing the timer layout
   * **Informations** - Informations about the app
 
 ## Timer :hourglass_flowing_sand:
-![First tab, with manual settings](https://github.com/Marusko/Race-Timer/assets/93376571/02d47ac1-5aef-4e60-8b14-299c1938cf74)
+![First tab, with manual settings](https://github.com/Marusko/Race-Timer/assets/93376571/620e9ab8-4e12-4f8a-9e94-82cf4cedb422)
   * **Event name** - Event name that will be displayed with the timer
   * **Event type** - Event type that will be displayed on the big fullscreen clock
   * **Select image** - Choose an image from the PC to be displayed as the logo, it best works with a rectangle logo, 
@@ -85,7 +85,7 @@ The result:
   * **Open timer** - Open fullscreen timer, disables all settings and enables **Timer control**
   
 ## API Timer :watch:
-![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/bc39decb-5de1-42c2-8d7f-bfdbf794668e)
+![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/5af42eb8-0686-43ac-b39a-2db15c5850e6)
   * **API Timer** - Tab for entering links and setting up the API timer
     * **API Link** - Here enter the main link to get the name and type of the event
     * **List Link** - Here enter the link which points to the output list, for automatic switching of the timer windows
@@ -94,21 +94,21 @@ The result:
     * **Delete image** - Clear the selected image (shared with **Timer**)
     * **Open timer** - Open fullscreen timer, disables all settings and enables **Timer control**
 
-![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/53932dae-83e1-47a7-8a8e-8a690a7be5ba)
+![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/4ab47cc5-1435-4ab5-ac00-5fd969526047)
   * **API cheat sheet** - Tab with API settings, to quickly find and paste when creating API in Race Result
 
-## Start times :runner::runner:
-![Third tab, creating and editing contests](https://github.com/Marusko/Race-Timer/assets/93376571/2c3c4cef-0551-4634-91eb-227ec378f323)
+## Contests :runner::runner:
+![Third tab, creating and editing contests](https://github.com/Marusko/Race-Timer/assets/93376571/41439e55-1e66-4922-9607-885e20c8c549)
   * **Contests link** - Here enter the Contests link to load all contests from RR
   * **Load** - Reads the Contests link and adds loaded contests to the list below, you can then edit them
   * **Add start time** - Adds a new line to the list below
-  * **For each start time**
+  * **For each contest**
     * **Name** - Name of the contest which will be shown with elapsed time
     * **Start time** - Start time of the contest
     * **Remove** - Removes this contest from the list
 
 ## QR code :framed_picture:
-![Fourth tab, with QR code settings](https://github.com/Marusko/Race-Timer/assets/93376571/6b467fc4-efa6-4849-b4b8-472696c2757d)
+![Fourth tab, with QR code settings](https://github.com/Marusko/Race-Timer/assets/93376571/025d6df9-a3bc-4357-b76f-1ab3e2d31ff7)
   * **Generate QR code** - Here enter the link to convert to a QR code
   * **Generate QR** - Generates the QR code and sets it
   * **Select QR** - Choose an image from the PC to be displayed as a QR code, above the button will be shown the name of the image, enabling the delete button
@@ -118,13 +118,13 @@ The result:
 ## Timer control :wrench:
 > Tab is enabled when the timer is open
 
-![Fifth tab, timer control](https://github.com/Marusko/Race-Timer/assets/93376571/025fdcc9-f327-4927-8f4f-6c5295d37911)
+![Fifth tab, timer control](https://github.com/Marusko/Race-Timer/assets/93376571/b930120a-55c6-432d-b0fd-935f54cf19d7)
   * **Minimize** - To manually switch from fullscreen to the small timer
   * **Maximize** - To manually switch from the small to the fullscreen timer
   * **Close timer** - To close the timer window, the timer window also close when closing the main window
 
 ## Display settings :hammer_and_wrench:
-![Sixth tab, display settings](https://github.com/Marusko/Race-Timer/assets/93376571/f33df989-53b9-4ff1-a43f-b7d1b9f3e846)
+![Sixth tab, display settings](https://github.com/Marusko/Race-Timer/assets/93376571/aef1a5ce-2d42-435c-b6c5-f2a1e47d4098)
   * **Display** - List of connected displays to choose on which the timer window will be opened. Display names here **AREN'T** the same as in Windows settings
   * **Timer and image alignment** - List of available alignments 
       * Timer on top - Timer on top, clock in the middle, logo on the bottom, QR code **NOT** displayed
