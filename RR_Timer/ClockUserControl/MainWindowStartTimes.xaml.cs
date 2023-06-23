@@ -12,14 +12,36 @@ namespace Race_timer.ClockUserControl
         public int Index
         {
             get => _index;
-            set
+            init
             {
                 IndexLabel.Content = value + ":";
                 _index = value;
             }
         }
 
-        private int _index;
+        public new string? Name
+        {
+            get => _name;
+            init
+            {
+                StartNameText.Text = value;
+                _name = value;
+            }
+        }
+        public string? StartTime
+        {
+            get => _startTime;
+            init
+            {
+                StartTimeText.Text = value;
+                _startTime = value;
+            }
+        }
+
+        private readonly string? _name;
+        private readonly string? _startTime;
+
+        private readonly int _index;
 
         public MainWindowStartTimes()
         {

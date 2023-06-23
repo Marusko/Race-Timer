@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using Newtonsoft.Json;
+using Race_timer.ClockUserControl;
 using Race_timer.Data;
 using Race_timer.Logic;
 using Race_timer.UI;
@@ -158,6 +161,71 @@ namespace Race_timer.API
         public void StopTimer()
         {
             _timer.Stop();
+        }
+
+        public static async void LoadContest(string contestLink, MainWindow mw)
+        {
+            var httpClient = new HttpClient();
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync(contestLink);
+            }
+            catch (Exception e)
+            {
+                var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: \n[" + e.Message + "]");
+                warning.ShowDialog();
+                return;
+            }
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                var contests = JsonConvert.DeserializeObject<List<Contest>>(responseString);
+                if (contests == null)
+                {
+                    var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: \n[Can't deserialize contests from link]");
+                    warning.ShowDialog();
+                    return;
+                }
+                mw.StartTimesStackPanel.Children.Clear();
+                mw.StartTimeCount = 0;
+                mw.TimesNumberLabel.Content = mw.StartTimeCount.ToString();
+                mw.UsedIndexes.Clear();
+                foreach (var contest in contests)
+                {
+                    var index = mw.GetFirstFreeIndex();
+                    mw.StartTimesStackPanel.Children.Add(new MainWindowStartTimes
+                    {
+                        Index = index,
+                        MainWindow = mw,
+                        StartTime = SecondsToTimeString(contest.StartTime),
+                        Name = contest.Name
+                    });
+                    mw.UsedIndexes.Add(index);
+                    mw.StartTimeCount++;
+                    mw.TimesNumberLabel.Content = mw.StartTimeCount.ToString();
+                }
+            }
+            else
+            {
+                var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: [" + response.StatusCode + "]");
+                warning.ShowDialog();
+            }
+
+            httpClient.Dispose();
+        }
+
+        private static string SecondsToTimeString(int? seconds)
+        {
+            var timeString = "00:00:00";
+
+            if (seconds != null)
+            {
+                TimeSpan time = TimeSpan.FromSeconds((double)seconds);
+                timeString = time.ToString(@"hh\:mm\:ss");
+            }
+
+            return timeString;
         }
     }
 }

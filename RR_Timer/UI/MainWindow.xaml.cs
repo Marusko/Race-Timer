@@ -475,7 +475,7 @@ namespace Race_timer.UI
         /// Returns first unused index of start time
         /// </summary>
         /// <returns>First free index</returns>
-        private int GetFirstFreeIndex()
+        public int GetFirstFreeIndex()
         {
             var indexer = 1;
             while (UsedIndexes.Contains(indexer))
@@ -514,7 +514,7 @@ namespace Race_timer.UI
                 var startTime = (MainWindowStartTimes)i;
                 try
                 {
-                    StartTimes.Add(startTime.StartName.Text, startTime.StartTime.Text);
+                    StartTimes.Add(startTime.StartNameText.Text, startTime.StartTimeText.Text);
                 }
                 catch (Exception e)
                 {
@@ -540,6 +540,11 @@ namespace Race_timer.UI
         private void CopyContestLink(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(ContestSetText.Text);
+        }
+
+        private void LoadContests(object sender, RoutedEventArgs e)
+        {
+            LinkHandler.LoadContest(ContestLinkText.Text, this);
         }
 
         /// <summary>

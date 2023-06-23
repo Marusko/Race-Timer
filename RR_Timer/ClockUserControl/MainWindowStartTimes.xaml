@@ -13,8 +13,8 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Label x:Name="IndexLabel" Grid.Column="0" Content="01:" FontSize="16" Width="30"/>
-        <TextBox x:Name="StartName" Grid.Column="1" Margin="10, 0" FontSize="16" Width="200" TextAlignment="Center" TextWrapping="Wrap" ToolTip="Contest name" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="StartTime" Grid.Column="2" Margin="0,0,10,0" Text="00:00:00" FontSize="16" Width="75" TextAlignment="Center" ToolTip="Contest start time"/>
+        <TextBox x:Name="StartNameText" Grid.Column="1" Margin="10, 0" FontSize="16" Width="200" TextAlignment="Center" TextWrapping="Wrap" ToolTip="Contest name" HorizontalContentAlignment="Center"/>
+        <TextBox x:Name="StartTimeText" Grid.Column="2" Margin="0,0,10,0" Text="00:00:00" FontSize="16" Width="75" TextAlignment="Center" ToolTip="Contest start time"/>
         <Button Grid.Column="3" Content="Remove" Click="Close" ToolTip="Remove this start time"/>
     </Grid>
 </UserControl>
