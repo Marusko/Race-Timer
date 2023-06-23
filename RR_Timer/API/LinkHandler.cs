@@ -15,38 +15,38 @@ namespace Race_timer.API
     internal class LinkHandler
     {
         private readonly string _mainLink;
-        private readonly string? _listLink;
+        private readonly string? _countLink;
         private readonly ClockLogic _clockLogic;
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private readonly HttpClient _httpClient;
 
         /// <summary>
-        /// When both links are entered, this constructor will be called and main, list links will be read
+        /// When both links are entered, this constructor will be called and main, count links will be read
         /// </summary>
         /// <param name="mainLink">For event name and type</param>
-        /// <param name="listLink">For list of participants that already finished</param>
+        /// <param name="countLink">For count of participants that already finished</param>
         /// <param name="cl"></param>
-        public LinkHandler(string mainLink, string listLink, ClockLogic cl)
+        public LinkHandler(string mainLink, string countLink, ClockLogic cl)
         {
             _mainLink = mainLink;
-            _listLink = listLink;
+            _countLink = countLink;
             _clockLogic = cl;
             _httpClient = new HttpClient();
             ReadMainLink();
 
-            _timer.Tick += RefreshListLink;
+            _timer.Tick += RefreshCountLink;
             _timer.Interval = new TimeSpan(0, 0, 15);
             _timer.Start();
         }
         /// <summary>
-        /// When list link is not entered, this constructor will be called and main link will be read
+        /// When count link is not entered, this constructor will be called and main link will be read
         /// </summary>
         /// <param name="mainLink">For event name and type</param>
         /// <param name="cl">For clock logic object</param>
         public LinkHandler(string mainLink, ClockLogic cl)
         {
             _mainLink = mainLink;
-            _listLink = null;
+            _countLink = null;
             _clockLogic = cl;
             _httpClient = new HttpClient();
             ReadMainLink();
@@ -93,22 +93,22 @@ namespace Race_timer.API
         }
 
         /// <summary>
-        /// Reads list link and if one or mor participants finished, it minimizes timer, if something went wrong shows error
-        /// and stops the timer for refreshing list link
+        /// Reads count link and if one or mor participants finished, it minimizes timer, if something went wrong shows error
+        /// and stops the timer for refreshing count link
         /// </summary>
-        private async void ReadListLink()
+        private async void ReadCountLink()
         {
             if (!_clockLogic.IsTimerMinimized())
             {
                 HttpResponseMessage response;
                 try
                 {
-                    response = await _httpClient.GetAsync(_listLink);
+                    response = await _httpClient.GetAsync(_countLink);
                 }
                 catch (Exception e)
                 {
                     _timer.Stop();
-                    var warning = new WarningWindow("Oops, something went wrong with list API!\nError code: \n[" + e.Message + "]");
+                    var warning = new WarningWindow("Oops, something went wrong with count API!\nError code: \n[" + e.Message + "]");
                     warning.ShowDialog();
                     return;
                 }
@@ -126,7 +126,7 @@ namespace Race_timer.API
                 else
                 {
                     _timer.Stop();
-                    var warning = new WarningWindow("Oops, something went wrong with list API!\nError code: [" + response.StatusCode + "]");
+                    var warning = new WarningWindow("Oops, something went wrong with count API!\nError code: [" + response.StatusCode + "]");
                     warning.ShowDialog();
                 }
             }
@@ -137,13 +137,13 @@ namespace Race_timer.API
         }
 
         /// <summary>
-        /// Timer calls this method, which calls ReadListLink()
+        /// Timer calls this method, which calls ReadCountLink()
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RefreshListLink(object? sender, EventArgs e)
+        private void RefreshCountLink(object? sender, EventArgs e)
         {
-            ReadListLink();
+            ReadCountLink();
         }
 
         /// <summary>

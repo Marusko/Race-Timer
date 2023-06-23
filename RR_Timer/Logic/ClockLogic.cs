@@ -221,7 +221,7 @@ namespace Race_timer.Logic
             {
                 if (string.IsNullOrEmpty(listLink))
                 {
-                    var warning = new WarningWindow(WarningWindow.ListLinkWarning);
+                    var warning = new WarningWindow(WarningWindow.CountLinkWarning);
                     warning.ShowDialog();
                     _linkHandler = new LinkHandler(mainLink, this);
                 }
