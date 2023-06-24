@@ -68,7 +68,7 @@ The result:
 ## Left side menu :fleur_de_lis:
 ![Left side menu](https://github.com/Marusko/Race-Timer/assets/93376571/ac4c6759-1ee3-4d91-aa4e-8ce7ddbbfd65)
   * **Timer** - Menu for entering event name, type and start time, logo image, and starting the timer
-  * **API Timer** - Menu for entering API link for name and type, logo image, start time, and starting the timer
+  * **API Timer** - Menu for entering API link for name and type, logo image, and starting the timer
   * **Contests** - Menu for adding contests with start times, manually or from API, and editing them
   * **QR code** - Menu for setting or generating QR code
   * **Timer control** - Menu for switching between fullscreen and small timer, and closing the timer
@@ -88,7 +88,7 @@ The result:
 ![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/5af42eb8-0686-43ac-b39a-2db15c5850e6)
   * **API Timer** - Tab for entering links and setting up the API timer
     * **API Link** - Here enter the main link to get the name and type of the event
-    * **List Link** - Here enter the link which points to the output list, for automatic switching of the timer windows
+    * **List Link** - Here enter the link which points to the counter, for automatic switching of the timer windows
     * **Select image** - Choose an image from the PC to be displayed as the logo, it best works with a rectangle logo, 
                        above the button will be shown the name of the image, enabling the delete button (shared with **Timer**)
     * **Delete image** - Clear the selected image (shared with **Timer**)
