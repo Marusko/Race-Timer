@@ -57,7 +57,7 @@ If you don't time the race with RaceResult, or don't want to create links, simpl
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
  2. Select **Custom** from the left dropdown menu, in the details write or copy `contests/get`(see the picture)
 ![Creating contest API link](https://github.com/Marusko/Race-Timer/assets/93376571/bd5711f7-ad8f-43c7-a98d-a5cd1be2e273)
- 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it into the `Start times` tab in the `Contests link` text box
+ 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it into the `Contests` tab in the `Contests link` text box
 
 The result:
 
