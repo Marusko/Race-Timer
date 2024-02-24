@@ -540,9 +540,9 @@ namespace Race_timer.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CopyApiLink(object sender, RoutedEventArgs e)
+        private void CopyEventLink(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(ApiSetText.Text);
+            Clipboard.SetText(EventSetText.Text);
         }
 
         /// <summary>
@@ -563,6 +563,11 @@ namespace Race_timer.UI
         private void CopyContestLink(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(ContestSetText.Text);
+        }
+
+        private void CopyApiLink(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(ApiSetText.Text);
         }
 
         /// <summary>

@@ -78,39 +78,88 @@
                     <TabItem Header="API cheat sheet" ToolTip="API settings for Race Result API">
                         <Grid >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Margin="0,20,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Grid.Row="0" Margin="0,20,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Settings for API link" FontSize="16"/>
-                                <TextBox x:Name="ApiSetText" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="EventName,EventType" ToolTip="Copy this into Race Result API with 'Settings' selected for name and type" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="180" HorizontalContentAlignment="Center"/>
-                                <Button Grid.Row="2" Click="CopyApiLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for API link"/>
+                                <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Settings for Event link" FontSize="16"/>
+                                <Grid Grid.Row="1" HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Settings" ToolTip="Type of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="80" HorizontalContentAlignment="Center"/>
+                                    <TextBox x:Name="EventSetText" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="EventName,EventType" ToolTip="Copy this into Race Result API with 'Settings' selected for name and type" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="180" HorizontalContentAlignment="Center" Margin="2"/>
+                                    <TextBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="main" ToolTip="RR label of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="50" HorizontalContentAlignment="Center"/>
+                                </Grid>
+                                <Button Grid.Row="2" Click="CopyEventLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for API link"/>
                             </Grid>
-                            <Grid Grid.Row="1" Margin="0,20,0,0">
+                            <Grid Grid.Column="0" Grid.Row="1" Margin="0,20,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Settings for Count link" FontSize="16"/>
-                                <TextBox x:Name="CountSetText" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="data/count?filter=[Finished]=1"  ToolTip="Copy this into Race Result API with 'Custom' selected to create count which will be used to minimize the timer" IsReadOnly="True" FontFamily="Consolas" FontSize="14" HorizontalContentAlignment="Center" Width="260"/>
+                                <Grid Grid.Row="1" HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Custom" ToolTip="Type of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="60" HorizontalContentAlignment="Center"/>
+                                    <TextBox x:Name="CountSetText" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="data/count?filter=[Finished]=1"  ToolTip="Copy this into Race Result API with 'Custom' selected to create count which will be used to minimize the timer" IsReadOnly="True" FontFamily="Consolas" FontSize="14" HorizontalContentAlignment="Center" Width="220" Margin="2"/>
+                                    <TextBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="count" ToolTip="RR label of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="50" HorizontalContentAlignment="Center"/>
+                                </Grid>
                                 <Button Grid.Row="2" Click="CopyCountLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for Count link"/>
                             </Grid>
-                            <Grid Grid.Row="2" Margin="0,20,0,0">
+                            <Grid Grid.Column="1" Grid.Row="0" Margin="0,20,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Settings for Contest link" FontSize="16"/>
-                                <TextBox x:Name="ContestSetText" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="contests/get"  ToolTip="Copy this into Race Result API with 'Custom' selected to create list of contest and times, for setting up start times" IsReadOnly="True" FontFamily="Consolas" FontSize="14" HorizontalContentAlignment="Center" Width="130"/>
+                                <Grid Grid.Row="1" HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Custom" ToolTip="Type of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="80" HorizontalContentAlignment="Center"/>
+                                    <TextBox x:Name="ContestSetText" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="contests/get"  ToolTip="Copy this into Race Result API with 'Custom' selected to create list of contest and times, for setting up start times" IsReadOnly="True" FontFamily="Consolas" FontSize="14" HorizontalContentAlignment="Center" Width="130" Margin="2"/>
+                                    <TextBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="contest" ToolTip="RR label of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="70" HorizontalContentAlignment="Center"/>
+                                </Grid>
                                 <Button Grid.Row="2" Click="CopyContestLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for Contest link"/>
+                            </Grid>
+                            <Grid Grid.Column="1" Grid.Row="1" Margin="0,20,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Settings for API link" FontSize="16"/>
+                                <Grid Grid.Row="1" HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Custom" ToolTip="Type of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="80" HorizontalContentAlignment="Center"/>
+                                    <TextBox x:Name="ApiSetText" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="simpleapi/get"  ToolTip="Copy this into Race Result API with 'Custom' selected to create list of APIs" IsReadOnly="True" FontFamily="Consolas" FontSize="14" HorizontalContentAlignment="Center" Width="130" Margin="2"/>
+                                    <TextBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="api" ToolTip="RR label of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="70" HorizontalContentAlignment="Center"/>
+                                </Grid>
+                                <Button Grid.Row="2" Click="CopyApiLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for API link"/>
                             </Grid>
                         </Grid>
                     </TabItem>
