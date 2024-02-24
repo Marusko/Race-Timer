@@ -65,9 +65,10 @@ namespace Race_timer.API
             }
             catch (Exception e)
             {
-                var warning = new WarningWindow("Oops, something went wrong with main API!\nError code: \n[" + e.Message + "]");
+                var warning = new WarningWindow("Oops, something went wrong with Event API!\nError code: \n[" + e.Message + "]");
                 warning.ShowDialog();
                 _clockLogic.MainWindow.CanOpenTimer = false;
+                _clockLogic.MainWindow.EventStatusLabel.Content = "ERR";
                 return;
             }
 
@@ -77,18 +78,20 @@ namespace Race_timer.API
                 var myEvent = JsonConvert.DeserializeObject<Event>(responseString);
                 if (myEvent?.EventName == null || myEvent.EventType == null)
                 {
-                    var warning = new WarningWindow("Oops, something went wrong with main API!\nError code: \n[Can't read main API link]");
+                    var warning = new WarningWindow("Oops, something went wrong with Event API!\nError code: \n[Can't read main API link]");
                     warning.ShowDialog();
                     _clockLogic.MainWindow.CanOpenTimer = false;
+                    _clockLogic.MainWindow.EventStatusLabel.Content = "ERR";
                     return;
                 }
                 _clockLogic.SetLabels(myEvent.EventName, ((EventType)int.Parse(myEvent.EventType)).ToString());
             }
             else
             {
-                var warning = new WarningWindow("Oops, something went wrong with main API!\nError code: [" + response.StatusCode + "]");
+                var warning = new WarningWindow("Oops, something went wrong with Event API!\nError code: [" + response.StatusCode + "]");
                 warning.ShowDialog();
                 _clockLogic.MainWindow.OnClose();
+                _clockLogic.MainWindow.EventStatusLabel.Content = "ERR";
             }
         }
 
@@ -110,6 +113,7 @@ namespace Race_timer.API
                     _timer.Stop();
                     var warning = new WarningWindow("Oops, something went wrong with count API!\nError code: \n[" + e.Message + "]");
                     warning.ShowDialog();
+                    _clockLogic.MainWindow.CountStatusLabel.Content = "ERR";
                     return;
                 }
 
@@ -128,6 +132,7 @@ namespace Race_timer.API
                     _timer.Stop();
                     var warning = new WarningWindow("Oops, something went wrong with count API!\nError code: [" + response.StatusCode + "]");
                     warning.ShowDialog();
+                    _clockLogic.MainWindow.CountStatusLabel.Content = "ERR";
                 }
             }
             else
@@ -160,7 +165,7 @@ namespace Race_timer.API
         /// </summary>
         /// <param name="contestLink">For loading contests</param>
         /// <param name="mw">Already created main window</param>
-        public static async void LoadContest(string contestLink, MainWindow mw)
+        private static async void LoadContest(string contestLink, MainWindow mw)
         {
             var httpClient = new HttpClient();
             HttpResponseMessage response;
@@ -172,6 +177,7 @@ namespace Race_timer.API
             {
                 var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: \n[" + e.Message + "]");
                 warning.ShowDialog();
+                mw.ContestStatusLabel.Content = "ERR";
                 return;
             }
             if (response.IsSuccessStatusCode)
@@ -182,6 +188,7 @@ namespace Race_timer.API
                 {
                     var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: \n[Can't deserialize contests from link]");
                     warning.ShowDialog();
+                    mw.ContestStatusLabel.Content = "ERR";
                     return;
                 }
                 mw.ContestsStackPanel.Children.Clear();
@@ -207,9 +214,106 @@ namespace Race_timer.API
             {
                 var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: [" + response.StatusCode + "]");
                 warning.ShowDialog();
+                mw.ContestStatusLabel.Content = "ERR";
             }
 
             httpClient.Dispose();
+        }
+
+        public static async void LoadApi(string apiLink, MainWindow mw)
+        {
+            var canLoadContest = false;
+            var httpClient = new HttpClient();
+            HttpResponseMessage response;
+            try
+            {
+                response = await httpClient.GetAsync(apiLink);
+            }
+            catch (Exception e)
+            {
+                var warning = new WarningWindow("Oops, something went wrong with all API link!\nError code: \n[" + e.Message + "]");
+                warning.ShowDialog();
+                return;
+            }
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                var apis = JsonConvert.DeserializeObject<List<Api>>(responseString);
+                if (apis == null)
+                {
+                    var warning = new WarningWindow("Oops, something went wrong with all API link!\nError code: \n[Can't deserialize contests from link]");
+                    warning.ShowDialog();
+                    return;
+                }
+
+                var index = apiLink.LastIndexOf("/");
+                if (index == -1)
+                {
+                    var warning = new WarningWindow("Oops, something went wrong with all API link!\nError code: \n[Can't deserialize contests from link]");
+                    warning.ShowDialog();
+                    return;
+                }
+                var link = apiLink.Substring(0, index + 1);
+
+                mw.EventStatusLabel.Content = "MIS";
+                mw.CountStatusLabel.Content = "MIS";
+                mw.ContestStatusLabel.Content = "MIS";
+
+                foreach (var api in apis)
+                {
+                    if ((bool)api.Label?.ToLower().Equals("main"))
+                    {
+                        mw.EventLink = "";
+                        if (api.Disabled != null && !(bool)api.Disabled)
+                        {
+                            mw.EventStatusLabel.Content = "OK";
+                            mw.EventLink = link + api.Key;
+                        }
+                        else
+                        {
+                            mw.EventStatusLabel.Content = "OFF";
+                        }
+                    }
+                    else if ((bool)api.Label?.ToLower().Equals("count"))
+                    {
+                        mw.CountLink = "";
+                        if (api.Disabled != null && !(bool)api.Disabled)
+                        {
+                            mw.CountStatusLabel.Content = "OK";
+                            mw.CountLink = link + api.Key;
+                        }
+                        else
+                        {
+                            mw.CountStatusLabel.Content = "OFF";
+                        }
+                    }
+                    else if ((bool)api.Label?.ToLower().Equals("contest"))
+                    {
+                        mw.ContestLink = "";
+                        if (api.Disabled != null && !(bool)api.Disabled)
+                        {
+                            mw.ContestStatusLabel.Content = "OK";
+                            mw.ContestLink = link + api.Key;
+                            canLoadContest = true;
+                        }
+                        else
+                        {
+                            mw.ContestStatusLabel.Content = "OFF";
+                        }
+                    }
+                }
+            }
+            else
+            {
+                var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: [" + response.StatusCode + "]");
+                warning.ShowDialog();
+            }
+
+            httpClient.Dispose();
+            if (canLoadContest)
+            {
+                LoadContest(mw.ContestLink, mw);
+            }
         }
 
         /// <summary>

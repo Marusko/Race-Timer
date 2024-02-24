@@ -566,13 +566,13 @@ namespace Race_timer.UI
         }
 
         /// <summary>
-        /// Load contests from contest link
+        /// Load all API from link
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void LoadContests(object sender, RoutedEventArgs e)
+        private void LoadApis(object sender, RoutedEventArgs e)
         {
-            LinkHandler.LoadContest(ContestLinkText.Text, this);
+            LinkHandler.LoadApi(LinkText.Text, this);
         }
 
         /// <summary>
