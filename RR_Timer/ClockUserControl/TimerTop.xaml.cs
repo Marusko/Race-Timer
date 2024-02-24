@@ -53,35 +53,40 @@ namespace Race_timer.ClockUserControl
         /// <param name="e"></param>
         private void TimerTick(object? sender, EventArgs e)
         {
-            if (_currentDelay != ScrollDelay && (_stateOfScroll == ClockLogic.ScrollBegin || _stateOfScroll == ClockLogic.ScrollEnd))
+            if (TimerStackPanel.Children.Count > 3)
             {
-                _currentDelay++;
-            }
-            else
-            {
-                if (_stateOfScroll == ClockLogic.ScrollBegin)
+                if (_currentDelay != ScrollDelay && (_stateOfScroll == ClockLogic.ScrollBegin || _stateOfScroll == ClockLogic.ScrollEnd))
                 {
-                    _stateOfScroll = ClockLogic.Scrolling;
+                    _currentDelay++;
                 }
-                else if (_stateOfScroll == ClockLogic.Scrolling)
+                else
                 {
-                    if (_currentTime == ScrollTimes)
+                    if (_stateOfScroll == ClockLogic.ScrollBegin)
                     {
-                        _currentTime = 0;
-                        _stateOfScroll = ClockLogic.ScrollEnd;
+                        _stateOfScroll = ClockLogic.Scrolling;
                     }
-                    else
+                    else if (_stateOfScroll == ClockLogic.Scrolling)
                     {
-                        _currentTime++;
-                        TimerScrollViewer.ScrollToHorizontalOffset(_currentTime * (TimerScrollViewer.ScrollableWidth/ScrollTimes));
+                        if (TimerScrollViewer.HorizontalOffset >= TimerScrollViewer.ScrollableWidth)
+                        {
+                            _currentTime = 0;
+                            _stateOfScroll = ClockLogic.ScrollEnd;
+                        }
+                        else
+                        {
+                            _currentTime++;
+                            TimerScrollViewer.ScrollToHorizontalOffset(_currentTime * (TimerScrollViewer.ScrollableWidth/(ScrollTimes * Math.Abs(TimerStackPanel.Children.Count - 3))));
+                            TimerScrollViewer.UpdateLayout();
+                        }
                     }
+                    else if (_stateOfScroll == ClockLogic.ScrollEnd)
+                    {
+                        TimerScrollViewer.ScrollToLeftEnd();
+                        TimerScrollViewer.UpdateLayout();
+                        _stateOfScroll = ClockLogic.ScrollBegin;
+                    }
+                    _currentDelay = 0;
                 }
-                else if (_stateOfScroll == ClockLogic.ScrollEnd)
-                {
-                    TimerScrollViewer.ScrollToLeftEnd();
-                    _stateOfScroll = ClockLogic.ScrollBegin;
-                }
-                _currentDelay = 0;
             }
         }
     }
