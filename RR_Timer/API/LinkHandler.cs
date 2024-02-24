@@ -65,7 +65,7 @@ namespace Race_timer.API
             }
             catch (Exception e)
             {
-                var warning = new WarningWindow("Oops, something went wrong with Event API!\nError code: \n[" + e.Message + "]");
+                var warning = new WarningWindow($"Oops, something went wrong with Event API!\nError code: \n[{e.Message}]");
                 warning.ShowDialog();
                 _clockLogic.MainWindow.CanOpenTimer = false;
                 _clockLogic.MainWindow.EventStatusLabel.Content = "ERR";
@@ -75,10 +75,22 @@ namespace Race_timer.API
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                var myEvent = JsonConvert.DeserializeObject<Event>(responseString);
+                Event? myEvent;
+                try
+                {
+                    myEvent = JsonConvert.DeserializeObject<Event>(responseString);
+                }
+                catch (Exception e)
+                {
+                    var warning = new WarningWindow($"Oops, something went wrong with Event API!\nError code: [{e.Message}]");
+                    warning.ShowDialog();
+                    _clockLogic.MainWindow.OnClose();
+                    _clockLogic.MainWindow.EventStatusLabel.Content = "ERR";
+                    return;
+                }
                 if (myEvent?.EventName == null || myEvent.EventType == null)
                 {
-                    var warning = new WarningWindow("Oops, something went wrong with Event API!\nError code: \n[Can't read main API link]");
+                    var warning = new WarningWindow("Oops, something went wrong with Event API!\nError code: \n[Can't read Event API link]");
                     warning.ShowDialog();
                     _clockLogic.MainWindow.CanOpenTimer = false;
                     _clockLogic.MainWindow.EventStatusLabel.Content = "ERR";
@@ -88,7 +100,7 @@ namespace Race_timer.API
             }
             else
             {
-                var warning = new WarningWindow("Oops, something went wrong with Event API!\nError code: [" + response.StatusCode + "]");
+                var warning = new WarningWindow($"Oops, something went wrong with Event API!\nError code: [{response.StatusCode}]");
                 warning.ShowDialog();
                 _clockLogic.MainWindow.OnClose();
                 _clockLogic.MainWindow.EventStatusLabel.Content = "ERR";
@@ -111,7 +123,7 @@ namespace Race_timer.API
                 catch (Exception e)
                 {
                     _timer.Stop();
-                    var warning = new WarningWindow("Oops, something went wrong with count API!\nError code: \n[" + e.Message + "]");
+                    var warning = new WarningWindow($"Oops, something went wrong with count API!\nError code: \n[{e.Message}]");
                     warning.ShowDialog();
                     _clockLogic.MainWindow.CountStatusLabel.Content = "ERR";
                     return;
@@ -130,7 +142,7 @@ namespace Race_timer.API
                 else
                 {
                     _timer.Stop();
-                    var warning = new WarningWindow("Oops, something went wrong with count API!\nError code: [" + response.StatusCode + "]");
+                    var warning = new WarningWindow($"Oops, something went wrong with count API!\nError code: [{response.StatusCode}]");
                     warning.ShowDialog();
                     _clockLogic.MainWindow.CountStatusLabel.Content = "ERR";
                 }
@@ -175,7 +187,7 @@ namespace Race_timer.API
             }
             catch (Exception e)
             {
-                var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: \n[" + e.Message + "]");
+                var warning = new WarningWindow($"Oops, something went wrong with contest API!\nError code: \n[{e.Message}]");
                 warning.ShowDialog();
                 mw.ContestStatusLabel.Content = "ERR";
                 return;
@@ -183,10 +195,21 @@ namespace Race_timer.API
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                var contests = JsonConvert.DeserializeObject<List<Contest>>(responseString);
+                List<Contest>? contests;
+                try
+                {
+                    contests = JsonConvert.DeserializeObject<List<Contest>>(responseString);
+                }
+                catch (Exception e)
+                {
+                    var warning = new WarningWindow($"Oops, something went wrong with contest API!\nError code: \n[{e.Message}]");
+                    warning.ShowDialog();
+                    mw.ContestStatusLabel.Content = "ERR";
+                    return;
+                }
                 if (contests == null)
                 {
-                    var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: \n[Can't deserialize contests from link]");
+                    var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: \n[Can't deserialize null contests from link]");
                     warning.ShowDialog();
                     mw.ContestStatusLabel.Content = "ERR";
                     return;
@@ -212,7 +235,7 @@ namespace Race_timer.API
             }
             else
             {
-                var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: [" + response.StatusCode + "]");
+                var warning = new WarningWindow($"Oops, something went wrong with contest API!\nError code: [{response.StatusCode}]");
                 warning.ShowDialog();
                 mw.ContestStatusLabel.Content = "ERR";
             }
@@ -231,17 +254,27 @@ namespace Race_timer.API
             }
             catch (Exception e)
             {
-                var warning = new WarningWindow("Oops, something went wrong with all API link!\nError code: \n[" + e.Message + "]");
+                var warning = new WarningWindow($"Oops, something went wrong with all API link!\nError code: \n[{e.Message}]");
                 warning.ShowDialog();
                 return;
             }
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                var apis = JsonConvert.DeserializeObject<List<Api>>(responseString);
+                List<Api>? apis;
+                try
+                {
+                    apis = JsonConvert.DeserializeObject<List<Api>>(responseString);
+                }
+                catch (Exception e)
+                {
+                    var warning = new WarningWindow($"Oops, something went wrong with all API link!\nError code: \n[{e.Message}]");
+                    warning.ShowDialog();
+                    return;
+                }
                 if (apis == null)
                 {
-                    var warning = new WarningWindow("Oops, something went wrong with all API link!\nError code: \n[Can't deserialize contests from link]");
+                    var warning = new WarningWindow("Oops, something went wrong with all API link!\nError code: \n[Can't deserialize null APIs from link]");
                     warning.ShowDialog();
                     return;
                 }
@@ -249,7 +282,7 @@ namespace Race_timer.API
                 var index = apiLink.LastIndexOf("/");
                 if (index == -1)
                 {
-                    var warning = new WarningWindow("Oops, something went wrong with all API link!\nError code: \n[Can't deserialize contests from link]");
+                    var warning = new WarningWindow("Oops, something went wrong with all API link!\nError code: \n[Can't find main API link part]");
                     warning.ShowDialog();
                     return;
                 }
@@ -305,7 +338,7 @@ namespace Race_timer.API
             }
             else
             {
-                var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: [" + response.StatusCode + "]");
+                var warning = new WarningWindow($"Oops, something went wrong with all API!\nError code: [{response.StatusCode}]");
                 warning.ShowDialog();
             }
 
