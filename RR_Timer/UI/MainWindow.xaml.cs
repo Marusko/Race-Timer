@@ -108,7 +108,7 @@ namespace Race_timer.UI
             }
             OpenTimerStart();
             if (_clockWindow == null) return;
-            _clockLogic.SetClockWindow(EventLinkText.Text, CountLinkText.Text, (ClockWindow)_clockWindow);
+            _clockLogic.SetClockWindow(EventLink, CountLink, (ClockWindow)_clockWindow);
             _clockWindow.Show();
             OpenTimerEnd();
             _openedLinkTimer = true;
