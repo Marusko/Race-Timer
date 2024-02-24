@@ -32,6 +32,10 @@ namespace Race_timer.UI
         public List<int> UsedIndexes { get; }
         public Dictionary<string,string> StartTimes { get; }
 
+        public string EventLink { get; set; } = "";
+        public string CountLink { get; set; } = "";
+        public string ContestLink { get; set; } = "";
+
         /// <summary>
         /// Initializes and shows the main window, creates new ScreenHandler and ClockLogic,
         /// sets values for event type combobox and screen combobox from screen handler and selects first screen in list
