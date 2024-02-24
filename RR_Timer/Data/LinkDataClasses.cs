@@ -17,4 +17,11 @@
         public string? Name { get; set; }
         public int? StartTime { get; set; }
     }
+
+    public record Api
+    {
+        public bool? Disabled { get; set; }
+        public string? Key { get; set; }
+        public string? Label { get; set; }
+    }
 }
