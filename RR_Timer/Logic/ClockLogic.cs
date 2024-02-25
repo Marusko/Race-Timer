@@ -147,7 +147,8 @@ namespace Race_timer.Logic
                         {
                             continue;
                         }
-                        ActiveTimers.Add(StartTimes.Keys.ElementAt(i), new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, false)
+                        ActiveTimers.Add(StartTimes.Keys.ElementAt(i), new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, false,
+                            EventName?.Length ?? 0)
                         {
                             Name = StartTimes.Keys.ElementAt(i),
                             StartTime = StartTimes.Values.ElementAt(i)

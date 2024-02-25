@@ -11,6 +11,7 @@ namespace Race_timer.ClockUserControl
         private readonly int _screenWidth;
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private readonly bool _isClock;
+        private readonly int _nameLength;
         public DateTime StartTime { get; init; }
 
         public new string Name
@@ -24,7 +25,7 @@ namespace Race_timer.ClockUserControl
         }
 
         private string _name = "";
-        public ContestTimer(int screenWidth, bool isClock)
+        public ContestTimer(int screenWidth, bool isClock, int nameLength)
         {
             InitializeComponent();
             Loaded += WindowLoaded;
@@ -33,6 +34,7 @@ namespace Race_timer.ClockUserControl
             _timer.Start();
             _screenWidth = screenWidth;
             _isClock = isClock;
+            _nameLength = nameLength;
         }
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
@@ -42,6 +44,10 @@ namespace Race_timer.ClockUserControl
             Application.Current.Resources.Add("ControlFontSize", controlSize * 10);
             Application.Current.Resources.Remove("ControlSmallFontSize");
             Application.Current.Resources.Add("ControlSmallFontSize", controlSize * 5);
+            if (_isClock && _nameLength <= 26)
+            {
+                ContestTimeLabel.FontSize = 300;
+            }
         }
 
         /// <summary>

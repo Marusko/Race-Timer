@@ -148,7 +148,7 @@ namespace Race_timer.UI
                 clock.Content = " ";
                 timers.Children.Clear();
                 if (_screenHandler.SelectedScreen == null) return;
-                timers.Children.Add(new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
+                timers.Children.Add(new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true, _clockLogic.EventName?.Length ?? 0)
                 {
                     Name = " "
                 });
