@@ -70,7 +70,6 @@ namespace Race_timer.Logic
             {
                 StartTimes.Add(time.Key, StringToDateTime(time.Value));
             }
-            MainWindow.StartTimes.Clear();
         }
 
         /// <summary>

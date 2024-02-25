@@ -123,13 +123,19 @@ namespace Race_timer.UI
         /// </summary>
         private void OpenTimerStart()
         {
+            StartTimesDataGrid.AutoGenerateColumns = false;
             SaveStartTimesToDictionary();
             ContestComboBox.IsEnabled = true;
             NewStartTime.IsEnabled = true;
             NewStartButton.IsEnabled = true;
             if (StartTimeCount > 0)
             {
+                StartTimesDataGrid.Items.Clear();
                 ContestComboBox.ItemsSource = StartTimes.Keys;
+                foreach (var startTime in StartTimes)
+                {
+                    StartTimesDataGrid.Items.Add(startTime);
+                }
             }
             else
             {
@@ -642,26 +648,29 @@ namespace Race_timer.UI
             if (ContestComboBox?.SelectedItem == null) return;
             var newStart = _clockLogic.StringToDateTime(NewStartTime.Text);
             var canSetTime = _clockLogic.StartTimes.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedStartTime);
-            if (canSetTime)
+            if (!canSetTime) return;
+            _clockLogic.StartTimes[ContestComboBox.SelectedItem.ToString()] = newStart;
+            StartTimes[ContestComboBox.SelectedItem.ToString()] = NewStartTime.Text;
+            if (_clockLogic.ActiveTimers.Count > 0)
             {
-                _clockLogic.StartTimes[ContestComboBox.SelectedItem.ToString()] = newStart;
-                if (_clockLogic.ActiveTimers.Count > 0)
+                var can = _clockLogic.ActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
+                if (can && selectedContest != null)
                 {
-                    var can = _clockLogic.ActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
-                    if (can && selectedContest != null)
-                    {
-                        selectedContest.StartTime = newStart;
-                    }
-                } else if (_clockLogic.MiniActiveTimers.Count > 0)
+                    selectedContest.StartTime = newStart;
+                }
+            } else if (_clockLogic.MiniActiveTimers.Count > 0)
+            {
+                var can = _clockLogic.MiniActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
+                if (can && selectedContest != null)
                 {
-                    var can = _clockLogic.MiniActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
-                    if (can && selectedContest != null)
-                    {
-                        selectedContest.StartTime = newStart;
-                    }
+                    selectedContest.StartTime = newStart;
                 }
             }
-
+            StartTimesDataGrid.Items.Clear();
+            foreach (var startTime in StartTimes)
+            {
+                StartTimesDataGrid.Items.Add(startTime);
+            }
         }
     }
 }

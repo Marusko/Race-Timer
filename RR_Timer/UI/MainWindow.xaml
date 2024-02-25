@@ -200,25 +200,44 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="ControlTab" Header="Timer control" ToolTip="Control size or close the timer">
-                <Grid>
-                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,100">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" x:Name="MinimizeButton" Content="Minimize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MinimizeTimerHandler" Margin="0,0,20,0 " FontSize="16" ToolTip="Make the timer small in the upper side of screen"/>
-                        <Button Grid.Column="1" x:Name="MaximizeButton" Content="Maximize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MaximizeTimerHandler" FontSize="16" ToolTip="Make the timer big and on fullscreen"/>
+                <Grid Margin="0 20 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,100">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" x:Name="MinimizeButton" Content="Minimize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MinimizeTimerHandler" Margin="0,0,20,0 " FontSize="16" ToolTip="Make the timer small in the upper side of screen"/>
+                            <Button Grid.Column="1" x:Name="MaximizeButton" Content="Maximize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MaximizeTimerHandler" FontSize="16" ToolTip="Make the timer big and on fullscreen"/>
+                        </Grid>
+                        <Button Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CloseTimer" FontSize="16" ToolTip="Stop and close the timer"/>
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox x:Name="ContestComboBox" Width="200" Grid.Column="0" ToolTip="Contest for which start time has to be changed"></ComboBox>
+                            <TextBox x:Name="NewStartTime" Grid.Column="1" Margin="10" Text="00:00:00" FontSize="16" Width="75" TextAlignment="Center" ToolTip="New contest start time"></TextBox>
+                            <Button x:Name="NewStartButton" Click="SetNewStartTime" Grid.Column="2" FontSize="16" ToolTip="Set the new start time for selected contest">Set</Button>
+                        </Grid>
                     </Grid>
-                    <Button Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CloseTimer" FontSize="16" ToolTip="Stop and close the timer"/>
-                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <ComboBox x:Name="ContestComboBox" Width="200" Grid.Column="0" ToolTip="Contest for which start time has to be changed"></ComboBox>
-                        <TextBox x:Name="NewStartTime" Grid.Column="1" Margin="10" Text="00:00:00" FontSize="16" Width="75" TextAlignment="Center" ToolTip="New contest start time"></TextBox>
-                        <Button x:Name="NewStartButton" Click="SetNewStartTime" Grid.Column="2" FontSize="16" ToolTip="Set the new start time for selected contest">Set</Button>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" FontSize="16" HorizontalAlignment="Center" Margin="0 10 0 0">Current start times:</Label>
+                        <DataGrid Grid.Row="1" Name="StartTimesDataGrid" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" MinWidth="100" Binding="{Binding Path=Key}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Start time" MinWidth="100" Binding="{Binding Path=Value}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Grid>
                 </Grid>
             </TabItem>
