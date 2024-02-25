@@ -186,7 +186,16 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="CodeTab" Header="QR code" >
+            <TabItem x:Name="ResultTab" Header="Results" ToolTip="Enable and setup WebView">
+                <Grid>
+                    <CheckBox x:Name="WebViewEnableCheckBox" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -60 0 0" ToolTip="Enable WebView">Enable WebView</CheckBox>
+                    <Label Content="Link to web page with result" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="16"/>
+                    <TextBox x:Name="ResultLinkText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" 
+                             VerticalAlignment="Center" Width="601" HorizontalContentAlignment="Center" InputScope="Url" FontSize="14" ToolTip="Link to result page"
+                             IsEnabled="{Binding IsChecked, ElementName=WebViewEnableCheckBox}"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="CodeTab" Header="QR code" ToolTip="Generate or set QR image">
                 <Grid>
                     <Label Content="Generate QR code" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" FontSize="16"/>
                     <TextBox x:Name="CodeLinkText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" HorizontalContentAlignment="Center" InputScope="Url" FontSize="14" ToolTip="Link to convert"/>
@@ -210,9 +219,11 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" x:Name="MinimizeButton" Content="Minimize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MinimizeTimerHandler" Margin="0,0,20,0 " FontSize="16" ToolTip="Make the timer small in the upper side of screen"/>
-                            <Button Grid.Column="1" x:Name="MaximizeButton" Content="Maximize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MaximizeTimerHandler" FontSize="16" ToolTip="Make the timer big and on fullscreen"/>
+                            <Button Grid.Column="0" x:Name="WebReloadButton" Content="Reload" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Reload" Margin="0,0,20,0 " FontSize="16" ToolTip="Reload WebView page"/>
+                            <Button Grid.Column="1" x:Name="MinimizeButton" Content="Minimize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MinimizeTimerHandler" Margin="0,0,20,0 " FontSize="16" ToolTip="Make the timer small in the upper side of screen"/>
+                            <Button Grid.Column="2" x:Name="MaximizeButton" Content="Maximize" HorizontalAlignment="Center" VerticalAlignment="Center" Click="MaximizeTimerHandler" FontSize="16" ToolTip="Make the timer big and on fullscreen"/>
                         </Grid>
                         <Button Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Center" Click="CloseTimer" FontSize="16" ToolTip="Stop and close the timer"/>
                         <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0">

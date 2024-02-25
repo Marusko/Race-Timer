@@ -67,6 +67,7 @@ namespace Race_timer.UI
             CanOpenTimer = true;
             ControlTab.IsEnabled = false;
             MaximizeButton.IsEnabled = false;
+            WebReloadButton.IsEnabled = false;
             StartTimeCount = 0;
             UsedIndexes = new List<int>();
             StartTimes = new Dictionary<string,string>();
@@ -177,6 +178,7 @@ namespace Race_timer.UI
             ControlTab.IsEnabled = true;
             CodeTab.IsEnabled = false;
             ContestsTab.IsEnabled = false;
+            ResultTab.IsEnabled = false;
             TabControl.SelectedItem = ControlTab;
         }
 
@@ -224,6 +226,7 @@ namespace Race_timer.UI
             _clockWindow.Show();
             MinimizedTimer = false;
             MinimizeButton.IsEnabled = true;
+            WebReloadButton.IsEnabled = false;
             MaximizeButton.IsEnabled = false;
             _clockLogic.CheckTimers();
         }
@@ -244,12 +247,26 @@ namespace Race_timer.UI
             }
             _clockWindow.Close();
             _clockLogic.CheckTimers(true);
-            _clockWindow = new MiniClockWindow(_clockLogic, _screenHandler);
-            _clockLogic.SetClockWindow((MiniClockWindow)_clockWindow);
+            if (WebViewEnableCheckBox.IsChecked != null && (bool)WebViewEnableCheckBox.IsChecked 
+                                                        && !string.IsNullOrEmpty(ResultLinkText.Text))
+            {
+                _clockWindow = new WebViewClockWindow(_clockLogic, _screenHandler, ResultLinkText.Text);
+                _clockLogic.SetClockWindow((WebViewClockWindow)_clockWindow);
+            }
+            else
+            {
+                _clockWindow = new MiniClockWindow(_clockLogic, _screenHandler);
+                _clockLogic.SetClockWindow((MiniClockWindow)_clockWindow);
+            }
             _clockWindow.Show();
             MinimizedTimer = true;
             MinimizeButton.IsEnabled = false;
+            if (_clockWindow?.GetType() == typeof(WebViewClockWindow))
+            {
+                WebReloadButton.IsEnabled = true;
+            }
             MaximizeButton.IsEnabled = true;
+
         }
 
         /// <summary>
@@ -285,8 +302,10 @@ namespace Race_timer.UI
             ControlTab.IsEnabled = false;
             CodeTab.IsEnabled = true;
             ContestsTab.IsEnabled = true;
+            ResultTab.IsEnabled = true;
             TabControl.SelectedItem = _openedLinkTimer ? LinkTimerTab : TimerTab;
             MinimizeButton.IsEnabled = true;
+            WebReloadButton.IsEnabled = false;
             MaximizeButton.IsEnabled = false;
             NewStartTime.Text = "00:00:00";
             CanOpenTimer = true;
@@ -686,6 +705,17 @@ namespace Race_timer.UI
             foreach (var startTime in StartTimes)
             {
                 StartTimesDataGrid.Items.Add(startTime);
+            }
+        }
+
+        private void Reload(object sender, RoutedEventArgs e)
+        {
+            if (_clockWindow?.GetType() == typeof(WebViewClockWindow))
+            {
+                if (((WebViewClockWindow)_clockWindow).WebView is { CoreWebView2: not null })
+                {
+                    ((WebViewClockWindow)_clockWindow).WebView.Reload();
+                }
             }
         }
     }
