@@ -46,6 +46,19 @@ namespace Race_timer.ClockUserControl
             _timer.Stop();
         }
 
+        public void SetTopMargin(int nameLength)
+        {
+            if (nameLength is <= 26 and > 0)
+            {
+                TimerGrid.Margin = new Thickness(0, 10, 0, 0);
+            }
+
+            if (nameLength == 0)
+            {
+                TimerGrid.Margin = new Thickness(0, -50, 0, 0);
+            }
+        }
+
         /// <summary>
         /// Called by timer, scrolls the contest timers horizontally, waits on beginning and end
         /// </summary>

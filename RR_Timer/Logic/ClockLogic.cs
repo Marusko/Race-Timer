@@ -217,13 +217,13 @@ namespace Race_timer.Logic
         /// sets alignment, and both images
         /// </summary>
         /// <param name="mainLink">Link for event name and type</param>
-        /// <param name="listLink">Link for finished participants list</param>
+        /// <param name="countLink">Link for finished participants list</param>
         /// <param name="cw">To update or open clock window with API parameters</param>
-        public void SetClockWindow(string mainLink, string listLink, ClockWindow cw)
+        public void SetClockWindow(string mainLink, string countLink, ClockWindow cw)
         {
             if (!string.IsNullOrEmpty(mainLink))
             {
-                if (string.IsNullOrEmpty(listLink))
+                if (string.IsNullOrEmpty(countLink))
                 {
                     var warning = new WarningWindow(WarningWindow.CountLinkWarning);
                     warning.ShowDialog();
@@ -231,7 +231,7 @@ namespace Race_timer.Logic
                 }
                 else
                 {
-                    _linkHandler = new LinkHandler(mainLink, listLink, this);
+                    _linkHandler = new LinkHandler(mainLink, countLink, this);
                 }
             }
             else
@@ -247,6 +247,10 @@ namespace Race_timer.Logic
             {
                 ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
                 ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
+                if (SelectedAlignment.GetType() == typeof(TimerTop))
+                {
+                    ((TimerTop)SelectedAlignment).SetTopMargin(EventName?.Length ?? 0);
+                }
             }
             if (LogoImage != null)
             {
@@ -344,6 +348,10 @@ namespace Race_timer.Logic
             {
                 ((ClockWindow)_clockWindow).SetEventName(name);
                 ((ClockWindow)_clockWindow).SetEventType(type);
+                if (SelectedAlignment?.GetType() == typeof(TimerTop))
+                {
+                    ((TimerTop)SelectedAlignment).SetTopMargin(EventName?.Length ?? 0);
+                }
             }
             else if (_clockWindow != null && _clockWindow.GetType() == typeof(MiniClockWindow))
             {
