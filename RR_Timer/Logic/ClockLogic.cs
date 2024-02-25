@@ -119,6 +119,11 @@ namespace Race_timer.Logic
                 ((MiniClockWindow)_clockWindow).OnTimerClick();
                 MiniCodeShow();
             }
+            else if (_clockWindow.GetType() == typeof(WebViewClockWindow))
+            {
+                ((WebViewClockWindow)_clockWindow).OnTimerClick();
+                MiniCodeShow();
+            }
         }
 
         /// <summary>
@@ -153,7 +158,7 @@ namespace Race_timer.Logic
                             StartTime = StartTimes.Values.ElementAt(i)
                         });
                     }
-                    else if (_clockWindow.GetType() == typeof(MiniClockWindow) || isSmall)
+                    else if (_clockWindow.GetType() == typeof(MiniClockWindow) || _clockWindow.GetType() == typeof(WebViewClockWindow) || isSmall)
                     {
                         if (ActiveTimers.Count > 0)
                         {
@@ -274,6 +279,10 @@ namespace Race_timer.Logic
                 {
                     ((MiniClockWindow)_clockWindow).SetImage(LogoImage);
                 }
+                else if (_clockWindow.GetType() == typeof(WebViewClockWindow))
+                {
+                    ((WebViewClockWindow)_clockWindow).SetImage(LogoImage);
+                }
             }
             if (CodeImage != null && SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
             {
@@ -303,6 +312,10 @@ namespace Race_timer.Logic
                 else if (_clockWindow.GetType() == typeof(MiniClockWindow))
                 {
                     ((MiniClockWindow)_clockWindow).SetImage(LogoImage);
+                }
+                else if (_clockWindow.GetType() == typeof(WebViewClockWindow))
+                {
+                    ((WebViewClockWindow)_clockWindow).SetImage(LogoImage);
                 }
             }
             if (CodeImage != null && SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
@@ -338,6 +351,10 @@ namespace Race_timer.Logic
                 {
                     ((MiniClockWindow)_clockWindow).SetImage(LogoImage);
                 }
+                else if (_clockWindow.GetType() == typeof(WebViewClockWindow))
+                {
+                    ((WebViewClockWindow)_clockWindow).SetImage(LogoImage);
+                }
             }
             if (CodeImage != null && SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
             {
@@ -368,6 +385,10 @@ namespace Race_timer.Logic
             else if (_clockWindow != null && _clockWindow.GetType() == typeof(MiniClockWindow))
             {
                 ((MiniClockWindow)_clockWindow).SetEventName(name);
+            }
+            else if (_clockWindow != null && _clockWindow.GetType() == typeof(WebViewClockWindow))
+            {
+                ((WebViewClockWindow)_clockWindow).SetEventName(name);
             }
         }
 
