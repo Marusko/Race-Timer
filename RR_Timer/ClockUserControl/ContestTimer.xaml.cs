@@ -12,7 +12,8 @@ namespace Race_timer.ClockUserControl
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private readonly bool _isClock;
         private readonly int _nameLength;
-        public DateTime StartTime { get; init; }
+        public DateTime StartTime { get; set; }
+        public bool Clock => _isClock;
 
         public new string Name
         {

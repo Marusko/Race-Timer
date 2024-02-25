@@ -11,7 +11,8 @@ namespace Race_timer.ClockUserControl
         private readonly int _screenWidth;
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private readonly bool _isClock;
-        public DateTime StartTime { get; init; }
+        public DateTime StartTime { get; set; }
+        public bool Clock => _isClock;
 
         public new string Name
         {
@@ -71,6 +72,11 @@ namespace Race_timer.ClockUserControl
         public void StopTimer()
         {
             _timer.Stop();
+        }
+
+        public void SetStartTime(DateTime time)
+        {
+            StartTime = time;
         }
     }
 }
