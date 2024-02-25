@@ -22,7 +22,7 @@ namespace Race_timer.Logic
 
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
 
-        private Dictionary<string, DateTime> StartTimes { get; }
+        public Dictionary<string, DateTime> StartTimes { get; }
         public Dictionary<string, ContestTimer> ActiveTimers { get; }
         public Dictionary<string, MiniContestTimer> MiniActiveTimers { get; }
         public string? EventName { get; private set; }
@@ -169,6 +169,19 @@ namespace Race_timer.Logic
                             Name = StartTimes.Keys.ElementAt(i),
                             StartTime = StartTimes.Values.ElementAt(i)
                         });
+                    }
+                }
+                else
+                {
+                    if (ActiveTimers.ContainsKey(StartTimes.Keys.ElementAt(i)))
+                    {
+                        ActiveTimers[StartTimes.Keys.ElementAt(i)].StopTimer();
+                        ActiveTimers.Remove(StartTimes.Keys.ElementAt(i));
+                    }
+                    if (MiniActiveTimers.ContainsKey(StartTimes.Keys.ElementAt(i)))
+                    {
+                        MiniActiveTimers[StartTimes.Keys.ElementAt(i)].StopTimer();
+                        MiniActiveTimers.Remove(StartTimes.Keys.ElementAt(i));
                     }
                 }
             }
@@ -364,7 +377,7 @@ namespace Race_timer.Logic
         /// </summary>
         /// <param name="s">Time in string format</param>
         /// <returns>Date time with values from string</returns>
-        private DateTime StringToDateTime(string s)
+        public DateTime StringToDateTime(string s)
         {
             DateTime returnDateTime = DateTime.Now;
             var split = s.Split(':');
