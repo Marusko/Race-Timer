@@ -59,6 +59,8 @@ namespace Race_timer.UI
             AlignmentComboBox.SelectedIndex = 0;
             AlignmentComboBox.SelectionChanged += SelectAlignmentHandler;
 
+            StartTimesDataGrid.AutoGenerateColumns = false;
+
             MinimizedCodeTimes.EveryTimeText.TextChanged += CheckIfInt;
             MinimizedCodeTimes.HowLongTimeText.TextChanged += CheckIfInt;
             MinimizedTimer = false;
@@ -88,6 +90,12 @@ namespace Race_timer.UI
                 return;
             }
             OpenTimerStart();
+            if (!CanOpenTimer)
+            {
+                OpenedTimer = false;
+                CanOpenTimer = true;
+                return;
+            }
             if (_clockWindow == null) return;
             _clockLogic.SetClockWindow((ClockWindow)_clockWindow, EventNameText.Text, EventTypeComboBox.Text);
             _clockWindow.Show();
@@ -111,6 +119,12 @@ namespace Race_timer.UI
                 return;
             }
             OpenTimerStart();
+            if (!CanOpenTimer)
+            {
+                OpenedTimer = false;
+                CanOpenTimer = true;
+                return;
+            }
             if (_clockWindow == null) return;
             _clockLogic.SetClockWindow(EventLink, CountLink, (ClockWindow)_clockWindow);
             _clockWindow.Show();
@@ -123,7 +137,6 @@ namespace Race_timer.UI
         /// </summary>
         private void OpenTimerStart()
         {
-            StartTimesDataGrid.AutoGenerateColumns = false;
             SaveStartTimesToDictionary();
             ContestComboBox.IsEnabled = true;
             NewStartTime.IsEnabled = true;
@@ -145,6 +158,7 @@ namespace Race_timer.UI
             }
             _clockLogic.ProcessStartTimes();
             if (OpenedTimer) return;
+            if (!CanOpenTimer) return;
             OpenedTimer = true;
             _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
             _clockLogic.SelectedAlignment = null;
@@ -274,6 +288,8 @@ namespace Race_timer.UI
             TabControl.SelectedItem = _openedLinkTimer ? LinkTimerTab : TimerTab;
             MinimizeButton.IsEnabled = true;
             MaximizeButton.IsEnabled = false;
+            NewStartTime.Text = "00:00:00";
+            CanOpenTimer = true;
             foreach (var timer in _clockLogic.ActiveTimers)
             {
                 timer.Value.StopTimer();
