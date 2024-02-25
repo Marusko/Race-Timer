@@ -124,6 +124,19 @@ namespace Race_timer.UI
         private void OpenTimerStart()
         {
             SaveStartTimesToDictionary();
+            ContestComboBox.IsEnabled = true;
+            NewStartTime.IsEnabled = true;
+            NewStartButton.IsEnabled = true;
+            if (StartTimeCount > 0)
+            {
+                ContestComboBox.ItemsSource = StartTimes.Keys;
+            }
+            else
+            {
+                ContestComboBox.IsEnabled = false;
+                NewStartTime.IsEnabled = false;
+                NewStartButton.IsEnabled = false;
+            }
             _clockLogic.ProcessStartTimes();
             if (OpenedTimer) return;
             OpenedTimer = true;
@@ -622,6 +635,33 @@ namespace Race_timer.UI
         {
             const string url = "https://github.com/codebude/QRCoder";
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+        }
+
+        private void SetNewStartTime(object sender, RoutedEventArgs e)
+        {
+            if (ContestComboBox?.SelectedItem == null) return;
+            var newStart = _clockLogic.StringToDateTime(NewStartTime.Text);
+            var canSetTime = _clockLogic.StartTimes.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedStartTime);
+            if (canSetTime)
+            {
+                _clockLogic.StartTimes[ContestComboBox.SelectedItem.ToString()] = newStart;
+                if (_clockLogic.ActiveTimers.Count > 0)
+                {
+                    var can = _clockLogic.ActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
+                    if (can && selectedContest != null)
+                    {
+                        selectedContest.StartTime = newStart;
+                    }
+                } else if (_clockLogic.MiniActiveTimers.Count > 0)
+                {
+                    var can = _clockLogic.MiniActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
+                    if (can && selectedContest != null)
+                    {
+                        selectedContest.StartTime = newStart;
+                    }
+                }
+            }
+
         }
     }
 }
