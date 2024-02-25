@@ -69,11 +69,11 @@ namespace Race_timer.UI
             }
             if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
             {
-                ((TimerLeft)TimerPanel.Children[0]).TimerScrollViewer.MaxHeight = 300;
+                ((TimerLeft)TimerPanel.Children[0]).TimerScrollViewer.MaxHeight = 400;
             }
             else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
             {
-                ((TimerRight)TimerPanel.Children[0]).TimerScrollViewer.MaxHeight = 300;
+                ((TimerRight)TimerPanel.Children[0]).TimerScrollViewer.MaxHeight = 400;
             }
         }
 
