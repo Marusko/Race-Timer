@@ -380,12 +380,6 @@ namespace Race_timer.Logic
         {
             DateTime returnDateTime = DateTime.Now;
             var split = s.Split(':');
-            if (string.IsNullOrEmpty(split[0]))
-            {
-                var warning = new WarningWindow(WarningWindow.TimeWarning);
-                warning.ShowDialog();
-                MainWindow.CanOpenTimer = false;
-            }
 
             if (split.Length > 2)
             {
