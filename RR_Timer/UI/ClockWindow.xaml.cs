@@ -154,13 +154,29 @@ namespace Race_timer.UI
                 });
                 _clockInPanel = true;
             }
-            else if (_clockLogic.ActiveTimers.Values.Count > 0)
+            else if (_clockLogic.ActiveTimers.Values.Count > 0 && _clockLogic.ActiveTimers.Values.Count == timers.Children.Count)
             {
                 if (_clockInPanel)
                 {
                     timers.Children.Clear();
                     _clockInPanel = false;
                 }
+                clock.Content = FormatTime();
+                foreach (var contestTimer in _clockLogic.ActiveTimers.Values)
+                {
+                    if (!timers.Children.Contains(contestTimer))
+                    {
+                        timers.Children.Add(contestTimer);
+                    }
+                }
+            }
+            else if (_clockLogic.ActiveTimers.Values.Count != timers.Children.Count)
+            {
+                if (timers.Children.Count == 1 && ((ContestTimer)timers.Children[0]).Clock)
+                {
+                    return;
+                }
+                timers.Children.Clear();
                 clock.Content = FormatTime();
                 foreach (var contestTimer in _clockLogic.ActiveTimers.Values)
                 {
