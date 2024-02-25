@@ -80,9 +80,9 @@ namespace Race_timer.API
                 {
                     myEvent = JsonConvert.DeserializeObject<Event>(responseString);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    var warning = new WarningWindow($"Oops, something went wrong with Event API!\nError code: [{e.Message}]");
+                    var warning = new WarningWindow("Oops, something went wrong with Event API!\nError code: [Can't deserialize provided data]");
                     warning.ShowDialog();
                     _clockLogic.MainWindow.OnClose();
                     _clockLogic.MainWindow.EventStatusLabel.Content = "ERR";
@@ -190,8 +190,10 @@ namespace Race_timer.API
                 var warning = new WarningWindow($"Oops, something went wrong with contest API!\nError code: \n[{e.Message}]");
                 warning.ShowDialog();
                 mw.ContestStatusLabel.Content = "ERR";
+                httpClient.Dispose();
                 return;
             }
+            httpClient.Dispose();
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
@@ -200,16 +202,16 @@ namespace Race_timer.API
                 {
                     contests = JsonConvert.DeserializeObject<List<Contest>>(responseString);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    var warning = new WarningWindow($"Oops, something went wrong with contest API!\nError code: \n[{e.Message}]");
+                    var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: \n[Can't deserialize provided data]");
                     warning.ShowDialog();
                     mw.ContestStatusLabel.Content = "ERR";
                     return;
                 }
                 if (contests == null)
                 {
-                    var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: \n[Can't deserialize null contests from link]");
+                    var warning = new WarningWindow("Oops, something went wrong with contest API!\nError code: \n[Contests from link are null]");
                     warning.ShowDialog();
                     mw.ContestStatusLabel.Content = "ERR";
                     return;
@@ -239,8 +241,6 @@ namespace Race_timer.API
                 warning.ShowDialog();
                 mw.ContestStatusLabel.Content = "ERR";
             }
-
-            httpClient.Dispose();
         }
 
         public static async void LoadApi(string apiLink, MainWindow mw)
@@ -256,8 +256,10 @@ namespace Race_timer.API
             {
                 var warning = new WarningWindow($"Oops, something went wrong with all API link!\nError code: \n[{e.Message}]");
                 warning.ShowDialog();
+                httpClient.Dispose();
                 return;
             }
+            httpClient.Dispose();
             if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
@@ -266,20 +268,20 @@ namespace Race_timer.API
                 {
                     apis = JsonConvert.DeserializeObject<List<Api>>(responseString);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    var warning = new WarningWindow($"Oops, something went wrong with all API link!\nError code: \n[{e.Message}]");
+                    var warning = new WarningWindow("Oops, something went wrong with all API link!\nError code: \n[Can't deserialize provided data]");
                     warning.ShowDialog();
                     return;
                 }
                 if (apis == null)
                 {
-                    var warning = new WarningWindow("Oops, something went wrong with all API link!\nError code: \n[Can't deserialize null APIs from link]");
+                    var warning = new WarningWindow("Oops, something went wrong with all API link!\nError code: \n[APIs from link are null]");
                     warning.ShowDialog();
                     return;
                 }
 
-                var index = apiLink.LastIndexOf("/");
+                var index = apiLink.LastIndexOf("/", StringComparison.Ordinal);
                 if (index == -1)
                 {
                     var warning = new WarningWindow("Oops, something went wrong with all API link!\nError code: \n[Can't find main API link part]");
@@ -342,7 +344,6 @@ namespace Race_timer.API
                 warning.ShowDialog();
             }
 
-            httpClient.Dispose();
             if (canLoadContest)
             {
                 LoadContest(mw.ContestLink, mw);
