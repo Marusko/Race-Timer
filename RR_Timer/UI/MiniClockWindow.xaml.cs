@@ -38,7 +38,10 @@ namespace Race_timer.UI
             _timer.Tick += TimerTick;
             _timer.Interval = new TimeSpan(0, 0, TimerShownForSeconds);
             TimerTickLogic();
-            _timer.Start();
+            if (_clockLogic.MiniActiveTimers.Count > 0)
+            {
+                _timer.Start();
+            }
         }
 
         /// <summary>
@@ -85,24 +88,6 @@ namespace Race_timer.UI
                 TimerStackPanel.Children.Add(_clockLogic.MiniActiveTimers.Values.ElementAt(_showTimerIndex));
                 _showTimerIndex++;
             }
-            else
-            {
-                if (TimerStackPanel.Children.Count <= 0)
-                {
-                    return;
-                }
-                if (((MiniContestTimer)TimerStackPanel.Children[0]).Clock)
-                {
-                    return;
-                }
-                if (_screenHandler.SelectedScreen == null) return;
-                TimerStackPanel.Children.Clear();
-                TimerStackPanel.Children.Add(new MiniContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
-                {
-                    Name = " "
-                });
-                _clockInMiniPanel = true;
-            }
         }
 
         /// <summary>
@@ -129,12 +114,20 @@ namespace Race_timer.UI
                 });
                 _clockInMiniPanel = true;
             }
+            else if (_clockLogic.MiniActiveTimers.Values.Count == 0)
+            {
+                if (_screenHandler.SelectedScreen == null) return;
+                if (_clockInMiniPanel) return;
+                TimerStackPanel.Children.Clear();
+                _timer.Stop();
+            }
             else if (_clockLogic.MiniActiveTimers.Values.Count > 0)
             {
                 if (_clockInMiniPanel)
                 {
-                    timers.Children.Clear();
+                    TimerTickLogic();
                     _clockInMiniPanel = false;
+                    _timer.Start();
                 }
             }
         }
