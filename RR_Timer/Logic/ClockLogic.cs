@@ -87,6 +87,7 @@ namespace Race_timer.Logic
         /// </summary>
         public void StartTimer()
         {
+            ClockTickLogic();
             _timer.Tick += ClockTick;
             _timer.Interval = new TimeSpan(0, 0, 1);
             _timer.Start();
@@ -108,7 +109,17 @@ namespace Race_timer.Logic
         /// <param name="e"></param>
         private void ClockTick(object? sender, EventArgs e)
         {
-            CheckTimers();
+            ClockTickLogic();
+        }
+
+        public void ClockTickLogic(bool isSmall = false)
+        {
+            CheckTimers(isSmall);
+            AfterCheckTimers();
+        }
+
+        public void AfterCheckTimers()
+        {
             if (_clockWindow == null) return;
             if (_clockWindow.GetType() == typeof(ClockWindow))
             {
