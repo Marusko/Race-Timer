@@ -197,6 +197,14 @@ namespace Race_timer.Logic
                     {
                         MiniActiveTimers[StartTimes.Keys.ElementAt(i)].StopTimer();
                         MiniActiveTimers.Remove(StartTimes.Keys.ElementAt(i));
+                        if (_clockWindow?.GetType() == typeof(MiniClockWindow))
+                        {
+                            ((MiniClockWindow)_clockWindow).TimerTickLogic();
+                        }
+                        else if (_clockWindow?.GetType() == typeof(WebViewClockWindow))
+                        {
+                            ((WebViewClockWindow)_clockWindow).TimerTickLogic();
+                        }
                     }
                 }
             }

@@ -76,7 +76,7 @@ namespace Race_timer.UI
         /// <summary>
         /// Switches between start times every 5 seconds
         /// </summary>
-        private void TimerTickLogic()
+        public void TimerTickLogic()
         {
             if (_clockLogic.MiniActiveTimers.Values.Count > 0)
             {
