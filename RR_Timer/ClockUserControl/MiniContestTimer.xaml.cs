@@ -29,11 +29,15 @@ namespace Race_timer.ClockUserControl
         {
             InitializeComponent();
             Loaded += WindowLoaded;
+            _screenWidth = screenWidth;
+            _isClock = isClock;
+            if (isClock)
+            {
+                TimerClickLogic();
+            }
             _timer.Interval = new TimeSpan(0, 0, 1);
             _timer.Tick += TimerClick;
             _timer.Start();
-            _screenWidth = screenWidth;
-            _isClock = isClock;
         }
 
         private void WindowLoaded(object sender, RoutedEventArgs e)
@@ -62,6 +66,11 @@ namespace Race_timer.ClockUserControl
         /// <param name="e"></param>
         private void TimerClick(object? sender, EventArgs e)
         {
+            TimerClickLogic();
+        }
+
+        private void TimerClickLogic()
+        {
             var c = FormatStartTimeOrClock();
             ContestTimeLabel.Content = c;
         }
@@ -72,11 +81,6 @@ namespace Race_timer.ClockUserControl
         public void StopTimer()
         {
             _timer.Stop();
-        }
-
-        public void SetStartTime(DateTime time)
-        {
-            StartTime = time;
         }
     }
 }
