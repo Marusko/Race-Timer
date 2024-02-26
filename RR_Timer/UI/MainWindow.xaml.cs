@@ -702,6 +702,7 @@ namespace Race_timer.UI
                     selectedContest.StartTime = newStart;
                 }
             }
+            _clockLogic.ClockTickLogic(MinimizedTimer);
             StartTimesDataGrid.Items.Clear();
             foreach (var startTime in StartTimes)
             {

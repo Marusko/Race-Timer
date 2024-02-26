@@ -145,14 +145,7 @@ namespace Race_timer.UI
         {
             if (_clockLogic.ActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
             {
-                clock.Content = " ";
-                timers.Children.Clear();
-                if (_screenHandler.SelectedScreen == null) return;
-                timers.Children.Add(new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true, _clockLogic.EventName?.Length ?? 0)
-                {
-                    Name = " "
-                });
-                _clockInPanel = true;
+                AddClock(ref timers, ref clock);
             }
             else if (_clockLogic.ActiveTimers.Values.Count > 0 && _clockLogic.ActiveTimers.Values.Count == timers.Children.Count)
             {
@@ -177,15 +170,34 @@ namespace Race_timer.UI
                     return;
                 }
                 timers.Children.Clear();
-                clock.Content = FormatTime();
-                foreach (var contestTimer in _clockLogic.ActiveTimers.Values)
+                if (_clockLogic.ActiveTimers.Values.Count == 0)
                 {
-                    if (!timers.Children.Contains(contestTimer))
+                    AddClock(ref timers, ref clock);
+                }
+                else
+                {
+                    clock.Content = FormatTime();
+                    foreach (var contestTimer in _clockLogic.ActiveTimers.Values)
                     {
-                        timers.Children.Add(contestTimer);
+                        if (!timers.Children.Contains(contestTimer))
+                        {
+                            timers.Children.Add(contestTimer);
+                        }
                     }
                 }
             }
+        }
+
+        private void AddClock(ref StackPanel timers, ref Label clock)
+        {
+            clock.Content = " ";
+            timers.Children.Clear();
+            if (_screenHandler.SelectedScreen == null) return;
+            timers.Children.Add(new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true, _clockLogic.EventName?.Length ?? 0)
+            {
+                Name = " "
+            });
+            _clockInPanel = true;
         }
 
         /// <summary>
