@@ -106,13 +106,7 @@ namespace Race_timer.UI
         {
             if (_clockLogic.MiniActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
             {
-                timers.Children.Clear();
-                if (_screenHandler.SelectedScreen == null) return;
-                timers.Children.Add(new MiniContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
-                {
-                    Name = " "
-                });
-                _clockInMiniPanel = true;
+                AddClock(ref timers);
             }
             else if (_clockLogic.MiniActiveTimers.Values.Count == 0)
             {
@@ -120,6 +114,7 @@ namespace Race_timer.UI
                 if (_clockInMiniPanel) return;
                 TimerStackPanel.Children.Clear();
                 _timer.Stop();
+                AddClock(ref timers);
             }
             else if (_clockLogic.MiniActiveTimers.Values.Count > 0)
             {
@@ -130,6 +125,17 @@ namespace Race_timer.UI
                     _timer.Start();
                 }
             }
+        }
+
+        private void AddClock(ref StackPanel timers)
+        {
+            timers.Children.Clear();
+            if (_screenHandler.SelectedScreen == null) return;
+            timers.Children.Add(new MiniContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
+            {
+                Name = " "
+            });
+            _clockInMiniPanel = true;
         }
 
         /// <summary>
