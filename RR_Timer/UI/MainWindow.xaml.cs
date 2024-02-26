@@ -145,6 +145,7 @@ namespace Race_timer.UI
             if (StartTimeCount > 0)
             {
                 StartTimesDataGrid.Items.Clear();
+                ContestComboBox.ItemsSource = null;
                 ContestComboBox.ItemsSource = StartTimes.Keys;
                 foreach (var startTime in StartTimes)
                 {
