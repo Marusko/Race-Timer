@@ -99,8 +99,8 @@ namespace Race_timer.UI
             }
             if (_clockWindow == null) return;
             _clockLogic.SetClockWindow((ClockWindow)_clockWindow, EventNameText.Text, EventTypeComboBox.Text);
-            _clockWindow.Show();
             OpenTimerEnd();
+            _clockWindow.Show();
             _openedLinkTimer = false;
         }
 
@@ -128,8 +128,8 @@ namespace Race_timer.UI
             }
             if (_clockWindow == null) return;
             _clockLogic.SetClockWindow(EventLink, CountLink, (ClockWindow)_clockWindow);
-            _clockWindow.Show();
             OpenTimerEnd();
+            _clockWindow.Show();
             _openedLinkTimer = true;
         }
 
@@ -223,12 +223,12 @@ namespace Race_timer.UI
             _clockLogic.SetClockWindow((ClockWindow)_clockWindow);
             _clockLogic.CodeWindowForMinimized?.Close();
             _clockLogic.CodeWindowForMinimized = null;
-            _clockWindow.Show();
             MinimizedTimer = false;
             MinimizeButton.IsEnabled = true;
             WebReloadButton.IsEnabled = false;
             MaximizeButton.IsEnabled = false;
-            _clockLogic.CheckTimers();
+            _clockLogic.ClockTickLogic();
+            _clockWindow.Show();
         }
 
         /// <summary>
@@ -258,6 +258,7 @@ namespace Race_timer.UI
                 _clockWindow = new MiniClockWindow(_clockLogic, _screenHandler);
                 _clockLogic.SetClockWindow((MiniClockWindow)_clockWindow);
             }
+            _clockLogic.AfterCheckTimers();
             _clockWindow.Show();
             MinimizedTimer = true;
             MinimizeButton.IsEnabled = false;
