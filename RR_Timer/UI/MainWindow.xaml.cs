@@ -78,7 +78,7 @@ namespace Race_timer.UI
         /// <summary>
         /// Method called by Open timer button, only if clock window is not opened creates and shows new fullscreen clock window,
         /// sets it in clock logic, sets the properties and starts the timer
-        /// Disables Timer, API timer, Display settings, QR tabs as disabled, enables control tab and selects it
+        /// Disables all tabs, enables control tab and selects it
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -107,7 +107,7 @@ namespace Race_timer.UI
         /// <summary>
         /// Method called by Open timer button in API timer menu, only if clock window is not opened creates and shows
         /// new fullscreen clock window, sets it in clock logic, sets the properties and starts the timer
-        /// Disables Timer, API timer, Display settings, QR tabs, enables control tab and selects it
+        /// Disables all tabs, enables control tab and selects it
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -134,7 +134,7 @@ namespace Race_timer.UI
         }
 
         /// <summary>
-        /// Process the start times, set clock window and alignment
+        /// Process the start times, set clock window and alignment, set contest combobox and datagrid content
         /// </summary>
         private void OpenTimerStart()
         {
@@ -233,8 +233,8 @@ namespace Race_timer.UI
         }
 
         /// <summary>
-        /// Closes the maximized clock window and open new minimized clock window, sets it in ClockLogic,
-        /// sets the MinimizedTimer property to true
+        /// Closes the maximized clock window and open new minimized classic or WebView clock window,
+        /// sets it in ClockLogic, sets the MinimizedTimer property to true
         /// Disables minimize button, enables maximize button
         /// </summary>
         public void MinimizeTimer()
@@ -268,7 +268,6 @@ namespace Race_timer.UI
                 WebReloadButton.IsEnabled = true;
             }
             MaximizeButton.IsEnabled = true;
-
         }
 
         /// <summary>
@@ -284,7 +283,7 @@ namespace Race_timer.UI
         /// <summary>
         /// Only if clock window is opened closes the clock window,
         /// sets both properties to false and stops the timer
-        /// Enables Timer, API timer, Display settings, QR tabs, disables control tab and
+        /// Enables all tabs, disables control tab and
         /// selects timer tab from which the timer was started
         /// </summary>
         public void OnClose()
@@ -353,7 +352,7 @@ namespace Race_timer.UI
         }
 
         /// <summary>
-        /// Calls SelectAlignment, used with buttons
+        /// Calls SelectAlignment, used with alignment combo box
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -361,6 +360,7 @@ namespace Race_timer.UI
         {
             SelectAlignment();
         }
+
         /// <summary>
         /// Method selects alignment and sets it in ClockLogic
         /// </summary>
@@ -593,7 +593,62 @@ namespace Race_timer.UI
         }
 
         /// <summary>
-        /// Copy main link settings to system clipboard
+        /// Update contest start time in MainWindow and ClockLogic start time collections
+        /// Update contest start time directly in (mini)contest timer
+        /// Updates data grid with current start times
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SetNewStartTime(object sender, RoutedEventArgs e)
+        {
+            if (ContestComboBox?.SelectedItem == null) return;
+            var newStart = _clockLogic.StringToDateTime(NewStartTime.Text);
+            var canSetTime = _clockLogic.StartTimes.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedStartTime);
+            if (!canSetTime) return;
+            _clockLogic.StartTimes[ContestComboBox.SelectedItem.ToString()] = newStart;
+            StartTimes[ContestComboBox.SelectedItem.ToString()] = NewStartTime.Text;
+            if (_clockLogic.ActiveTimers.Count > 0)
+            {
+                var can = _clockLogic.ActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
+                if (can && selectedContest != null)
+                {
+                    selectedContest.StartTime = newStart;
+                }
+            }
+            else if (_clockLogic.MiniActiveTimers.Count > 0)
+            {
+                var can = _clockLogic.MiniActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
+                if (can && selectedContest != null)
+                {
+                    selectedContest.StartTime = newStart;
+                }
+            }
+            _clockLogic.ClockTickLogic(MinimizedTimer);
+            StartTimesDataGrid.Items.Clear();
+            foreach (var startTime in StartTimes)
+            {
+                StartTimesDataGrid.Items.Add(startTime);
+            }
+        }
+
+        /// <summary>
+        /// Reload opened WebView page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Reload(object sender, RoutedEventArgs e)
+        {
+            if (_clockWindow?.GetType() == typeof(WebViewClockWindow))
+            {
+                if (((WebViewClockWindow)_clockWindow).WebView is { CoreWebView2: not null })
+                {
+                    ((WebViewClockWindow)_clockWindow).WebView.Reload();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Copy event link settings to system clipboard
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -622,6 +677,11 @@ namespace Race_timer.UI
             Clipboard.SetText(ContestSetText.Text);
         }
 
+        /// <summary>
+        /// Copy All API link settings to system clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CopyApiLink(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(ApiSetText.Text);
@@ -679,48 +739,6 @@ namespace Race_timer.UI
         {
             const string url = "https://github.com/codebude/QRCoder";
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
-        }
-
-        private void SetNewStartTime(object sender, RoutedEventArgs e)
-        {
-            if (ContestComboBox?.SelectedItem == null) return;
-            var newStart = _clockLogic.StringToDateTime(NewStartTime.Text);
-            var canSetTime = _clockLogic.StartTimes.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedStartTime);
-            if (!canSetTime) return;
-            _clockLogic.StartTimes[ContestComboBox.SelectedItem.ToString()] = newStart;
-            StartTimes[ContestComboBox.SelectedItem.ToString()] = NewStartTime.Text;
-            if (_clockLogic.ActiveTimers.Count > 0)
-            {
-                var can = _clockLogic.ActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
-                if (can && selectedContest != null)
-                {
-                    selectedContest.StartTime = newStart;
-                }
-            } else if (_clockLogic.MiniActiveTimers.Count > 0)
-            {
-                var can = _clockLogic.MiniActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
-                if (can && selectedContest != null)
-                {
-                    selectedContest.StartTime = newStart;
-                }
-            }
-            _clockLogic.ClockTickLogic(MinimizedTimer);
-            StartTimesDataGrid.Items.Clear();
-            foreach (var startTime in StartTimes)
-            {
-                StartTimesDataGrid.Items.Add(startTime);
-            }
-        }
-
-        private void Reload(object sender, RoutedEventArgs e)
-        {
-            if (_clockWindow?.GetType() == typeof(WebViewClockWindow))
-            {
-                if (((WebViewClockWindow)_clockWindow).WebView is { CoreWebView2: not null })
-                {
-                    ((WebViewClockWindow)_clockWindow).WebView.Reload();
-                }
-            }
         }
     }
 }

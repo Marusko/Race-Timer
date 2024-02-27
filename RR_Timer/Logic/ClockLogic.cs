@@ -60,7 +60,7 @@ namespace Race_timer.Logic
         }
 
         /// <summary>
-        /// Converts time string to DateTime for all contest and clears StartTimes list in MainWindow
+        /// Converts time string to DateTime for all contest
         /// </summary>
         public void ProcessStartTimes()
         {
@@ -101,9 +101,9 @@ namespace Race_timer.Logic
             _timer.Stop();
             _linkHandler?.StopTimer();
         }
+
         /// <summary>
-        /// Method called by timer, calls method in windows to update clocks
-        /// If the timer is small and QR code is enabled, calls method MiniCodeShow()
+        /// Method called by timer, calls ClockTickLogic()
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -112,12 +112,20 @@ namespace Race_timer.Logic
             ClockTickLogic();
         }
 
+        /// <summary>
+        /// Method called by timer, calls method in windows to update clocks
+        /// If the timer is small and QR code is enabled, calls method MiniCodeShow()
+        /// </summary>
+        /// <param name="isSmall">If timer is small</param>
         public void ClockTickLogic(bool isSmall = false)
         {
             CheckTimers(isSmall);
             AfterCheckTimers();
         }
 
+        /// <summary>
+        /// Calls methods to update timers, scrolls... in clock windows
+        /// </summary>
         public void AfterCheckTimers()
         {
             if (_clockWindow == null) return;
@@ -140,6 +148,7 @@ namespace Race_timer.Logic
         /// <summary>
         /// Checks if som of the timers are started, if yes then it checks if clock window is small or fullscreen,
         /// and fills the corresponding Dictionary with started timers
+        /// If timer has new start time greater than current time, remove it
         /// Is called every second
         /// </summary>
         /// <param name="isSmall">Manually set filling to MiniActiveTimers</param>
@@ -456,11 +465,20 @@ namespace Race_timer.Logic
         {
             MainWindow.MinimizeTimer();
         }
+
+        /// <summary>
+        /// If currently opened window is small timer or not
+        /// </summary>
+        /// <returns>If timer window is small</returns>
         public bool IsTimerMinimized()
         {
             return MainWindow.MinimizedTimer;
         }
 
+        /// <summary>
+        /// All alignment names
+        /// </summary>
+        /// <returns>Collection of alignment names</returns>
         public ObservableCollection<string> GetAlignments()
         {
             return _timerAlignmentNames;

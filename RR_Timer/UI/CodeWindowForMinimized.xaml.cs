@@ -10,6 +10,11 @@ namespace Race_timer.UI
     public partial class CodeWindowForMinimized
     {
         private readonly ScreenHandler _screenHandler;
+
+        /// <summary>
+        /// Initializes component, adds method when window is loaded
+        /// </summary>
+        /// <param name="sh">Already created ScreenHandler</param>
         public CodeWindowForMinimized(ScreenHandler sh)
         {
             InitializeComponent();

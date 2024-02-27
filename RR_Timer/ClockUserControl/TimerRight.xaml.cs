@@ -19,6 +19,11 @@ namespace Race_timer.ClockUserControl
         private const int ScrollDelay = 500;
         private const int ScrollTimes = 800;
         private const int TimerMillis = 10;
+
+        /// <summary>
+        /// Initialize component, start timer
+        /// </summary>
+        /// <param name="screenWidth">Width of selected screen</param>
         public TimerRight(int screenWidth)
         {
             InitializeComponent();
@@ -28,6 +33,12 @@ namespace Race_timer.ClockUserControl
             _timer.Interval = new TimeSpan(0, 0, 0, 0, TimerMillis);
             _timer.Start();
         }
+
+        /// <summary>
+        /// Sets font size when window is loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
             var controlSize = (double)_screenWidth / 12 / 3 * 2 / 5 * 0.7;

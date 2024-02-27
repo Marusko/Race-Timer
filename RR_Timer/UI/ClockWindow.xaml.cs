@@ -118,6 +118,7 @@ namespace Race_timer.UI
 
         /// <summary>
         /// Method to update timer and type label with correct time
+        /// Method called by ClockLogic timer
         /// </summary>
         public void OnTimerClick()
         {
@@ -188,6 +189,11 @@ namespace Race_timer.UI
             }
         }
 
+        /// <summary>
+        /// Add clock to timers stack panel
+        /// </summary>
+        /// <param name="timers">Timer StackPanel from fullscreen clock</param>
+        /// <param name="clock">Clock label from fullscreen clock</param>
         private void AddClock(ref StackPanel timers, ref Label clock)
         {
             clock.Content = " ";

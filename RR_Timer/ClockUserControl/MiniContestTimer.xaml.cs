@@ -25,6 +25,12 @@ namespace Race_timer.ClockUserControl
         }
 
         private string _name = "";
+
+        /// <summary>
+        /// Initialize component, if isClock call TimerClickLogic() and start timer
+        /// </summary>
+        /// <param name="screenWidth">Width of selected screen</param>
+        /// <param name="isClock">If this timer is clock</param>
         public MiniContestTimer(int screenWidth, bool isClock)
         {
             InitializeComponent();
@@ -40,6 +46,11 @@ namespace Race_timer.ClockUserControl
             _timer.Start();
         }
 
+        /// <summary>
+        /// Sets font size when component is loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
             var controlSize = (double)_screenWidth / 12 / 3 * 2 / 5 * 0.7;
@@ -60,7 +71,7 @@ namespace Race_timer.ClockUserControl
         }
 
         /// <summary>
-        /// Updates label with correct formatted time
+        /// Method called by ClockLogic timer, calls TimerClickLogic()
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -69,6 +80,9 @@ namespace Race_timer.ClockUserControl
             TimerClickLogic();
         }
 
+        /// <summary>
+        /// Updates label with correct formatted time
+        /// </summary>
         private void TimerClickLogic()
         {
             var c = FormatStartTimeOrClock();

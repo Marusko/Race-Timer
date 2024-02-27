@@ -243,6 +243,12 @@ namespace Race_timer.API
             }
         }
 
+        /// <summary>
+        /// Reads all API link, sets Event, count and contest links and status and
+        /// if it is possible calls LoadContest(), if something went wrong, shows warning window
+        /// </summary>
+        /// <param name="apiLink">For loading all APIs</param>
+        /// <param name="mw">Already created main window</param>
         public static async void LoadApi(string apiLink, MainWindow mw)
         {
             var canLoadContest = false;

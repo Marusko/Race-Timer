@@ -46,6 +46,11 @@ namespace Race_timer.UI
             };
         }
 
+        /// <summary>
+        /// Close this warning window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseWindow(object sender, EventArgs e)
         {
             Close();

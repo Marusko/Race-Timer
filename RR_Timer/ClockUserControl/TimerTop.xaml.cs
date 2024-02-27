@@ -20,6 +20,10 @@ namespace Race_timer.ClockUserControl
         private const int ScrollTimes = 1000;
         private const int TimerMillis = 10;
 
+        /// <summary>
+        /// Initialize component, start timer
+        /// </summary>
+        /// <param name="screenWidth">Width of selected screen</param>
         public TimerTop(int screenWidth)
         {
             InitializeComponent();
@@ -29,6 +33,12 @@ namespace Race_timer.ClockUserControl
             _timer.Interval = new TimeSpan(0, 0, 0, 0, TimerMillis);
             _timer.Start();
         }
+
+        /// <summary>
+        /// Sets font size when window is loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
             var controlSize = (double)_screenWidth / 12 / 3 * 2 / 5 * 0.7;
@@ -46,6 +56,10 @@ namespace Race_timer.ClockUserControl
             _timer.Stop();
         }
 
+        /// <summary>
+        /// Set the top margin according to length of event name
+        /// </summary>
+        /// <param name="nameLength"></param>
         public void SetTopMargin(int nameLength)
         {
             if (nameLength is <= 26 and > 0)

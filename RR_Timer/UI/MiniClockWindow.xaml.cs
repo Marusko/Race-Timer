@@ -24,6 +24,7 @@ namespace Race_timer.UI
 
         /// <summary>
         /// Initializes the window, adds method to call after window is loaded
+        /// If possible, start timer
         /// </summary>
         /// <param name="cl">Already created ClockLogic object</param>
         /// <param name="sh">Already created ScreenHandler object</param>
@@ -92,6 +93,7 @@ namespace Race_timer.UI
 
         /// <summary>
         /// Method to update timer label with correct time
+        /// Method called by ClockLogic timer
         /// </summary>
         public void OnTimerClick()
         {
@@ -127,6 +129,10 @@ namespace Race_timer.UI
             }
         }
 
+        /// <summary>
+        /// Add clock to timers stack panel
+        /// </summary>
+        /// <param name="timers">Timer StackPanel from minimized clock</param>
         private void AddClock(ref StackPanel timers)
         {
             timers.Children.Clear();
