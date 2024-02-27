@@ -8,17 +8,17 @@ Application to show elapsed time from entered start time, with clock, on user-se
 ![Fullscreen timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/BigTimer.png)
 
 ## Table of content
-* Installation
-* Preparation
-* Using the app
-  * Left side menu
-  * Timer
-  * API Timer
-  * Contests
-  * Results
-  * QR Code
-  * Timer control
-  * Display settings
+* [Installation](#installation-cd)
+* [Preparation](#preparation-gear)
+* [Using the app](#using-the-app-computer)
+  * [Left side menu](#left-side-menu-fleur_de_lis)
+  * [Timer](#timer-hourglass_flowing_sand)
+  * [API Timer](#api-timer-watch)
+  * [Contests](#contests-runnerrunner)
+  * [Results](#results-grinning)
+  * [QR Code](#qr-code-framed_picture)
+  * [Timer control](#timer-control-wrench)
+  * [Display settings](#display-settings-hammer_and_wrench)
 
 ---
 # Features :star:
