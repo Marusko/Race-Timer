@@ -90,13 +90,13 @@ If you don't time the race with RaceResult or don't want to create links, simply
 ![Left side menu](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWleftMenu.png)
 
 [Top](#race-timer-stopwatch)
-  * **Timer** - Menu for entering event name, type and logo image, and starting the timer
+  * **Timer** - Menu for entering event name, type, and logo image, and starting the timer
   * **API Timer** - Menu for entering API link, logo image, and starting the timer
   * **Contests** - Menu for adding contests with start times manually and editing them
   * **Results** - Menu for enabling WebView on MiniTimer and setting result link
   * **QR code** - Menu for setting or generating QR code
   * **Timer control** - Menu for switching between fullscreen and small timer, closing the timer, refreshing the WebView, and setting new start times
-  * **Display settings** - Choosing the screen on which the will timer be displayed, choosing the timer layout
+  * **Display settings** - Choosing the screen on which the timer will be displayed, choosing the timer layout
   * **Informations** - Informations about the app
 
 ## Timer :hourglass_flowing_sand:
