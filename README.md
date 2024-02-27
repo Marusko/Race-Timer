@@ -1,10 +1,11 @@
 # Race Timer :stopwatch:
-Application to show elapsed time from entered start time, with clock, on user-selected screen. Best used with RaceResult presenter as this app can automatically make the timer smaller, so it can fit over the presenter window without pressing `F11` on the presenter window.
+Application to show elapsed time from entered start time, with clock, on user-selected screen. Best used with RaceResult presenter as this app can automatically make the timer smaller, so it can fit over the presenter window without pressing `F11` on the presenter window, or show results directly in the app.
 ### Small timer over the RR presenter after the start
-![Small timer](https://github.com/Marusko/Race-Timer/assets/93376571/2749d93a-f3ab-4ba2-9d26-129fcf602039)
+
+![Small timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/SmallTimer.png)
 
 ### Fullscreen timer after the start
-![Fullscreen timer](https://github.com/Marusko/Race-Timer/assets/93376571/b97f476e-b3c1-47a5-8714-feb9a815f2aa)
+![Fullscreen timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/BigTimer.png)
 
 ---
 # Features :star:
@@ -12,6 +13,7 @@ Application to show elapsed time from entered start time, with clock, on user-se
 * Show a small timer when someone has finished
 * Automatic switch from the big fullscreen timer to the small timer
 * Manual switching between big and small clock
+* Show results directly in the app
 * Event name and type can be entered manually or using the RaceResult Simple API link
 * When start times are `larger` than the current time, instead of a timer, the clock is shown 
 * When the clock is on fullscreen, you can choose the position of the timer
@@ -38,30 +40,33 @@ The app requires [.NET7](https://dotnet.microsoft.com/en-us/download) to be inst
 ---
 # Preparation :gear:
 ## Using the Timer :hourglass:
-If you don't time the race with RaceResult, or don't want to create links, simply use the `Timer` tab to set up the timer. Automatic switching of timer windows is disabled. You can still manually switch the windows.
+If you don't time the race with RaceResult or don't want to create links, simply use the `Timer` tab to set up the timer. Automatic switching of timer windows is disabled. You can still manually switch the windows.
 ## Using the API Timer :watch:
 > Only works with RaceResult Simple API
-### Main API link :link:
+### Event API link :link:
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
- 2. Select **Settings** from the left dropdown menu, in the details write `EventName,EventType`(see the picture)
-![Creating main API link](https://user-images.githubusercontent.com/93376571/228536613-721357e7-d342-403c-9e85-fb77a9ba8633.png)
- 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it into the `API Timer` tab in the `API link` text box
+ 2. Select **Settings** from the left dropdown menu, in the details write `EventName,EventType`, and in the label write `main` :bangbang: **Important** (see the picture)
+![Creating event API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/NEWmainAPI.png)
 ### Count API link :link:
 > If you don't enter the Count link, the automatic switching of timer windows will be disabled. You can still manually switch the windows.
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
- 2. Select **Custom** from the left dropdown menu, in the details write or copy `data/count?filter=[Finished]=1`(see the picture)
-![Creating count API link](https://github.com/Marusko/Race-Timer/assets/93376571/a815a921-59e7-454e-98ba-30f4314fb850)
- 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it into the `API Timer` tab in the `Count link` text box
+ 2. Select **Custom** from the left dropdown menu, in the details write or copy `data/count?filter=[Finished]=1`, and in the label write `count` :bangbang: **Important** (see the picture)
+![Creating count API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/NEWcountAPI.png)
 ### Contest API link :link:
 > If you don't enter the Contest link, you will have to add and edit contest and start times manually
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
- 2. Select **Custom** from the left dropdown menu, in the details write or copy `contests/get`(see the picture)
-![Creating contest API link](https://github.com/Marusko/Race-Timer/assets/93376571/bd5711f7-ad8f-43c7-a98d-a5cd1be2e273)
- 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it into the `Contests` tab in the `Contests link` text box
+ 2. Select **Custom** from the left dropdown menu, in the details write or copy `contests/get`, and in the label write `contest` :bangbang: **Important** (see the picture)
+![Creating contest API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/NEWcontestAPI.png)
+### All API link :link:
+> If you don't enter this API link, the API timer will not work
+ 1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
+ 2. Select **Custom** from the left dropdown menu, in the details write or copy `simpleapi/get`, and in the label write `api` :bangbang: **Important** (see the picture)
+![Creating all API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/NEWallAPI.png)
+ 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it into the `API Timer` tab in the `API link` text box and click `Load` button
 
-The result:
+### The result:
 
-![All API links created](https://github.com/Marusko/Race-Timer/assets/93376571/ebfc47f2-5557-4e51-b435-bdf2d493a3df)
+![All API links created](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/NEWAPI.png)
 
 ---
 # Using the app :computer:
