@@ -1,11 +1,24 @@
 # Race Timer :stopwatch:
 Application to show elapsed time from entered start time, with clock, on user-selected screen. Best used with RaceResult presenter as this app can automatically make the timer smaller, so it can fit over the presenter window without pressing `F11` on the presenter window, or show results directly in the app.
-### Small timer over the RR presenter after the start
+### Small timer with WebView RR presenter after the start
 
 ![Small timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/SmallTimer.png)
 
 ### Fullscreen timer after the start
 ![Fullscreen timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/BigTimer.png)
+
+## Table of content
+* Installation
+* Preparation
+* Using the app
+  * Left side menu
+  * Timer
+  * API Timer
+  * Contests
+  * Results
+  * QR Code
+  * Timer control
+  * Display settings
 
 ---
 # Features :star:
@@ -45,92 +58,106 @@ If you don't time the race with RaceResult or don't want to create links, simply
 > Only works with RaceResult Simple API
 ### Event API link :link:
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
- 2. Select **Settings** from the left dropdown menu, in the details write `EventName,EventType`, and in the label write `main` :bangbang: **Important** (see the picture)
-![Creating event API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/NEWmainAPI.png)
+ 2. Select **Settings** from the left dropdown menu, in the details write or copy `EventName,EventType`, and in the label write `main` :bangbang: **Important** (see the picture)
+![Creating event API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWmainAPI.png)
 ### Count API link :link:
 > If you don't enter the Count link, the automatic switching of timer windows will be disabled. You can still manually switch the windows.
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
  2. Select **Custom** from the left dropdown menu, in the details write or copy `data/count?filter=[Finished]=1`, and in the label write `count` :bangbang: **Important** (see the picture)
-![Creating count API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/NEWcountAPI.png)
+![Creating count API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWcountAPI.png)
 ### Contest API link :link:
 > If you don't enter the Contest link, you will have to add and edit contest and start times manually
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
  2. Select **Custom** from the left dropdown menu, in the details write or copy `contests/get`, and in the label write `contest` :bangbang: **Important** (see the picture)
-![Creating contest API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/NEWcontestAPI.png)
+![Creating contest API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWcontestAPI.png)
 ### All API link :link:
 > If you don't enter this API link, the API timer will not work
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
  2. Select **Custom** from the left dropdown menu, in the details write or copy `simpleapi/get`, and in the label write `api` :bangbang: **Important** (see the picture)
-![Creating all API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/NEWallAPI.png)
+![Creating all API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWallAPI.png)
  3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it into the `API Timer` tab in the `API link` text box and click `Load` button
 
 ### The result:
 
-![All API links created](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/photos/NEWAPI.png)
+![All API links created](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWAPI.png)
 
 ---
 # Using the app :computer:
 ## Left side menu :fleur_de_lis:
-![Left side menu](https://github.com/Marusko/Race-Timer/assets/93376571/ac4c6759-1ee3-4d91-aa4e-8ce7ddbbfd65)
-  * **Timer** - Menu for entering event name, type and start time, logo image, and starting the timer
-  * **API Timer** - Menu for entering API link for name and type, logo image, and starting the timer
-  * **Contests** - Menu for adding contests with start times, manually or from API, and editing them
+![Left side menu](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWleftMenu.png)
+  * **Timer** - Menu for entering event name, type and logo image, and starting the timer
+  * **API Timer** - Menu for entering API link, logo image, and starting the timer
+  * **Contests** - Menu for adding contests with start times manually and editing them
+  * **Results** - Menu for enabling WebView on MiniTimer and setting result link
   * **QR code** - Menu for setting or generating QR code
-  * **Timer control** - Menu for switching between fullscreen and small timer, and closing the timer
+  * **Timer control** - Menu for switching between fullscreen and small timer, closing the timer, refreshing the WebView, and setting new start times
   * **Display settings** - Choosing the screen on which the will timer be displayed, choosing the timer layout
   * **Informations** - Informations about the app
 
 ## Timer :hourglass_flowing_sand:
-![First tab, with manual settings](https://github.com/Marusko/Race-Timer/assets/93376571/620e9ab8-4e12-4f8a-9e94-82cf4cedb422)
+![First tab, with manual settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWtimer.png)
   * **Event name** - Event name that will be displayed with the timer
   * **Event type** - Event type that will be displayed on the big fullscreen clock
   * **Select image** - Choose an image from the PC to be displayed as the logo, it best works with a rectangle logo, 
                        above the button will be shown the name of the image, enabling the delete button (shared with **API Timer**)
   * **Delete image** - Clear the selected image (shared with **API Timer**)
-  * **Open timer** - Open fullscreen timer, disables all settings and enables **Timer control**
+  * **Open timer** - Open fullscreen timer, disables all tabs and enables **Timer control**
   
 ## API Timer :watch:
-![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/5af42eb8-0686-43ac-b39a-2db15c5850e6)
+![Second tab, with API settings, API timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWAPItimer.png)
   * **API Timer** - Tab for entering links and setting up the API timer
-    * **API Link** - Here enter the main link to get the name and type of the event
-    * **List Link** - Here enter the link which points to the counter, for automatic switching of the timer windows
+    * **API Link** - Here enter the API link to get all other APIs
+    * **Load** - Loads all three APIs, loads Contest if possible, and sets the status of the API links below
+    * Statuses can be:
+      * `MIS` - The link is missing
+      * `OFF` - The link is disabled
+      * `ERR` - Something went wrong when reading the link
+      * `OK` - The link is correct
     * **Select image** - Choose an image from the PC to be displayed as the logo, it best works with a rectangle logo, 
                        above the button will be shown the name of the image, enabling the delete button (shared with **Timer**)
     * **Delete image** - Clear the selected image (shared with **Timer**)
-    * **Open timer** - Open fullscreen timer, disables all settings and enables **Timer control**
+    * **Open timer** - Open fullscreen timer, disables all tabs and enables **Timer control**
 
-![Second tab, with API settings, API timer](https://github.com/Marusko/Race-Timer/assets/93376571/4ab47cc5-1435-4ab5-ac00-5fd969526047)
-  * **API cheat sheet** - Tab with API settings, to quickly find and paste when creating API in Race Result
+![Second tab, with API settings, API cheatsheet](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWAPIcheat.png)
+  * **API cheat sheet** - Tab with API settings, to quickly find and paste when creating APIs in Race Result
 
 ## Contests :runner::runner:
-![Third tab, creating and editing contests](https://github.com/Marusko/Race-Timer/assets/93376571/41439e55-1e66-4922-9607-885e20c8c549)
-  * **Contests link** - Here enter the Contests link to load all contests from RR
-  * **Load** - Reads the Contests link and adds loaded contests to the list below, you can then edit them
-  * **Add start time** - Adds a new line to the list below
+![Third tab, creating and editing contests](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWcontest.png)
+  * **Add contest** - Adds a new line to the list below
   * **For each contest**
     * **Name** - Name of the contest which will be shown with elapsed time
     * **Start time** - Start time of the contest
     * **Remove** - Removes this contest from the list
+   
+## Results :grinning:
+![Fourth tab, with WebView settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWresult.png)
+  * **Enable WebView** - If checked MiniTimer will have its browser, in which the results will be shown
+  * **Link to web page with results** - Here enter the link with results, which will be shown with the MiniTimer
 
 ## QR code :framed_picture:
-![Fourth tab, with QR code settings](https://github.com/Marusko/Race-Timer/assets/93376571/025d6df9-a3bc-4357-b76f-1ab3e2d31ff7)
+![Fifth tab, with QR code settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWqrCode.png)
   * **Generate QR code** - Here enter the link to convert to a QR code
   * **Generate QR** - Generates the QR code and sets it
   * **Select QR** - Choose an image from the PC to be displayed as a QR code, above the button will be shown the name of the image, enabling the delete button
   * **Delete QR** - Clear the selected QR code
-  * **Show QR code when minimized** - If checked, minimized timer will periodically show a QR code, based on input from the two text boxes below in the 1 - 60 range
+  * **Show QR code when minimized** - If checked, MiniTimer will periodically show a QR code, based on input from the two text boxes below in the 1 - 60 range
 
 ## Timer control :wrench:
 > Tab is enabled when the timer is open
 
-![Fifth tab, timer control](https://github.com/Marusko/Race-Timer/assets/93376571/b930120a-55c6-432d-b0fd-935f54cf19d7)
+![Sixth tab, timer control](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWcontrol.png)
+  * **Reload** - To manually reload WebView, if it is enabled
   * **Minimize** - To manually switch from fullscreen to the small timer
   * **Maximize** - To manually switch from the small to the fullscreen timer
-  * **Close timer** - To close the timer window, the timer window also close when closing the main window
+  * **Close timer** - To close the timer window, the timer window also closes when closing the main window
+  * **Contest selection** - Here select the contest, for which the start time has to be changed
+  * **New start time** - Here enter new start time for the selected contest
+  * **Set** - Sets the new start time for selected contest
+  * **Current start times** - Table shows currently set start times
 
 ## Display settings :hammer_and_wrench:
-![Sixth tab, display settings](https://github.com/Marusko/Race-Timer/assets/93376571/aef1a5ce-2d42-435c-b6c5-f2a1e47d4098)
-  * **Display** - List of connected displays to choose on which the timer window will be opened. Display names here **AREN'T** the same as in Windows settings
+![Seventh tab, display settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWdisplay.png)
+  * **Display** - List of connected displays to choose on which the timer window will be opened. Display names here **sometimes AREN'T** the same as in Windows settings
   * **Timer and image alignment** - List of available alignments 
       * Timer on top - Timer on top, clock in the middle, logo on the bottom, QR code **NOT** displayed
       * Timer on left - Timer and clock on the left side, logo and QR code on the right side
