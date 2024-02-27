@@ -450,6 +450,7 @@ namespace Race_timer.UI
             _clockLogic.CodeImage = null;
             CodeName.Content = "";
             DeleteCodeButton.IsEnabled = false;
+            CodeCheckBoxForMinimized.IsChecked = false;
         }
 
         /// <summary>
