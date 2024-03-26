@@ -141,11 +141,13 @@ If you don't time the race with RaceResult or don't want to create links, simply
     * **Remove** - Removes this contest from the list
    
 ## Results :grinning:
-![Fourth tab, with WebView settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWresult.png)
+![Fourth tab, with WebView settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWNEWresults.png)
 
 [Top](#race-timer-stopwatch)
   * **Enable WebView** - If checked MiniTimer will have its browser, in which the results will be shown
   * **Link to web page with results** - Here enter the link with results, which will be shown with the MiniTimer
+  * **Enable info panel** - If checked MiniTimer will show info panel with custom information - panel will be shown every 3 minutes for 30 seconds
+  * **Information to show** - Here enter the information you want to show, you can show multiple information separated by `;`
 
 ## QR code :framed_picture:
 ![Fifth tab, with QR code settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWqrCode.png)
@@ -160,7 +162,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
 ## Timer control :wrench:
 > Tab is enabled when the timer is open
 
-![Sixth tab, timer control](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWcontrol.png)
+![Sixth tab, timer control](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWNEWcontrol.png)
 
 [Top](#race-timer-stopwatch)
   * **Reload** - To manually reload WebView, if it is enabled
@@ -170,6 +172,8 @@ If you don't time the race with RaceResult or don't want to create links, simply
   * **Contest selection** - Here select the contest, for which the start time has to be changed
   * **New start time** - Here enter new start time for the selected contest
   * **Set** - Sets the new start time for selected contest
+  * **New information** - Here enter new information to show on info panel
+  * **Set** - Sets the new information, new information will be show on next panel show
   * **Current start times** - Table shows currently set start times
 
 ## Display settings :hammer_and_wrench:
