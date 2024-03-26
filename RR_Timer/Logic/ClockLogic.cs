@@ -20,6 +20,9 @@ namespace Race_timer.Logic
         public const int Scrolling = 0;
         public const int ScrollEnd = 1;
 
+        private const int InfoPanelHide = 3;
+        private const int InfoPanelMinShowSec = 30;
+
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
 
         public Dictionary<string, DateTime> StartTimes { get; }
@@ -30,6 +33,7 @@ namespace Race_timer.Logic
         public BitmapImage? LogoImage { get; set; }
         public BitmapSource? CodeImage { get; set; }
         public CodeWindowForMinimized? CodeWindowForMinimized { get; set; }
+        public InfoWindow? InfoWindow { get; set; }
         public MainWindow MainWindow { get; }
         public UserControl? SelectedAlignment { get; set; }
 
@@ -37,10 +41,15 @@ namespace Race_timer.Logic
         private Window? _clockWindow;
         private LinkHandler? _linkHandler;
         private readonly ObservableCollection<string> _timerAlignmentNames = new();
+        public string InfoText { get; set; }
 
         private DateTime _showCodeTime;
         private DateTime _hideCodeTime;
         private DateTime _showTime;
+
+        private DateTime _showInfoTime;
+        private DateTime _hideInfoTime;
+        private DateTime _showTimeInfo;
 
         /// <summary>
         /// Sets the main window, screen handler and alignment to top
@@ -100,6 +109,7 @@ namespace Race_timer.Logic
         {
             _timer.Stop();
             _linkHandler?.StopTimer();
+            InfoWindow?.StopTimer();
         }
 
         /// <summary>
@@ -138,11 +148,13 @@ namespace Race_timer.Logic
             {
                 ((MiniClockWindow)_clockWindow).OnTimerClick();
                 MiniCodeShow();
+                InfoPanelShow();
             }
             else if (_clockWindow.GetType() == typeof(WebViewClockWindow))
             {
                 ((WebViewClockWindow)_clockWindow).OnTimerClick();
                 MiniCodeShow();
+                InfoPanelShow();
             }
         }
 
@@ -285,6 +297,46 @@ namespace Race_timer.Logic
                 else
                 {
                     _hideCodeTime = _hideCodeTime.Add(DateTime.Now - _hideCodeTime);
+                }
+            }
+        }
+
+        private void InfoPanelShow()
+        {
+            if (MainWindow.InfoEnableCheckBox.IsChecked != null && (!MainWindow.InfoEnableCheckBox.IsChecked.Value || string.IsNullOrEmpty(InfoText))) return;
+            if (InfoWindow == null)
+            {
+                InfoWindow = new InfoWindow(_screenHandler);
+                InfoWindow.SetLabel(InfoText);
+                _hideInfoTime = DateTime.Now;
+                _showTimeInfo = DateTime.Now;
+                InfoWindow.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                if (_hideInfoTime >= _showTimeInfo.AddMinutes(InfoPanelHide))
+                {
+                    if (InfoWindow.Visibility == Visibility.Hidden)
+                    {
+                        InfoWindow.SetLabel(InfoText);
+                        InfoWindow.Show();
+                        InfoWindow.StartTimer();
+                        _showInfoTime = DateTime.Now;
+                    }
+                    _showInfoTime = _showInfoTime.Add(DateTime.Now - _showInfoTime);
+                    if ((_showInfoTime < _showTimeInfo.AddSeconds(InfoPanelMinShowSec + InfoPanelHide * 60) 
+                        && InfoWindow.Laps == 0 && !InfoWindow.IsScrolling()) 
+                        || (InfoWindow.IsScrolling() && InfoWindow.Laps < 2)) return;
+                    InfoWindow.Hide();
+                    InfoWindow.Laps = 0;
+                    InfoWindow.StopTimer();
+                    _hideInfoTime = DateTime.Now;
+                    _showInfoTime = DateTime.Now;
+                    _showTimeInfo = DateTime.Now;
+                }
+                else
+                {
+                    _hideInfoTime = _hideInfoTime.Add(DateTime.Now - _hideInfoTime);
                 }
             }
         }
