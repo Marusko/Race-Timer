@@ -9,7 +9,6 @@ namespace Race_timer.ClockUserControl
     public partial class ContestTimer
     {
         private readonly int _screenWidth;
-        private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private readonly bool _isClock;
         private readonly int _nameLength;
         public DateTime StartTime { get; set; }
@@ -44,9 +43,6 @@ namespace Race_timer.ClockUserControl
             {
                 TimerClickLogic();
             }
-            _timer.Interval = new TimeSpan(0, 0, 1);
-            _timer.Tick += TimerClick;
-            _timer.Start();
         }
 
         /// <summary>
@@ -80,30 +76,12 @@ namespace Race_timer.ClockUserControl
         }
 
         /// <summary>
-        /// Method called by ClockLogic timer, calls TimerClickLogic()
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TimerClick(object? sender, EventArgs e)
-        {
-            TimerClickLogic();
-        }
-
-        /// <summary>
         /// Updates label with correct formatted time
         /// </summary>
-        private void TimerClickLogic()
+        public void TimerClickLogic()
         {
             var c = FormatStartTimeOrClock();
             ContestTimeLabel.Content = c;
-        }
-
-        /// <summary>
-        /// Stops the timer
-        /// </summary>
-        public void StopTimer()
-        {
-            _timer.Stop();
         }
     }
 }
