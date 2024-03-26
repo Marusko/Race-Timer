@@ -165,6 +165,16 @@ namespace Race_timer.UI
             _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
             _clockLogic.SelectedAlignment = null;
             SelectAlignment();
+            _clockLogic.InfoText = InfoText.Text;
+            if (InfoEnableCheckBox.IsChecked != null)
+            {
+                NewInfoButton.IsEnabled = InfoEnableCheckBox.IsChecked.Value;
+                NewInfoText.IsEnabled = InfoEnableCheckBox.IsChecked.Value;
+                if (InfoEnableCheckBox.IsChecked.Value)
+                {
+                    NewInfoText.Text = _clockLogic.InfoText;
+                }
+            }
         }
 
         /// <summary>
@@ -220,6 +230,9 @@ namespace Race_timer.UI
             _clockLogic.SetClockWindow((ClockWindow)_clockWindow);
             _clockLogic.CodeWindowForMinimized?.Close();
             _clockLogic.CodeWindowForMinimized = null;
+            _clockLogic.InfoWindow?.StopTimer();
+            _clockLogic.InfoWindow?.Close();
+            _clockLogic.InfoWindow = null;
             MinimizedTimer = false;
             MinimizeButton.IsEnabled = true;
             WebReloadButton.IsEnabled = false;
@@ -289,6 +302,9 @@ namespace Race_timer.UI
             _clockLogic.SelectedAlignment = null;
             _clockLogic.CodeWindowForMinimized?.Close();
             _clockLogic.CodeWindowForMinimized = null;
+            _clockLogic.InfoWindow?.StopTimer();
+            _clockLogic.InfoWindow?.Close();
+            _clockLogic.InfoWindow = null;
             LinkTimerTab.IsEnabled = true;
             TimerTab.IsEnabled = true;
             SettingsTab.IsEnabled = true;
@@ -302,6 +318,11 @@ namespace Race_timer.UI
             MaximizeButton.IsEnabled = false;
             NewStartTime.Text = "00:00:00";
             CanOpenTimer = true;
+        }
+
+        private void SetInfo(object? sender, EventArgs e)
+        {
+            _clockLogic.InfoText = NewInfoText.Text;
         }
 
         /// <summary>
