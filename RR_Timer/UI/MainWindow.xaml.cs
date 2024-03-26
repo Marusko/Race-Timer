@@ -213,10 +213,6 @@ namespace Race_timer.UI
             if (!OpenedTimer) return;
             if (_clockWindow == null) return;
             if (!MinimizedTimer) return;
-            foreach (var timer in _clockLogic.ActiveTimers)
-            {
-                timer.Value.StopTimer();
-            }
             _clockWindow.Close();
             _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
             _clockLogic.SelectedAlignment = null;
@@ -242,10 +238,6 @@ namespace Race_timer.UI
             if (!OpenedTimer) return;
             if (_clockWindow == null) return;
             if (MinimizedTimer) return;
-            foreach (var timer in _clockLogic.MiniActiveTimers)
-            {
-                timer.Value.StopTimer();
-            }
             _clockWindow.Close();
             _clockLogic.CheckTimers(true);
             if (WebViewEnableCheckBox.IsChecked != null && (bool)WebViewEnableCheckBox.IsChecked 
@@ -310,14 +302,6 @@ namespace Race_timer.UI
             MaximizeButton.IsEnabled = false;
             NewStartTime.Text = "00:00:00";
             CanOpenTimer = true;
-            foreach (var timer in _clockLogic.ActiveTimers)
-            {
-                timer.Value.StopTimer();
-            }
-            foreach (var timer in _clockLogic.MiniActiveTimers)
-            {
-                timer.Value.StopTimer();
-            }
         }
 
         /// <summary>
