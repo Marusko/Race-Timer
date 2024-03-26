@@ -41,7 +41,7 @@ namespace Race_timer.Logic
         private Window? _clockWindow;
         private LinkHandler? _linkHandler;
         private readonly ObservableCollection<string> _timerAlignmentNames = new();
-        public string InfoText { get; set; }
+        public string InfoText { get; set; } = "";
 
         private DateTime _showCodeTime;
         private DateTime _hideCodeTime;

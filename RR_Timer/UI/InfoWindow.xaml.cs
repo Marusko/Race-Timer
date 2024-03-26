@@ -7,7 +7,7 @@ namespace Race_timer.UI
     /// <summary>
     /// Interaction logic for InfoWindow.xaml
     /// </summary>
-    public partial class InfoWindow : Window
+    public partial class InfoWindow
     {
         private readonly ScreenHandler _screenHandler;
 
