@@ -17,8 +17,11 @@ namespace Race_timer.UI
         private readonly ScreenHandler _screenHandler;
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private int _showTimerIndex;
+
         private const int TimerShownForSeconds = 5;
+
         private bool _clockInMiniPanel;
+        public MiniContestTimer? Clock { get; set; }
 
         /// <summary>
         /// Initializes the window, adds method to call after window is loaded
@@ -124,6 +127,7 @@ namespace Race_timer.UI
                 {
                     TimerTickLogic();
                     _clockInMiniPanel = false;
+                    Clock = null;
                     _timer.Start();
                 }
             }
@@ -137,11 +141,13 @@ namespace Race_timer.UI
         {
             timers.Children.Clear();
             if (_screenHandler.SelectedScreen == null) return;
-            timers.Children.Add(new MiniContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
+            var clock = new MiniContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
             {
                 Name = " "
-            });
+            };
+            timers.Children.Add(clock);
             _clockInMiniPanel = true;
+            Clock = clock;
         }
 
         /// <summary>

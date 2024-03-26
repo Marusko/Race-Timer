@@ -15,6 +15,7 @@ namespace Race_timer.UI
         private readonly ClockLogic _clockLogic;
         private readonly ScreenHandler _screenHandler;
         private bool _clockInPanel;
+        public ContestTimer? Clock { get; set; }
 
         /// <summary>
         /// Initialize and open the window, used when switching between fullscreen and minimized clock window
@@ -154,6 +155,7 @@ namespace Race_timer.UI
                 {
                     timers.Children.Clear();
                     _clockInPanel = false;
+                    Clock = null;
                 }
                 clock.Content = FormatTime();
                 foreach (var contestTimer in _clockLogic.ActiveTimers.Values)
@@ -178,6 +180,8 @@ namespace Race_timer.UI
                 else
                 {
                     clock.Content = FormatTime();
+                    _clockInPanel = false;
+                    Clock = null;
                     foreach (var contestTimer in _clockLogic.ActiveTimers.Values)
                     {
                         if (!timers.Children.Contains(contestTimer))
@@ -199,11 +203,14 @@ namespace Race_timer.UI
             clock.Content = " ";
             timers.Children.Clear();
             if (_screenHandler.SelectedScreen == null) return;
-            timers.Children.Add(new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true, _clockLogic.EventName?.Length ?? 0)
+            var clockTimer = new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true,
+                _clockLogic.EventName?.Length ?? 0)
             {
                 Name = " "
-            });
+            };
+            timers.Children.Add(clockTimer);
             _clockInPanel = true;
+            Clock = clockTimer;
         }
 
         /// <summary>
