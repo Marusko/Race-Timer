@@ -120,6 +120,7 @@ namespace Race_timer.Logic
         public void ClockTickLogic(bool isSmall = false)
         {
             CheckTimers(isSmall);
+            ClickTimers();
             AfterCheckTimers();
         }
 
@@ -199,12 +200,10 @@ namespace Race_timer.Logic
                 {
                     if (ActiveTimers.ContainsKey(StartTimes.Keys.ElementAt(i)))
                     {
-                        ActiveTimers[StartTimes.Keys.ElementAt(i)].StopTimer();
                         ActiveTimers.Remove(StartTimes.Keys.ElementAt(i));
                     }
                     if (MiniActiveTimers.ContainsKey(StartTimes.Keys.ElementAt(i)))
                     {
-                        MiniActiveTimers[StartTimes.Keys.ElementAt(i)].StopTimer();
                         MiniActiveTimers.Remove(StartTimes.Keys.ElementAt(i));
                         if (_clockWindow?.GetType() == typeof(MiniClockWindow))
                         {
@@ -215,6 +214,39 @@ namespace Race_timer.Logic
                             ((WebViewClockWindow)_clockWindow).TimerTickLogic();
                         }
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Calls contest timer logic for updating label
+        /// </summary>
+        private void ClickTimers()
+        {
+            if (MainWindow.MinimizedTimer)
+            {
+                if (_clockWindow?.GetType() == typeof(MiniClockWindow))
+                {
+                    ((MiniClockWindow)_clockWindow).Clock?.TimerClickLogic();
+                }
+                else if (_clockWindow?.GetType() == typeof(WebViewClockWindow))
+                {
+                    ((WebViewClockWindow)_clockWindow).Clock?.TimerClickLogic();
+                }
+                foreach (var ct in MiniActiveTimers)
+                {
+                    ct.Value.TimerClickLogic();
+                }
+            }
+            else
+            {
+                if (_clockWindow?.GetType() == typeof(ClockWindow))
+                {
+                    ((ClockWindow)_clockWindow).Clock?.TimerClickLogic();
+                }
+                foreach (var ct in ActiveTimers)
+                {
+                    ct.Value.TimerClickLogic();
                 }
             }
         }
