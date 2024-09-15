@@ -23,6 +23,7 @@
 		<TargetFramework>net7.0-windows</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ApplicationIcon>onlyRmini.ico</ApplicationIcon>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
 	</PropertyGroup>
 
 </Project>
