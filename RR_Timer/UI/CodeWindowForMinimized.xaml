@@ -5,13 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="QR code" Height="320" Width="320"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" WindowStyle="None" HorizontalAlignment="Center" 
+        Style="{StaticResource MaterialDesignWindow}"
+        WindowStyle="None" HorizontalAlignment="Center" 
         Icon="/UI/onlyRmini.png" IsTabStop="False" ResizeMode="NoResize" ShowInTaskbar="False" 
         Topmost="True" VerticalAlignment="Top">
     <Grid>

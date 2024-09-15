@@ -5,14 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="WarningWindow" Height="300" Width="400" Topmost="True"
-
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" 
+        Style="{StaticResource MaterialDesignWindow}"
+        WindowStartupLocation="CenterScreen" 
         ResizeMode="NoResize" WindowStyle="None" ShowInTaskbar="False" IsTabStop="False" Icon="/UI/onlyRmini.png">
     <Grid>
         <Label Content="WARNING" HorizontalAlignment="Center" FontSize="40" FontWeight="SemiBold" Margin="0, 20, 0, 0"/>

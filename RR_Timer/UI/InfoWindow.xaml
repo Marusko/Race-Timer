@@ -6,14 +6,8 @@
         mc:Ignorable="d"
         Title="InfoWindow" Height="100" Width="{x:Static SystemParameters.PrimaryScreenWidth}" 
         WindowStyle="None" ShowInTaskbar="False" Topmost="True" Left="0" Top="0"
-
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" Icon="/UI/onlyRmini.png" IsTabStop="False" 
+        Style="{StaticResource MaterialDesignWindow}"
+        Icon="/UI/onlyRmini.png" IsTabStop="False" 
         ResizeMode="NoResize">
     <Grid>
         <ScrollViewer x:Name="InfoScrollViewer" Margin="10 0" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" CanContentScroll="False">

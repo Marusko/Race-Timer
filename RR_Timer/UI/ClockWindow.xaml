@@ -5,14 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Clock" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" ShowInTaskbar="False"
-
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" Icon="/UI/onlyRmini.png" 
+        Style="{StaticResource MaterialDesignWindow}"
+        Icon="/UI/onlyRmini.png" 
         ResizeMode="NoResize" IsTabStop="False">
     <Grid>
         <Grid.RowDefinitions>

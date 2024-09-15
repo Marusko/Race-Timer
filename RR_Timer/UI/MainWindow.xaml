@@ -7,14 +7,8 @@
         x:Class="Race_timer.UI.MainWindow"
         mc:Ignorable="d"
         Title="Race Timer" Height="450" Width="800"
-
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="14"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" 
+        Style="{StaticResource MaterialDesignWindow}"
+        WindowStartupLocation="CenterScreen" 
         Icon="/UI/onlyRmini.png" ResizeMode="CanMinimize">
     <DockPanel>
         <TabControl x:Name="TabControl" TabStripPlacement="Left">
