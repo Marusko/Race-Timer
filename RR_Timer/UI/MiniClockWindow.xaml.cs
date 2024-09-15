@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Race_timer.ClockUserControl;
@@ -34,6 +35,12 @@ namespace Race_timer.UI
             InitializeComponent();
             _clockLogic = cl;
             _screenHandler = sh;
+
+            if (_screenHandler.SelectedScreen == null) return;
+            WindowState = WindowState.Minimized;
+            Left = _screenHandler.SelectedScreen.WorkingArea.Left;
+            Top = _screenHandler.SelectedScreen.WorkingArea.Top;
+            Width = _screenHandler.SelectedScreen.WorkingArea.Width;
 
             Loaded += WindowLoaded;
             Closed += StopTimer;
@@ -155,11 +162,7 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            if (_screenHandler.SelectedScreen == null) return;
             WindowState = WindowState.Normal;
-            Left = _screenHandler.SelectedScreen.WorkingArea.Left;
-            Top = _screenHandler.SelectedScreen.WorkingArea.Top;
-            Width = _screenHandler.SelectedScreen.WorkingArea.Width;
 
             //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
             var controlSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
@@ -169,7 +172,7 @@ namespace Race_timer.UI
             //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
             var controlWidth = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 3 - 50;
             Application.Current.Resources.Remove("ControlWidth");
-            Application.Current.Resources.Add("ControlWidth", controlWidth );
+            Application.Current.Resources.Add("ControlWidth", controlWidth);
         }
         /// <summary>
         /// Method sets chosen image to TimerImage, best used for rectangle logo

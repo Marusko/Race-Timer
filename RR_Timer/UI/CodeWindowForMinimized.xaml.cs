@@ -19,6 +19,13 @@ namespace Race_timer.UI
         {
             InitializeComponent();
             _screenHandler = sh;
+
+            if (_screenHandler.SelectedScreen == null) return;
+            WindowState = WindowState.Minimized;
+            var half = ((double)_screenHandler.SelectedScreen.WorkingArea.Width / 2) - (Width / 2);
+            Left = _screenHandler.SelectedScreen.WorkingArea.Left + half;
+            Top = _screenHandler.SelectedScreen.WorkingArea.Top;
+
             Loaded += WindowLoaded;
         }
 
@@ -29,10 +36,6 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            if (_screenHandler.SelectedScreen == null) return;
-            var half = ((double)_screenHandler.SelectedScreen.WorkingArea.Width / 2) - (Width / 2);
-            Left = _screenHandler.SelectedScreen.WorkingArea.Left + half;
-            Top = _screenHandler.SelectedScreen.WorkingArea.Top;
             WindowState = WindowState.Normal;
         }
 

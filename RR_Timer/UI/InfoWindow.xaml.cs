@@ -30,6 +30,13 @@ namespace Race_timer.UI
         {
             InitializeComponent();
             _screenHandler = sh;
+
+            if (_screenHandler.SelectedScreen == null) return;
+            WindowState = WindowState.Minimized;
+            Left = _screenHandler.SelectedScreen.WorkingArea.Left;
+            Top = _screenHandler.SelectedScreen.WorkingArea.Bottom - 200;
+            Width = _screenHandler.SelectedScreen.WorkingArea.Width;
+
             Loaded += WindowLoaded;
             _timer.Tick += TimerTick;
             _timer.Interval = new TimeSpan(0, 0, 0, 0, TimerMillis);
@@ -42,11 +49,7 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            if (_screenHandler.SelectedScreen == null) return;
             WindowState = WindowState.Normal;
-            Left = _screenHandler.SelectedScreen.WorkingArea.Left;
-            Top = _screenHandler.SelectedScreen.WorkingArea.Bottom - 200;
-            Width = _screenHandler.SelectedScreen.WorkingArea.Width;
 
             //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
             var controlSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
