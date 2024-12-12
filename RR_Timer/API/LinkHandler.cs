@@ -16,8 +16,8 @@ namespace Race_timer.API
     {
         private static LinkHandler? _instance;
 
-        private readonly string _mainLink;
-        private readonly string? _countLink;
+        private string _mainLink;
+        private string? _countLink;
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private readonly HttpClient _httpClient;
 
@@ -55,6 +55,11 @@ namespace Race_timer.API
             {
                 _instance = new LinkHandler(mainLink);
             }
+            else
+            {
+                _instance._mainLink = mainLink;
+                _instance.ReadMainLink();
+            }
 
             return _instance;
         }
@@ -63,6 +68,13 @@ namespace Race_timer.API
             if (_instance == null)
             {
                 _instance = new LinkHandler(mainLink, countLink);
+            }
+            else
+            {
+                _instance._mainLink = mainLink;
+                _instance._countLink = countLink;
+                _instance.ReadMainLink();
+                _instance._timer.Start();
             }
 
             return _instance;
@@ -162,6 +174,7 @@ namespace Race_timer.API
                     if (asRacers > 0 && !ClockLogic.GetInstance().IsTimerMinimized())
                     {
                         ClockLogic.GetInstance().AutoMinimizeTimer();
+                        _timer.Stop();
                     }
                 }
                 else

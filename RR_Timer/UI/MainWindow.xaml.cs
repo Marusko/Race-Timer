@@ -371,13 +371,11 @@ namespace Race_timer.UI
         {
             if (ScreenHandler.GetInstance().SelectedScreen != null)
             {
-                var selectedScreen = ScreenHandler.GetInstance().SelectedScreen;
-                if (selectedScreen != null)
                     ClockLogic.GetInstance().SelectedAlignment = AlignmentComboBox.SelectedIndex switch
                     {
-                        0 => new TimerTop(selectedScreen.WorkingArea.Width),
-                        1 => new TimerLeft(selectedScreen.WorkingArea.Width),
-                        2 => new TimerRight(selectedScreen.WorkingArea.Width),
+                        0 => new TimerTop(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width),
+                        1 => new TimerLeft(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width),
+                        2 => new TimerRight(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width),
                         _ => ClockLogic.GetInstance().SelectedAlignment
                     };
             }
