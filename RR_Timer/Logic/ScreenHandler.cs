@@ -11,6 +11,8 @@ namespace Race_timer.Logic
     /// </summary>
     public class ScreenHandler
     {
+        private static ScreenHandler? _instance;
+
         private Screen[] _screens = Screen.AllScreens;
         private string[] _screenNames;
         public Screen? SelectedScreen { get; set; }
@@ -21,7 +23,7 @@ namespace Race_timer.Logic
         /// Sets up timer, names
         /// </summary>
         /// <param name="mw">Already created MainWindow object</param>
-        public ScreenHandler(MainWindow mw)
+        private ScreenHandler(MainWindow mw)
         {
             _mainWindow = mw;
             _screenNames = new string[_screens.Length];
@@ -29,6 +31,25 @@ namespace Race_timer.Logic
             _timer.Interval = new TimeSpan(0, 0, 20);
             _timer.Start();
             SetScreenNames();
+        }
+
+        public static ScreenHandler Initialize(MainWindow mw)
+        {
+            if (_instance == null)
+            {
+                _instance = new ScreenHandler(mw);
+            }
+            
+            return _instance;
+        }
+
+        public static ScreenHandler GetInstance()
+        {
+            if (_instance == null)
+            {
+                throw new InvalidOperationException("ScreenHandler is not initialized. Call Initialize() first.");
+            }
+            return _instance;
         }
 
         /// <summary>

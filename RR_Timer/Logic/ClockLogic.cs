@@ -16,6 +16,8 @@ namespace Race_timer.Logic
     /// </summary>
     public class ClockLogic
     {
+        private static ClockLogic? _instance;
+
         public const int ScrollBegin = -1;
         public const int Scrolling = 0;
         public const int ScrollEnd = 1;
@@ -37,9 +39,7 @@ namespace Race_timer.Logic
         public MainWindow MainWindow { get; }
         public UserControl? SelectedAlignment { get; set; }
 
-        private readonly ScreenHandler _screenHandler;
         private Window? _clockWindow;
-        private LinkHandler? _linkHandler;
         private readonly ObservableCollection<string> _timerAlignmentNames = new();
         public string InfoText { get; set; } = "";
 
@@ -55,17 +55,34 @@ namespace Race_timer.Logic
         /// Sets the main window, screen handler and alignment to top
         /// </summary>
         /// <param name="mw">Previously created main window</param>
-        /// <param name="sh">Previously created screen handler</param>
-        public ClockLogic(MainWindow mw, ScreenHandler sh)
+        private ClockLogic(MainWindow mw)
         {
             MainWindow = mw;
-            _screenHandler = sh;
             StartTimes = new Dictionary<string, DateTime>();
             ActiveTimers = new Dictionary<string, ContestTimer>();
             MiniActiveTimers = new Dictionary<string, MiniContestTimer>();
             SetAlignmentList();
-            if (_screenHandler.SelectedScreen != null)
-                SelectedAlignment = new TimerTop(_screenHandler.SelectedScreen.WorkingArea.Width);
+            if (ScreenHandler.GetInstance().SelectedScreen != null)
+                SelectedAlignment = new TimerTop(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width);
+        }
+
+        public static ClockLogic Initialize(MainWindow mw)
+        {
+            if (_instance == null)
+            {
+                _instance = new ClockLogic(mw);
+            }
+
+            return _instance;
+        }
+
+        public static ClockLogic GetInstance()
+        {
+            if (_instance == null)
+            {
+                throw new InvalidOperationException("ClockLogic is not initialized. Call Initialize() first.");
+            }
+            return _instance;
         }
 
         /// <summary>
@@ -108,7 +125,13 @@ namespace Race_timer.Logic
         public void StopTimer()
         {
             _timer.Stop();
-            _linkHandler?.StopTimer();
+            try
+            {
+                LinkHandler.GetInstance().StopTimer();
+            }
+            catch (InvalidOperationException e)
+            {
+            }
             InfoWindow?.StopTimer();
         }
 
@@ -171,7 +194,7 @@ namespace Race_timer.Logic
             {
                 if (StartTimes.Values.ElementAt(i) < DateTime.Now)
                 {
-                    if (_screenHandler.SelectedScreen == null) return;
+                    if (ScreenHandler.GetInstance().SelectedScreen == null) return;
 
                     if (_clockWindow == null) return;
                     if (_clockWindow.GetType() == typeof(ClockWindow) && !isSmall)
@@ -184,7 +207,7 @@ namespace Race_timer.Logic
                         {
                             continue;
                         }
-                        ActiveTimers.Add(StartTimes.Keys.ElementAt(i), new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, false,
+                        ActiveTimers.Add(StartTimes.Keys.ElementAt(i), new ContestTimer(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width, false,
                             EventName?.Length ?? 0)
                         {
                             Name = StartTimes.Keys.ElementAt(i),
@@ -201,7 +224,7 @@ namespace Race_timer.Logic
                         {
                             continue;
                         }
-                        MiniActiveTimers.Add(StartTimes.Keys.ElementAt(i), new MiniContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, false)
+                        MiniActiveTimers.Add(StartTimes.Keys.ElementAt(i), new MiniContestTimer(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width, false)
                         {
                             Name = StartTimes.Keys.ElementAt(i),
                             StartTime = StartTimes.Values.ElementAt(i)
@@ -271,7 +294,7 @@ namespace Race_timer.Logic
             if (!MainWindow.IsCodeOnMinimized() || CodeImage == null) return;
             if (CodeWindowForMinimized == null)
             {
-                CodeWindowForMinimized = new CodeWindowForMinimized(_screenHandler);
+                CodeWindowForMinimized = new CodeWindowForMinimized();
                 CodeWindowForMinimized.SetImage(CodeImage);
                 _hideCodeTime = DateTime.Now;
                 _showTime = DateTime.Now;
@@ -306,7 +329,7 @@ namespace Race_timer.Logic
             if (MainWindow.InfoEnableCheckBox.IsChecked != null && (!MainWindow.InfoEnableCheckBox.IsChecked.Value || string.IsNullOrEmpty(InfoText))) return;
             if (InfoWindow == null)
             {
-                InfoWindow = new InfoWindow(_screenHandler);
+                InfoWindow = new InfoWindow();
                 InfoWindow.SetLabel(InfoText);
                 _hideInfoTime = DateTime.Now;
                 _showTimeInfo = DateTime.Now;
@@ -356,11 +379,11 @@ namespace Race_timer.Logic
                 {
                     var warning = new WarningWindow(WarningWindow.CountLinkWarning);
                     warning.ShowDialog();
-                    _linkHandler = new LinkHandler(mainLink, this);
+                    LinkHandler.Initialize(mainLink);
                 }
                 else
                 {
-                    _linkHandler = new LinkHandler(mainLink, countLink, this);
+                    LinkHandler.Initialize(mainLink, countLink);
                 }
             }
             else

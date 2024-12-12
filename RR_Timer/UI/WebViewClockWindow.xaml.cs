@@ -13,8 +13,6 @@ namespace Race_timer.UI
     /// </summary>
     public partial class WebViewClockWindow
     {
-        private readonly ClockLogic _clockLogic;
-        private readonly ScreenHandler _screenHandler;
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private int _showTimerIndex;
 
@@ -27,27 +25,23 @@ namespace Race_timer.UI
         /// Initializes the window, adds method to call after window is loaded
         /// If possible, start timer
         /// </summary>
-        /// <param name="cl">Already created ClockLogic object</param>
-        /// <param name="sh">Already created ScreenHandler object</param>
-        public WebViewClockWindow(ClockLogic cl, ScreenHandler sh, string link)
+        public WebViewClockWindow(string link)
         {
             InitializeComponent();
-            _clockLogic = cl;
-            _screenHandler = sh;
 
             WebView.Source = new Uri(link);
 
-            if (_screenHandler.SelectedScreen == null) return;
+            if (ScreenHandler.GetInstance().SelectedScreen == null) return;
             WindowState = WindowState.Minimized;
-            Left = _screenHandler.SelectedScreen.WorkingArea.Left;
-            Top = _screenHandler.SelectedScreen.WorkingArea.Top;
+            Left = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Left;
+            Top = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Top;
 
             Loaded += WindowLoaded;
             Closed += StopTimer;
             _timer.Tick += TimerTick;
             _timer.Interval = new TimeSpan(0, 0, TimerShownForSeconds);
             TimerTickLogic();
-            if (_clockLogic.MiniActiveTimers.Count > 0)
+            if (ClockLogic.GetInstance().MiniActiveTimers.Count > 0)
             {
                 _timer.Start();
             }
@@ -87,14 +81,14 @@ namespace Race_timer.UI
         /// </summary>
         public void TimerTickLogic()
         {
-            if (_clockLogic.MiniActiveTimers.Values.Count > 0)
+            if (ClockLogic.GetInstance().MiniActiveTimers.Values.Count > 0)
             {
-                if (_showTimerIndex >= _clockLogic.MiniActiveTimers.Values.Count)
+                if (_showTimerIndex >= ClockLogic.GetInstance().MiniActiveTimers.Values.Count)
                 {
                     _showTimerIndex = 0;
                 }
                 TimerStackPanel.Children.Clear();
-                TimerStackPanel.Children.Add(_clockLogic.MiniActiveTimers.Values.ElementAt(_showTimerIndex));
+                TimerStackPanel.Children.Add(ClockLogic.GetInstance().MiniActiveTimers.Values.ElementAt(_showTimerIndex));
                 _showTimerIndex++;
             }
         }
@@ -114,19 +108,19 @@ namespace Race_timer.UI
         /// <param name="timers">Timer StackPanel from minimized clock</param>
         private void ShowMiniClockOrTimer(ref StackPanel timers)
         {
-            if (_clockLogic.MiniActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
+            if (ClockLogic.GetInstance().MiniActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
             {
                 AddClock(ref timers);
             }
-            else if (_clockLogic.MiniActiveTimers.Values.Count == 0)
+            else if (ClockLogic.GetInstance().MiniActiveTimers.Values.Count == 0)
             {
-                if (_screenHandler.SelectedScreen == null) return;
+                if (ScreenHandler.GetInstance().SelectedScreen == null) return;
                 if (_clockInMiniPanel) return;
                 TimerStackPanel.Children.Clear();
                 _timer.Stop();
                 AddClock(ref timers);
             }
-            else if (_clockLogic.MiniActiveTimers.Values.Count > 0)
+            else if (ClockLogic.GetInstance().MiniActiveTimers.Values.Count > 0)
             {
                 if (_clockInMiniPanel)
                 {
@@ -145,8 +139,8 @@ namespace Race_timer.UI
         private void AddClock(ref StackPanel timers)
         {
             timers.Children.Clear();
-            if (_screenHandler.SelectedScreen == null) return;
-            var clock = new MiniContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true)
+            if (ScreenHandler.GetInstance().SelectedScreen == null) return;
+            var clock = new MiniContestTimer(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width, true)
             {
                 Name = " "
             };
@@ -165,12 +159,12 @@ namespace Race_timer.UI
             WindowState = WindowState.Maximized;
 
             //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
-            var controlSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
+            var controlSize = (double)ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
             Application.Current.Resources.Remove("ControlFontSize");
             Application.Current.Resources.Add("ControlFontSize", controlSize * 3 - 5);
 
             //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
-            var controlWidth = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 3 - 50;
+            var controlWidth = (double)ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width / 3 - 50;
             Application.Current.Resources.Remove("ControlWidth");
             Application.Current.Resources.Add("ControlWidth", controlWidth);
         }

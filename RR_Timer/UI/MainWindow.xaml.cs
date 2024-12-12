@@ -21,8 +21,6 @@ namespace Race_timer.UI
     {
         private const string Author = "Matúš Suský";
         private const string Version = "2.6.5";
-        private readonly ClockLogic _clockLogic;
-        private readonly ScreenHandler _screenHandler;
         private Window? _clockWindow;
         private bool _openedLinkTimer;
         public bool OpenedTimer { get; private set; }
@@ -46,16 +44,16 @@ namespace Race_timer.UI
         public MainWindow()
         {
             InitializeComponent();
-            _screenHandler = new ScreenHandler(this);
-            _clockLogic = new ClockLogic(this, _screenHandler);
+            ScreenHandler.Initialize(this);
+            ClockLogic.Initialize(this);
 
             EventTypeComboBox.ItemsSource = Enum.GetValues(typeof(EventType));
 
-            ScreenComboBox.ItemsSource = _screenHandler.GetScreenNames();
+            ScreenComboBox.ItemsSource = ScreenHandler.GetInstance().GetScreenNames();
             ScreenComboBox.SelectionChanged += SelectScreen;
             ScreenComboBox.SelectedIndex = 0;
 
-            AlignmentComboBox.ItemsSource = _clockLogic.GetAlignments();
+            AlignmentComboBox.ItemsSource = ClockLogic.GetInstance().GetAlignments();
             AlignmentComboBox.SelectedIndex = 0;
             AlignmentComboBox.SelectionChanged += SelectAlignmentHandler;
 
@@ -98,7 +96,7 @@ namespace Race_timer.UI
                 return;
             }
             if (_clockWindow == null) return;
-            _clockLogic.SetClockWindow((ClockWindow)_clockWindow, EventNameText.Text, EventTypeComboBox.Text);
+            ClockLogic.GetInstance().SetClockWindow((ClockWindow)_clockWindow, EventNameText.Text, EventTypeComboBox.Text);
             OpenTimerEnd();
             _clockWindow.Show();
             _openedLinkTimer = false;
@@ -127,7 +125,7 @@ namespace Race_timer.UI
                 return;
             }
             if (_clockWindow == null) return;
-            _clockLogic.SetClockWindow(EventLink, CountLink, (ClockWindow)_clockWindow);
+            ClockLogic.GetInstance().SetClockWindow(EventLink, CountLink, (ClockWindow)_clockWindow);
             OpenTimerEnd();
             _clockWindow.Show();
             _openedLinkTimer = true;
@@ -158,21 +156,21 @@ namespace Race_timer.UI
                 NewStartTime.IsEnabled = false;
                 NewStartButton.IsEnabled = false;
             }
-            _clockLogic.ProcessStartTimes();
+            ClockLogic.GetInstance().ProcessStartTimes();
             if (OpenedTimer) return;
             if (!CanOpenTimer) return;
             OpenedTimer = true;
-            _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
-            _clockLogic.SelectedAlignment = null;
+            _clockWindow = new ClockWindow();
+            ClockLogic.GetInstance().SelectedAlignment = null;
             SelectAlignment();
-            _clockLogic.InfoText = InfoText.Text;
+            ClockLogic.GetInstance().InfoText = InfoText.Text;
             if (InfoEnableCheckBox.IsChecked != null)
             {
                 NewInfoButton.IsEnabled = InfoEnableCheckBox.IsChecked.Value;
                 NewInfoText.IsEnabled = InfoEnableCheckBox.IsChecked.Value;
                 if (InfoEnableCheckBox.IsChecked.Value)
                 {
-                    NewInfoText.Text = _clockLogic.InfoText;
+                    NewInfoText.Text = ClockLogic.GetInstance().InfoText;
                 }
             }
         }
@@ -182,7 +180,7 @@ namespace Race_timer.UI
         /// </summary>
         private void OpenTimerEnd()
         {
-            _clockLogic.StartTimer();
+            ClockLogic.GetInstance().StartTimer();
             LinkTimerTab.IsEnabled = false;
             TimerTab.IsEnabled = false;
             SettingsTab.IsEnabled = false;
@@ -224,20 +222,20 @@ namespace Race_timer.UI
             if (_clockWindow == null) return;
             if (!MinimizedTimer) return;
             _clockWindow.Close();
-            _clockWindow = new ClockWindow(_clockLogic, _screenHandler);
-            _clockLogic.SelectedAlignment = null;
+            _clockWindow = new ClockWindow();
+            ClockLogic.GetInstance().SelectedAlignment = null;
             SelectAlignment();
-            _clockLogic.SetClockWindow((ClockWindow)_clockWindow);
-            _clockLogic.CodeWindowForMinimized?.Close();
-            _clockLogic.CodeWindowForMinimized = null;
-            _clockLogic.InfoWindow?.StopTimer();
-            _clockLogic.InfoWindow?.Close();
-            _clockLogic.InfoWindow = null;
+            ClockLogic.GetInstance().SetClockWindow((ClockWindow)_clockWindow);
+            ClockLogic.GetInstance().CodeWindowForMinimized?.Close();
+            ClockLogic.GetInstance().CodeWindowForMinimized = null;
+            ClockLogic.GetInstance().InfoWindow?.StopTimer();
+            ClockLogic.GetInstance().InfoWindow?.Close();
+            ClockLogic.GetInstance().InfoWindow = null;
             MinimizedTimer = false;
             MinimizeButton.IsEnabled = true;
             WebReloadButton.IsEnabled = false;
             MaximizeButton.IsEnabled = false;
-            _clockLogic.ClockTickLogic();
+            ClockLogic.GetInstance().ClockTickLogic();
             _clockWindow.Show();
         }
 
@@ -252,19 +250,19 @@ namespace Race_timer.UI
             if (_clockWindow == null) return;
             if (MinimizedTimer) return;
             _clockWindow.Close();
-            _clockLogic.CheckTimers(true);
+            ClockLogic.GetInstance().CheckTimers(true);
             if (WebViewEnableCheckBox.IsChecked != null && (bool)WebViewEnableCheckBox.IsChecked 
                                                         && !string.IsNullOrEmpty(ResultLinkText.Text))
             {
-                _clockWindow = new WebViewClockWindow(_clockLogic, _screenHandler, ResultLinkText.Text);
-                _clockLogic.SetClockWindow((WebViewClockWindow)_clockWindow);
+                _clockWindow = new WebViewClockWindow(ResultLinkText.Text);
+                ClockLogic.GetInstance().SetClockWindow((WebViewClockWindow)_clockWindow);
             }
             else
             {
-                _clockWindow = new MiniClockWindow(_clockLogic, _screenHandler);
-                _clockLogic.SetClockWindow((MiniClockWindow)_clockWindow);
+                _clockWindow = new MiniClockWindow();
+                ClockLogic.GetInstance().SetClockWindow((MiniClockWindow)_clockWindow);
             }
-            _clockLogic.AfterCheckTimers();
+            ClockLogic.GetInstance().AfterCheckTimers();
             _clockWindow.Show();
             MinimizedTimer = true;
             MinimizeButton.IsEnabled = false;
@@ -298,13 +296,13 @@ namespace Race_timer.UI
             _clockWindow.Close();
             OpenedTimer = false;
             MinimizedTimer = false;
-            _clockLogic.StopTimer();
-            _clockLogic.SelectedAlignment = null;
-            _clockLogic.CodeWindowForMinimized?.Close();
-            _clockLogic.CodeWindowForMinimized = null;
-            _clockLogic.InfoWindow?.StopTimer();
-            _clockLogic.InfoWindow?.Close();
-            _clockLogic.InfoWindow = null;
+            ClockLogic.GetInstance().StopTimer();
+            ClockLogic.GetInstance().SelectedAlignment = null;
+            ClockLogic.GetInstance().CodeWindowForMinimized?.Close();
+            ClockLogic.GetInstance().CodeWindowForMinimized = null;
+            ClockLogic.GetInstance().InfoWindow?.StopTimer();
+            ClockLogic.GetInstance().InfoWindow?.Close();
+            ClockLogic.GetInstance().InfoWindow = null;
             LinkTimerTab.IsEnabled = true;
             TimerTab.IsEnabled = true;
             SettingsTab.IsEnabled = true;
@@ -322,7 +320,7 @@ namespace Race_timer.UI
 
         private void SetInfo(object? sender, EventArgs e)
         {
-            _clockLogic.InfoText = NewInfoText.Text;
+            ClockLogic.GetInstance().InfoText = NewInfoText.Text;
         }
 
         /// <summary>
@@ -334,7 +332,7 @@ namespace Race_timer.UI
         private void ShutDownApp(object? sender, EventArgs e)
         {
             OnClose();
-            _screenHandler.StopTimer();
+            ScreenHandler.GetInstance().StopTimer();
             Application.Current.Shutdown();
         }
 
@@ -347,11 +345,11 @@ namespace Race_timer.UI
         {
             try
             {
-                _screenHandler.SelectedScreen = _screenHandler.GetScreens()[ScreenComboBox.SelectedIndex];
+                ScreenHandler.GetInstance().SelectedScreen = ScreenHandler.GetInstance().GetScreens()[ScreenComboBox.SelectedIndex];
             }
             catch (Exception)
             {
-                _screenHandler.SelectedScreen = _screenHandler.GetScreens()[0];
+                ScreenHandler.GetInstance().SelectedScreen = ScreenHandler.GetInstance().GetScreens()[0];
                 ScreenComboBox.SelectedIndex = 0;
             }
         }
@@ -371,15 +369,17 @@ namespace Race_timer.UI
         /// </summary>
         private void SelectAlignment()
         {
-            if (_screenHandler.SelectedScreen != null)
+            if (ScreenHandler.GetInstance().SelectedScreen != null)
             {
-                _clockLogic.SelectedAlignment = AlignmentComboBox.SelectedIndex switch
-                {
-                    0 => new TimerTop(_screenHandler.SelectedScreen.WorkingArea.Width),
-                    1 => new TimerLeft(_screenHandler.SelectedScreen.WorkingArea.Width),
-                    2 => new TimerRight(_screenHandler.SelectedScreen.WorkingArea.Width),
-                    _ => _clockLogic.SelectedAlignment
-                };
+                var selectedScreen = ScreenHandler.GetInstance().SelectedScreen;
+                if (selectedScreen != null)
+                    ClockLogic.GetInstance().SelectedAlignment = AlignmentComboBox.SelectedIndex switch
+                    {
+                        0 => new TimerTop(selectedScreen.WorkingArea.Width),
+                        1 => new TimerLeft(selectedScreen.WorkingArea.Width),
+                        2 => new TimerRight(selectedScreen.WorkingArea.Width),
+                        _ => ClockLogic.GetInstance().SelectedAlignment
+                    };
             }
         }
 
@@ -397,7 +397,7 @@ namespace Race_timer.UI
                         "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
                         "Portable Network Graphic (*.png)|*.png";
             if (op.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
-            _clockLogic.LogoImage = new BitmapImage(new Uri(op.FileName));
+            ClockLogic.GetInstance().LogoImage = new BitmapImage(new Uri(op.FileName));
             DeleteImageButton.IsEnabled = true;
             LinkDeleteImageButton.IsEnabled = true;
             var tmp = op.FileName;
@@ -415,7 +415,7 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void DeleteImage(object sender, RoutedEventArgs e)
         {
-            _clockLogic.LogoImage = null;
+            ClockLogic.GetInstance().LogoImage = null;
             DeleteImageButton.IsEnabled = false;
             ImageName.Content = "";
             LinkDeleteImageButton.IsEnabled = false;
@@ -436,7 +436,7 @@ namespace Race_timer.UI
                         "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
                         "Portable Network Graphic (*.png)|*.png";
             if (op.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
-            _clockLogic.CodeImage = new BitmapImage(new Uri(op.FileName));
+            ClockLogic.GetInstance().CodeImage = new BitmapImage(new Uri(op.FileName));
             var tmp = op.FileName;
             var index = tmp.LastIndexOf(Path.DirectorySeparatorChar) + 1;
             var name = tmp.Substring(index, tmp.Length - index);
@@ -452,7 +452,7 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void DeleteCode(object sender, RoutedEventArgs e)
         {
-            _clockLogic.CodeImage = null;
+            ClockLogic.GetInstance().CodeImage = null;
             CodeName.Content = "";
             DeleteCodeButton.IsEnabled = false;
             CodeCheckBoxForMinimized.IsChecked = false;
@@ -467,9 +467,9 @@ namespace Race_timer.UI
         private void GenerateCode(object sender, RoutedEventArgs e)
         {
             DeleteCodeButton.IsEnabled = true;
-            _clockLogic.CodeImage = CodeGenerator.GenerateCode(CodeLinkText.Text);
+            ClockLogic.GetInstance().CodeImage = CodeGenerator.GenerateCode(CodeLinkText.Text);
             CodeName.Content = "QR code generated!";
-            if (_clockLogic.CodeImage != null) return;
+            if (ClockLogic.GetInstance().CodeImage != null) return;
             var ww = new WarningWindow("Something went wrong! QR code was not generated");
             ww.ShowDialog();
         }
@@ -607,28 +607,28 @@ namespace Race_timer.UI
         private void SetNewStartTime(object sender, RoutedEventArgs e)
         {
             if (ContestComboBox?.SelectedItem == null) return;
-            var newStart = _clockLogic.StringToDateTime(NewStartTime.Text);
-            var canSetTime = _clockLogic.StartTimes.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedStartTime);
+            var newStart = ClockLogic.GetInstance().StringToDateTime(NewStartTime.Text);
+            var canSetTime = ClockLogic.GetInstance().StartTimes.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedStartTime);
             if (!canSetTime) return;
-            _clockLogic.StartTimes[ContestComboBox.SelectedItem.ToString()] = newStart;
+            ClockLogic.GetInstance().StartTimes[ContestComboBox.SelectedItem.ToString()] = newStart;
             StartTimes[ContestComboBox.SelectedItem.ToString()] = NewStartTime.Text;
-            if (_clockLogic.ActiveTimers.Count > 0)
+            if (ClockLogic.GetInstance().ActiveTimers.Count > 0)
             {
-                var can = _clockLogic.ActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
+                var can = ClockLogic.GetInstance().ActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
                 if (can && selectedContest != null)
                 {
                     selectedContest.StartTime = newStart;
                 }
             }
-            else if (_clockLogic.MiniActiveTimers.Count > 0)
+            else if (ClockLogic.GetInstance().MiniActiveTimers.Count > 0)
             {
-                var can = _clockLogic.MiniActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
+                var can = ClockLogic.GetInstance().MiniActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
                 if (can && selectedContest != null)
                 {
                     selectedContest.StartTime = newStart;
                 }
             }
-            _clockLogic.ClockTickLogic(MinimizedTimer);
+            ClockLogic.GetInstance().ClockTickLogic(MinimizedTimer);
             StartTimesDataGrid.Items.Clear();
             foreach (var startTime in StartTimes)
             {

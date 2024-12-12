@@ -12,8 +12,6 @@ namespace Race_timer.UI
     /// </summary>
     public partial class ClockWindow
     {
-        private readonly ClockLogic _clockLogic;
-        private readonly ScreenHandler _screenHandler;
         private bool _clockInPanel;
         public ContestTimer? Clock { get; set; }
 
@@ -21,19 +19,14 @@ namespace Race_timer.UI
         /// Initialize and open the window, used when switching between fullscreen and minimized clock window
         /// Initialize and open the window, converts time string to DateTime and adds method to call after window is loaded
         /// </summary>
-        /// <param name="cl">Already created ClockLogic object</param>
-        /// <param name="sh">Already created ScreenHandler object</param>
-        public ClockWindow(ClockLogic cl, ScreenHandler sh)
+        public ClockWindow()
         {
             InitializeComponent();
 
-            _clockLogic = cl;
-            _screenHandler = sh;
-
-            if (_screenHandler.SelectedScreen == null) return;
+            if (ScreenHandler.GetInstance().SelectedScreen == null) return;
             WindowState = WindowState.Minimized;
-            Left = _screenHandler.SelectedScreen.WorkingArea.Left;
-            Top = _screenHandler.SelectedScreen.WorkingArea.Top;
+            Left = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Left;
+            Top = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Top;
 
             Loaded += WindowLoaded;
             Closed += OnClose;
@@ -48,7 +41,7 @@ namespace Race_timer.UI
             WindowState = WindowState.Maximized;
 
             //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
-            var controlSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
+            var controlSize = (double)ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
             Application.Current.Resources.Remove("ControlFontSize");
             Application.Current.Resources.Add("ControlFontSize", controlSize * 10);
             Application.Current.Resources.Remove("ControlSmallFontSize");
@@ -63,7 +56,7 @@ namespace Race_timer.UI
         /// </summary>
         private void SetTimersMaxHeight()
         {
-            if (_clockLogic.EventName is { Length: <= 26 })
+            if (ClockLogic.GetInstance().EventName is { Length: <= 26 })
             {
                 return;
             }
@@ -144,11 +137,11 @@ namespace Race_timer.UI
         /// <param name="clock">Clock label from fullscreen clock</param>
         private void ShowClockOrTimer(ref StackPanel timers, ref Label clock)
         {
-            if (_clockLogic.ActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
+            if (ClockLogic.GetInstance().ActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
             {
                 AddClock(ref timers, ref clock);
             }
-            else if (_clockLogic.ActiveTimers.Values.Count > 0 && _clockLogic.ActiveTimers.Values.Count == timers.Children.Count)
+            else if (ClockLogic.GetInstance().ActiveTimers.Values.Count > 0 && ClockLogic.GetInstance().ActiveTimers.Values.Count == timers.Children.Count)
             {
                 if (_clockInPanel)
                 {
@@ -157,7 +150,7 @@ namespace Race_timer.UI
                     Clock = null;
                 }
                 clock.Content = FormatTime();
-                foreach (var contestTimer in _clockLogic.ActiveTimers.Values)
+                foreach (var contestTimer in ClockLogic.GetInstance().ActiveTimers.Values)
                 {
                     if (!timers.Children.Contains(contestTimer))
                     {
@@ -165,14 +158,14 @@ namespace Race_timer.UI
                     }
                 }
             }
-            else if (_clockLogic.ActiveTimers.Values.Count != timers.Children.Count)
+            else if (ClockLogic.GetInstance().ActiveTimers.Values.Count != timers.Children.Count)
             {
                 if (timers.Children.Count == 1 && ((ContestTimer)timers.Children[0]).Clock)
                 {
                     return;
                 }
                 timers.Children.Clear();
-                if (_clockLogic.ActiveTimers.Values.Count == 0)
+                if (ClockLogic.GetInstance().ActiveTimers.Values.Count == 0)
                 {
                     AddClock(ref timers, ref clock);
                 }
@@ -181,7 +174,7 @@ namespace Race_timer.UI
                     clock.Content = FormatTime();
                     _clockInPanel = false;
                     Clock = null;
-                    foreach (var contestTimer in _clockLogic.ActiveTimers.Values)
+                    foreach (var contestTimer in ClockLogic.GetInstance().ActiveTimers.Values)
                     {
                         if (!timers.Children.Contains(contestTimer))
                         {
@@ -201,9 +194,9 @@ namespace Race_timer.UI
         {
             clock.Content = " ";
             timers.Children.Clear();
-            if (_screenHandler.SelectedScreen == null) return;
-            var clockTimer = new ContestTimer(_screenHandler.SelectedScreen.WorkingArea.Width, true,
-                _clockLogic.EventName?.Length ?? 0)
+            if (ScreenHandler.GetInstance().SelectedScreen == null) return;
+            var clockTimer = new ContestTimer(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width, true,
+                ClockLogic.GetInstance().EventName?.Length ?? 0)
             {
                 Name = " "
             };

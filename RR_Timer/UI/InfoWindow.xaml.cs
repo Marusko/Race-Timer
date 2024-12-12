@@ -9,8 +9,6 @@ namespace Race_timer.UI
     /// </summary>
     public partial class InfoWindow
     {
-        private readonly ScreenHandler _screenHandler;
-
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private int _stateOfScroll = ClockLogic.ScrollBegin;
         private int _currentTime;
@@ -25,17 +23,15 @@ namespace Race_timer.UI
         /// <summary>
         /// Initializes component, adds method when window is loaded
         /// </summary>
-        /// <param name="sh">Already created ScreenHandler</param>
-        public InfoWindow(ScreenHandler sh)
+        public InfoWindow()
         {
             InitializeComponent();
-            _screenHandler = sh;
 
-            if (_screenHandler.SelectedScreen == null) return;
+            if (ScreenHandler.GetInstance().SelectedScreen == null) return;
             WindowState = WindowState.Minimized;
-            Left = _screenHandler.SelectedScreen.WorkingArea.Left;
-            Top = _screenHandler.SelectedScreen.WorkingArea.Bottom - 200;
-            Width = _screenHandler.SelectedScreen.WorkingArea.Width;
+            Left = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Left;
+            Top = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Bottom - 200;
+            Width = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width;
 
             Loaded += WindowLoaded;
             _timer.Tick += TimerTick;
@@ -52,7 +48,7 @@ namespace Race_timer.UI
             WindowState = WindowState.Normal;
 
             //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
-            var controlSize = (double)_screenHandler.SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
+            var controlSize = (double)ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
             Application.Current.Resources.Remove("InfoFontSize");
             Application.Current.Resources.Add("InfoFontSize", controlSize * 3 - 5);
         }

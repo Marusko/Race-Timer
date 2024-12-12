@@ -9,22 +9,18 @@ namespace Race_timer.UI
     /// </summary>
     public partial class CodeWindowForMinimized
     {
-        private readonly ScreenHandler _screenHandler;
-
         /// <summary>
         /// Initializes component, adds method when window is loaded
         /// </summary>
-        /// <param name="sh">Already created ScreenHandler</param>
-        public CodeWindowForMinimized(ScreenHandler sh)
+        public CodeWindowForMinimized()
         {
             InitializeComponent();
-            _screenHandler = sh;
 
-            if (_screenHandler.SelectedScreen == null) return;
+            if (ScreenHandler.GetInstance().SelectedScreen == null) return;
             WindowState = WindowState.Minimized;
-            var half = ((double)_screenHandler.SelectedScreen.WorkingArea.Width / 2) - (Width / 2);
-            Left = _screenHandler.SelectedScreen.WorkingArea.Left + half;
-            Top = _screenHandler.SelectedScreen.WorkingArea.Top;
+            var half = ((double)ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width / 2) - (Width / 2);
+            Left = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Left + half;
+            Top = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Top;
 
             Loaded += WindowLoaded;
         }

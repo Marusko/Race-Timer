@@ -14,9 +14,10 @@ namespace Race_timer.API
     /// </summary>
     internal class LinkHandler
     {
+        private static LinkHandler? _instance;
+
         private readonly string _mainLink;
         private readonly string? _countLink;
-        private readonly ClockLogic _clockLogic;
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private readonly HttpClient _httpClient;
 
@@ -25,12 +26,10 @@ namespace Race_timer.API
         /// </summary>
         /// <param name="mainLink">For event name and type</param>
         /// <param name="countLink">For count of participants that already finished</param>
-        /// <param name="cl"></param>
-        public LinkHandler(string mainLink, string countLink, ClockLogic cl)
+        private LinkHandler(string mainLink, string countLink)
         {
             _mainLink = mainLink;
             _countLink = countLink;
-            _clockLogic = cl;
             _httpClient = new HttpClient();
             ReadMainLink();
 
@@ -42,14 +41,40 @@ namespace Race_timer.API
         /// When count link is not entered, this constructor will be called and main link will be read
         /// </summary>
         /// <param name="mainLink">For event name and type</param>
-        /// <param name="cl">For clock logic object</param>
-        public LinkHandler(string mainLink, ClockLogic cl)
+        private LinkHandler(string mainLink)
         {
             _mainLink = mainLink;
             _countLink = null;
-            _clockLogic = cl;
             _httpClient = new HttpClient();
             ReadMainLink();
+        }
+
+        public static LinkHandler Initialize(string mainLink)
+        {
+            if (_instance == null)
+            {
+                _instance = new LinkHandler(mainLink);
+            }
+
+            return _instance;
+        }
+        public static LinkHandler Initialize(string mainLink, string countLink)
+        {
+            if (_instance == null)
+            {
+                _instance = new LinkHandler(mainLink, countLink);
+            }
+
+            return _instance;
+        }
+
+        public static LinkHandler GetInstance()
+        {
+            if (_instance == null)
+            {
+                throw new InvalidOperationException("LinkHandler is not initialized. Call Initialize() first.");
+            }
+            return _instance;
         }
 
         /// <summary>
@@ -67,8 +92,8 @@ namespace Race_timer.API
             {
                 var warning = new WarningWindow($"Oops, something went wrong with Event API!\nError code: \n[{e.Message}]");
                 warning.ShowDialog();
-                _clockLogic.MainWindow.CanOpenTimer = false;
-                _clockLogic.MainWindow.EventStatusLabel.Content = "ERR";
+                ClockLogic.GetInstance().MainWindow.CanOpenTimer = false;
+                ClockLogic.GetInstance().MainWindow.EventStatusLabel.Content = "ERR";
                 return;
             }
 
@@ -84,26 +109,26 @@ namespace Race_timer.API
                 {
                     var warning = new WarningWindow("Oops, something went wrong with Event API!\nError code: [Can't deserialize provided data]");
                     warning.ShowDialog();
-                    _clockLogic.MainWindow.OnClose();
-                    _clockLogic.MainWindow.EventStatusLabel.Content = "ERR";
+                    ClockLogic.GetInstance().MainWindow.OnClose();
+                    ClockLogic.GetInstance().MainWindow.EventStatusLabel.Content = "ERR";
                     return;
                 }
                 if (myEvent?.EventName == null || myEvent.EventType == null)
                 {
                     var warning = new WarningWindow("Oops, something went wrong with Event API!\nError code: \n[Can't read Event API link]");
                     warning.ShowDialog();
-                    _clockLogic.MainWindow.CanOpenTimer = false;
-                    _clockLogic.MainWindow.EventStatusLabel.Content = "ERR";
+                    ClockLogic.GetInstance().MainWindow.CanOpenTimer = false;
+                    ClockLogic.GetInstance().MainWindow.EventStatusLabel.Content = "ERR";
                     return;
                 }
-                _clockLogic.SetLabels(myEvent.EventName, ((EventType)int.Parse(myEvent.EventType)).ToString());
+                ClockLogic.GetInstance().SetLabels(myEvent.EventName, ((EventType)int.Parse(myEvent.EventType)).ToString());
             }
             else
             {
                 var warning = new WarningWindow($"Oops, something went wrong with Event API!\nError code: [{response.StatusCode}]");
                 warning.ShowDialog();
-                _clockLogic.MainWindow.OnClose();
-                _clockLogic.MainWindow.EventStatusLabel.Content = "ERR";
+                ClockLogic.GetInstance().MainWindow.OnClose();
+                ClockLogic.GetInstance().MainWindow.EventStatusLabel.Content = "ERR";
             }
         }
 
@@ -113,7 +138,7 @@ namespace Race_timer.API
         /// </summary>
         private async void ReadCountLink()
         {
-            if (!_clockLogic.IsTimerMinimized())
+            if (!ClockLogic.GetInstance().IsTimerMinimized())
             {
                 HttpResponseMessage response;
                 try
@@ -125,7 +150,7 @@ namespace Race_timer.API
                     _timer.Stop();
                     var warning = new WarningWindow($"Oops, something went wrong with count API!\nError code: \n[{e.Message}]");
                     warning.ShowDialog();
-                    _clockLogic.MainWindow.CountStatusLabel.Content = "ERR";
+                    ClockLogic.GetInstance().MainWindow.CountStatusLabel.Content = "ERR";
                     return;
                 }
 
@@ -134,9 +159,9 @@ namespace Race_timer.API
                     var responseString = await response.Content.ReadAsStringAsync();
 
                     var asRacers = int.Parse(responseString);
-                    if (asRacers > 0 && !_clockLogic.IsTimerMinimized())
+                    if (asRacers > 0 && !ClockLogic.GetInstance().IsTimerMinimized())
                     {
-                        _clockLogic.AutoMinimizeTimer();
+                        ClockLogic.GetInstance().AutoMinimizeTimer();
                     }
                 }
                 else
@@ -144,7 +169,7 @@ namespace Race_timer.API
                     _timer.Stop();
                     var warning = new WarningWindow($"Oops, something went wrong with count API!\nError code: [{response.StatusCode}]");
                     warning.ShowDialog();
-                    _clockLogic.MainWindow.CountStatusLabel.Content = "ERR";
+                    ClockLogic.GetInstance().MainWindow.CountStatusLabel.Content = "ERR";
                 }
             }
             else
