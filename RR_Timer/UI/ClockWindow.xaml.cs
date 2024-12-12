@@ -4,13 +4,14 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Race_timer.ClockUserControl;
 using Race_timer.Logic;
+using Race_timer.Logic.Interfaces;
 
 namespace Race_timer.UI
 {
     /// <summary>
     /// Interaction logic for ClockWindow.xaml
     /// </summary>
-    public partial class ClockWindow
+    public partial class ClockWindow:IClockWindow
     {
         private bool _clockInPanel;
         public ContestTimer? Clock { get; set; }
@@ -95,7 +96,7 @@ namespace Race_timer.UI
         /// Sets the event name to label
         /// </summary>
         /// <param name="name">Event name to show</param>
-        public void SetEventName(string name)
+        private void SetEventName(string name)
         {
             EventNameLabel.Text = name;
         }
@@ -104,9 +105,19 @@ namespace Race_timer.UI
         /// Sets the event type to label
         /// </summary>
         /// <param name="type">Event type to show</param>
-        public void SetEventType(string type)
+        private void SetEventType(string type)
         {
             EventTypeLabel.Content = type;
+        }
+
+        public void TimerTickLogic()
+        {
+            
+        }
+
+        public void TimerClickLogic()
+        {
+            Clock?.TimerClickLogic();
         }
 
         /// <summary>
@@ -127,6 +138,12 @@ namespace Race_timer.UI
             {
                 ShowClockOrTimer(ref ((TimerRight)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerRight)TimerPanel.Children[0]).MainClockLabel);
             }
+        }
+
+        public void SetLabels(string name, string type)
+        {
+            SetEventName(name);
+            SetEventType(type);
         }
 
         /// <summary>
@@ -251,6 +268,12 @@ namespace Race_timer.UI
             {
                 ((TimerRight)TimerPanel.Children[0]).CodeImage.Source = image;
             }
+        }
+
+        public void SetChildren(UserControl alignment)
+        {
+            TimerPanel.Children.Clear();
+            TimerPanel.Children.Add(alignment);
         }
     }
     

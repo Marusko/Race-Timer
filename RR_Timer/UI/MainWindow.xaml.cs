@@ -221,6 +221,7 @@ namespace Race_timer.UI
             if (!OpenedTimer) return;
             if (_clockWindow == null) return;
             if (!MinimizedTimer) return;
+            MinimizedTimer = false;
             _clockWindow.Close();
             _clockWindow = new ClockWindow();
             ClockLogic.GetInstance().SelectedAlignment = null;
@@ -231,7 +232,6 @@ namespace Race_timer.UI
             ClockLogic.GetInstance().InfoWindow?.StopTimer();
             ClockLogic.GetInstance().InfoWindow?.Close();
             ClockLogic.GetInstance().InfoWindow = null;
-            MinimizedTimer = false;
             MinimizeButton.IsEnabled = true;
             WebReloadButton.IsEnabled = false;
             MaximizeButton.IsEnabled = false;
@@ -249,6 +249,7 @@ namespace Race_timer.UI
             if (!OpenedTimer) return;
             if (_clockWindow == null) return;
             if (MinimizedTimer) return;
+            MinimizedTimer = true;
             _clockWindow.Close();
             ClockLogic.GetInstance().CheckTimers(true);
             if (WebViewEnableCheckBox.IsChecked != null && (bool)WebViewEnableCheckBox.IsChecked 
@@ -264,7 +265,6 @@ namespace Race_timer.UI
             }
             ClockLogic.GetInstance().AfterCheckTimers();
             _clockWindow.Show();
-            MinimizedTimer = true;
             MinimizeButton.IsEnabled = false;
             if (_clockWindow?.GetType() == typeof(WebViewClockWindow))
             {

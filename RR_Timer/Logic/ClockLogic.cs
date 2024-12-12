@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Race_timer.API;
 using Race_timer.ClockUserControl;
+using Race_timer.Logic.Interfaces;
 using Race_timer.UI;
 
 namespace Race_timer.Logic
@@ -39,7 +40,7 @@ namespace Race_timer.Logic
         public MainWindow MainWindow { get; }
         public UserControl? SelectedAlignment { get; set; }
 
-        private Window? _clockWindow;
+        private IClockWindow? _clockWindow;
         private readonly ObservableCollection<string> _timerAlignmentNames = new();
         public string InfoText { get; set; } = "";
 
@@ -83,6 +84,11 @@ namespace Race_timer.Logic
                 throw new InvalidOperationException("ClockLogic is not initialized. Call Initialize() first.");
             }
             return _instance;
+        }
+
+        private void SetActiveObserver(IClockWindow w)
+        {
+            _clockWindow = w;
         }
 
         /// <summary>
@@ -163,19 +169,9 @@ namespace Race_timer.Logic
         public void AfterCheckTimers()
         {
             if (_clockWindow == null) return;
-            if (_clockWindow.GetType() == typeof(ClockWindow))
+            _clockWindow.OnTimerClick();
+            if (MainWindow.MinimizedTimer)
             {
-                ((ClockWindow)_clockWindow).OnTimerClick();
-            }
-            else if (_clockWindow.GetType() == typeof(MiniClockWindow))
-            {
-                ((MiniClockWindow)_clockWindow).OnTimerClick();
-                MiniCodeShow();
-                InfoPanelShow();
-            }
-            else if (_clockWindow.GetType() == typeof(WebViewClockWindow))
-            {
-                ((WebViewClockWindow)_clockWindow).OnTimerClick();
                 MiniCodeShow();
                 InfoPanelShow();
             }
@@ -240,14 +236,7 @@ namespace Race_timer.Logic
                     if (MiniActiveTimers.ContainsKey(StartTimes.Keys.ElementAt(i)))
                     {
                         MiniActiveTimers.Remove(StartTimes.Keys.ElementAt(i));
-                        if (_clockWindow?.GetType() == typeof(MiniClockWindow))
-                        {
-                            ((MiniClockWindow)_clockWindow).TimerTickLogic();
-                        }
-                        else if (_clockWindow?.GetType() == typeof(WebViewClockWindow))
-                        {
-                            ((WebViewClockWindow)_clockWindow).TimerTickLogic();
-                        }
+                        _clockWindow?.TimerTickLogic();
                     }
                 }
             }
@@ -258,16 +247,9 @@ namespace Race_timer.Logic
         /// </summary>
         private void ClickTimers()
         {
+            _clockWindow?.TimerClickLogic();
             if (MainWindow.MinimizedTimer)
             {
-                if (_clockWindow?.GetType() == typeof(MiniClockWindow))
-                {
-                    ((MiniClockWindow)_clockWindow).Clock?.TimerClickLogic();
-                }
-                else if (_clockWindow?.GetType() == typeof(WebViewClockWindow))
-                {
-                    ((WebViewClockWindow)_clockWindow).Clock?.TimerClickLogic();
-                }
                 foreach (var ct in MiniActiveTimers)
                 {
                     ct.Value.TimerClickLogic();
@@ -275,10 +257,6 @@ namespace Race_timer.Logic
             }
             else
             {
-                if (_clockWindow?.GetType() == typeof(ClockWindow))
-                {
-                    ((ClockWindow)_clockWindow).Clock?.TimerClickLogic();
-                }
                 foreach (var ct in ActiveTimers)
                 {
                     ct.Value.TimerClickLogic();
@@ -371,7 +349,7 @@ namespace Race_timer.Logic
         /// <param name="mainLink">Link for event name and type</param>
         /// <param name="countLink">Link for finished participants list</param>
         /// <param name="cw">To update or open clock window with API parameters</param>
-        public void SetClockWindow(string mainLink, string countLink, ClockWindow cw)
+        public void SetClockWindow(string mainLink, string countLink, IClockWindow cw)
         {
             if (!string.IsNullOrEmpty(mainLink))
             {
@@ -394,11 +372,10 @@ namespace Race_timer.Logic
                 MainWindow.OnClose();
             }
 
-            _clockWindow = cw;
-            if (SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
+            SetActiveObserver(cw);
+            if (SelectedAlignment != null && !MainWindow.MinimizedTimer)
             {
-                ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
-                ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
+                _clockWindow?.SetChildren(SelectedAlignment);
                 if (SelectedAlignment.GetType() == typeof(TimerTop))
                 {
                     ((TimerTop)SelectedAlignment).SetTopMargin(EventName?.Length ?? 0);
@@ -406,22 +383,11 @@ namespace Race_timer.Logic
             }
             if (LogoImage != null)
             {
-                if (_clockWindow.GetType() == typeof(ClockWindow))
-                {
-                    ((ClockWindow)_clockWindow).SetImage(LogoImage);
-                }
-                else if (_clockWindow.GetType() == typeof(MiniClockWindow))
-                {
-                    ((MiniClockWindow)_clockWindow).SetImage(LogoImage);
-                }
-                else if (_clockWindow.GetType() == typeof(WebViewClockWindow))
-                {
-                    ((WebViewClockWindow)_clockWindow).SetImage(LogoImage);
-                }
+                _clockWindow?.SetImage(LogoImage);
             }
-            if (CodeImage != null && SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
+            if (CodeImage != null && SelectedAlignment != null && !MainWindow.MinimizedTimer)
             {
-                ((ClockWindow)_clockWindow).SetCodeImage(CodeImage);
+                _clockWindow?.SetCodeImage(CodeImage);
             }
         }
 
@@ -430,32 +396,20 @@ namespace Race_timer.Logic
         /// sets alignment, and both images
         /// </summary>
         /// <param name="cw">To update _clockWindow</param>
-        public void SetClockWindow(Window cw)
+        public void SetClockWindow(IClockWindow cw)
         {
-            _clockWindow = cw;
-            if (SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
+            SetActiveObserver(cw);
+            if (SelectedAlignment != null && !MainWindow.MinimizedTimer)
             {
-                ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
-                ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
+                _clockWindow?.SetChildren(SelectedAlignment);
             }
             if (LogoImage != null)
             {
-                if (_clockWindow.GetType() == typeof(ClockWindow))
-                {
-                    ((ClockWindow)_clockWindow).SetImage(LogoImage);
-                }
-                else if (_clockWindow.GetType() == typeof(MiniClockWindow))
-                {
-                    ((MiniClockWindow)_clockWindow).SetImage(LogoImage);
-                }
-                else if (_clockWindow.GetType() == typeof(WebViewClockWindow))
-                {
-                    ((WebViewClockWindow)_clockWindow).SetImage(LogoImage);
-                }
+                _clockWindow?.SetImage(LogoImage);
             }
-            if (CodeImage != null && SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
+            if (CodeImage != null && SelectedAlignment != null && !MainWindow.MinimizedTimer)
             {
-                ((ClockWindow)_clockWindow).SetCodeImage(CodeImage);
+                _clockWindow?.SetCodeImage(CodeImage);
             }
             if (EventName == null) return;
             if (EventType != null)
@@ -468,32 +422,20 @@ namespace Race_timer.Logic
         /// <param name="cw">To open or update clock window</param>
         /// <param name="name">Name of the event</param>
         /// <param name="type">Type of event</param>
-        public void SetClockWindow(Window cw, string name, string type)
+        public void SetClockWindow(IClockWindow cw, string name, string type)
         {
-            _clockWindow = cw;
-            if (SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
+            SetActiveObserver(cw);
+            if (SelectedAlignment != null && !MainWindow.MinimizedTimer)
             {
-                ((ClockWindow)_clockWindow).TimerPanel.Children.Clear();
-                ((ClockWindow)_clockWindow).TimerPanel.Children.Add(SelectedAlignment);
+                _clockWindow?.SetChildren(SelectedAlignment);
             }
             if (LogoImage != null)
             {
-                if (_clockWindow.GetType() == typeof(ClockWindow))
-                {
-                    ((ClockWindow)_clockWindow).SetImage(LogoImage);
-                }
-                else if (_clockWindow.GetType() == typeof(MiniClockWindow))
-                {
-                    ((MiniClockWindow)_clockWindow).SetImage(LogoImage);
-                }
-                else if (_clockWindow.GetType() == typeof(WebViewClockWindow))
-                {
-                    ((WebViewClockWindow)_clockWindow).SetImage(LogoImage);
-                }
+                _clockWindow?.SetImage(LogoImage);
             }
-            if (CodeImage != null && SelectedAlignment != null && _clockWindow.GetType() == typeof(ClockWindow))
+            if (CodeImage != null && SelectedAlignment != null && !MainWindow.MinimizedTimer)
             {
-                ((ClockWindow)_clockWindow).SetCodeImage(CodeImage);
+                _clockWindow?.SetCodeImage(CodeImage);
             }
             SetLabels(name, type);
         }
@@ -508,22 +450,13 @@ namespace Race_timer.Logic
             EventName = name;
             EventType = type;
 
-            if (_clockWindow != null && _clockWindow.GetType() == typeof(ClockWindow))
+            _clockWindow?.SetLabels(name, type);
+            if (_clockWindow != null && !MainWindow.MinimizedTimer)
             {
-                ((ClockWindow)_clockWindow).SetEventName(name);
-                ((ClockWindow)_clockWindow).SetEventType(type);
                 if (SelectedAlignment?.GetType() == typeof(TimerTop))
                 {
                     ((TimerTop)SelectedAlignment).SetTopMargin(EventName?.Length ?? 0);
                 }
-            }
-            else if (_clockWindow != null && _clockWindow.GetType() == typeof(MiniClockWindow))
-            {
-                ((MiniClockWindow)_clockWindow).SetEventName(name);
-            }
-            else if (_clockWindow != null && _clockWindow.GetType() == typeof(WebViewClockWindow))
-            {
-                ((WebViewClockWindow)_clockWindow).SetEventName(name);
             }
         }
 

@@ -5,13 +5,14 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Race_timer.ClockUserControl;
 using Race_timer.Logic;
+using Race_timer.Logic.Interfaces;
 
 namespace Race_timer.UI
 {
     /// <summary>
     /// Interaction logic for WebViewClockWindow.xaml
     /// </summary>
-    public partial class WebViewClockWindow
+    public partial class WebViewClockWindow:IClockWindow
     {
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private int _showTimerIndex;
@@ -51,7 +52,7 @@ namespace Race_timer.UI
         /// Sets the label to correct name
         /// </summary>
         /// <param name="name">Event name to show</param>
-        public void SetEventName(string name)
+        private void SetEventName(string name)
         {
             EventNameMini.Text = name;
         }
@@ -93,6 +94,11 @@ namespace Race_timer.UI
             }
         }
 
+        public void TimerClickLogic()
+        {
+            Clock?.TimerClickLogic();
+        }
+
         /// <summary>
         /// Method to update timer label with correct time
         /// Method called by ClockLogic timer
@@ -100,6 +106,11 @@ namespace Race_timer.UI
         public void OnTimerClick()
         {
             ShowMiniClockOrTimer(ref TimerStackPanel);
+        }
+
+        public void SetLabels(string name, string type)
+        {
+            SetEventName(name);
         }
 
         /// <summary>
@@ -175,6 +186,16 @@ namespace Race_timer.UI
         public void SetImage(BitmapImage image)
         {
             TimerImage.Source = image;
+        }
+
+        public void SetCodeImage(BitmapSource image)
+        {
+            
+        }
+
+        public void SetChildren(UserControl alignment)
+        {
+            
         }
     }
 }
