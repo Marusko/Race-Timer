@@ -1,29 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
-
-  <ItemGroup>	  <None Remove="UI\onlyRmini.png" />
+  <ItemGroup>
+    <None Remove="UI\onlyRmini.png" />
   </ItemGroup>
-
-	<ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2739.15" />
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3179.45" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="QRCoder" Version="1.6.0" />
   </ItemGroup>
-
-	<ItemGroup>		<Resource Include="UI\onlyRmini.png" />
-	</ItemGroup>
-	<PropertyGroup>
-		<TargetFramework>net7.0-windows</TargetFramework>
-		<UseWindowsForms>true</UseWindowsForms>
-		<ApplicationIcon>onlyRmini.ico</ApplicationIcon>
-		<ApplicationManifest>app.manifest</ApplicationManifest>
-	</PropertyGroup>
-
+  <ItemGroup>
+    <Resource Include="UI\onlyRmini.png" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>onlyRmini.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
 </Project>
