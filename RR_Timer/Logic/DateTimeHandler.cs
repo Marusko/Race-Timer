@@ -2,6 +2,8 @@
 using Race_timer.UI;
 using System;
 using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace Race_timer.Logic
 {
@@ -13,6 +15,8 @@ namespace Race_timer.Logic
         private readonly Thread _syncThread;
         private bool _running = true;
         private readonly object _lock = new();
+        private bool _synchronized = false;
+        private MainWindow _mainWindow;
 
         public DateTime Now
         {
@@ -25,13 +29,28 @@ namespace Race_timer.Logic
             }
         }
 
-        public static DateTimeHandler GetInstance()
+        public static DateTimeHandler Initialize(MainWindow mw)
         {
-            return _instance ??= new DateTimeHandler();
+            if (_instance == null)
+            {
+                _instance = new DateTimeHandler(mw);
+            }
+
+            return _instance;
         }
 
-        private DateTimeHandler()
+        public static DateTimeHandler GetInstance()
         {
+            if (_instance == null)
+            {
+                throw new InvalidOperationException("DateTimeHandler is not initialized. Call Initialize() first.");
+            }
+            return _instance;
+        }
+
+        private DateTimeHandler(MainWindow mw)
+        {
+            _mainWindow = mw;
             _client = NtpClient.Default;
             _syncThread = new Thread(SyncLoop)
             {
@@ -44,6 +63,10 @@ namespace Race_timer.Logic
         {
             while (_running)
             {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    _mainWindow.NtpStatusLabel.Content = "Syncing NTP";
+                });
                 try
                 {
                     var clock = QueryWithBackoff();
@@ -53,11 +76,19 @@ namespace Race_timer.Logic
                     }
                     var localNow = DateTime.UtcNow;
                     var difference = (clock.UtcNow - localNow).TotalMilliseconds;
+                    Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        _mainWindow.NtpStatusLabel.Content = "NTP success";
+                    });
                 }
                 catch (Exception ex)
                 {
                     var warning = new WarningWindow($"Cannot synchronize time with NTP server!\nError: \n[{ex.Message}]");
                     warning.Show();
+                    Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        _mainWindow.NtpStatusLabel.Content = "NTP fail";
+                    });
                 }
 
                 Thread.Sleep(TimeSpan.FromMinutes(1));
@@ -71,7 +102,8 @@ namespace Race_timer.Logic
             {
                 try
                 {
-                    return _client.Query();
+                    var q = _client.Query();
+                    return q;
                 }
                 catch
                 {

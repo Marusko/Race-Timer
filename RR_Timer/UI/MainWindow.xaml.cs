@@ -46,6 +46,7 @@ namespace Race_timer.UI
             InitializeComponent();
             ScreenHandler.Initialize(this);
             ClockLogic.Initialize(this);
+            DateTimeHandler.Initialize(this);
 
             EventTypeComboBox.ItemsSource = Enum.GetValues(typeof(EventType));
 

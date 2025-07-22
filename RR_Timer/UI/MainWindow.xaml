@@ -10,7 +10,7 @@
         Style="{StaticResource MaterialDesignWindow}"
         WindowStartupLocation="CenterScreen" 
         Icon="/UI/onlyRmini.png" ResizeMode="CanMinimize">
-    <DockPanel>
+    <Grid>
         <TabControl x:Name="TabControl" TabStripPlacement="Left">
             <TabItem x:Name="TimerTab" Header="Finish timer" ToolTip="Timer setup">
                 <Grid>
@@ -315,5 +315,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-    </DockPanel>
+        <Label x:Name="NtpStatusLabel" Content="No sync" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25,5,5,5" FontSize="12"/>
+    </Grid>
 </Window>
