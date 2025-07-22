@@ -62,7 +62,7 @@ namespace Race_timer.ClockUserControl
         private string FormatStartTimeOrClock()
         {
             var now = DateTimeHandler.GetInstance().Now;
-            TimeSpan time = TimeSpan.FromSeconds(!_isClock ? now.Subtract(StartTime).TotalSeconds : now.TimeOfDay.TotalSeconds);
+            TimeSpan time = TimeSpan.FromMilliseconds(!_isClock ? now.Subtract(StartTime).TotalMilliseconds : now.TimeOfDay.TotalMilliseconds);
             var timeString = time.ToString(@"hh\:mm\:ss");
             return timeString;
         }
