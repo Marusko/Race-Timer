@@ -228,7 +228,7 @@ namespace Race_timer.UI
         /// <returns>Formatted time to show as clock</returns>
         private string FormatTime()
         {
-            var now = DateTime.Now;
+            var now = DateTimeHandler.GetInstance().Now;
             TimeSpan time = TimeSpan.FromSeconds(now.TimeOfDay.TotalSeconds);
             var timeString = time.ToString(@"hh\:mm\:ss");
             return timeString;

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System;
+using Race_timer.Logic;
 
 namespace Race_timer.ClockUserControl
 {
@@ -60,7 +61,7 @@ namespace Race_timer.ClockUserControl
         /// <returns>Formatted time to show as timer or clock</returns>
         private string FormatStartTimeOrClock()
         {
-            var now = DateTime.Now;
+            var now = DateTimeHandler.GetInstance().Now;
             TimeSpan time = TimeSpan.FromSeconds(!_isClock ? now.Subtract(StartTime).TotalSeconds : now.TimeOfDay.TotalSeconds);
             var timeString = time.ToString(@"hh\:mm\:ss");
             return timeString;

@@ -188,7 +188,7 @@ namespace Race_timer.Logic
         {
             for (int i = 0;i < StartTimes.Count; i++)
             {
-                if (StartTimes.Values.ElementAt(i) < DateTime.Now)
+                if (StartTimes.Values.ElementAt(i) < DateTimeHandler.GetInstance().Now)
                 {
                     if (ScreenHandler.GetInstance().SelectedScreen == null) return;
 
@@ -274,8 +274,8 @@ namespace Race_timer.Logic
             {
                 CodeWindowForMinimized = new CodeWindowForMinimized();
                 CodeWindowForMinimized.SetImage(CodeImage);
-                _hideCodeTime = DateTime.Now;
-                _showTime = DateTime.Now;
+                _hideCodeTime = DateTimeHandler.GetInstance().Now;
+                _showTime = DateTimeHandler.GetInstance().Now;
                 CodeWindowForMinimized.Visibility = Visibility.Hidden;
             }
             else
@@ -285,19 +285,19 @@ namespace Race_timer.Logic
                     if (CodeWindowForMinimized.Visibility == Visibility.Hidden)
                     {
                         CodeWindowForMinimized.Show();
-                        _showCodeTime = DateTime.Now;
+                        _showCodeTime = DateTimeHandler.GetInstance().Now;
                     }
-                    _showCodeTime = _showCodeTime.Add(DateTime.Now - _showCodeTime);
+                    _showCodeTime = _showCodeTime.Add(DateTimeHandler.GetInstance().Now - _showCodeTime);
                     if (_showCodeTime < _showTime.AddMinutes(MainWindow.GetCodeForMiniTimes().Item1 +
                                                              MainWindow.GetCodeForMiniTimes().Item2)) return;
                     CodeWindowForMinimized.Hide();
-                    _hideCodeTime = DateTime.Now;
-                    _showCodeTime = DateTime.Now;
-                    _showTime = DateTime.Now;
+                    _hideCodeTime = DateTimeHandler.GetInstance().Now;
+                    _showCodeTime = DateTimeHandler.GetInstance().Now;
+                    _showTime = DateTimeHandler.GetInstance().Now;
                 }
                 else
                 {
-                    _hideCodeTime = _hideCodeTime.Add(DateTime.Now - _hideCodeTime);
+                    _hideCodeTime = _hideCodeTime.Add(DateTimeHandler.GetInstance().Now - _hideCodeTime);
                 }
             }
         }
@@ -309,8 +309,8 @@ namespace Race_timer.Logic
             {
                 InfoWindow = new InfoWindow();
                 InfoWindow.SetLabel(InfoText);
-                _hideInfoTime = DateTime.Now;
-                _showTimeInfo = DateTime.Now;
+                _hideInfoTime = DateTimeHandler.GetInstance().Now;
+                _showTimeInfo = DateTimeHandler.GetInstance().Now;
                 InfoWindow.Visibility = Visibility.Hidden;
             }
             else
@@ -322,22 +322,22 @@ namespace Race_timer.Logic
                         InfoWindow.SetLabel(InfoText);
                         InfoWindow.Show();
                         InfoWindow.StartTimer();
-                        _showInfoTime = DateTime.Now;
+                        _showInfoTime = DateTimeHandler.GetInstance().Now;
                     }
-                    _showInfoTime = _showInfoTime.Add(DateTime.Now - _showInfoTime);
+                    _showInfoTime = _showInfoTime.Add(DateTimeHandler.GetInstance().Now - _showInfoTime);
                     if ((_showInfoTime < _showTimeInfo.AddSeconds(InfoPanelMinShowSec + InfoPanelHide * 60) 
                         && InfoWindow.Laps == 0 && !InfoWindow.IsScrolling()) 
                         || (InfoWindow.IsScrolling() && InfoWindow.Laps < 2)) return;
                     InfoWindow.Hide();
                     InfoWindow.Laps = 0;
                     InfoWindow.StopTimer();
-                    _hideInfoTime = DateTime.Now;
-                    _showInfoTime = DateTime.Now;
-                    _showTimeInfo = DateTime.Now;
+                    _hideInfoTime = DateTimeHandler.GetInstance().Now;
+                    _showInfoTime = DateTimeHandler.GetInstance().Now;
+                    _showTimeInfo = DateTimeHandler.GetInstance().Now;
                 }
                 else
                 {
-                    _hideInfoTime = _hideInfoTime.Add(DateTime.Now - _hideInfoTime);
+                    _hideInfoTime = _hideInfoTime.Add(DateTimeHandler.GetInstance().Now - _hideInfoTime);
                 }
             }
         }
@@ -467,14 +467,14 @@ namespace Race_timer.Logic
         /// <returns>Date time with values from string</returns>
         public DateTime StringToDateTime(string s)
         {
-            DateTime returnDateTime = DateTime.Now;
+            DateTime returnDateTime = DateTimeHandler.GetInstance().Now;
             var split = s.Split(':');
 
             if (split.Length > 2)
             {
                 try
                 {
-                    var date = DateTime.Now;
+                    var date = DateTimeHandler.GetInstance().Now;
                     var hour = int.Parse(split[0]);
                     var minute = int.Parse(split[1]);
                     var second = int.Parse(split[2]);
