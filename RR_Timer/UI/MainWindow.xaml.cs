@@ -189,6 +189,7 @@ namespace Race_timer.UI
             CodeTab.IsEnabled = false;
             ContestsTab.IsEnabled = false;
             ResultTab.IsEnabled = false;
+            ResultCodeTab.IsEnabled = false;
             TabControl.SelectedItem = ControlTab;
         }
 
@@ -311,6 +312,7 @@ namespace Race_timer.UI
             CodeTab.IsEnabled = true;
             ContestsTab.IsEnabled = true;
             ResultTab.IsEnabled = true;
+            ResultCodeTab.IsEnabled = true;
             TabControl.SelectedItem = _openedLinkTimer ? LinkTimerTab : TimerTab;
             MinimizeButton.IsEnabled = true;
             WebReloadButton.IsEnabled = false;
