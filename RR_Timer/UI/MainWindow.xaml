@@ -12,7 +12,7 @@
         Icon="/UI/onlyRmini.png" ResizeMode="CanMinimize">
     <DockPanel>
         <TabControl x:Name="TabControl" TabStripPlacement="Left">
-            <TabItem x:Name="TimerTab" Header="Timer" ToolTip="Timer setup">
+            <TabItem x:Name="TimerTab" Header="Finish timer" ToolTip="Timer setup">
                 <Grid>
                     <TextBox x:Name="EventNameText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" HorizontalScrollBarVisibility="Auto" InputScope="RegularExpression" HorizontalContentAlignment="Center" ToolTip="Event Name" FontSize="16"/>
                     <Button Content="Open Timer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTimer" Margin="0,320,0,0" FontSize="16" ToolTip="Start the timer"/>
@@ -24,7 +24,7 @@
                     <Label x:Name="ImageName" Content="" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Top" FontSize="16"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="LinkTimerTab" Header="API Timer" ToolTip="API timer setup">
+            <TabItem x:Name="LinkTimerTab" Header="Finish API Timer" ToolTip="API timer setup">
                 <TabControl>
                     <TabItem Header="API Timer" ToolTip="API timer setup">
                         <Grid>
@@ -180,41 +180,45 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="ResultTab" Header="Results" ToolTip="Enable and setup WebView">
-                <Grid VerticalAlignment="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <CheckBox x:Name="WebViewEnableCheckBox" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -60 0 0" ToolTip="Enable WebView">Enable WebView</CheckBox>
-                        <Label Content="Link to web page with result" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="16"/>
-                        <TextBox x:Name="ResultLinkText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" 
+            <TabItem x:Name="ResultCodeTab" Header="Displaying" ToolTip="Setup results, info panel and QR code">
+                <TabControl>
+                    <TabItem x:Name="ResultTab" Header="Results" ToolTip="Enable and setup WebView">
+                        <Grid VerticalAlignment="Top" Margin="0,20,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <CheckBox x:Name="WebViewEnableCheckBox" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -60 0 0" ToolTip="Enable WebView">Enable WebView</CheckBox>
+                                <Label Content="Link to web page with result" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="16"/>
+                                <TextBox x:Name="ResultLinkText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" 
                                  VerticalAlignment="Center" Width="601" HorizontalContentAlignment="Center" InputScope="Url" FontSize="16" ToolTip="Link to result page"
                                  IsEnabled="{Binding IsChecked, ElementName=WebViewEnableCheckBox}"/>
-                    </Grid>
-                    <Grid Grid.Row="1" Margin="0 10 0 0">
-                        <CheckBox x:Name="InfoEnableCheckBox" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -60 0 0" ToolTip="Enable Info panel">Enable info panel</CheckBox>
-                        <Label Content="Information to show - separate with ';'" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="16"/>
-                        <TextBox x:Name="InfoText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" 
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="0 10 0 0">
+                                <CheckBox x:Name="InfoEnableCheckBox" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -60 0 0" ToolTip="Enable Info panel">Enable info panel</CheckBox>
+                                <Label Content="Information to show - separate with ';'" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="16"/>
+                                <TextBox x:Name="InfoText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" 
                                  VerticalAlignment="Center" Width="601" HorizontalContentAlignment="Center" FontSize="16" ToolTip="Information to show on info panel"
                                  Text="Tieto, ale aj ďalšie výsledky a súťaže nájdete na stránke casomierapt.com"
                                  IsEnabled="{Binding IsChecked, ElementName=InfoEnableCheckBox}"/>
-                    </Grid>
-                </Grid>
-            </TabItem>
-            <TabItem x:Name="CodeTab" Header="QR code" ToolTip="Generate or set QR image">
-                <Grid>
-                    <Label Content="Generate QR code" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" FontSize="16"/>
-                    <TextBox x:Name="CodeLinkText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" HorizontalContentAlignment="Center" InputScope="Url" FontSize="16" ToolTip="Link to convert"/>
-                    <Button Content="Generate QR" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Top" Click="GenerateCode" ToolTip="Run the generator and set the generated QR code"/>
-                    <Label Content="Select QR code" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" FontSize="16"/>
-                    <Label x:Name="CodeName" Content="" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" FontSize="16"/>
-                    <Button Content="Select QR" HorizontalAlignment="Center" Margin="0,230,100,0" VerticalAlignment="Top" Click="OpenCode" ToolTip="Select QR code/image from PC"/>
-                    <Button x:Name="DeleteCodeButton" Content="Delete QR" HorizontalAlignment="Center" Margin="100,230,0,0" VerticalAlignment="Top" Click="DeleteCode" IsEnabled="False" ToolTip="Clear the QR code/image"/>
-                    <CheckBox x:Name="CodeCheckBoxForMinimized" Content="Show QR code when minimized" HorizontalAlignment="Center" Margin="0,288,0,0" VerticalAlignment="Top" FontSize="16" Height="31" Width="265" IsEnabled="{Binding IsEnabled, ElementName=DeleteCodeButton}" ToolTip="If enabled, QR code will be shown in periods when timer is small"/>
-                    <clockUserControl:CodeOnMinimized x:Name="MinimizedCodeTimes" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,320,0,0" IsEnabled="{Binding IsChecked, ElementName=CodeCheckBoxForMinimized}" ToolTip="Sets the intervals"/>
-                </Grid>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="CodeTab" Header="QR code" ToolTip="Generate or set QR image">
+                        <Grid VerticalAlignment="Top" Margin="0,-20,0,0">
+                            <Label Content="Generate QR code" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" FontSize="16"/>
+                            <TextBox x:Name="CodeLinkText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" HorizontalContentAlignment="Center" InputScope="Url" FontSize="16" ToolTip="Link to convert"/>
+                            <Button Content="Generate QR" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Top" Click="GenerateCode" ToolTip="Run the generator and set the generated QR code"/>
+                            <Label Content="Select QR code" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" FontSize="16"/>
+                            <Label x:Name="CodeName" Content="" HorizontalAlignment="Center" Margin="0,160,0,0" VerticalAlignment="Top" FontSize="16"/>
+                            <Button Content="Select QR" HorizontalAlignment="Center" Margin="0,230,100,0" VerticalAlignment="Top" Click="OpenCode" ToolTip="Select QR code/image from PC"/>
+                            <Button x:Name="DeleteCodeButton" Content="Delete QR" HorizontalAlignment="Center" Margin="100,230,0,0" VerticalAlignment="Top" Click="DeleteCode" IsEnabled="False" ToolTip="Clear the QR code/image"/>
+                            <CheckBox x:Name="CodeCheckBoxForMinimized" Content="Show QR code when minimized" HorizontalAlignment="Center" Margin="0,288,0,0" VerticalAlignment="Top" FontSize="16" Height="31" Width="265" IsEnabled="{Binding IsEnabled, ElementName=DeleteCodeButton}" ToolTip="If enabled, QR code will be shown in periods when timer is small"/>
+                            <clockUserControl:CodeOnMinimized x:Name="MinimizedCodeTimes" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,320,0,0" IsEnabled="{Binding IsChecked, ElementName=CodeCheckBoxForMinimized}" ToolTip="Sets the intervals"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
             </TabItem>
             <TabItem x:Name="ControlTab" Header="Timer control" ToolTip="Control size or close the timer">
                 <Grid Margin="0 20 0 0">
