@@ -582,6 +582,10 @@ namespace Race_timer.UI
                 var startTime = (MainWindowStartTimes)i;
                 try
                 {
+                    if (startTime.StartNameText.Text.Length > 26)
+                    {
+                        throw new Exception("Contest name cannot be longer than 26 characters!");
+                    }
                     StartTimes.Add(startTime.StartNameText.Text, startTime.StartTimeText.Text);
                 }
                 catch (Exception e)
@@ -590,6 +594,7 @@ namespace Race_timer.UI
                     v.ShowDialog();
                     CanOpenTimer = false;
                     OnClose();
+                    break;
                 }
                 
             }
