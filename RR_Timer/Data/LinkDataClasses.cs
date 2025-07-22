@@ -3,7 +3,12 @@
     public record Event
     {
         public string? EventName { get; set; }
-        public string? EventType { get; set; }
+        public EventType? EventType { get; set; }
+
+        public string GetFormatedType()
+        {
+            return EventType.GetValueOrDefault().GetDisplayName();
+        }
     }
 
     public record Racer

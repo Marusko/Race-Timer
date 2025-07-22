@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
@@ -48,7 +49,11 @@ namespace Race_timer.UI
             ClockLogic.Initialize(this);
             DateTimeHandler.Initialize(this);
 
-            EventTypeComboBox.ItemsSource = Enum.GetValues(typeof(EventType));
+            EventTypeComboBox.ItemsSource = Enum.GetValues<EventType>()
+                .Select(e => new { Value = e, Text = e.GetDisplayName() })
+                .ToList();
+            EventTypeComboBox.DisplayMemberPath = "Text";
+            EventTypeComboBox.SelectedValuePath = "Value";
 
             ScreenComboBox.ItemsSource = ScreenHandler.GetInstance().GetScreenNames();
             ScreenComboBox.SelectionChanged += SelectScreen;

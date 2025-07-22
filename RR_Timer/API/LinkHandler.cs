@@ -133,7 +133,7 @@ namespace Race_timer.API
                     ClockLogic.GetInstance().MainWindow.EventStatusLabel.Content = "ERR";
                     return;
                 }
-                ClockLogic.GetInstance().SetLabels(myEvent.EventName, ((EventType)int.Parse(myEvent.EventType)).ToString());
+                ClockLogic.GetInstance().SetLabels(myEvent.EventName, myEvent.GetFormatedType());
             }
             else
             {
