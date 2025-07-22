@@ -27,6 +27,7 @@ namespace Race_timer.Logic
         private const int InfoPanelMinShowSec = 30;
 
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
+        private DateTime? _lastNtp;
 
         public Dictionary<string, DateTime> StartTimes { get; }
         public Dictionary<string, ContestTimer> ActiveTimers { get; }
@@ -121,7 +122,7 @@ namespace Race_timer.Logic
         {
             ClockTickLogic();
             _timer.Tick += ClockTick;
-            _timer.Interval = new TimeSpan(0, 0, 1);
+            _timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             _timer.Start();
         }
 
@@ -158,6 +159,15 @@ namespace Race_timer.Logic
         /// <param name="isSmall">If timer is small</param>
         public void ClockTickLogic(bool isSmall = false)
         {
+            var now = DateTimeHandler.GetInstance().Now;
+            if (_lastNtp != null)
+            {
+                if (_lastNtp.Value.Second == now.Second)
+                {
+                    return;
+                }
+            }
+            _lastNtp = now;
             CheckTimers(isSmall);
             ClickTimers();
             AfterCheckTimers();
@@ -181,7 +191,7 @@ namespace Race_timer.Logic
         /// Checks if som of the timers are started, if yes then it checks if clock window is small or fullscreen,
         /// and fills the corresponding Dictionary with started timers
         /// If timer has new start time greater than current time, remove it
-        /// Is called every second
+        /// Is called every third of the second
         /// </summary>
         /// <param name="isSmall">Manually set filling to MiniActiveTimers</param>
         public void CheckTimers(bool isSmall = false)
