@@ -17,7 +17,7 @@ namespace Race_timer.ClockUserControl
         private int _currentDelay;
 
         private const int ScrollDelay = 500;
-        private const int ScrollTimes = 1000;
+        private const int ScrollTimes = 1;
         private const int TimerMillis = 10;
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Race_timer.ClockUserControl
         /// <param name="e"></param>
         private void TimerTick(object? sender, EventArgs e)
         {
-            if (TimerStackPanel.Children.Count > 3)
+            if (TimerStackPanel.ActualWidth > _screenWidth)
             {
                 if (_currentDelay != ScrollDelay && (_stateOfScroll == ClockLogic.ScrollBegin || _stateOfScroll == ClockLogic.ScrollEnd))
                 {
@@ -102,7 +102,7 @@ namespace Race_timer.ClockUserControl
                         else
                         {
                             _currentTime++;
-                            TimerScrollViewer.ScrollToHorizontalOffset(_currentTime * (TimerScrollViewer.ScrollableWidth/(ScrollTimes * Math.Abs(TimerStackPanel.Children.Count - 3))));
+                            TimerScrollViewer.ScrollToHorizontalOffset(_currentTime * ScrollTimes);
                             TimerScrollViewer.UpdateLayout();
                         }
                     }
