@@ -310,6 +310,11 @@
                             <Run Text="QR code generator"/>
                         </Hyperlink>
                     </Label>
+                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,170,0,0">
+                        <Hyperlink Click="OpenNptPage" Foreground="#FF30E433">
+                            <Run Text="NTP library"/>
+                        </Hyperlink>
+                    </Label>
                     <Label Content="Used external content:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"/>
                     <Label Content="More on:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,30"/>
                 </Grid>

@@ -756,5 +756,16 @@ namespace Race_timer.UI
             const string url = "https://github.com/codebude/QRCoder";
             Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
         }
+
+        /// <summary>
+        /// Method called by NTP library hyperlink, opens NTP library page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenNptPage(object sender, RoutedEventArgs e)
+        {
+            const string url = "https://guerrillantp.machinezoo.com/";
+            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+        }
     }
 }
