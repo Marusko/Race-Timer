@@ -26,9 +26,10 @@
                             <CheckBox Grid.Row="1" x:Name="ApiStartsCheckbox" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 20 0 0" ToolTip="Use starts list from API">Use list from API</CheckBox>
                             <Label Grid.Row="2" Content="Or upload CSV file" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Center" FontSize="16"/>
                             <Grid Grid.Row="3" Margin="0 20 0 0">
+                                <Label x:Name="StartsFileName" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
                                 <Button Content="Select file" HorizontalAlignment="Center" Margin="0,30,100,0" VerticalAlignment="Top" ToolTip="Select CSV file from PC"/>
                                 <Button x:Name="DeleteStartsFileButton" Content="Delete file" HorizontalAlignment="Center" Margin="100,30,0,0" VerticalAlignment="Top" IsEnabled="False" ToolTip="Clear starts file"/>
-                                <Label x:Name="StartsFileName" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                                <Button Content="Open Timer" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" FontSize="16" ToolTip="Start the timer"/>
                             </Grid>
                         </Grid>
                     </TabItem>
