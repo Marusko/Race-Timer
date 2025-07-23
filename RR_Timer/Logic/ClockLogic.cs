@@ -65,7 +65,7 @@ namespace Race_timer.Logic
             MiniActiveTimers = new Dictionary<string, MiniContestTimer>();
             SetAlignmentList();
             if (ScreenHandler.GetInstance().SelectedScreen != null)
-                SelectedAlignment = new TimerTop(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width);
+                SelectedAlignment = new TimerTop(ScreenHandler.GetInstance().GetSelectedScreenArea().Width);
         }
 
         public static ClockLogic Initialize(MainWindow mw)
@@ -213,7 +213,7 @@ namespace Race_timer.Logic
                         {
                             continue;
                         }
-                        ActiveTimers.Add(StartTimes.Keys.ElementAt(i), new ContestTimer(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width, false,
+                        ActiveTimers.Add(StartTimes.Keys.ElementAt(i), new ContestTimer(ScreenHandler.GetInstance().GetSelectedScreenArea().Width, false,
                             EventName?.Length ?? 0)
                         {
                             Name = StartTimes.Keys.ElementAt(i),
@@ -230,7 +230,7 @@ namespace Race_timer.Logic
                         {
                             continue;
                         }
-                        MiniActiveTimers.Add(StartTimes.Keys.ElementAt(i), new MiniContestTimer(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width, false)
+                        MiniActiveTimers.Add(StartTimes.Keys.ElementAt(i), new MiniContestTimer(ScreenHandler.GetInstance().GetSelectedScreenArea().Width, false)
                         {
                             Name = StartTimes.Keys.ElementAt(i),
                             StartTime = StartTimes.Values.ElementAt(i)

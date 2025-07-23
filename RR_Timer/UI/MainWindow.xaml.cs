@@ -143,6 +143,7 @@ namespace Race_timer.UI
         private void OpenTimerStart()
         {
             SaveStartTimesToDictionary();
+            ScreenHandler.GetInstance().CheckScreenArea();
             ContestComboBox.IsEnabled = true;
             NewStartTime.IsEnabled = true;
             NewStartButton.IsEnabled = true;
@@ -353,11 +354,11 @@ namespace Race_timer.UI
         {
             try
             {
-                ScreenHandler.GetInstance().SelectedScreen = ScreenHandler.GetInstance().GetScreens()[ScreenComboBox.SelectedIndex];
+                ScreenHandler.GetInstance().SetSelectedScreen(ScreenComboBox.SelectedIndex);
             }
             catch (Exception)
             {
-                ScreenHandler.GetInstance().SelectedScreen = ScreenHandler.GetInstance().GetScreens()[0];
+                ScreenHandler.GetInstance().SetSelectedScreen(0);
                 ScreenComboBox.SelectedIndex = 0;
             }
         }
@@ -381,9 +382,9 @@ namespace Race_timer.UI
             {
                     ClockLogic.GetInstance().SelectedAlignment = AlignmentComboBox.SelectedIndex switch
                     {
-                        0 => new TimerTop(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width),
-                        1 => new TimerLeft(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width),
-                        2 => new TimerRight(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width),
+                        0 => new TimerTop(ScreenHandler.GetInstance().GetSelectedScreenArea().Width),
+                        1 => new TimerLeft(ScreenHandler.GetInstance().GetSelectedScreenArea().Width),
+                        2 => new TimerRight(ScreenHandler.GetInstance().GetSelectedScreenArea().Width),
                         _ => ClockLogic.GetInstance().SelectedAlignment
                     };
             }

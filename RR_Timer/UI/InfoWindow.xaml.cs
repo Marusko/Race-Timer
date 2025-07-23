@@ -30,8 +30,8 @@ namespace Race_timer.UI
             if (ScreenHandler.GetInstance().SelectedScreen == null) return;
             WindowState = WindowState.Minimized;
             Left = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Left;
-            Top = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Bottom - 200;
-            Width = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width;
+            Top = ScreenHandler.GetInstance().GetSelectedScreenArea().Height - 200;
+            Width = ScreenHandler.GetInstance().GetSelectedScreenArea().Width;
 
             Loaded += WindowLoaded;
             _timer.Tick += TimerTick;
@@ -48,7 +48,7 @@ namespace Race_timer.UI
             WindowState = WindowState.Normal;
 
             //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
-            var controlSize = (double)ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
+            var controlSize = (double)ScreenHandler.GetInstance().GetSelectedScreenArea().Width / 12 / 3 * 2 / 5 * 0.7;
             Application.Current.Resources.Remove("InfoFontSize");
             Application.Current.Resources.Add("InfoFontSize", controlSize * 3 - 5);
         }

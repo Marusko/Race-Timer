@@ -42,7 +42,7 @@ namespace Race_timer.UI
             WindowState = WindowState.Maximized;
 
             //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
-            var controlSize = (double)ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
+            var controlSize = (double)ScreenHandler.GetInstance().GetSelectedScreenArea().Width / 12 / 3 * 2 / 5 * 0.7;
             Application.Current.Resources.Remove("ControlFontSize");
             Application.Current.Resources.Add("ControlFontSize", controlSize * 10);
             Application.Current.Resources.Remove("ControlSmallFontSize");
@@ -212,7 +212,7 @@ namespace Race_timer.UI
             clock.Content = " ";
             timers.Children.Clear();
             if (ScreenHandler.GetInstance().SelectedScreen == null) return;
-            var clockTimer = new ContestTimer(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width, true,
+            var clockTimer = new ContestTimer(ScreenHandler.GetInstance().GetSelectedScreenArea().Width, true,
                 ClockLogic.GetInstance().EventName?.Length ?? 0)
             {
                 Name = " "

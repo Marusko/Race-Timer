@@ -36,7 +36,7 @@ namespace Race_timer.UI
             WindowState = WindowState.Minimized;
             Left = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Left;
             Top = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Top;
-            Width = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width;
+            Width = ScreenHandler.GetInstance().GetSelectedScreenArea().Width;
 
             Loaded += WindowLoaded;
             Closed += StopTimer;
@@ -152,7 +152,7 @@ namespace Race_timer.UI
         {
             timers.Children.Clear();
             if (ScreenHandler.GetInstance().SelectedScreen == null) return;
-            var clock = new MiniContestTimer(ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width, true)
+            var clock = new MiniContestTimer(ScreenHandler.GetInstance().GetSelectedScreenArea().Width, true)
             {
                 Name = " "
             };
@@ -169,14 +169,14 @@ namespace Race_timer.UI
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Normal;
-
+            
             //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
-            var controlSize = (double)ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width / 12 / 3 * 2 / 5 * 0.7;
+            var controlSize = (double)ScreenHandler.GetInstance().GetSelectedScreenArea().Width / 12 / 3 * 2 / 5 * 0.7;
             Application.Current.Resources.Remove("ControlFontSize");
             Application.Current.Resources.Add("ControlFontSize", controlSize * 3 - 5);
 
             //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
-            var controlWidth = (double)ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Width / 3 - 50;
+            var controlWidth = (double)ScreenHandler.GetInstance().GetSelectedScreenArea().Width / 3 - 50;
             Application.Current.Resources.Remove("ControlWidth");
             Application.Current.Resources.Add("ControlWidth", controlWidth);
         }
