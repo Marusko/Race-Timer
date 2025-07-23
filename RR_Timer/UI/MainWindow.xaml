@@ -13,7 +13,7 @@
     <Grid>
         <TabControl x:Name="TabControl" TabStripPlacement="Left">
             <TabItem x:Name="StartsTab" Header="Starts" ToolTip="Individual starts setup">
-                <TabControl>
+                <TabControl x:Name="StartsTabControl">
                     <TabItem x:Name="StartsSetupTab" Header="Setup" ToolTip="Enable and setup sources of starts times">
                         <Grid VerticalAlignment="Center">
                             <Grid.RowDefinitions>
@@ -316,46 +316,50 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="SettingsTab" Header="Display settings" ToolTip="Set display and layout">
-                <Grid>
-                    <Label Content="Display" HorizontalAlignment="Center" Margin="0,53,0,0" VerticalAlignment="Top" FontSize="16"/>
-                    <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" Width="260" FontSize="14" ToolTip="Choose on which screen the timer will be displayed"/>
-                    <Label Content="Timer and image alignment" HorizontalAlignment="Center" Margin="0, 200, 0, 0" FontSize="16" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="AlignmentComboBox" HorizontalAlignment="Center" Margin="0, 240, 0, 0" VerticalAlignment="Top" Width="200" FontSize="14" ToolTip="Choose on which side of the fullscreen window will timer be, QR code will be displayed only in Left and Right mode"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Information" ToolTip="Information about app">
-                <Grid>
-                    <Label Content="Race timer" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 40, 0, 0" FontSize="40" FontWeight="SemiBold"/>
-                    <Label x:Name="InfoLabel" Content="Info" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top"/>
-                    <Label HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Hyperlink Click="OpenGithub" Foreground="#FF30E433">
-                            <Run Text="Github"/>
-                        </Hyperlink>
-                    </Label>
-                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,110,0,0">
-                        <Hyperlink Click="OpenMaterialDesignPage" Foreground="#FF30E433">
-                            <Run Text="Material design themes"/>
-                        </Hyperlink>
-                    </Label>
-                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,80,0,0">
-                        <Hyperlink Click="OpenJsonPage" Foreground="#FF30E433">
-                            <Run Text="JSON processing framework"/>
-                        </Hyperlink>
-                    </Label>
-                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,140,0,0">
-                        <Hyperlink Click="OpenCodePage" Foreground="#FF30E433">
-                            <Run Text="QR code generator"/>
-                        </Hyperlink>
-                    </Label>
-                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,170,0,0">
-                        <Hyperlink Click="OpenNptPage" Foreground="#FF30E433">
-                            <Run Text="NTP library"/>
-                        </Hyperlink>
-                    </Label>
-                    <Label Content="Used external content:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"/>
-                    <Label Content="More on:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,30"/>
-                </Grid>
+            <TabItem Header="Settings" ToolTip="Display settings and app information">
+                <TabControl x:Name="SettingsTabControl">
+                    <TabItem x:Name="SettingsTab" Header="Display settings" ToolTip="Set display and layout">
+                        <Grid>
+                            <Label Content="Display" HorizontalAlignment="Center" Margin="0,53,0,0" VerticalAlignment="Top" FontSize="16"/>
+                            <ComboBox x:Name="ScreenComboBox" HorizontalAlignment="Center" Margin="0,90,0,0" VerticalAlignment="Top" Width="260" FontSize="14" ToolTip="Choose on which screen the timer will be displayed"/>
+                            <Label Content="Timer and image alignment" HorizontalAlignment="Center" Margin="0, 200, 0, 0" FontSize="16" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="AlignmentComboBox" HorizontalAlignment="Center" Margin="0, 240, 0, 0" VerticalAlignment="Top" Width="200" FontSize="14" ToolTip="Choose on which side of the fullscreen window will timer be, QR code will be displayed only in Left and Right mode"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="InfoTab" Header="Information" ToolTip="Information about app">
+                        <Grid>
+                            <Label Content="Race timer" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 40, 0, 0" FontSize="40" FontWeight="SemiBold"/>
+                            <Label x:Name="InfoLabel" Content="Info" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top"/>
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Hyperlink Click="OpenGithub" Foreground="#FF30E433">
+                                    <Run Text="Github"/>
+                                </Hyperlink>
+                            </Label>
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,110,0,0">
+                                <Hyperlink Click="OpenMaterialDesignPage" Foreground="#FF30E433">
+                                    <Run Text="Material design themes"/>
+                                </Hyperlink>
+                            </Label>
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,80,0,0">
+                                <Hyperlink Click="OpenJsonPage" Foreground="#FF30E433">
+                                    <Run Text="JSON processing framework"/>
+                                </Hyperlink>
+                            </Label>
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,140,0,0">
+                                <Hyperlink Click="OpenCodePage" Foreground="#FF30E433">
+                                    <Run Text="QR code generator"/>
+                                </Hyperlink>
+                            </Label>
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,170,0,0">
+                                <Hyperlink Click="OpenNptPage" Foreground="#FF30E433">
+                                    <Run Text="NTP library"/>
+                                </Hyperlink>
+                            </Label>
+                            <Label Content="Used external content:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"/>
+                            <Label Content="More on:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,30"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
             </TabItem>
         </TabControl>
         <Label x:Name="NtpStatusLabel" Content="No sync" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25,5,5,5" FontSize="12"/>
