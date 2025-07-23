@@ -12,6 +12,44 @@
         Icon="/UI/onlyRmini.png" ResizeMode="CanMinimize">
     <Grid>
         <TabControl x:Name="TabControl" TabStripPlacement="Left">
+            <TabItem x:Name="StartsTab" Header="Starts" ToolTip="Individual starts setup">
+                <TabControl>
+                    <TabItem x:Name="StartsSetupTab" Header="Setup" ToolTip="Enable and setup sources of starts times">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <CheckBox Grid.Row="0" x:Name="StartsEnableCheckbox" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Enable individual starts">Enable individual starts</CheckBox>
+                            <CheckBox Grid.Row="1" x:Name="ApiStartsCheckbox" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 20 0 0" ToolTip="Use starts list from API">Use list from API</CheckBox>
+                            <Label Grid.Row="2" Content="Or upload CSV file" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Center" FontSize="16"/>
+                            <Grid Grid.Row="3" Margin="0 20 0 0">
+                                <Button Content="Select file" HorizontalAlignment="Center" Margin="0,30,100,0" VerticalAlignment="Top" ToolTip="Select CSV file from PC"/>
+                                <Button x:Name="DeleteStartsFileButton" Content="Delete file" HorizontalAlignment="Center" Margin="100,30,0,0" VerticalAlignment="Top" IsEnabled="False" ToolTip="Clear starts file"/>
+                                <Label x:Name="StartsFileName" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="StartsControlTab" Header="Control" ToolTip="Control starts times">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="0" Content="Close Timer" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,10" FontSize="16" ToolTip="Stop and close the starts timer"/>
+                            <DataGrid Grid.Row="1" Name="IndividualStartDataGrid" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Bib" MinWidth="50" Binding="{Binding Path=Bib}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Name" MinWidth="100" Binding="{Binding Path=Name}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Start time" MinWidth="100" Binding="{Binding Path=Start}"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
             <TabItem x:Name="TimerTab" Header="Finish timer" ToolTip="Timer setup">
                 <Grid>
                     <TextBox x:Name="EventNameText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="396" HorizontalScrollBarVisibility="Auto" InputScope="RegularExpression" HorizontalContentAlignment="Center" ToolTip="Event Name" FontSize="16"/>
