@@ -127,7 +127,7 @@
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0" Grid.Row="0" Margin="0,20,0,0">
+                            <Grid Grid.Column="0" Grid.Row="0" Margin="0,15,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
@@ -146,7 +146,7 @@
                                 </Grid>
                                 <Button Grid.Row="2" Click="CopyEventLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for Event link"/>
                             </Grid>
-                            <Grid Grid.Column="0" Grid.Row="1" Margin="0,20,0,0">
+                            <Grid Grid.Column="0" Grid.Row="1" Margin="0,15,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
@@ -165,7 +165,7 @@
                                 </Grid>
                                 <Button Grid.Row="2" Click="CopyCountLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for Count link"/>
                             </Grid>
-                            <Grid Grid.Column="1" Grid.Row="0" Margin="0,20,0,0">
+                            <Grid Grid.Column="1" Grid.Row="0" Margin="0,15,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
@@ -184,7 +184,7 @@
                                 </Grid>
                                 <Button Grid.Row="2" Click="CopyContestLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for Contest link"/>
                             </Grid>
-                            <Grid Grid.Column="1" Grid.Row="1" Margin="0,20,0,0">
+                            <Grid Grid.Column="1" Grid.Row="1" Margin="0,15,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
@@ -203,24 +203,24 @@
                                 </Grid>
                                 <Button Grid.Row="2" Click="CopyApiLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for API link"/>
                             </Grid>
-                            <Grid Grid.Column="0" Grid.Row="2" Margin="0,20,0,0">
+                            <Grid Grid.Column="0" Grid.Row="2" Margin="0,15,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Settings for starts link" FontSize="16"/>
+                                <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Settings for Starts link" FontSize="16"/>
                                 <Grid Grid.Row="1" HorizontalAlignment="Center">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Custom" ToolTip="Type of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="80" HorizontalContentAlignment="Center"/>
-                                    <TextBox x:Name="StartsSetText" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="data/list?&amp;fields=Bib,DisplayName,Start.Chip&amp;sort=Start.Chip&amp;listformat=JSON" ToolTip="Copy this into Race Result API with 'Custom' selected for starts participant list" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="180" HorizontalContentAlignment="Center" Margin="2"/>
-                                    <TextBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="starts" ToolTip="RR label of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="50" HorizontalContentAlignment="Center"/>
+                                    <TextBox Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Custom" ToolTip="Type of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="60" HorizontalContentAlignment="Center"/>
+                                    <TextBox x:Name="StartsSetText" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="data/list?&amp;fields=Bib,DisplayName,Start.Chip&amp;sort=Start.Chip&amp;listformat=JSON" ToolTip="Copy this into Race Result API with 'Custom' selected for starts participant list" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="210" HorizontalContentAlignment="Center" Margin="2"/>
+                                    <TextBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="starts" ToolTip="RR label of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="60" HorizontalContentAlignment="Center"/>
                                 </Grid>
-                                <Button Grid.Row="2" Click="CopyStartsLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for Event link"/>
+                                <Button Grid.Row="2" Click="CopyStartsLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for starts list link"/>
                             </Grid>
                         </Grid>
                     </TabItem>
