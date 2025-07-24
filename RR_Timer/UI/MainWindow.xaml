@@ -43,8 +43,8 @@
                             <DataGrid Grid.Row="1" Name="IndividualStartDataGrid" IsReadOnly="True">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Bib" MinWidth="50" Binding="{Binding Path=Bib}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Name" MinWidth="100" Binding="{Binding Path=Name}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Start time" MinWidth="100" Binding="{Binding Path=Start}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Name" MinWidth="100" MaxWidth="500" Binding="{Binding Path=Name}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Start time" MinWidth="100" Binding="{Binding Path=Time}"></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

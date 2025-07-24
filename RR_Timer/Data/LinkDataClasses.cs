@@ -11,10 +11,11 @@
         }
     }
 
-    public record Racer
+    public record StartTime
     {
-        public string? DisplayName { get; set; }
         public string? Bib { get; set; }
+        public string? Name { get; set; }
+        public string? Time { get; set; }
     }
 
     public record Contest

@@ -48,6 +48,7 @@ namespace Race_timer.UI
             ScreenHandler.Initialize(this);
             ClockLogic.Initialize(this);
             DateTimeHandler.Initialize(this);
+            StartsController.Initialize(this);
 
             EventTypeComboBox.ItemsSource = Enum.GetValues<EventType>()
                 .Select(e => new { Value = e, Text = e.GetDisplayName() })
@@ -514,6 +515,7 @@ namespace Race_timer.UI
                 ApiStartsCheckbox.IsEnabled = false;
                 StartsSetupButtons.IsEnabled = false;
                 ClockLogic.GetInstance().Starts = false;
+                DeleteCsvFile(sender, e);
             }
         }
 
@@ -525,8 +527,7 @@ namespace Race_timer.UI
                 LoadStartsFileButton.IsEnabled = false;
                 DeleteStartsFileButton.IsEnabled = false;
                 ClockLogic.GetInstance().ApiStarts = true;
-                //TODO
-                //Delete CSV file
+                DeleteCsvFile(sender, e);
             }
             else if (ApiStartsCheckbox.IsChecked is false)
             {
@@ -539,12 +540,26 @@ namespace Race_timer.UI
 
         private void LoadCsvFile(object sender, RoutedEventArgs e)
         {
-            DeleteStartsFileButton.IsEnabled = true;
+            try
+            {
+                StartsController.GetInstance().LoadData();
+                DeleteStartsFileButton.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                var w = new WarningWindow(
+                    $"Oops, something went wrong when loading data from file!\nError code: \n[{ex.Message}]");
+                w.ShowDialog();
+                StartsFileName.Content = "";
+                StartsController.GetInstance().ClearData();
+            }
         }
 
         private void DeleteCsvFile(object sender, RoutedEventArgs e)
         {
             DeleteStartsFileButton.IsEnabled = false;
+            StartsFileName.Content = "";
+            StartsController.GetInstance().ClearData();
         }
 
         private void OpenStartsTimer(object sender, RoutedEventArgs e)
