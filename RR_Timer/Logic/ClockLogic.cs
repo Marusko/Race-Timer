@@ -40,6 +40,8 @@ namespace Race_timer.Logic
         public InfoWindow? InfoWindow { get; set; }
         public MainWindow MainWindow { get; }
         public UserControl? SelectedAlignment { get; set; }
+        public bool Starts { get; set; }
+        public bool ApiStarts { get; set; }
 
         private IClockWindow? _clockWindow;
         private readonly ObservableCollection<string> _timerAlignmentNames = new();

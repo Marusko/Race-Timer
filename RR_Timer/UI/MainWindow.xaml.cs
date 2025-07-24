@@ -486,6 +486,87 @@ namespace Race_timer.UI
             ww.ShowDialog();
         }
 
+        private void EnableStarts(object sender, RoutedEventArgs e)
+        {
+            if (StartsEnableCheckbox.IsChecked is true)
+            {
+                TimerTab.IsEnabled = false;
+                ContestsTab.IsEnabled = false;
+                ResultCodeTab.IsEnabled = false;
+                AlignmentComboBox.IsEnabled = false;
+                LinkLoadImageButton.IsEnabled = false;
+                LinkDeleteImageButton.IsEnabled = false;
+                LinkStartTimerButton.IsEnabled = false;
+                ApiStartsCheckbox.IsEnabled = true;
+                StartsSetupButtons.IsEnabled = true;
+                ClockLogic.GetInstance().Starts = true;
+                //TODO
+                //Delete image
+            }
+            else if (StartsEnableCheckbox.IsChecked is false)
+            {
+                TimerTab.IsEnabled = true;
+                ContestsTab.IsEnabled = true;
+                ResultCodeTab.IsEnabled = true;
+                AlignmentComboBox.IsEnabled = true;
+                LinkLoadImageButton.IsEnabled = true;
+                LinkStartTimerButton.IsEnabled = true;
+                ApiStartsCheckbox.IsEnabled = false;
+                StartsSetupButtons.IsEnabled = false;
+                ClockLogic.GetInstance().Starts = false;
+            }
+        }
+
+        private void EnableApiStarts(object sender, RoutedEventArgs e)
+        {
+            if (ApiStartsCheckbox.IsChecked is true)
+            {
+                StartsStatusGrid.IsEnabled = true;
+                LoadStartsFileButton.IsEnabled = false;
+                DeleteStartsFileButton.IsEnabled = false;
+                ClockLogic.GetInstance().ApiStarts = true;
+                //TODO
+                //Delete CSV file
+            }
+            else if (ApiStartsCheckbox.IsChecked is false)
+            {
+                StartsStatusGrid.IsEnabled = false;
+                LoadStartsFileButton.IsEnabled = true;
+                ClockLogic.GetInstance().ApiStarts = true;
+            }
+
+        }
+
+        private void LoadCsvFile(object sender, RoutedEventArgs e)
+        {
+            DeleteStartsFileButton.IsEnabled = true;
+        }
+
+        private void DeleteCsvFile(object sender, RoutedEventArgs e)
+        {
+            DeleteStartsFileButton.IsEnabled = false;
+        }
+
+        private void OpenStartsTimer(object sender, RoutedEventArgs e)
+        {
+            LinkTimerTab.IsEnabled = false;
+            SettingsTab.IsEnabled = false;
+            SettingsTabControl.SelectedItem = InfoTab;
+            StartsTabControl.SelectedItem = StartsControlTab;
+            StartsSetupTab.IsEnabled = false;
+            StartsControlTab.IsEnabled = true;
+        }
+
+        private void CloseStartsTimer(object sender, RoutedEventArgs e)
+        {
+            LinkTimerTab.IsEnabled = true;
+            SettingsTab.IsEnabled = true;
+            SettingsTabControl.SelectedItem = SettingsTab;
+            StartsTabControl.SelectedItem = StartsSetupTab;
+            StartsSetupTab.IsEnabled = true;
+            StartsControlTab.IsEnabled = false;
+        }
+
         /// <summary>
         /// Sets the info label with correct author and version
         /// </summary>
