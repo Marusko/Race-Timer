@@ -790,6 +790,11 @@ namespace Race_timer.UI
             Clipboard.SetText(ApiSetText.Text);
         }
 
+        private void CopyStartsLink(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(StartsSetText.Text);
+        }
+
         /// <summary>
         /// Load all API from link
         /// </summary>

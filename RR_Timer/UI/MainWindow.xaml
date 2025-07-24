@@ -121,6 +121,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
@@ -201,6 +202,25 @@
                                     <TextBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="api" ToolTip="RR label of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="70" HorizontalContentAlignment="Center"/>
                                 </Grid>
                                 <Button Grid.Row="2" Click="CopyApiLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for API link"/>
+                            </Grid>
+                            <Grid Grid.Column="0" Grid.Row="2" Margin="0,20,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Settings for starts link" FontSize="16"/>
+                                <Grid Grid.Row="1" HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Custom" ToolTip="Type of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="80" HorizontalContentAlignment="Center"/>
+                                    <TextBox x:Name="StartsSetText" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="data/list?&amp;fields=Bib,DisplayName,Start.Chip&amp;sort=Start.Chip&amp;listformat=JSON" ToolTip="Copy this into Race Result API with 'Custom' selected for starts participant list" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="180" HorizontalContentAlignment="Center" Margin="2"/>
+                                    <TextBox Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="starts" ToolTip="RR label of this API" IsReadOnly="True" FontFamily="Consolas" FontSize="14" Width="50" HorizontalContentAlignment="Center"/>
+                                </Grid>
+                                <Button Grid.Row="2" Click="CopyStartsLink" Content="Copy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" ToolTip="Copy settings for Event link"/>
                             </Grid>
                         </Grid>
                     </TabItem>
