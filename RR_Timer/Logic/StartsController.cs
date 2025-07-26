@@ -1,10 +1,11 @@
-﻿using Race_timer.UI;
+﻿using Race_timer.API;
+using Race_timer.Data;
+using Race_timer.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Race_timer.Data;
 
 namespace Race_timer.Logic
 {
@@ -96,6 +97,30 @@ namespace Race_timer.Logic
                 }
             }
             return true;
+        }
+
+        public async void LoadApiData(string link, int lastSeconds)
+        {
+            _startTimes.Clear();
+            await LinkHandler.LoadStarts(link, lastSeconds, _mainWindow);
+            if (_startTimes.Any())
+            {
+                _mainWindow.IndividualStartDataGrid.Items.Clear();
+                foreach (var startTime in _startTimes)
+                {
+                    if (startTime.Value.Count > 1)
+                    {
+                        foreach (var st in startTime.Value)
+                        {
+                            _mainWindow.IndividualStartDataGrid.Items.Add(st);
+                        }
+                    }
+                    else
+                    {
+                        _mainWindow.IndividualStartDataGrid.Items.Add(startTime.Value.First());
+                    }
+                }
+            }
         }
 
         public void AddData(StartTime data, string time)

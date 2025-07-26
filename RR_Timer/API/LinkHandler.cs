@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Race_timer.ClockUserControl;
 using Race_timer.Data;
@@ -391,6 +393,68 @@ namespace Race_timer.API
             if (canLoadContest)
             {
                 LoadContest(mw.ContestLink, mw);
+            }
+        }
+
+        public static async Task LoadStarts(string apiLink, int lastSeconds, MainWindow mw)
+        {
+            HttpResponseMessage response;
+            var httpClient = new HttpClient();
+            try
+            {
+                response = await httpClient.GetAsync($"{apiLink}?&filter=Start.Decimal%3E{lastSeconds}");
+            }
+            catch (Exception e)
+            {
+                var ww = new WarningWindow($"Oops, something went wrong with starts API!\nError code: \n[{e.Message}]");
+                ww.ShowDialog();
+                httpClient.Dispose();
+                mw.StartsStatusLabel.Content = "ERR";
+                return;
+            }
+            httpClient.Dispose();
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                List<List<string>>? starts;
+                try
+                {
+                    starts = JsonConvert.DeserializeObject<List<List<string>>>(responseString);
+                }
+                catch (Exception)
+                {
+                    var ww = new WarningWindow("Oops, something went wrong with starts API!\nError code: \n[Can't deserialize provided data]");
+                    ww.ShowDialog();
+                    mw.StartsStatusLabel.Content = "ERR";
+                    return;
+                }
+
+                if (starts != null)
+                {
+                    var tmp = (from b in starts select new StartTime() { Bib = b[0], Name = b[1], Time = b[2] }).ToList();
+                    foreach (var st in tmp)
+                    {
+                        if (!string.IsNullOrEmpty(st.Time))
+                        {
+                            StartsController.GetInstance().AddData(st, st.Time);
+                        }
+                    }
+                    mw.StartsStatusLabel.Content = "OK";
+                }
+                else
+                {
+                    var ww = new WarningWindow("Oops, something went wrong with starts API!\nError code: \n[Data from API are null]");
+                    ww.ShowDialog();
+                    mw.StartsStatusLabel.Content = "ERR";
+                    return;
+                }
+            }
+            else
+            {
+                var ww = new WarningWindow($"Oops, something went wrong with starts API!\nError code: \n[{response.StatusCode}]");
+                ww.ShowDialog();
+                mw.StartsStatusLabel.Content = "ERR";
+                return;
             }
         }
 

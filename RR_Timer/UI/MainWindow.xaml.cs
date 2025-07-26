@@ -501,8 +501,7 @@ namespace Race_timer.UI
                 ApiStartsCheckbox.IsEnabled = true;
                 StartsSetupButtons.IsEnabled = true;
                 ClockLogic.GetInstance().Starts = true;
-                //TODO
-                //Delete image
+                DeleteImage(sender, e);
             }
             else if (StartsEnableCheckbox.IsChecked is false)
             {
@@ -524,6 +523,9 @@ namespace Race_timer.UI
             if (ApiStartsCheckbox.IsChecked is true)
             {
                 StartsStatusGrid.IsEnabled = true;
+                EventStatusLabel.Content = "OFF";
+                CountStatusLabel.Content = "OFF"; 
+                ContestStatusLabel.Content = "OFF";
                 LoadStartsFileButton.IsEnabled = false;
                 DeleteStartsFileButton.IsEnabled = false;
                 ClockLogic.GetInstance().ApiStarts = true;
@@ -532,6 +534,9 @@ namespace Race_timer.UI
             else if (ApiStartsCheckbox.IsChecked is false)
             {
                 StartsStatusGrid.IsEnabled = false;
+                EventStatusLabel.Content = "MIS";
+                CountStatusLabel.Content = "MIS";
+                ContestStatusLabel.Content = "MIS";
                 LoadStartsFileButton.IsEnabled = true;
                 ClockLogic.GetInstance().ApiStarts = true;
             }
@@ -817,7 +822,14 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void LoadApis(object sender, RoutedEventArgs e)
         {
-            LinkHandler.LoadApi(LinkText.Text, this);
+            if (ClockLogic.GetInstance().Starts && ClockLogic.GetInstance().ApiStarts)
+            {
+                StartsController.GetInstance().LoadApiData(LinkText.Text, 0);
+            }
+            else
+            {
+                LinkHandler.LoadApi(LinkText.Text, this);
+            }
         }
 
         /// <summary>
