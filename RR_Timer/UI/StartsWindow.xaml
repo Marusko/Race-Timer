@@ -9,7 +9,9 @@
         Style="{StaticResource MaterialDesignWindow}"
         Icon="/UI/onlyRmini.png" 
         ResizeMode="NoResize" IsTabStop="False">
-    <Grid>
-        
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <TextBlock x:Name="StartsNameLabel" Text="StartsNameLabel" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="{DynamicResource ControlFontSize}" Margin="0,50,0,0" TextAlignment="Center" TextWrapping="Wrap"/>
+        <Label x:Name="ParticipantStartCounterLabel" Content="ParticipantStartCounterLabel" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="{DynamicResource ControlClockFontSize}"/>
+        <Label x:Name="NextParticipantLabel" Content="NextParticipantLabel" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="{DynamicResource ControlSmallFontSize}" Margin="0,0,0,20"/>
     </Grid>
 </Window>

@@ -1,19 +1,6 @@
-﻿using Race_timer.ClockUserControl;
-using Race_timer.Logic;
+﻿using Race_timer.Logic;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace Race_timer.UI
 {
@@ -43,6 +30,8 @@ namespace Race_timer.UI
             var controlSize = (double)ScreenHandler.GetInstance().GetSelectedScreenArea().Width / 12 / 3 * 2 / 5 * 0.7;
             Application.Current.Resources.Remove("ControlFontSize");
             Application.Current.Resources.Add("ControlFontSize", controlSize * 10);
+            Application.Current.Resources.Remove("ControlClockFontSize");
+            Application.Current.Resources.Add("ControlClockFontSize", controlSize * 20);
             Application.Current.Resources.Remove("ControlSmallFontSize");
             Application.Current.Resources.Add("ControlSmallFontSize", controlSize * 5);
         }
@@ -51,7 +40,5 @@ namespace Race_timer.UI
         {
             
         }
-
-        
     }
 }
