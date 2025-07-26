@@ -14,6 +14,8 @@ namespace Race_timer.Logic
         private static StartsController? _instance;
         private MainWindow _mainWindow;
         private Dictionary<string, List<StartTime>> _startTimes;
+        private string _startsLink = "";
+        private StartsWindow? _startsWindow;
         private StartsController(MainWindow mw)
         {
             _mainWindow = mw;
@@ -130,6 +132,19 @@ namespace Race_timer.Logic
                 _startTimes.Add(time, new List<StartTime>());
             }
             _startTimes[time].Add(data);
+        }
+
+        public void StartStarts(string link)
+        {
+            _startsLink = link;
+            _startsWindow = new StartsWindow();
+            _startsWindow.Show();
+        }
+
+        public void StopStarts()
+        {
+            _startsWindow?.Close();
+            _startsWindow = null;
         }
     }
 }

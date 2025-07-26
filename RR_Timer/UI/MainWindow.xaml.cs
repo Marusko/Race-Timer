@@ -582,16 +582,22 @@ namespace Race_timer.UI
             StartsTabControl.SelectedItem = StartsControlTab;
             StartsSetupTab.IsEnabled = false;
             StartsControlTab.IsEnabled = true;
+            ScreenHandler.GetInstance().CheckScreenArea();
+            StartsController.GetInstance().StartStarts(LinkText.Text);
         }
 
         private void CloseStartsTimer(object sender, RoutedEventArgs e)
         {
-            LinkTimerTab.IsEnabled = true;
+            if (ClockLogic.GetInstance().ApiStarts)
+            {
+                LinkTimerTab.IsEnabled = true;
+            }
             SettingsTab.IsEnabled = true;
             SettingsTabControl.SelectedItem = SettingsTab;
             StartsTabControl.SelectedItem = StartsSetupTab;
             StartsSetupTab.IsEnabled = true;
             StartsControlTab.IsEnabled = false;
+            StartsController.GetInstance().StopStarts();
         }
 
         /// <summary>
