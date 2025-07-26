@@ -494,6 +494,7 @@ namespace Race_timer.UI
                 TimerTab.IsEnabled = false;
                 ContestsTab.IsEnabled = false;
                 ResultCodeTab.IsEnabled = false;
+                LinkTimerTab.IsEnabled = false;
                 AlignmentComboBox.IsEnabled = false;
                 LinkLoadImageButton.IsEnabled = false;
                 LinkDeleteImageButton.IsEnabled = false;
@@ -508,6 +509,7 @@ namespace Race_timer.UI
                 TimerTab.IsEnabled = true;
                 ContestsTab.IsEnabled = true;
                 ResultCodeTab.IsEnabled = true;
+                LinkTimerTab.IsEnabled = true;
                 AlignmentComboBox.IsEnabled = true;
                 LinkLoadImageButton.IsEnabled = true;
                 LinkStartTimerButton.IsEnabled = true;
@@ -529,6 +531,7 @@ namespace Race_timer.UI
                 LoadStartsFileButton.IsEnabled = false;
                 DeleteStartsFileButton.IsEnabled = false;
                 ClockLogic.GetInstance().ApiStarts = true;
+                LinkTimerTab.IsEnabled = true;
                 DeleteCsvFile(sender, e);
             }
             else if (ApiStartsCheckbox.IsChecked is false)
@@ -537,8 +540,10 @@ namespace Race_timer.UI
                 EventStatusLabel.Content = "MIS";
                 CountStatusLabel.Content = "MIS";
                 ContestStatusLabel.Content = "MIS";
+                StartsStatusLabel.Content = "MIS";
                 LoadStartsFileButton.IsEnabled = true;
-                ClockLogic.GetInstance().ApiStarts = true;
+                ClockLogic.GetInstance().ApiStarts = false;
+                LinkTimerTab.IsEnabled = false;
             }
 
         }
