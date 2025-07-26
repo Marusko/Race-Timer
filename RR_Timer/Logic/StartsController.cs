@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
+using Path = System.IO.Path;
 
 namespace Race_timer.Logic
 {
@@ -16,10 +18,17 @@ namespace Race_timer.Logic
         private Dictionary<string, List<StartTime>> _startTimes;
         private string _startsLink = "";
         private StartsWindow? _startsWindow;
+        private readonly System.Windows.Threading.DispatcherTimer _timer = new();
+        private DateTime? _lastNtp;
+        private List<StartTime> _current;
+        private List<StartTime> _next;
+
         private StartsController(MainWindow mw)
         {
             _mainWindow = mw;
             _startTimes = new Dictionary<string, List<StartTime>>();
+            _current = new List<StartTime>();
+            _next = new List<StartTime>();
         }
 
         public static StartsController Initialize(MainWindow mw)
@@ -137,14 +146,149 @@ namespace Race_timer.Logic
         public void StartStarts(string link)
         {
             _startsLink = link;
+            _timer.Tick += ClockTick;
+            _timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             _startsWindow = new StartsWindow();
+            GetCurrentStart();
+            GetNextStart();
             _startsWindow.Show();
+            _timer.Start();
         }
 
         public void StopStarts()
         {
+            _timer.Stop();
             _startsWindow?.Close();
             _startsWindow = null;
+        }
+
+        private void ClockTick(object? sender, EventArgs e)
+        {
+            ClockTickLogic();
+        }
+
+        public void ClockTickLogic()
+        {
+            var now = DateTimeHandler.GetInstance().Now;
+            if (_lastNtp != null)
+            {
+                if (_lastNtp.Value.Second == now.Second)
+                {
+                    return;
+                }
+            }
+            _lastNtp = now;
+            SetLabels();
+            CheckStarted();
+        }
+
+        private void SetLabels()
+        {
+            if (_startsWindow != null)
+            {
+                if (_current.Any())
+                {
+                    var partName = $"{_current.First().Bib}. {_current.First().Name}";
+                    if (_current.Count > 1)
+                    {
+                        var names = from s in _current select $"{s.Bib}. {s.Name}";
+                        partName = string.Join(" - ", names);
+                    }
+                    _startsWindow.StartsNameLabel.Text = partName;
+
+                    if (_next.Any())
+                    {
+                        var nextName = _next.First().Name;
+                        if (_next.Count > 1)
+                        {
+                            var nextNames = from s in _next select s.Name;
+                            nextName = string.Join(" - ", nextNames);
+                        }
+                        _startsWindow.NextParticipantLabel.Content = nextName;
+                    }
+                    else
+                    {
+                        _startsWindow.NextParticipantLabel.Content = "";
+                    }
+
+                    _startsWindow.ParticipantStartCounterLabel.Content = FormatStartTimeOrClock(_current.First().Time);
+                }
+                else
+                {
+                    _startsWindow.StartsNameLabel.Text = "";
+                    _startsWindow.NextParticipantLabel.Content = "";
+                    _startsWindow.ParticipantStartCounterLabel.Content = FormatTime();
+                }
+            }
+        }
+
+        private void CheckStarted()
+        {
+            if (_current.Any())
+            {
+                if (TimeOnly.TryParse(_current.First().Time, out var parsed))
+                {
+                    var now = TimeOnly.FromDateTime(DateTimeHandler.GetInstance().Now);
+                    if (Math.Abs(parsed.ToTimeSpan().Subtract(now.ToTimeSpan()).TotalSeconds) > 2 && parsed < now)
+                    {
+                        _current.Clear();
+                        _current.AddRange(_next);
+                        GetNextStart();
+                        //TODO load next API data
+                    }
+                }
+            }
+        }
+
+        private string FormatTime()
+        {
+            var now = DateTimeHandler.GetInstance().Now;
+            TimeSpan time = TimeSpan.FromMilliseconds(now.TimeOfDay.TotalMilliseconds);
+            var timeString = time.ToString(@"hh\:mm\:ss");
+            return timeString;
+        }
+
+        private string FormatStartTimeOrClock(string stime)
+        {
+            if (TimeOnly.TryParse(stime, out var parsed))
+            {
+                var now = TimeOnly.FromDateTime(DateTimeHandler.GetInstance().Now);
+                TimeSpan time = TimeSpan.FromSeconds(Math.Round(now.ToTimeSpan().Subtract(parsed.ToTimeSpan()).TotalSeconds));
+                var timeString = time.ToString(@"hh\:mm\:ss");
+                if (Math.Abs(time.TotalSeconds) < 0.2)
+                {
+                    new Thread(() => Console.Beep(1100, 1000)).Start();
+                }
+                else if (parsed > now && Math.Abs(time.TotalSeconds) < 6)
+                {
+                    new Thread(() => Console.Beep()).Start();
+                }
+                return timeString;
+            }
+
+            return FormatTime();
+        }
+
+        private void GetCurrentStart()
+        {
+            _current.Clear();
+            if (_startTimes.Any())
+            {
+                _current.AddRange(_startTimes.Values.First());
+                var time = _startTimes.Keys.First();
+                _startTimes.Remove(time);
+            }
+        }
+
+        private void GetNextStart()
+        {
+            _next.Clear();
+            if (_startTimes.Any())
+            {
+                _next.AddRange(_startTimes.Values.First());
+                var time = _startTimes.Keys.First();
+                _startTimes.Remove(time);
+            }
         }
     }
 }
