@@ -68,7 +68,7 @@
                     <TabItem Header="API Timer" ToolTip="API timer setup">
                         <Grid>
                             <TextBox x:Name="LinkText" HorizontalAlignment="Center" Margin="0,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" HorizontalContentAlignment="Center" InputScope="Url" FontSize="16" ToolTip="Link for all API"/>
-                            <Label Content="API Link" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" FontSize="16"/>
+                            <Label x:Name="ApiLinkTextLabel" Content="API Link" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" FontSize="16"/>
                             <Button Content="Load" Click="LoadApis" Margin="0,90,0,0" VerticalAlignment="Top" ToolTip="Loads the APIs from entered link" HorizontalAlignment="Center"/>
                             <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5 140 5 0">
                                 <Grid.ColumnDefinitions>

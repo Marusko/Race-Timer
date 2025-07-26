@@ -532,6 +532,7 @@ namespace Race_timer.UI
                 DeleteStartsFileButton.IsEnabled = false;
                 ClockLogic.GetInstance().ApiStarts = true;
                 LinkTimerTab.IsEnabled = true;
+                ApiLinkTextLabel.Content = "Only starts API Link";
                 DeleteCsvFile(sender, e);
             }
             else if (ApiStartsCheckbox.IsChecked is false)
@@ -544,6 +545,7 @@ namespace Race_timer.UI
                 LoadStartsFileButton.IsEnabled = true;
                 ClockLogic.GetInstance().ApiStarts = false;
                 LinkTimerTab.IsEnabled = false;
+                ApiLinkTextLabel.Content = "API Link";
             }
 
         }
