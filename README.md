@@ -38,7 +38,7 @@ Application to show elapsed time from entered start time, with clock or individu
 * Multiple contests with start times, manual or from API
 * Individual start times from CSV file or RaceResult API
 ## Automatic switching
-  When someone finishes the race, the count in RR is updated and cashed on the second API link. The app checks this second link every 20 seconds. When the clock switches to the small clock, the app stops checking the second link.
+  When someone finishes the race, the count in RR is updated and cashed on the second API link. The app checks this second link every 15 seconds. When the clock switches to the small clock, the app stops checking the second link.
 ## Choosing screen
   You can choose on which screen the timer will be shown, the list of screens is refreshed every 20 seconds. If the timer is open, refreshing the list of screens is paused.
 ## Multiple contests
@@ -116,7 +116,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
 [Top](#race-timer)
   * **Starts** - Menu for setting up and controlling individual participant starts
   * **Finish timer** - Menu for entering event name, type, and logo image, and starting the timer
-  * **Finish API Timer** - Menu for entering API link, logo image, and starting the timer
+  * **Finish API Timer** - Menu for entering API link or link for starts, logo image, and starting the timer
   * **Contests** - Menu for adding contests with start times manually and editing them
   * **Displaying** - Menu for setting up results and QR code
   * **Timer control** - Menu for switching between fullscreen and small timer, closing the timer, refreshing the WebView, and setting new start times
