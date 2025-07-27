@@ -347,6 +347,10 @@ namespace Race_timer.UI
         private void ShutDownApp(object? sender, EventArgs e)
         {
             OnClose();
+            if (StartsController.GetInstance().IsActive)
+            {
+                StartsController.GetInstance().StopStarts();
+            }
             ScreenHandler.GetInstance().StopTimer();
             Application.Current.Shutdown();
         }

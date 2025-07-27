@@ -23,6 +23,7 @@ namespace Race_timer.Logic
         private List<StartTime> _current;
         private List<StartTime> _next;
         private int _startedCounter;
+        public bool IsActive { get; private set; }
 
         private StartsController(MainWindow mw)
         {
@@ -154,6 +155,7 @@ namespace Race_timer.Logic
             GetNextStart();
             _startsWindow.Show();
             _timer.Start();
+            IsActive = true;
         }
 
         public void StopStarts()
@@ -161,6 +163,7 @@ namespace Race_timer.Logic
             _timer.Stop();
             _startsWindow?.Close();
             _startsWindow = null;
+            IsActive = false;
         }
 
         private void ClockTick(object? sender, EventArgs e)
@@ -236,7 +239,7 @@ namespace Race_timer.Logic
                         _current.Clear();
                         _current.AddRange(_next);
                         GetNextStart();
-                        if (ClockLogic.GetInstance().ApiStarts && ClockLogic.GetInstance().Starts)
+                        if (ClockLogic.GetInstance().ApiStarts && ClockLogic.GetInstance().Starts && _next.Any())
                         {
                             _startedCounter++;
                             if (_startedCounter > 3)
