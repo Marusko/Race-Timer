@@ -257,7 +257,7 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
                                 <CheckBox x:Name="WebViewEnableCheckBox" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 -60 0 0" ToolTip="Enable WebView">Enable WebView</CheckBox>
-                                <Label Content="Link to web page with result" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="16"/>
+                                <Label Content="Link to web page with results" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="16"/>
                                 <TextBox x:Name="ResultLinkText" HorizontalAlignment="Center" Margin="0,70,0,0" TextWrapping="Wrap" 
                                  VerticalAlignment="Center" Width="601" HorizontalContentAlignment="Center" InputScope="Url" FontSize="16" ToolTip="Link to result page"
                                  IsEnabled="{Binding IsChecked, ElementName=WebViewEnableCheckBox}"/>
