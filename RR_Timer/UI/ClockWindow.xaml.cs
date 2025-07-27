@@ -110,11 +110,17 @@ namespace Race_timer.UI
             EventTypeLabel.Content = type;
         }
 
+        /// <summary>
+        /// Not implemented
+        /// </summary>
         public void TimerTickLogic()
         {
             
         }
 
+        /// <summary>
+        /// Calls clock TimerClickLogic() method for updating time
+        /// </summary>
         public void TimerClickLogic()
         {
             Clock?.TimerClickLogic();
@@ -140,6 +146,11 @@ namespace Race_timer.UI
             }
         }
 
+        /// <summary>
+        /// Method for setting the event name and type labels
+        /// </summary>
+        /// <param name="name">Event name</param>
+        /// <param name="type">Event type</param>
         public void SetLabels(string name, string type)
         {
             SetEventName(name);
@@ -270,6 +281,10 @@ namespace Race_timer.UI
             }
         }
 
+        /// <summary>
+        /// Method for setting alignment of big clock window
+        /// </summary>
+        /// <param name="alignment">Selected alignment</param>
         public void SetChildren(UserControl alignment)
         {
             TimerPanel.Children.Clear();

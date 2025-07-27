@@ -11,6 +11,9 @@ using Path = System.IO.Path;
 
 namespace Race_timer.Logic
 {
+    /// <summary>
+    /// Class for handling individual starts
+    /// </summary>
     public class StartsController
     {
         private static StartsController? _instance;
@@ -25,6 +28,10 @@ namespace Race_timer.Logic
         private int _startedCounter;
         public bool IsActive { get; private set; }
 
+        /// <summary>
+        /// Private StartsController contstructor for singleton use
+        /// </summary>
+        /// <param name="mw">Already created MainWindow</param>
         private StartsController(MainWindow mw)
         {
             _mainWindow = mw;
@@ -33,6 +40,11 @@ namespace Race_timer.Logic
             _next = new List<StartTime>();
         }
 
+        /// <summary>
+        /// Method for StartsController initialization
+        /// </summary>
+        /// <param name="mw">Already created MainWindow</param>
+        /// <returns>Instance of StartsController</returns>
         public static StartsController Initialize(MainWindow mw)
         {
             if (_instance == null)
@@ -43,6 +55,11 @@ namespace Race_timer.Logic
             return _instance;
         }
 
+        /// <summary>
+        /// Method for retrieving singleton instance of StartsController
+        /// </summary>
+        /// <returns>Singleton instance of StartsController</returns>
+        /// <exception cref="InvalidOperationException">When StartsController is not initialized first</exception>
         public static StartsController GetInstance()
         {
             if (_instance == null)
@@ -52,12 +69,20 @@ namespace Race_timer.Logic
             return _instance;
         }
 
+        /// <summary>
+        /// Clear all saved start times, alo in UI individual start time data grid
+        /// </summary>
         public void ClearData()
         {
             _startTimes.Clear();
             _mainWindow.IndividualStartDataGrid.Items.Clear();
         }
 
+        /// <summary>
+        /// Load start times from CSV file, saves it to dictionary and updates main window individual starts data grid
+        /// </summary>
+        /// <returns>True if successful load</returns>
+        /// <exception cref="Exception">When something went wrong with reading or parsing data</exception>
         public bool LoadData()
         {
             var op = new OpenFileDialog();
@@ -112,6 +137,11 @@ namespace Race_timer.Logic
             return true;
         }
 
+        /// <summary>
+        /// Load start times from RaceResult API, saves it to dictionary and updates main window individual starts data grid
+        /// </summary>
+        /// <param name="link">Starts API link</param>
+        /// <param name="lastSeconds">Load times after this in seconds</param>
         public async void LoadApiData(string link, int lastSeconds)
         {
             _startTimes.Clear();
@@ -136,6 +166,11 @@ namespace Race_timer.Logic
             }
         }
 
+        /// <summary>
+        /// Add data to start times dictionary
+        /// </summary>
+        /// <param name="data">StartTime object with all data</param>
+        /// <param name="time">Start time to group by</param>
         public void AddData(StartTime data, string time)
         {
             if (!_startTimes.ContainsKey(time))
@@ -145,6 +180,10 @@ namespace Race_timer.Logic
             _startTimes[time].Add(data);
         }
 
+        /// <summary>
+        /// Setup and start the timer, setup first starts, opens the starts window
+        /// </summary>
+        /// <param name="link">Starts API link for recurring auto update</param>
         public void StartStarts(string link)
         {
             _startsLink = link;
@@ -154,10 +193,14 @@ namespace Race_timer.Logic
             GetCurrentStart();
             GetNextStart();
             _startsWindow.Show();
+            ClockTickLogic();
             _timer.Start();
             IsActive = true;
         }
 
+        /// <summary>
+        /// Stops the timer and close the starts window
+        /// </summary>
         public void StopStarts()
         {
             _timer.Stop();
@@ -166,11 +209,19 @@ namespace Race_timer.Logic
             IsActive = false;
         }
 
+        /// <summary>
+        /// Method called by timer, calls ClockTickLogic()
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClockTick(object? sender, EventArgs e)
         {
             ClockTickLogic();
         }
 
+        /// <summary>
+        /// Main control loop for the starts window
+        /// </summary>
         public void ClockTickLogic()
         {
             var now = DateTimeHandler.GetInstance().Now;
@@ -186,6 +237,9 @@ namespace Race_timer.Logic
             CheckStarted();
         }
 
+        /// <summary>
+        /// Method for setting correct current, next participants and start time counter labels
+        /// </summary>
         private void SetLabels()
         {
             if (_startsWindow != null)
@@ -227,6 +281,9 @@ namespace Race_timer.Logic
             }
         }
 
+        /// <summary>
+        /// Method for selecting next start in line, if API is used also auto update the start time every 4th start
+        /// </summary>
         private void CheckStarted()
         {
             if (_current.Any())
@@ -256,6 +313,10 @@ namespace Race_timer.Logic
             }
         }
 
+        /// <summary>
+        /// Format the now time in hh:mm:ss format
+        /// </summary>
+        /// <returns>Formated now time in hh:mm:ss format</returns>
         private string FormatTime()
         {
             var now = DateTimeHandler.GetInstance().Now;
@@ -264,6 +325,11 @@ namespace Race_timer.Logic
             return timeString;
         }
 
+        /// <summary>
+        /// Format the start time in hh:mm:ss format, beep every second if start is less than 5 seconds from now, long beep on start
+        /// </summary>
+        /// <param name="stime">Start time to format</param>
+        /// <returns>Formated start time in hh:mm:ss format</returns>
         private string FormatStartTimeOrClock(string stime)
         {
             if (TimeOnly.TryParse(stime, out var parsed))
@@ -285,6 +351,9 @@ namespace Race_timer.Logic
             return FormatTime();
         }
 
+        /// <summary>
+        /// First load of currently starting participants, removes it from start time dictionary
+        /// </summary>
         private void GetCurrentStart()
         {
             _current.Clear();
@@ -296,6 +365,9 @@ namespace Race_timer.Logic
             }
         }
 
+        /// <summary>
+        /// Get the next in line start time, removes it from start time dictionary
+        /// </summary>
         private void GetNextStart()
         {
             _next.Clear();

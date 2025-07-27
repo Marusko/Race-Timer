@@ -7,6 +7,9 @@ using QRCoder;
 
 namespace Race_timer.API
 {
+    /// <summary>
+    /// Handles generating QR code from text
+    /// </summary>
     internal static class CodeGenerator
     {
         /// <summary>

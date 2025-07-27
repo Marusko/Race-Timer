@@ -3,10 +3,12 @@ using Race_timer.UI;
 using System;
 using System.Threading;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace Race_timer.Logic
 {
+    /// <summary>
+    /// Class for handling NTP sync and fallback
+    /// </summary>
     public class DateTimeHandler : IDisposable
     {
         private static DateTimeHandler? _instance;
@@ -29,6 +31,11 @@ namespace Race_timer.Logic
             }
         }
 
+        /// <summary>
+        /// Method for DateTimeHandler initialization
+        /// </summary>
+        /// <param name="mw">Already created MainWindow</param>
+        /// <returns>DateTimeHandler instance</returns>
         public static DateTimeHandler Initialize(MainWindow mw)
         {
             if (_instance == null)
@@ -39,6 +46,11 @@ namespace Race_timer.Logic
             return _instance;
         }
 
+        /// <summary>
+        /// Method for retrieving singleton instance of DateTimeHandler
+        /// </summary>
+        /// <returns>Singleton instance of DateTimeHandler</returns>
+        /// <exception cref="InvalidOperationException">When DateTimeHandler is not initialized first</exception>
         public static DateTimeHandler GetInstance()
         {
             if (_instance == null)
@@ -48,6 +60,10 @@ namespace Race_timer.Logic
             return _instance;
         }
 
+        /// <summary>
+        /// Set up the NTP client and sync thread
+        /// </summary>
+        /// <param name="mw">Already created MainWindow</param>
         private DateTimeHandler(MainWindow mw)
         {
             _mainWindow = mw;
@@ -59,6 +75,9 @@ namespace Race_timer.Logic
             _syncThread.Start();
         }
 
+        /// <summary>
+        /// Method called in separate sync thread for synchronizing local time with pool.ntp.org
+        /// </summary>
         private void SyncLoop()
         {
             while (_running)
@@ -95,6 +114,11 @@ namespace Race_timer.Logic
             }
         }
 
+        /// <summary>
+        /// Method for querying the NTP server, if error then the delay between retries becomes longer, max 1 minute
+        /// </summary>
+        /// <returns>Synchronized NTP client</returns>
+        /// <exception cref="InvalidOperationException">When the NTP sync stops</exception>
         private NtpClock QueryWithBackoff()
         {
             var delay = TimeSpan.FromSeconds(1);
@@ -117,6 +141,9 @@ namespace Race_timer.Logic
             throw new InvalidOperationException("NTP sync was stopped.");
         }
 
+        /// <summary>
+        /// Clean up method, join the sync thread
+        /// </summary>
         public void Dispose()
         {
             _running = false;

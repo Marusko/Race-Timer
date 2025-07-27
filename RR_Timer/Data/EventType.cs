@@ -118,8 +118,16 @@ public enum EventType
     Kayak = 36
 }
 
+/// <summary>
+/// Enum extension for localization of event type
+/// </summary>
 public static class EventTypeExtensions
 {
+    /// <summary>
+    /// Method for retrieving localized name of event type based on resource dictionary
+    /// </summary>
+    /// <param name="eventType">Event type that should be localized</param>
+    /// <returns>Localized event type</returns>
     public static string GetDisplayName(this EventType eventType)
     {
         var field = eventType.GetType().GetField(eventType.ToString());

@@ -70,6 +70,11 @@ namespace Race_timer.Logic
                 SelectedAlignment = new TimerTop(ScreenHandler.GetInstance().GetSelectedScreenArea().Width);
         }
 
+        /// <summary>
+        /// Method for ClockLogic initialization
+        /// </summary>
+        /// <param name="mw">Already created MainWindow</param>
+        /// <returns>ClockLogic instance</returns>
         public static ClockLogic Initialize(MainWindow mw)
         {
             if (_instance == null)
@@ -80,6 +85,11 @@ namespace Race_timer.Logic
             return _instance;
         }
 
+        /// <summary>
+        /// Method for retrieving singleton instance of ClockLogic
+        /// </summary>
+        /// <returns>Singleton instance of ClockLogic</returns>
+        /// <exception cref="InvalidOperationException">When ClockLogic is not initialized first</exception>
         public static ClockLogic GetInstance()
         {
             if (_instance == null)
@@ -89,6 +99,10 @@ namespace Race_timer.Logic
             return _instance;
         }
 
+        /// <summary>
+        /// Sets the active clock window observer
+        /// </summary>
+        /// <param name="w">Active clock window</param>
         private void SetActiveObserver(IClockWindow w)
         {
             _clockWindow = w;
@@ -314,6 +328,9 @@ namespace Race_timer.Logic
             }
         }
 
+        /// <summary>
+        /// Shows and hides info panel when timer is small, shown for minimum of 30 seconds, hidden for 3 minutes
+        /// </summary>
         private void InfoPanelShow()
         {
             if (MainWindow.InfoEnableCheckBox.IsChecked != null && (!MainWindow.InfoEnableCheckBox.IsChecked.Value || string.IsNullOrEmpty(InfoText))) return;
@@ -427,6 +444,7 @@ namespace Race_timer.Logic
             if (EventType != null)
                 SetLabels(EventName, EventType);
         }
+
         /// <summary>
         /// When opening clock with manually set name and type, sets the labels,
         /// sets alignment, and both images

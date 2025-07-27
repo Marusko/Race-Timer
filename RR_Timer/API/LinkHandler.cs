@@ -17,7 +17,6 @@ namespace Race_timer.API
     internal class LinkHandler
     {
         private static LinkHandler? _instance;
-
         private string _mainLink;
         private string? _countLink;
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
@@ -39,6 +38,7 @@ namespace Race_timer.API
             _timer.Interval = new TimeSpan(0, 0, 15);
             _timer.Start();
         }
+
         /// <summary>
         /// When count link is not entered, this constructor will be called and main link will be read
         /// </summary>
@@ -51,6 +51,11 @@ namespace Race_timer.API
             ReadMainLink();
         }
 
+        /// <summary>
+        /// Method for initializing the LinkHandler with only main API link
+        /// </summary>
+        /// <param name="mainLink">Main API link</param>
+        /// <returns></returns>
         public static LinkHandler Initialize(string mainLink)
         {
             if (_instance == null)
@@ -65,6 +70,13 @@ namespace Race_timer.API
 
             return _instance;
         }
+
+        /// <summary>
+        /// Method for initializing the LinkHandler with both main and count API links
+        /// </summary>
+        /// <param name="mainLink"></param>
+        /// <param name="countLink"></param>
+        /// <returns></returns>
         public static LinkHandler Initialize(string mainLink, string countLink)
         {
             if (_instance == null)
@@ -82,6 +94,11 @@ namespace Race_timer.API
             return _instance;
         }
 
+        /// <summary>
+        /// Method for retrieving singleton instance of LinkHandler
+        /// </summary>
+        /// <returns>Instance of LinkHandler</returns>
+        /// <exception cref="InvalidOperationException">When LinkHandler is not initialized first</exception>
         public static LinkHandler GetInstance()
         {
             if (_instance == null)
@@ -396,6 +413,14 @@ namespace Race_timer.API
             }
         }
 
+        /// <summary>
+        /// Reads starts API link, parse and set all loaded start times
+        /// If something went wrong, shows warning window
+        /// </summary>
+        /// <param name="apiLink">For loading starts API</param>
+        /// <param name="lastSeconds">Load all starts after certain time in seconds</param>
+        /// <param name="mw">Already created main window</param>
+        /// <returns></returns>
         public static async Task LoadStarts(string apiLink, int lastSeconds, MainWindow mw)
         {
             HttpResponseMessage response;

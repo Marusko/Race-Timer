@@ -9,6 +9,9 @@ namespace Race_timer.UI
     /// </summary>
     public partial class StartsWindow : Window
     {
+        /// <summary>
+        /// Initializes the window, adds method to call after window is loaded
+        /// </summary>
         public StartsWindow()
         {
             InitializeComponent();
@@ -22,6 +25,11 @@ namespace Race_timer.UI
             Closed += OnClose;
         }
 
+        /// <summary>
+        /// Method called after window is loaded, sets the position, state and width and height of window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WindowLoaded(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Maximized;
@@ -36,6 +44,11 @@ namespace Race_timer.UI
             Application.Current.Resources.Add("ControlSmallFontSize", controlSize * 5);
         }
 
+        /// <summary>
+        /// Not implemented
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClose(object? sender, EventArgs e)
         {
             

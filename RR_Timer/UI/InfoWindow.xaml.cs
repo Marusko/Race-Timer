@@ -60,6 +60,7 @@ namespace Race_timer.UI
         {
             _timer.Stop();
         }
+
         /// <summary>
         /// Starts the timer
         /// </summary>

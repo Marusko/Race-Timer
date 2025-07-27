@@ -36,10 +36,14 @@ namespace Race_timer.Logic
             _timer.Interval = new TimeSpan(0, 0, 20);
             _timer.Start();
             _dpiAwareSizes = new Dictionary<int, (int Width, int Height)>();
-            //CheckScreenAreas();
             SetScreenNames();
         }
 
+        /// <summary>
+        /// Method for ScreenHandler initialization
+        /// </summary>
+        /// <param name="mw">Already created MainWindow</param>
+        /// <returns>ScreenHandler instance</returns>
         public static ScreenHandler Initialize(MainWindow mw)
         {
             if (_instance == null)
@@ -50,6 +54,11 @@ namespace Race_timer.Logic
             return _instance;
         }
 
+        /// <summary>
+        /// Method for retrieving singleton instance of ScreenHandler
+        /// </summary>
+        /// <returns>Singleton instance of ScreenHandler</returns>
+        /// <exception cref="InvalidOperationException">When ScreenHandler is not initialized first</exception>
         public static ScreenHandler GetInstance()
         {
             if (_instance == null)
@@ -77,12 +86,20 @@ namespace Race_timer.Logic
             return _screenNames;
         }
 
+        /// <summary>
+        /// Save the selected screen
+        /// </summary>
+        /// <param name="index">Index of selected screen</param>
         public void SetSelectedScreen(int index)
         {
             _selectedScreenIndex = index;
             SelectedScreen = _screens[index];
         }
 
+        /// <summary>
+        /// Method for retrieving real sizes of selected screen
+        /// </summary>
+        /// <returns>Real width and height of selected screen</returns>
         public (int Width, int Height) GetSelectedScreenArea()
         {
             return SelectedScreenSize;
@@ -113,11 +130,17 @@ namespace Race_timer.Logic
             }
         }
 
+        /// <summary>
+        /// Method for checking selected screen sizes
+        /// </summary>
         public void CheckScreenArea()
         {
             SelectedScreenSize = GetMaximizedDpiAwareSize(_selectedScreenIndex);
         }
 
+        /// <summary>
+        /// Method for checking screen sizes for all screens
+        /// </summary>
         private void CheckScreenAreas()
         {
             for (var i = 0; i < _screens.Length; i++)
@@ -126,6 +149,12 @@ namespace Race_timer.Logic
             }
         }
 
+        /// <summary>
+        /// Method for checking the screen DPI aware sizes based on screen index
+        /// </summary>
+        /// <param name="screenIndex">Index of the screen to be checked</param>
+        /// <returns>DPI aware width and height of selected screen</returns>
+        /// <exception cref="ArgumentOutOfRangeException">When index is out of bounds of the screens array</exception>
         private (int Width, int Height) GetMaximizedDpiAwareSize(int screenIndex = 0)
         {
             if (screenIndex < 0 || screenIndex >= _screens.Length)

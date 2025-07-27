@@ -36,7 +36,7 @@ namespace Race_timer.UI
         public string ContestLink { get; set; } = "";
 
         /// <summary>
-        /// Initializes and shows the main window, creates new ScreenHandler and ClockLogic,
+        /// Initializes and shows the main window, creates new ScreenHandler, ClockLogic, DateTimeHandler and StartsController,
         /// sets values for event type combobox and screen combobox from screen handler and selects first screen in list
         /// sets OnCloseCloseTimerWindow to be called when closing main window and calls SetInfoLabel() method
         /// Sets ControlTab as disabled
@@ -140,7 +140,7 @@ namespace Race_timer.UI
         }
 
         /// <summary>
-        /// Process the start times, set clock window and alignment, set contest combobox and datagrid content
+        /// Process the start times, check selected screen real sizes, set clock window and alignment, set contest combobox and datagrid content
         /// </summary>
         private void OpenTimerStart()
         {
@@ -333,13 +333,18 @@ namespace Race_timer.UI
             CanOpenTimer = true;
         }
 
+        /// <summary>
+        /// Sets the new text for info panel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SetInfo(object? sender, EventArgs e)
         {
             ClockLogic.GetInstance().InfoText = NewInfoText.Text;
         }
 
         /// <summary>
-        /// Called when main window is closed, shuts down the application, closes clock window calls OnCLose(),
+        /// Called when main window is closed, shuts down the application, closes clock window and starts window if open, calls OnCLose(),
         /// stops the screen handler timer
         /// </summary>
         /// <param name="sender"></param>
@@ -491,6 +496,12 @@ namespace Race_timer.UI
             ww.ShowDialog();
         }
 
+        /// <summary>
+        /// Method called after individual starts check box is clicked, prepares the UI for only starts and delete logo image and QR code,
+        /// or for normal use and delete CSV starts file if loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EnableStarts(object sender, RoutedEventArgs e)
         {
             if (StartsEnableCheckbox.IsChecked is true)
@@ -507,6 +518,7 @@ namespace Race_timer.UI
                 StartsSetupButtons.IsEnabled = true;
                 ClockLogic.GetInstance().Starts = true;
                 DeleteImage(sender, e);
+                DeleteCode(sender, e);
             }
             else if (StartsEnableCheckbox.IsChecked is false)
             {
@@ -524,6 +536,12 @@ namespace Race_timer.UI
             }
         }
 
+        /// <summary>
+        /// Method called after Use API for individual start times check box is clicked, prepares the UI for starts API use and deletes CSV starts file if loaded,
+        /// or for CSV file use
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EnableApiStarts(object sender, RoutedEventArgs e)
         {
             if (ApiStartsCheckbox.IsChecked is true)
@@ -554,6 +572,11 @@ namespace Race_timer.UI
 
         }
 
+        /// <summary>
+        /// Opens a file dialog where user chooses the starts CSV file, starts are saved to StartsController dictionary
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoadCsvFile(object sender, RoutedEventArgs e)
         {
             try
@@ -571,6 +594,11 @@ namespace Race_timer.UI
             }
         }
 
+        /// <summary>
+        /// Clear StartsController dictionary, update necessary labels
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteCsvFile(object sender, RoutedEventArgs e)
         {
             DeleteStartsFileButton.IsEnabled = false;
@@ -578,6 +606,11 @@ namespace Race_timer.UI
             StartsController.GetInstance().ClearData();
         }
 
+        /// <summary>
+        /// Disables necessary tabs, check real selected screen sizes and calls StartsController.StartStarts(ApiLink)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenStartsTimer(object sender, RoutedEventArgs e)
         {
             LinkTimerTab.IsEnabled = false;
@@ -590,6 +623,11 @@ namespace Race_timer.UI
             StartsController.GetInstance().StartStarts(LinkText.Text);
         }
 
+        /// <summary>
+        /// Closes the starts window, enables necessary tabs, calls StartsController.StopStarts()
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseStartsTimer(object sender, RoutedEventArgs e)
         {
             if (ClockLogic.GetInstance().ApiStarts)
@@ -827,13 +865,18 @@ namespace Race_timer.UI
             Clipboard.SetText(ApiSetText.Text);
         }
 
+        /// <summary>
+        /// Copy individual starts API link to system clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CopyStartsLink(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(StartsSetText.Text);
         }
 
         /// <summary>
-        /// Load all API from link
+        /// Load all API from link or individual starts from API
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -94,6 +94,9 @@ namespace Race_timer.UI
             }
         }
 
+        /// <summary>
+        /// Calls current contest timer TimerClickLogic() method for updating time
+        /// </summary>
         public void TimerClickLogic()
         {
             Clock?.TimerClickLogic();
@@ -108,6 +111,11 @@ namespace Race_timer.UI
             ShowMiniClockOrTimer(ref TimerStackPanel);
         }
 
+        /// <summary>
+        /// Set only the event name
+        /// </summary>
+        /// <param name="name">Event name</param>
+        /// <param name="type">Not used</param>
         public void SetLabels(string name, string type)
         {
             SetEventName(name);
@@ -179,6 +187,7 @@ namespace Race_timer.UI
             Application.Current.Resources.Remove("ControlWidth");
             Application.Current.Resources.Add("ControlWidth", controlWidth);
         }
+
         /// <summary>
         /// Method sets chosen image to TimerImage, best used for rectangle logo
         /// </summary>
@@ -188,11 +197,19 @@ namespace Race_timer.UI
             TimerImage.Source = image;
         }
 
+        /// <summary>
+        /// Not implemented
+        /// </summary>
+        /// <param name="image"></param>
         public void SetCodeImage(BitmapSource image)
         {
             
         }
 
+        /// <summary>
+        /// Not implemented
+        /// </summary>
+        /// <param name="alignment"></param>
         public void SetChildren(UserControl alignment)
         {
             
