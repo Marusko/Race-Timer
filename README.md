@@ -182,7 +182,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
     * **Remove** - Removes this contest from the list
    
 ## Displaying
-![Fifth tab, with result settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/results.png)
+![Fifth tab, with result settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/results2.png)
 
 [Top](#race-timer)
   * **Results** - Tab for setting up the webview results and info panel
