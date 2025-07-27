@@ -60,7 +60,8 @@ namespace Race_timer.ClockUserControl
             Application.Current.Resources.Add("ControlSmallFontSize", controlSize * 5);
             if (_isClock && _nameLength <= 26)
             {
-                ContestTimeLabel.FontSize = 300;
+                ContestTimeLabel.FontSize = 400;
+                ContestTimeLabel.FontWeight = FontWeights.Bold;
             }
         }
 
