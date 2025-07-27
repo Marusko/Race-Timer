@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Race_timer.Resources;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 namespace Race_timer.Data;
@@ -8,112 +9,112 @@ namespace Race_timer.Data;
 /// </summary>
 public enum EventType
 {
-    [Display(Name = "Running")]
+    [Display(Name = "Running", ResourceType = typeof(EventTypeResource))]
     Running = 0,
 
-    [Display(Name = "Inline")]
+    [Display(Name = "Inline", ResourceType = typeof(EventTypeResource))]
     Inline = 1,
 
-    [Display(Name = "Mountain Bike")]
+    [Display(Name = "MountainBike", ResourceType = typeof(EventTypeResource))]
     MountainBike = 2,
 
-    [Display(Name = "Skiing")]
+    [Display(Name = "Skiing", ResourceType = typeof(EventTypeResource))]
     Skiing = 3,
 
-    [Display(Name = "Swimming")]
+    [Display(Name = "Swimming", ResourceType = typeof(EventTypeResource))]
     Swimming = 4,
 
-    [Display(Name = "Triathlon")]
+    [Display(Name = "Triathlon", ResourceType = typeof(EventTypeResource))]
     Triathlon = 5,
 
-    [Display(Name = "Duathlon")]
+    [Display(Name = "Duathlon", ResourceType = typeof(EventTypeResource))]
     Duathlon = 6,
 
-    [Display(Name = "Gigathlon")]
+    [Display(Name = "Gigathlon", ResourceType = typeof(EventTypeResource))]
     Gigathlon = 7,
 
-    [Display(Name = "Athletics")]
+    [Display(Name = "Athletics", ResourceType = typeof(EventTypeResource))]
     Athletics = 8,
 
-    [Display(Name = "Motorsports")]
+    [Display(Name = "Motorsports", ResourceType = typeof(EventTypeResource))]
     Motorsports = 9,
 
-    [Display(Name = "Other")]
+    [Display(Name = "Other", ResourceType = typeof(EventTypeResource))]
     Other = 10,
 
-    [Display(Name = "Cycling")]
+    [Display(Name = "Cycling", ResourceType = typeof(EventTypeResource))]
     Cycling = 11,
 
-    [Display(Name = "Aquathlon")]
+    [Display(Name = "Aquathlon", ResourceType = typeof(EventTypeResource))]
     Aquathlon = 12,
 
-    [Display(Name = "BMX")]
+    [Display(Name = "BMX", ResourceType = typeof(EventTypeResource))]
     BMX = 13,
 
-    [Display(Name = "Water Skiing")]
+    [Display(Name = "WaterSkiing", ResourceType = typeof(EventTypeResource))]
     WaterSkiing = 14,
 
-    [Display(Name = "Wakeboard")]
+    [Display(Name = "Wakeboard", ResourceType = typeof(EventTypeResource))]
     Wakeboard = 15,
 
-    [Display(Name = "Rowing")]
+    [Display(Name = "Rowing", ResourceType = typeof(EventTypeResource))]
     Rowing = 16,
 
-    [Display(Name = "Biathlon")]
+    [Display(Name = "Biathlon", ResourceType = typeof(EventTypeResource))]
     Biathlon = 17,
 
-    [Display(Name = "Speed Skating")]
+    [Display(Name = "SpeedSkating", ResourceType = typeof(EventTypeResource))]
     SpeedSkating = 18,
 
-    [Display(Name = "Sailing")]
+    [Display(Name = "Sailing", ResourceType = typeof(EventTypeResource))]
     Sailing = 19,
 
-    [Display(Name = "Cyclocross")]
+    [Display(Name = "Cyclocross", ResourceType = typeof(EventTypeResource))]
     Cyclocross = 20,
 
-    [Display(Name = "Walking")]
+    [Display(Name = "Walking", ResourceType = typeof(EventTypeResource))]
     Walking = 21,
 
-    [Display(Name = "Bike Tour")]
+    [Display(Name = "BikeTour", ResourceType = typeof(EventTypeResource))]
     BikeTour = 22,
 
-    [Display(Name = "Women's Run")]
+    [Display(Name = "WomensRun", ResourceType = typeof(EventTypeResource))]
     WomensRun = 23,
 
-    [Display(Name = "Cross Country Skiing")]
+    [Display(Name = "CrossCountrySkiing", ResourceType = typeof(EventTypeResource))]
     CrossCountrySkiing = 24,
 
-    [Display(Name = "Ski Mountaineering")]
+    [Display(Name = "SkiMountaineering", ResourceType = typeof(EventTypeResource))]
     SkiMountaineering = 25,
 
-    [Display(Name = "Sky Run")]
+    [Display(Name = "SkyRun", ResourceType = typeof(EventTypeResource))]
     SkyRun = 26,
 
-    [Display(Name = "Equestrian")]
+    [Display(Name = "Equestrian", ResourceType = typeof(EventTypeResource))]
     Equestrian = 27,
 
-    [Display(Name = "Snowboard")]
+    [Display(Name = "Snowboard", ResourceType = typeof(EventTypeResource))]
     Snowboard = 28,
 
-    [Display(Name = "Canicross")]
+    [Display(Name = "Canicross", ResourceType = typeof(EventTypeResource))]
     Canicross = 29,
 
-    [Display(Name = "Trial Running")]
+    [Display(Name = "TrialRunning", ResourceType = typeof(EventTypeResource))]
     TrialRunning = 30,
 
-    [Display(Name = "Motocross")]
+    [Display(Name = "Motocross", ResourceType = typeof(EventTypeResource))]
     Motocross = 31,
 
-    [Display(Name = "Sled Dog")]
+    [Display(Name = "SledDog", ResourceType = typeof(EventTypeResource))]
     SledDog = 33,
 
-    [Display(Name = "Obstacle Course Race")]
+    [Display(Name = "ObstacleCourseRace", ResourceType = typeof(EventTypeResource))]
     ObstacleCourseRace = 34,
 
-    [Display(Name = "Stand-up Paddleboarding")]
+    [Display(Name = "StandupPaddleboarding", ResourceType = typeof(EventTypeResource))]
     StandupPaddleboarding = 35,
 
-    [Display(Name = "Kayak")]
+    [Display(Name = "Kayak", ResourceType = typeof(EventTypeResource))]
     Kayak = 36
 }
 
