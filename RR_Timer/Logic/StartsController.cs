@@ -22,6 +22,7 @@ namespace Race_timer.Logic
         private DateTime? _lastNtp;
         private List<StartTime> _current;
         private List<StartTime> _next;
+        private int _startedCounter;
 
         private StartsController(MainWindow mw)
         {
@@ -211,13 +212,14 @@ namespace Race_timer.Logic
                         _startsWindow.NextParticipantLabel.Content = "";
                     }
 
-                    _startsWindow.ParticipantStartCounterLabel.Content = FormatStartTimeOrClock(_current.First().Time);
+                    _startsWindow.ParticipantStartCounterLabel.Content = FormatStartTimeOrClock(_current.First().Time ?? "00:00:00");
                 }
                 else
                 {
                     _startsWindow.StartsNameLabel.Text = "";
                     _startsWindow.NextParticipantLabel.Content = "";
                     _startsWindow.ParticipantStartCounterLabel.Content = FormatTime();
+                    _mainWindow.IndividualStartDataGrid.Items.Clear();
                 }
             }
         }
@@ -234,7 +236,18 @@ namespace Race_timer.Logic
                         _current.Clear();
                         _current.AddRange(_next);
                         GetNextStart();
-                        //TODO load next API data
+                        if (ClockLogic.GetInstance().ApiStarts && ClockLogic.GetInstance().Starts)
+                        {
+                            _startedCounter++;
+                            if (_startedCounter > 3)
+                            {
+                                _startedCounter = 0;
+                                if (TimeOnly.TryParse(_next.First().Time, out var apiParsed))
+                                {
+                                    LoadApiData(_startsLink, (int)Math.Round(apiParsed.ToTimeSpan().TotalSeconds));
+                                }
+                            }
+                        }
                     }
                 }
             }
