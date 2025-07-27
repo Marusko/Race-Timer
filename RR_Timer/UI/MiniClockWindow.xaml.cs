@@ -26,16 +26,14 @@ namespace Race_timer.UI
         /// Initializes the window, adds method to call after window is loaded
         /// If possible, start timer
         /// </summary>
-        /// <param name="cl">Already created ClockLogic object</param>
-        /// <param name="sh">Already created ScreenHandler object</param>
         public MiniClockWindow()
         {
             InitializeComponent();
 
             if (ScreenHandler.GetInstance().SelectedScreen == null) return;
             WindowState = WindowState.Minimized;
-            Left = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Left;
-            Top = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Top;
+            Left = ScreenHandler.GetInstance().SelectedScreen?.WorkingArea.Left ?? 0;
+            Top = ScreenHandler.GetInstance().SelectedScreen?.WorkingArea.Top ?? 0;
             Width = ScreenHandler.GetInstance().GetSelectedScreenArea().Width;
 
             Loaded += WindowLoaded;

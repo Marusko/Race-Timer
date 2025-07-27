@@ -24,7 +24,7 @@ namespace Race_timer.ClockUserControl
             get => _name;
             init
             {
-                StartNameText.Text = value;
+                StartNameText.Text = value ?? "";
                 _name = value;
             }
         }
@@ -33,7 +33,7 @@ namespace Race_timer.ClockUserControl
             get => _startTime;
             init
             {
-                StartTimeText.Text = value;
+                StartTimeText.Text = value ?? "00:00:00";
                 _startTime = value;
             }
         }

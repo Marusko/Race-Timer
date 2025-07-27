@@ -17,7 +17,6 @@ namespace Race_timer.Logic
         private readonly Thread _syncThread;
         private bool _running = true;
         private readonly object _lock = new();
-        private bool _synchronized = false;
         private MainWindow _mainWindow;
 
         public DateTime Now
@@ -93,8 +92,6 @@ namespace Race_timer.Logic
                     {
                         _lastClock = clock;
                     }
-                    var localNow = DateTime.UtcNow;
-                    var difference = (clock.UtcNow - localNow).TotalMilliseconds;
                     Application.Current.Dispatcher.InvokeAsync(() =>
                     {
                         _mainWindow.NtpStatusLabel.Content = "NTP success";

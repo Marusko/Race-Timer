@@ -779,15 +779,15 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void SetNewStartTime(object sender, RoutedEventArgs e)
         {
-            if (ContestComboBox?.SelectedItem == null) return;
+            if (ContestComboBox.SelectedItem == null) return;
             var newStart = ClockLogic.GetInstance().StringToDateTime(NewStartTime.Text);
-            var canSetTime = ClockLogic.GetInstance().StartTimes.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedStartTime);
+            var canSetTime = ClockLogic.GetInstance().StartTimes.TryGetValue(ContestComboBox.SelectedItem.ToString() ?? "", out _);
             if (!canSetTime) return;
-            ClockLogic.GetInstance().StartTimes[ContestComboBox.SelectedItem.ToString()] = newStart;
-            StartTimes[ContestComboBox.SelectedItem.ToString()] = NewStartTime.Text;
+            ClockLogic.GetInstance().StartTimes[ContestComboBox.SelectedItem.ToString() ?? ""] = newStart;
+            StartTimes[ContestComboBox.SelectedItem.ToString() ?? ""] = NewStartTime.Text;
             if (ClockLogic.GetInstance().ActiveTimers.Count > 0)
             {
-                var can = ClockLogic.GetInstance().ActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
+                var can = ClockLogic.GetInstance().ActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString() ?? "", out var selectedContest);
                 if (can && selectedContest != null)
                 {
                     selectedContest.StartTime = newStart;
@@ -795,7 +795,7 @@ namespace Race_timer.UI
             }
             else if (ClockLogic.GetInstance().MiniActiveTimers.Count > 0)
             {
-                var can = ClockLogic.GetInstance().MiniActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString(), out var selectedContest);
+                var can = ClockLogic.GetInstance().MiniActiveTimers.TryGetValue(ContestComboBox.SelectedItem.ToString() ?? "", out var selectedContest);
                 if (can && selectedContest != null)
                 {
                     selectedContest.StartTime = newStart;

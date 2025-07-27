@@ -7,7 +7,7 @@ namespace Race_timer.UI
     /// <summary>
     /// Interaction logic for StartsWindow.xaml
     /// </summary>
-    public partial class StartsWindow : Window
+    public partial class StartsWindow
     {
         /// <summary>
         /// Initializes the window, adds method to call after window is loaded
@@ -18,8 +18,8 @@ namespace Race_timer.UI
 
             if (ScreenHandler.GetInstance().SelectedScreen == null) return;
             WindowState = WindowState.Minimized;
-            Left = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Left;
-            Top = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Top;
+            Left = ScreenHandler.GetInstance().SelectedScreen?.WorkingArea.Left ?? 0;
+            Top = ScreenHandler.GetInstance().SelectedScreen?.WorkingArea.Top ?? 0;
 
             Loaded += WindowLoaded;
             Closed += OnClose;

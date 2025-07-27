@@ -29,7 +29,7 @@ namespace Race_timer.UI
 
             if (ScreenHandler.GetInstance().SelectedScreen == null) return;
             WindowState = WindowState.Minimized;
-            Left = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Left;
+            Left = ScreenHandler.GetInstance().SelectedScreen?.WorkingArea.Left ?? 0;
             Top = ScreenHandler.GetInstance().GetSelectedScreenArea().Height - 200;
             Width = ScreenHandler.GetInstance().GetSelectedScreenArea().Width;
 

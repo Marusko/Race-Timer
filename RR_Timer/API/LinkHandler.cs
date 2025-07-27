@@ -55,7 +55,7 @@ namespace Race_timer.API
         /// Method for initializing the LinkHandler with only main API link
         /// </summary>
         /// <param name="mainLink">Main API link</param>
-        /// <returns></returns>
+        /// <returns>Instance of LinkHandler</returns>
         public static LinkHandler Initialize(string mainLink)
         {
             if (_instance == null)
@@ -76,7 +76,7 @@ namespace Race_timer.API
         /// </summary>
         /// <param name="mainLink"></param>
         /// <param name="countLink"></param>
-        /// <returns></returns>
+        /// <returns>Instance of LinkHandler</returns>
         public static LinkHandler Initialize(string mainLink, string countLink)
         {
             if (_instance == null)
@@ -97,7 +97,7 @@ namespace Race_timer.API
         /// <summary>
         /// Method for retrieving singleton instance of LinkHandler
         /// </summary>
-        /// <returns>Instance of LinkHandler</returns>
+        /// <returns>Singleton instance of LinkHandler</returns>
         /// <exception cref="InvalidOperationException">When LinkHandler is not initialized first</exception>
         public static LinkHandler GetInstance()
         {
@@ -471,7 +471,6 @@ namespace Race_timer.API
                     var ww = new WarningWindow("Oops, something went wrong with starts API!\nError code: \n[Data from API are null]");
                     ww.ShowDialog();
                     mw.StartsStatusLabel.Content = "ERR";
-                    return;
                 }
             }
             else
@@ -479,7 +478,6 @@ namespace Race_timer.API
                 var ww = new WarningWindow($"Oops, something went wrong with starts API!\nError code: \n[{response.StatusCode}]");
                 ww.ShowDialog();
                 mw.StartsStatusLabel.Content = "ERR";
-                return;
             }
         }
 

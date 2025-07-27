@@ -12,7 +12,6 @@ namespace Race_timer.Logic
     /// </summary>
     public class ScreenHandler
     {
-        private Dictionary<int, (int Width, int Height)> _dpiAwareSizes;
         public (int Width, int Height) SelectedScreenSize { get; private set; } 
 
         private static ScreenHandler? _instance;
@@ -35,7 +34,6 @@ namespace Race_timer.Logic
             _timer.Tick += ReloadScreens;
             _timer.Interval = new TimeSpan(0, 0, 20);
             _timer.Start();
-            _dpiAwareSizes = new Dictionary<int, (int Width, int Height)>();
             SetScreenNames();
         }
 
@@ -139,17 +137,6 @@ namespace Race_timer.Logic
         }
 
         /// <summary>
-        /// Method for checking screen sizes for all screens
-        /// </summary>
-        private void CheckScreenAreas()
-        {
-            for (var i = 0; i < _screens.Length; i++)
-            {
-                _dpiAwareSizes[i] = GetMaximizedDpiAwareSize(i);
-            }
-        }
-
-        /// <summary>
         /// Method for checking the screen DPI aware sizes based on screen index
         /// </summary>
         /// <param name="screenIndex">Index of the screen to be checked</param>
@@ -177,7 +164,7 @@ namespace Race_timer.Logic
                 Height = 0
             };
 
-            dummyWindow.Loaded += (s, e) =>
+            dummyWindow.Loaded += (_, _) =>
             {
                 dummyWindow.WindowState = WindowState.Maximized;
 

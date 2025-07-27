@@ -19,8 +19,8 @@ namespace Race_timer.UI
             if (ScreenHandler.GetInstance().SelectedScreen == null) return;
             WindowState = WindowState.Minimized;
             var half = ((double)ScreenHandler.GetInstance().GetSelectedScreenArea().Width / 2) - (Width / 2);
-            Left = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Left + half;
-            Top = ScreenHandler.GetInstance().SelectedScreen.WorkingArea.Top;
+            Left = ScreenHandler.GetInstance().SelectedScreen?.WorkingArea.Left + half ?? half;
+            Top = ScreenHandler.GetInstance().SelectedScreen?.WorkingArea.Top ?? 0;
 
             Loaded += WindowLoaded;
         }

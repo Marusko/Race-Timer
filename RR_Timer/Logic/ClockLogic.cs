@@ -152,7 +152,7 @@ namespace Race_timer.Logic
             {
                 LinkHandler.GetInstance().StopTimer();
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
             }
             InfoWindow?.StopTimer();
