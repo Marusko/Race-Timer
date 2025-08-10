@@ -152,7 +152,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
   * **Open timer** - Open fullscreen timer, disables all tabs and enables **Timer control**
   
 ## Finish API Timer
-![Third tab, with API settings, API timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/apiTimer.png)
+![Third tab, with API settings, API timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/apiTimer321.png)
 
 [Top](#race-timer)
   * **API Timer** - Tab for entering links and setting up the API timer
