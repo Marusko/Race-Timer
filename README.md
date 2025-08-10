@@ -228,7 +228,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
         * Timer on left - Timer and clock on the left side, logo and QR code on the right side
         * Timer on right - Timer and clock on the right side, logo and QR code on the left side
 
-![Seventh tab, info](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/info.png)     
+![Seventh tab, info](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/info321.png)     
 
   * **Information** - Tab with informations about the application
 
