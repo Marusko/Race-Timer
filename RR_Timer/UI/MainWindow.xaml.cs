@@ -547,9 +547,13 @@ namespace Race_timer.UI
             if (ApiStartsCheckbox.IsChecked is true)
             {
                 StartsStatusGrid.IsEnabled = true;
+                MainStatusGrid.IsEnabled = false;
+                CountStatusGrid.IsEnabled = false;
+                ContestStatusGrid.IsEnabled = false;
                 EventStatusLabel.Content = "OFF";
                 CountStatusLabel.Content = "OFF"; 
                 ContestStatusLabel.Content = "OFF";
+                StartsStatusLabel.Content = "MIS";
                 LoadStartsFileButton.IsEnabled = false;
                 DeleteStartsFileButton.IsEnabled = false;
                 ClockLogic.GetInstance().ApiStarts = true;
@@ -560,10 +564,13 @@ namespace Race_timer.UI
             else if (ApiStartsCheckbox.IsChecked is false)
             {
                 StartsStatusGrid.IsEnabled = false;
+                MainStatusGrid.IsEnabled = true;
+                CountStatusGrid.IsEnabled = true;
+                ContestStatusGrid.IsEnabled = true;
                 EventStatusLabel.Content = "MIS";
                 CountStatusLabel.Content = "MIS";
                 ContestStatusLabel.Content = "MIS";
-                StartsStatusLabel.Content = "MIS";
+                StartsStatusLabel.Content = "OFF";
                 LoadStartsFileButton.IsEnabled = true;
                 ClockLogic.GetInstance().ApiStarts = false;
                 LinkTimerTab.IsEnabled = false;
