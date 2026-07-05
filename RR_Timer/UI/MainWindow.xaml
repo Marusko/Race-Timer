@@ -7,8 +7,11 @@
         x:Class="Race_timer.UI.MainWindow"
         mc:Ignorable="d"
         Title="Race Timer" Height="450" Width="800"
-        Style="{StaticResource MaterialDesignWindow}"
-        WindowStartupLocation="CenterScreen" 
+        Background="{StaticResource WindowBackgroundBrush}"
+        Foreground="{StaticResource TextPrimaryBrush}"
+        FontFamily="Segoe UI" FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" UseLayoutRounding="True"
+        WindowStartupLocation="CenterScreen"
         Icon="/UI/onlyRmini.png" ResizeMode="CanMinimize">
     <Grid>
         <TabControl x:Name="TabControl" TabStripPlacement="Left">
@@ -369,27 +372,22 @@
                             <Label Content="Race timer" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 40, 0, 0" FontSize="40" FontWeight="SemiBold"/>
                             <Label x:Name="InfoLabel" Content="Info" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top"/>
                             <Label HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Hyperlink Click="OpenGithub" Foreground="#FF30E433">
+                                <Hyperlink Click="OpenGithub">
                                     <Run Text="Github"/>
                                 </Hyperlink>
                             </Label>
-                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,110,0,0">
-                                <Hyperlink Click="OpenMaterialDesignPage" Foreground="#FF30E433">
-                                    <Run Text="Material design themes"/>
-                                </Hyperlink>
-                            </Label>
                             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,80,0,0">
-                                <Hyperlink Click="OpenJsonPage" Foreground="#FF30E433">
+                                <Hyperlink Click="OpenJsonPage">
                                     <Run Text="JSON processing framework"/>
                                 </Hyperlink>
                             </Label>
-                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,140,0,0">
-                                <Hyperlink Click="OpenCodePage" Foreground="#FF30E433">
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,110,0,0">
+                                <Hyperlink Click="OpenCodePage">
                                     <Run Text="QR code generator"/>
                                 </Hyperlink>
                             </Label>
-                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,170,0,0">
-                                <Hyperlink Click="OpenNptPage" Foreground="#FF30E433">
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,140,0,0">
+                                <Hyperlink Click="OpenNptPage">
                                     <Run Text="NTP library"/>
                                 </Hyperlink>
                             </Label>

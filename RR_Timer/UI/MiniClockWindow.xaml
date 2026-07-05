@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="MiniClockWindow" Height="100"
         WindowStyle="None" ShowInTaskbar="False" Topmost="True" Left="0" Top="0"
-        Style="{StaticResource MaterialDesignWindow}"
+        Background="{StaticResource WindowBackgroundBrush}"
+        Foreground="{StaticResource TextPrimaryBrush}"
+        FontFamily="Segoe UI" TextOptions.TextFormattingMode="Ideal" UseLayoutRounding="True"
         Icon="/UI/onlyRmini.png" IsTabStop="False"
         ResizeMode="NoResize">
         <Grid>

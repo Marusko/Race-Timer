@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using QRCoder;
+using Race_timer.UI;
 
 namespace Race_timer.API
 {
@@ -45,7 +46,7 @@ namespace Race_timer.API
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                new WarningWindow(ex.Message).ShowDialog();
             }
 
             return bitmapSource;

@@ -7,7 +7,9 @@
         xmlns:ui="clr-namespace:Race_timer.UI"
         mc:Ignorable="d"
         Title="WebViewClock" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" ShowInTaskbar="False"
-        Style="{StaticResource MaterialDesignWindow}"
+        Background="{StaticResource WindowBackgroundBrush}"
+        Foreground="{StaticResource TextPrimaryBrush}"
+        FontFamily="Segoe UI" TextOptions.TextFormattingMode="Ideal" UseLayoutRounding="True"
         Icon="/UI/onlyRmini.png"
         ResizeMode="NoResize" IsTabStop="False">
     <Grid>

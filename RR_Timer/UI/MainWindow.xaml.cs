@@ -939,16 +939,6 @@ namespace Race_timer.UI
         }
 
         /// <summary>
-        /// Method called by Material design hyperlink, opens Material design Github page
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenMaterialDesignPage(object sender, RoutedEventArgs e)
-        {
-            OpenUrl("https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit");
-        }
-
-        /// <summary>
         /// Method called by QR code generator hyperlink, opens QR code generator page
         /// </summary>
         /// <param name="sender"></param>
