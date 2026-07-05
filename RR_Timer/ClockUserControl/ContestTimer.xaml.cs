@@ -60,14 +60,15 @@ namespace Race_timer.ClockUserControl
             Application.Current.Resources.Add("ControlSmallFontSize", controlSize * 5);
             if (_isClock && _nameLength <= 26)
             {
-                //big clock font is limited by screen width, with left/right alignment it shares the row with logo and QR code
+                //big clock font is limited so the event name, small clock and logo still fit vertically;
+                //with left/right alignment it also shares the row with the logo and QR code
                 if (ClockLogic.GetInstance().SelectedAlignment is TimerLeft or TimerRight)
                 {
-                    ContestTimeLabel.FontSize = Math.Min(400, (double)_screenWidth / 8);
+                    ContestTimeLabel.FontSize = Math.Min(360, (double)_screenWidth / 8);
                 }
                 else
                 {
-                    ContestTimeLabel.FontSize = Math.Min(400, (double)_screenWidth / 5);
+                    ContestTimeLabel.FontSize = Math.Min(360, (double)_screenWidth / 6);
                 }
                 ContestTimeLabel.FontWeight = FontWeights.Bold;
             }

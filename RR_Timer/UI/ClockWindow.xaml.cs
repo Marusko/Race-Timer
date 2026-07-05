@@ -47,6 +47,9 @@ namespace Race_timer.UI
             Application.Current.Resources.Add("ControlFontSize", controlSize * 10);
             Application.Current.Resources.Remove("ControlSmallFontSize");
             Application.Current.Resources.Add("ControlSmallFontSize", controlSize * 5);
+            //event name uses a smaller font than the timers so it doesn't push the timers and logo off screen
+            Application.Current.Resources.Remove("ControlNameFontSize");
+            Application.Current.Resources.Add("ControlNameFontSize", controlSize * 8);
 
             SetTimersMaxHeight();
         }
