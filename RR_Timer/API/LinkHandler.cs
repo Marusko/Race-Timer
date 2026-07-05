@@ -427,7 +427,7 @@ namespace Race_timer.API
             var httpClient = new HttpClient();
             try
             {
-                response = await httpClient.GetAsync($"{apiLink}?&filter=Start.ToD.Decimal%3E{lastSeconds}");
+                response = await httpClient.GetAsync($"{apiLink}?&filter={Uri.EscapeDataString(mw.StartsFilterField)}%3E{lastSeconds}");
             }
             catch (Exception e)
             {

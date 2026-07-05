@@ -21,11 +21,20 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <CheckBox Grid.Row="0" x:Name="StartsEnableCheckbox" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Enable individual starts" Click="EnableStarts">Enable individual starts</CheckBox>
                             <CheckBox Grid.Row="1" x:Name="ApiStartsCheckbox" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 20 0 0" ToolTip="Use starts list from API" IsEnabled="False" Click="EnableApiStarts">Use list from API</CheckBox>
-                            <Label Grid.Row="2" Content="Or upload CSV file" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Center" FontSize="16"/>
-                            <Grid x:Name="StartsSetupButtons" Grid.Row="3" Margin="0 20 0 0" IsEnabled="False">
+                            <Grid Grid.Row="2" Margin="0 20 0 0" HorizontalAlignment="Center" IsEnabled="{Binding IsChecked, ElementName=ApiStartsCheckbox}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="Start time filter field" FontSize="16" VerticalAlignment="Center"/>
+                                <TextBox Grid.Column="1" x:Name="StartsFilterText" Text="Start.ToD.Decimal" FontSize="16" Width="220" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Consolas" ToolTip="Race Result field with start time of day in seconds, used to filter loaded starts"/>
+                            </Grid>
+                            <Label Grid.Row="3" Content="Or upload CSV file" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Center" FontSize="16"/>
+                            <Grid x:Name="StartsSetupButtons" Grid.Row="4" Margin="0 20 0 0" IsEnabled="False">
                                 <Label x:Name="StartsFileName" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16"/>
                                 <Button x:Name="LoadStartsFileButton" Content="Select file" HorizontalAlignment="Center" Click="LoadCsvFile" Margin="0,30,100,0" VerticalAlignment="Top" ToolTip="Select CSV file from PC"/>
                                 <Button x:Name="DeleteStartsFileButton" Content="Delete file" HorizontalAlignment="Center" Click="DeleteCsvFile" Margin="100,30,0,0" VerticalAlignment="Top" IsEnabled="False" ToolTip="Clear starts file"/>

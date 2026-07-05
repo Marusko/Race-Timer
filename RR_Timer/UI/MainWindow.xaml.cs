@@ -35,6 +35,16 @@ namespace Race_timer.UI
         public string CountLink { get; set; } = "";
         public string ContestLink { get; set; } = "";
 
+        private const string DefaultStartsFilterField = "Start.ToD.Decimal";
+
+        /// <summary>
+        /// Race Result field used to filter loaded starts by time of day,
+        /// entered by user with "Start.ToD.Decimal" as default
+        /// </summary>
+        public string StartsFilterField => string.IsNullOrWhiteSpace(StartsFilterText.Text)
+            ? DefaultStartsFilterField
+            : StartsFilterText.Text.Trim();
+
         /// <summary>
         /// Initializes and shows the main window, creates new ScreenHandler, ClockLogic, DateTimeHandler and StartsController,
         /// sets values for event type combobox and screen combobox from screen handler and selects first screen in list
