@@ -171,7 +171,7 @@ namespace Race_timer.UI
             }
             else if (ClockLogic.GetInstance().ActiveTimers.Values.Count > 0 && ClockLogic.GetInstance().ActiveTimers.Values.Count == timers.Children.Count)
             {
-                if (_clockInPanel)
+                if (_clockInPanel || (timers.Children.Count == 1 && ((ContestTimer)timers.Children[0]).Clock))
                 {
                     timers.Children.Clear();
                     _clockInPanel = false;
@@ -188,7 +188,9 @@ namespace Race_timer.UI
             }
             else if (ClockLogic.GetInstance().ActiveTimers.Values.Count != timers.Children.Count)
             {
-                if (timers.Children.Count == 1 && ((ContestTimer)timers.Children[0]).Clock)
+                //keep the clock only while no contest timer is running, otherwise it must be replaced
+                if (timers.Children.Count == 1 && ((ContestTimer)timers.Children[0]).Clock
+                    && ClockLogic.GetInstance().ActiveTimers.Values.Count == 0)
                 {
                     return;
                 }
