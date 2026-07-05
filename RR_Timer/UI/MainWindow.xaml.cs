@@ -11,7 +11,6 @@ using Race_timer.ClockUserControl;
 using Race_timer.Data;
 using Race_timer.Logic;
 using Application = System.Windows.Application;
-using Clipboard = System.Windows.Clipboard;
 
 namespace Race_timer.UI
 {
@@ -840,56 +839,6 @@ namespace Race_timer.UI
                     ((WebViewClockWindow)_clockWindow).WebView.Reload();
                 }
             }
-        }
-
-        /// <summary>
-        /// Copy event link settings to system clipboard
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CopyEventLink(object sender, RoutedEventArgs e)
-        {
-            Clipboard.SetText(EventSetText.Text);
-        }
-
-        /// <summary>
-        /// Copy count link settings to system clipboard
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CopyCountLink(object sender, RoutedEventArgs e)
-        {
-            Clipboard.SetText(CountSetText.Text);
-        }
-
-        /// <summary>
-        /// Copy contest link settings to system clipboard
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CopyContestLink(object sender, RoutedEventArgs e)
-        {
-            Clipboard.SetText(ContestSetText.Text);
-        }
-
-        /// <summary>
-        /// Copy All API link settings to system clipboard
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CopyApiLink(object sender, RoutedEventArgs e)
-        {
-            Clipboard.SetText(ApiSetText.Text);
-        }
-
-        /// <summary>
-        /// Copy individual starts API link to system clipboard
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CopyStartsLink(object sender, RoutedEventArgs e)
-        {
-            Clipboard.SetText(StartsSetText.Text);
         }
 
         /// <summary>

@@ -1,20 +1,23 @@
-﻿<UserControl x:Class="Race_timer.ClockUserControl.MainWindowStartTimes"
+<UserControl x:Class="Race_timer.ClockUserControl.MainWindowStartTimes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="440">
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="40" d:DesignWidth="600">
+    <Grid Margin="6,4">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="IndexLabel" Grid.Column="0" Content="01:" FontSize="16" Width="30"/>
-        <TextBox x:Name="StartNameText" Grid.Column="1" Margin="10, 0" FontSize="16" Width="200" TextAlignment="Center" TextWrapping="Wrap" ToolTip="Contest name" HorizontalContentAlignment="Center" MaxLength="26"/>
-        <TextBox x:Name="StartTimeText" Grid.Column="2" Margin="0,0,10,0" Text="00:00:00" FontSize="16" Width="75" TextAlignment="Center" ToolTip="Contest start time"/>
-        <Button Grid.Column="3" Content="Remove" Click="Close" ToolTip="Remove this contest with start time"/>
+        <Label x:Name="IndexLabel" Grid.Column="0" Content="01:" VerticalAlignment="Center" Width="34"/>
+        <TextBox x:Name="StartNameText" Grid.Column="1" Margin="6,0" VerticalAlignment="Center" TextAlignment="Left"
+                 TextWrapping="NoWrap" ToolTip="Contest name" MaxLength="26"/>
+        <TextBox x:Name="StartTimeText" Grid.Column="2" Margin="0,0,6,0" Text="00:00:00" Width="92"
+                 VerticalAlignment="Center" TextAlignment="Center" ToolTip="Contest start time"/>
+        <Button x:Name="RemoveButton" Grid.Column="3" Content="Remove" Click="Close"
+                Style="{StaticResource SecondaryButtonStyle}" ToolTip="Remove this contest with start time"/>
     </Grid>
 </UserControl>

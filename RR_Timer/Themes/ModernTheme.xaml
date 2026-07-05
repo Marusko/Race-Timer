@@ -49,6 +49,43 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
+    <Style x:Key="SectionTitleStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+    </Style>
+
+    <Style x:Key="FieldLabelStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+        <Setter Property="Margin" Value="2,14,0,5" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <!-- Status value label (OK / ERR / OFF / NTP ...), colored by its text -->
+    <Style x:Key="StatusValueStyle" TargetType="Label">
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+        <Style.Triggers>
+            <Trigger Property="Content" Value="OK">
+                <Setter Property="Foreground" Value="{StaticResource SuccessBrush}" />
+            </Trigger>
+            <Trigger Property="Content" Value="ERR">
+                <Setter Property="Foreground" Value="{StaticResource ErrorBrush}" />
+            </Trigger>
+            <Trigger Property="Content" Value="OFF">
+                <Setter Property="Foreground" Value="{StaticResource WarningBrush}" />
+            </Trigger>
+            <Trigger Property="Content" Value="NTP success">
+                <Setter Property="Foreground" Value="{StaticResource SuccessBrush}" />
+            </Trigger>
+            <Trigger Property="Content" Value="NTP fail">
+                <Setter Property="Foreground" Value="{StaticResource ErrorBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="Label">
         <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
         <Setter Property="FontSize" Value="13" />
@@ -150,7 +187,7 @@
         <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource InputBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Padding" Value="9,7" />
+        <Setter Property="Padding" Value="9,5" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="CaretBrush" Value="{StaticResource AccentBrush}" />
         <Setter Property="SelectionBrush" Value="{StaticResource AccentBrush}" />
@@ -186,9 +223,9 @@
         <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource InputBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Padding" Value="10,7" />
+        <Setter Property="Padding" Value="9,5" />
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="MinHeight" Value="34" />
+        <Setter Property="MinHeight" Value="30" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
@@ -376,12 +413,18 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
         <Setter Property="Padding" Value="0" />
+        <!-- make the selected content fill the whole content area, otherwise nested
+             TabControls shrink-wrap and everything drifts to the top-left -->
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabControl">
                     <Grid x:Name="g" ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="ColumnDefinition0" Width="Auto" />
+                            <!-- default (Top placement): content lives in column 0, so it must be * to
+                                 fill width; the Left-placement trigger below flips these for the sidebar -->
+                            <ColumnDefinition x:Name="ColumnDefinition0" Width="*" />
                             <ColumnDefinition x:Name="ColumnDefinition1" Width="0" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -396,7 +439,8 @@
                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                 KeyboardNavigation.TabIndex="2">
                             <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent"
-                                              Margin="{TemplateBinding Padding}" SnapsToDevicePixels="True" />
+                                              Margin="{TemplateBinding Padding}" SnapsToDevicePixels="True"
+                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -423,7 +467,6 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Padding" Value="13,9" />
-        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
