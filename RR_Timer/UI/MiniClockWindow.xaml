@@ -1,13 +1,14 @@
-﻿<Window x:Class="Race_timer.UI.MiniClockWindow"
+<ui:MiniClockWindowBase x:Class="Race_timer.UI.MiniClockWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="clr-namespace:Race_timer.UI"
         mc:Ignorable="d"
         Title="MiniClockWindow" Height="100"
         WindowStyle="None" ShowInTaskbar="False" Topmost="True" Left="0" Top="0"
         Style="{StaticResource MaterialDesignWindow}"
-        Icon="/UI/onlyRmini.png" IsTabStop="False" 
+        Icon="/UI/onlyRmini.png" IsTabStop="False"
         ResizeMode="NoResize">
         <Grid>
             <ScrollViewer x:Name="EventNameScrollViewer" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" MaxWidth="{DynamicResource ControlWidth}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" CanContentScroll="False">
@@ -16,4 +17,4 @@
             <StackPanel x:Name="TimerStackPanel" Orientation="Vertical" HorizontalAlignment="Right" Margin="0,-10,40,0" VerticalAlignment="Center"/>
             <Image x:Name="TimerImage" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         </Grid>
-</Window>
+</ui:MiniClockWindowBase>

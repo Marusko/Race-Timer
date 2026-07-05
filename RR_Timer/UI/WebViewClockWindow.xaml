@@ -1,13 +1,14 @@
-﻿<Window x:Class="Race_timer.UI.WebViewClockWindow"
+<ui:MiniClockWindowBase x:Class="Race_timer.UI.WebViewClockWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        xmlns:ui="clr-namespace:Race_timer.UI"
         mc:Ignorable="d"
         Title="WebViewClock" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" ShowInTaskbar="False"
         Style="{StaticResource MaterialDesignWindow}"
-        Icon="/UI/onlyRmini.png" 
+        Icon="/UI/onlyRmini.png"
         ResizeMode="NoResize" IsTabStop="False">
     <Grid>
         <Grid.RowDefinitions>
@@ -25,4 +26,4 @@
             <wv2:WebView2 Name="WebView"/>
         </DockPanel>
     </Grid>
-</Window>
+</ui:MiniClockWindowBase>

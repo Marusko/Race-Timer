@@ -1,273 +1,32 @@
-﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using Race_timer.ClockUserControl;
 using Race_timer.Logic;
-using Race_timer.Logic.Interfaces;
 
 namespace Race_timer.UI
 {
     /// <summary>
     /// Interaction logic for MiniClockWindow.xaml
     /// </summary>
-    public partial class MiniClockWindow:IClockWindow
+    public partial class MiniClockWindow
     {
-        private readonly System.Windows.Threading.DispatcherTimer _timer = new();
-        private int _showTimerIndex;
-
-        private readonly System.Windows.Threading.DispatcherTimer _nameScrollTimer = new();
-        private int _stateOfScroll = ClockLogic.ScrollBegin;
-        private int _currentTime;
-        private int _currentDelay;
-
-        private const int TimerShownForSeconds = 5;
-        private const int ScrollDelay = 500;
-        private const int ScrollTimes = 1;
-        private const int ScrollTimerMillis = 10;
-
-        private bool _clockInMiniPanel;
-        public MiniContestTimer? Clock { get; set; }
+        protected override TextBlock EventNameText => EventNameMini;
+        protected override StackPanel TimersPanel => TimerStackPanel;
+        protected override Image LogoImage => TimerImage;
+        protected override ScrollViewer EventNameScroller => EventNameScrollViewer;
+        protected override WindowState LoadedWindowState => WindowState.Normal;
 
         /// <summary>
-        /// Initializes the window, adds method to call after window is loaded
-        /// If possible, start timer
+        /// Initializes the window, sets width to screen width, base sets up timers and position
         /// </summary>
         public MiniClockWindow()
         {
             InitializeComponent();
 
-            if (ScreenHandler.GetInstance().SelectedScreen == null) return;
-            WindowState = WindowState.Minimized;
-            Left = ScreenHandler.GetInstance().SelectedScreen?.WorkingArea.Left ?? 0;
-            Top = ScreenHandler.GetInstance().SelectedScreen?.WorkingArea.Top ?? 0;
-            Width = ScreenHandler.GetInstance().GetSelectedScreenArea().Width;
-
-            Loaded += WindowLoaded;
-            Closed += StopTimer;
-            _timer.Tick += TimerTick;
-            _timer.Interval = new TimeSpan(0, 0, TimerShownForSeconds);
-            _nameScrollTimer.Tick += NameScrollTimerTick;
-            _nameScrollTimer.Interval = new TimeSpan(0, 0, 0, 0, ScrollTimerMillis);
-            _nameScrollTimer.Start();
-            TimerTickLogic();
-            if (ClockLogic.GetInstance().MiniActiveTimers.Count > 0)
+            if (ScreenHandler.GetInstance().SelectedScreen != null)
             {
-                _timer.Start();
+                Width = ScreenHandler.GetInstance().GetSelectedScreenArea().Width;
             }
-        }
-
-        /// <summary>
-        /// Sets the label to correct name
-        /// </summary>
-        /// <param name="name">Event name to show</param>
-        private void SetEventName(string name)
-        {
-            EventNameMini.Text = name;
-        }
-
-        /// <summary>
-        /// Stops the timer
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void StopTimer(object? sender, EventArgs e)
-        {
-            _timer.Stop();
-            _nameScrollTimer.Stop();
-        }
-
-        /// <summary>
-        /// Called by timer, scrolls the event name horizontally when it doesn't fit, waits on beginning and end
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void NameScrollTimerTick(object? sender, EventArgs e)
-        {
-            if (EventNameScrollViewer.ScrollableWidth > 0)
-            {
-                if (_currentDelay != ScrollDelay && (_stateOfScroll == ClockLogic.ScrollBegin || _stateOfScroll == ClockLogic.ScrollEnd))
-                {
-                    _currentDelay++;
-                }
-                else
-                {
-                    if (_stateOfScroll == ClockLogic.ScrollBegin)
-                    {
-                        _stateOfScroll = ClockLogic.Scrolling;
-                    }
-                    else if (_stateOfScroll == ClockLogic.Scrolling)
-                    {
-                        if (EventNameScrollViewer.HorizontalOffset >= EventNameScrollViewer.ScrollableWidth)
-                        {
-                            _currentTime = 0;
-                            _stateOfScroll = ClockLogic.ScrollEnd;
-                        }
-                        else
-                        {
-                            _currentTime++;
-                            EventNameScrollViewer.ScrollToHorizontalOffset(_currentTime * ScrollTimes);
-                            EventNameScrollViewer.UpdateLayout();
-                        }
-                    }
-                    else if (_stateOfScroll == ClockLogic.ScrollEnd)
-                    {
-                        EventNameScrollViewer.ScrollToLeftEnd();
-                        EventNameScrollViewer.UpdateLayout();
-                        _stateOfScroll = ClockLogic.ScrollBegin;
-                    }
-                    _currentDelay = 0;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Method called by timer, call TimerTickLogic()
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TimerTick(object? sender, EventArgs e)
-        {
-            TimerTickLogic();
-        }
-
-        /// <summary>
-        /// Switches between start times every 5 seconds
-        /// </summary>
-        public void TimerTickLogic()
-        {
-            if (ClockLogic.GetInstance().MiniActiveTimers.Values.Count > 0)
-            {
-                if (_showTimerIndex >= ClockLogic.GetInstance().MiniActiveTimers.Values.Count)
-                {
-                    _showTimerIndex = 0;
-                }
-                TimerStackPanel.Children.Clear();
-                TimerStackPanel.Children.Add(ClockLogic.GetInstance().MiniActiveTimers.Values.ElementAt(_showTimerIndex));
-                _showTimerIndex++;
-            }
-        }
-
-        /// <summary>
-        /// Calls current contest timer TimerClickLogic() method for updating time
-        /// </summary>
-        public void TimerClickLogic()
-        {
-            Clock?.TimerClickLogic();
-        }
-
-        /// <summary>
-        /// Method to update timer label with correct time
-        /// Method called by ClockLogic timer
-        /// </summary>
-        public void OnTimerClick()
-        {
-            ShowMiniClockOrTimer(ref TimerStackPanel);
-        }
-
-        /// <summary>
-        /// Set only the event name
-        /// </summary>
-        /// <param name="name">Event name</param>
-        /// <param name="type">Not used</param>
-        public void SetLabels(string name, string type)
-        {
-            SetEventName(name);
-        }
-
-        /// <summary>
-        /// If current time is less than start time show clock, else show timer in minimized clock
-        /// </summary>
-        /// <param name="timers">Timer StackPanel from minimized clock</param>
-        private void ShowMiniClockOrTimer(ref StackPanel timers)
-        {
-            if (ClockLogic.GetInstance().MiniActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
-            {
-                AddClock(ref timers);
-            }
-            else if (ClockLogic.GetInstance().MiniActiveTimers.Values.Count == 0)
-            {
-                if (ScreenHandler.GetInstance().SelectedScreen == null) return;
-                if (_clockInMiniPanel) return;
-                TimerStackPanel.Children.Clear();
-                _timer.Stop();
-                AddClock(ref timers);
-            }
-            else if (ClockLogic.GetInstance().MiniActiveTimers.Values.Count > 0)
-            {
-                if (_clockInMiniPanel)
-                {
-                    TimerTickLogic();
-                    _clockInMiniPanel = false;
-                    Clock = null;
-                    _timer.Start();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Add clock to timers stack panel
-        /// </summary>
-        /// <param name="timers">Timer StackPanel from minimized clock</param>
-        private void AddClock(ref StackPanel timers)
-        {
-            timers.Children.Clear();
-            if (ScreenHandler.GetInstance().SelectedScreen == null) return;
-            var clock = new MiniContestTimer(ScreenHandler.GetInstance().GetSelectedScreenArea().Width, true)
-            {
-                Name = " "
-            };
-            timers.Children.Add(clock);
-            _clockInMiniPanel = true;
-            Clock = clock;
-        }
-
-        /// <summary>
-        /// Method called after window is loaded, sets the position, state and width of window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void WindowLoaded(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Normal;
-            
-            //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
-            var controlSize = (double)ScreenHandler.GetInstance().GetSelectedScreenArea().Width / 12 / 3 * 2 / 5 * 0.7;
-            Application.Current.Resources.Remove("ControlFontSize");
-            Application.Current.Resources.Add("ControlFontSize", controlSize * 3 - 5);
-
-            //Accepted answer from https://learn.microsoft.com/en-us/answers/questions/384918/how-to-scale-font-size-in-wpf
-            var controlWidth = (double)ScreenHandler.GetInstance().GetSelectedScreenArea().Width / 3 - 50;
-            Application.Current.Resources.Remove("ControlWidth");
-            Application.Current.Resources.Add("ControlWidth", controlWidth);
-        }
-
-        /// <summary>
-        /// Method sets chosen image to TimerImage, best used for rectangle logo
-        /// </summary>
-        /// <param name="image">Image to be shown</param>
-        public void SetImage(BitmapImage image)
-        {
-            TimerImage.Source = image;
-        }
-
-        /// <summary>
-        /// Not implemented
-        /// </summary>
-        /// <param name="image"></param>
-        public void SetCodeImage(BitmapSource image)
-        {
-            
-        }
-
-        /// <summary>
-        /// Not implemented
-        /// </summary>
-        /// <param name="alignment"></param>
-        public void SetChildren(UserControl alignment)
-        {
-            
+            InitializeMiniClock();
         }
     }
 }
