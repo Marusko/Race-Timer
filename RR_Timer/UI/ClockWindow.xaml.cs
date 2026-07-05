@@ -61,23 +61,15 @@ namespace Race_timer.UI
             {
                 return;
             }
-            switch (Alignment())
-            {
-                case TimerLeft left:
-                    left.TimerScrollViewer.MaxHeight = 400;
-                    break;
-                case TimerRight right:
-                    right.TimerScrollViewer.MaxHeight = 400;
-                    break;
-            }
+            Alignment()?.LimitTimersHeight();
         }
 
         /// <summary>
-        /// Currently set alignment UserControl, or null when none is set yet
+        /// Currently set alignment, or null when none is set yet
         /// </summary>
-        private UIElement? Alignment()
+        private TimerAlignmentBase? Alignment()
         {
-            return TimerPanel.Children.Count > 0 ? TimerPanel.Children[0] : null;
+            return TimerPanel.Children.Count > 0 ? TimerPanel.Children[0] as TimerAlignmentBase : null;
         }
 
         /// <summary>
@@ -87,18 +79,7 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void OnClose(object? sender, EventArgs e)
         {
-            switch (Alignment())
-            {
-                case TimerTop top:
-                    top.StopTimer();
-                    break;
-                case TimerLeft left:
-                    left.StopTimer();
-                    break;
-                case TimerRight right:
-                    right.StopTimer();
-                    break;
-            }
+            Alignment()?.StopTimer();
         }
 
         /// <summary>
@@ -141,18 +122,9 @@ namespace Race_timer.UI
         /// </summary>
         public void OnTimerClick()
         {
-            switch (Alignment())
-            {
-                case TimerTop top:
-                    ShowClockOrTimer(ref top.TimerStackPanel, ref top.MainClockLabel);
-                    break;
-                case TimerLeft left:
-                    ShowClockOrTimer(ref left.TimerStackPanel, ref left.MainClockLabel);
-                    break;
-                case TimerRight right:
-                    ShowClockOrTimer(ref right.TimerStackPanel, ref right.MainClockLabel);
-                    break;
-            }
+            var alignment = Alignment();
+            if (alignment == null) return;
+            ShowClockOrTimer(alignment.Timers, alignment.MainClock);
         }
 
         /// <summary>
@@ -172,11 +144,11 @@ namespace Race_timer.UI
         /// </summary>
         /// <param name="timers">Timer StackPanel from fullscreen clock</param>
         /// <param name="clock">Clock label from fullscreen clock</param>
-        private void ShowClockOrTimer(ref StackPanel timers, ref Label clock)
+        private void ShowClockOrTimer(StackPanel timers, Label clock)
         {
             if (ClockLogic.GetInstance().ActiveTimers.Values.Count == 0 && timers.Children.Count == 0)
             {
-                AddClock(ref timers, ref clock);
+                AddClock(timers, clock);
             }
             else if (ClockLogic.GetInstance().ActiveTimers.Values.Count > 0 && ClockLogic.GetInstance().ActiveTimers.Values.Count == timers.Children.Count)
             {
@@ -206,7 +178,7 @@ namespace Race_timer.UI
                 timers.Children.Clear();
                 if (ClockLogic.GetInstance().ActiveTimers.Values.Count == 0)
                 {
-                    AddClock(ref timers, ref clock);
+                    AddClock(timers, clock);
                 }
                 else
                 {
@@ -229,7 +201,7 @@ namespace Race_timer.UI
         /// </summary>
         /// <param name="timers">Timer StackPanel from fullscreen clock</param>
         /// <param name="clock">Clock label from fullscreen clock</param>
-        private void AddClock(ref StackPanel timers, ref Label clock)
+        private void AddClock(StackPanel timers, Label clock)
         {
             clock.Content = " ";
             timers.Children.Clear();
@@ -262,18 +234,9 @@ namespace Race_timer.UI
         /// <param name="image">Image to be shown</param>
         public void SetImage(BitmapImage image)
         {
-            switch (Alignment())
-            {
-                case TimerTop top:
-                    top.TimerImage.Source = image;
-                    break;
-                case TimerLeft left:
-                    left.TimerImage.Source = image;
-                    break;
-                case TimerRight right:
-                    right.TimerImage.Source = image;
-                    break;
-            }
+            var alignment = Alignment();
+            if (alignment == null) return;
+            alignment.Logo.Source = image;
         }
 
         /// <summary>
@@ -282,15 +245,9 @@ namespace Race_timer.UI
         /// <param name="image">Image/QR code to be shown</param>
         public void SetCodeImage(BitmapSource image)
         {
-            switch (Alignment())
-            {
-                case TimerLeft left:
-                    left.CodeImage.Source = image;
-                    break;
-                case TimerRight right:
-                    right.CodeImage.Source = image;
-                    break;
-            }
+            var code = Alignment()?.Code;
+            if (code == null) return;
+            code.Source = image;
         }
 
         /// <summary>

@@ -219,7 +219,7 @@ namespace Race_timer.Logic
                     if (ScreenHandler.GetInstance().SelectedScreen == null) return;
 
                     if (_clockWindow == null) return;
-                    if (_clockWindow.GetType() == typeof(ClockWindow) && !isSmall)
+                    if (_clockWindow is ClockWindow && !isSmall)
                     {
                         if (MiniActiveTimers.Count > 0)
                         {
@@ -236,7 +236,7 @@ namespace Race_timer.Logic
                             StartTime = StartTimes.Values.ElementAt(i)
                         });
                     }
-                    else if (_clockWindow.GetType() == typeof(MiniClockWindow) || _clockWindow.GetType() == typeof(WebViewClockWindow) || isSmall)
+                    else if (_clockWindow is MiniClockWindowBase || isSmall)
                     {
                         if (ActiveTimers.Count > 0)
                         {
@@ -405,9 +405,9 @@ namespace Race_timer.Logic
             if (SelectedAlignment != null && !MainWindow.MinimizedTimer)
             {
                 _clockWindow?.SetChildren(SelectedAlignment);
-                if (SelectedAlignment.GetType() == typeof(TimerTop))
+                if (SelectedAlignment is TimerTop timerTop)
                 {
-                    ((TimerTop)SelectedAlignment).SetTopMargin(EventName?.Length ?? 0);
+                    timerTop.SetTopMargin(EventName?.Length ?? 0);
                 }
             }
             if (LogoImage != null)
@@ -483,9 +483,9 @@ namespace Race_timer.Logic
             _clockWindow?.SetLabels(name, type);
             if (_clockWindow != null && !MainWindow.MinimizedTimer)
             {
-                if (SelectedAlignment?.GetType() == typeof(TimerTop))
+                if (SelectedAlignment is TimerTop timerTop)
                 {
-                    ((TimerTop)SelectedAlignment).SetTopMargin(EventName?.Length ?? 0);
+                    timerTop.SetTopMargin(EventName?.Length ?? 0);
                 }
             }
         }

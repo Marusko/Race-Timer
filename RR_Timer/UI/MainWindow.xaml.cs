@@ -143,10 +143,12 @@ namespace Race_timer.UI
                 return;
             }
             if (_clockWindow == null) return;
+            _openedLinkTimer = true;
             ClockLogic.GetInstance().SetClockWindow(EventLink, CountLink, (ClockWindow)_clockWindow);
+            //SetClockWindow can close the window (e.g. empty API link calls OnClose), never Show a closed window
+            if (!OpenedTimer || _clockWindow == null) return;
             OpenTimerEnd();
             _clockWindow.Show();
-            _openedLinkTimer = true;
         }
 
         /// <summary>
