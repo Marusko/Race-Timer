@@ -37,6 +37,8 @@ Application to show elapsed time from entered start time, with clock or individu
 * You can import your own QR code or provide a link and the app will convert it
 * Multiple contests with start times, manual or from API
 * Individual start times from CSV file or RaceResult API
+* Info panel with custom scrolling messages shown periodically over the small timer
+* Time synchronized with an NTP server, independent of the PC clock
 ## Automatic switching
   When someone finishes the race, the count in RR is updated and cashed on the second API link. The app checks this second link every 15 seconds. When the clock switches to the small clock, the app stops checking the second link.
 ## Choosing screen
@@ -48,7 +50,9 @@ Application to show elapsed time from entered start time, with clock or individu
   
 ---  
 # Dependencies
-The app requires [.NET8](https://dotnet.microsoft.com/en-us/download) to be installed. Most probably you already have it. If not, it will be downloaded and installed when installing the Race Timer
+The app requires [.NET 10](https://dotnet.microsoft.com/en-us/download) (Windows Desktop Runtime) to be installed. Most probably you already have it. If not, it will be downloaded and installed when installing the Race Timer.
+
+The timer is synchronized with an NTP server (`pool.ntp.org`) so elapsed times stay accurate regardless of the PC clock. The synchronization status is shown in the bottom-left corner of the main window.
   
 # Installation
 [Top](#race-timer)
@@ -77,6 +81,8 @@ CSV file format is `[Bib];[Name];[Start time]`
  2. Select **Custom** from the left dropdown menu, in the details write or copy `data/list?&fields=Bib,DisplayName,Start.ToD&sort=Start.ToD&listformat=JSON`, and in the label write `starts` :bangbang: **Important** (see the picture)
 ![Creating starts API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/startsApi.png)
 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it into the `Finish API Timer` tab in the `API link` text box and click `Load` button :bangbang: Only after enabling starts
+
+> The app filters the loaded starts by a Race Result field so it only fetches upcoming/recent participants and auto-refreshes the list. This field defaults to `Start.ToD.Decimal`, but some events use a different field. If your starts don't load or auto-update, change the **Start time filter field** value in `Starts` > `Setup` to match your event's field.
 
 ## Using the Timer
 If you don't time the race with RaceResult or don't want to create links, simply use the `Timer` tab to set up the timer. Automatic switching of timer windows is disabled. You can still manually switch the windows.
@@ -130,6 +136,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
   * **Setup** - Tab for setting up the start times
     * **Enable individual starts** - Enable or disable individual starts
     * **Use list from API** - Switch between using CSV file as source or RaceResult API as source
+    * **Start time filter field** - Race Result field used to filter and auto-update the starts loaded from the API, defaults to `Start.ToD.Decimal`. Enabled only when **Use list from API** is checked. Change it if your event uses a different field
     * **Select file** - Select the start times CSV file, above the button will be shown the name of the file, enabling the delete button
     * **Delete file** - Delete loaded starts from CSV file
     * **Open Timer** - Opens the starts window on selected screen, disables all tabs and enables **Control**

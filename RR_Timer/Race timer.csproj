@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>onlyRmini.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <!-- WFAC010 suggests moving DPI settings from app.manifest to the WinForms ApplicationHighDpiMode property,
-         but this is a WPF app (WinForms is referenced only for System.Windows.Forms.Screen) and WPF reads
-         DPI awareness from the manifest, so the manifest settings must stay -->
-    <NoWarn>$(NoWarn);WFAC010</NoWarn>
+    <!-- WFAC010 (.NET 8) / WFO0003 (.NET 10) suggest moving DPI settings from app.manifest to the WinForms
+         ApplicationHighDpiMode property, but this is a WPF app (WinForms is referenced only for
+         System.Windows.Forms.Screen) and WPF reads DPI awareness from the manifest, so the settings must stay -->
+    <NoWarn>$(NoWarn);WFAC010;WFO0003</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="UI\onlyRmini.png" />
