@@ -81,7 +81,8 @@ namespace Race_timer.Logic
         {
             while (_running)
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                //Application.Current can be null while the app is shutting down
+                Application.Current?.Dispatcher.InvokeAsync(() =>
                 {
                     _mainWindow.NtpStatusLabel.Content = "Syncing NTP";
                 });
@@ -92,17 +93,18 @@ namespace Race_timer.Logic
                     {
                         _lastClock = clock;
                     }
-                    Application.Current.Dispatcher.InvokeAsync(() =>
+                    Application.Current?.Dispatcher.InvokeAsync(() =>
                     {
                         _mainWindow.NtpStatusLabel.Content = "NTP success";
                     });
                 }
                 catch (Exception ex)
                 {
-                    var warning = new WarningWindow($"Cannot synchronize time with NTP server!\nError: \n[{ex.Message}]");
-                    warning.Show();
-                    Application.Current.Dispatcher.InvokeAsync(() =>
+                    //windows can be created and shown only on the UI thread
+                    Application.Current?.Dispatcher.InvokeAsync(() =>
                     {
+                        var warning = new WarningWindow($"Cannot synchronize time with NTP server!\nError: \n[{ex.Message}]");
+                        warning.Show();
                         _mainWindow.NtpStatusLabel.Content = "NTP fail";
                     });
                 }

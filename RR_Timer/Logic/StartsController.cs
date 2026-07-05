@@ -93,14 +93,17 @@ namespace Race_timer.Logic
             var index = filePath.LastIndexOf(Path.DirectorySeparatorChar) + 1;
             var name = filePath[index..];
             _mainWindow.StartsFileName.Content = name;
-            try
+            _startTimes.Clear();
+            using (StreamReader reader = new StreamReader(filePath))
             {
-                _startTimes.Clear();
-                using StreamReader reader = new StreamReader(filePath);
                 string? line;
                 while ((line = reader.ReadLine()) != null)
                 {
                     var split = line.Split(';');
+                    if (split.Length < 3 || string.IsNullOrWhiteSpace(line))
+                    {
+                        continue;
+                    }
                     var d = new StartTime()
                     {
                         Bib = split[0],
@@ -109,11 +112,6 @@ namespace Race_timer.Logic
                     };
                     AddData(d, split[2]);
                 }
-                reader.Close();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
             }
 
             if (_startTimes.Any())

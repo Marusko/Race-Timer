@@ -684,8 +684,15 @@ namespace Race_timer.UI
         /// <returns>Pair of int as minutes</returns>
         public (int, int) GetCodeForMiniTimes()
         {
-            var show = int.Parse(MinimizedCodeTimes.HowLongTimeText.Text);
-            var every = int.Parse(MinimizedCodeTimes.EveryTimeText.Text);
+            //text boxes can be left empty, fall back to 1 minute
+            if (!int.TryParse(MinimizedCodeTimes.HowLongTimeText.Text, out var show))
+            {
+                show = 1;
+            }
+            if (!int.TryParse(MinimizedCodeTimes.EveryTimeText.Text, out var every))
+            {
+                every = 1;
+            }
             return (show, every);
         }
 
@@ -698,31 +705,22 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void CheckIfInt(object sender, RoutedEventArgs e)
         {
-            try
+            if (sender is not System.Windows.Controls.TextBox textBox) return;
+            if (textBox.Text.Length <= 0) return;
+            if (int.TryParse(textBox.Text, out var i))
             {
-                if (sender.GetType().Name != "TextBox") return;
-                if (((System.Windows.Controls.TextBox)sender).Text.Length <= 0) return;
-                var i = int.Parse(((System.Windows.Controls.TextBox)sender).Text);
-                ((System.Windows.Controls.TextBox)sender).Text = i switch
+                textBox.Text = i switch
                 {
                     > 60 => "60",
                     <= 0 => "1",
-                    _ => ((System.Windows.Controls.TextBox)sender).Text
+                    _ => textBox.Text
                 };
             }
-            catch (Exception exception)
+            else
             {
-                if (sender.GetType().Name == "TextBox")
-                {
-                    var w = new WarningWindow($"Oops, cannot convert this [{((System.Windows.Controls.TextBox)sender).Text}] to number\n[{exception.Message}]");
-                    w.ShowDialog();
-                    ((System.Windows.Controls.TextBox)sender).Text = "1";
-                }
-                else
-                {
-                    var w = new WarningWindow($"Oops, cannot convert this to number\n[{exception.Message}]");
-                    w.ShowDialog();
-                }
+                var w = new WarningWindow($"Oops, cannot convert this [{textBox.Text}] to number");
+                w.ShowDialog();
+                textBox.Text = "1";
             }
         }
 
@@ -910,14 +908,22 @@ namespace Race_timer.UI
         }
 
         /// <summary>
+        /// Opens the link in default browser
+        /// </summary>
+        /// <param name="url">Link to open</param>
+        private static void OpenUrl(string url)
+        {
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+        }
+
+        /// <summary>
         /// Method called by Github hyperlink, opens project Github
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OpenGithub(object sender, RoutedEventArgs e)
         {
-            const string url = "https://github.com/Marusko/RR_Timer";
-            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+            OpenUrl("https://github.com/Marusko/RR_Timer");
         }
 
         /// <summary>
@@ -927,8 +933,7 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void OpenJsonPage(object sender, RoutedEventArgs e)
         {
-            const string url = "https://www.newtonsoft.com/json";
-            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+            OpenUrl("https://www.newtonsoft.com/json");
         }
 
         /// <summary>
@@ -938,8 +943,7 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void OpenMaterialDesignPage(object sender, RoutedEventArgs e)
         {
-            const string url = "https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit";
-            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+            OpenUrl("https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit");
         }
 
         /// <summary>
@@ -949,8 +953,7 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void OpenCodePage(object sender, RoutedEventArgs e)
         {
-            const string url = "https://github.com/codebude/QRCoder";
-            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+            OpenUrl("https://github.com/codebude/QRCoder");
         }
 
         /// <summary>
@@ -960,8 +963,7 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void OpenNptPage(object sender, RoutedEventArgs e)
         {
-            const string url = "https://guerrillantp.machinezoo.com/";
-            Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+            OpenUrl("https://guerrillantp.machinezoo.com/");
         }
     }
 }

@@ -189,7 +189,14 @@ namespace Race_timer.API
                 {
                     var responseString = await response.Content.ReadAsStringAsync();
 
-                    var asRacers = int.Parse(responseString);
+                    if (!int.TryParse(responseString, out var asRacers))
+                    {
+                        _timer.Stop();
+                        var warning = new WarningWindow($"Oops, something went wrong with count API!\nError code: \n[Can't read finished count from '{responseString}']");
+                        warning.ShowDialog();
+                        ClockLogic.GetInstance().MainWindow.CountStatusLabel.Content = "ERR";
+                        return;
+                    }
                     if (asRacers > 0 && !ClockLogic.GetInstance().IsTimerMinimized())
                     {
                         ClockLogic.GetInstance().AutoMinimizeTimer();
@@ -359,7 +366,8 @@ namespace Race_timer.API
 
                 foreach (var api in apis)
                 {
-                    if ((bool)api.Label?.ToLower().Equals("main"))
+                    var label = api.Label?.ToLower();
+                    if (label == "main")
                     {
                         mw.EventLink = "";
                         if (api.Disabled != null && !(bool)api.Disabled)
@@ -372,7 +380,7 @@ namespace Race_timer.API
                             mw.EventStatusLabel.Content = "OFF";
                         }
                     }
-                    else if ((bool)api.Label?.ToLower().Equals("count"))
+                    else if (label == "count")
                     {
                         mw.CountLink = "";
                         if (api.Disabled != null && !(bool)api.Disabled)
@@ -385,7 +393,7 @@ namespace Race_timer.API
                             mw.CountStatusLabel.Content = "OFF";
                         }
                     }
-                    else if ((bool)api.Label?.ToLower().Equals("contest"))
+                    else if (label == "contest")
                     {
                         mw.ContestLink = "";
                         if (api.Disabled != null && !(bool)api.Disabled)
@@ -456,7 +464,9 @@ namespace Race_timer.API
 
                 if (starts != null)
                 {
-                    var tmp = (from b in starts select new StartTime() { Bib = b[0], Name = b[1], Time = b[2] }).ToList();
+                    var tmp = (from b in starts
+                               where b.Count >= 3
+                               select new StartTime { Bib = b[0], Name = b[1], Time = b[2] }).ToList();
                     foreach (var st in tmp)
                     {
                         if (!string.IsNullOrEmpty(st.Time))

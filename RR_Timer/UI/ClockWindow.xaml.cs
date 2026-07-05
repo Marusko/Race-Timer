@@ -61,14 +61,23 @@ namespace Race_timer.UI
             {
                 return;
             }
-            if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
+            switch (Alignment())
             {
-                ((TimerLeft)TimerPanel.Children[0]).TimerScrollViewer.MaxHeight = 400;
+                case TimerLeft left:
+                    left.TimerScrollViewer.MaxHeight = 400;
+                    break;
+                case TimerRight right:
+                    right.TimerScrollViewer.MaxHeight = 400;
+                    break;
             }
-            else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
-            {
-                ((TimerRight)TimerPanel.Children[0]).TimerScrollViewer.MaxHeight = 400;
-            }
+        }
+
+        /// <summary>
+        /// Currently set alignment UserControl, or null when none is set yet
+        /// </summary>
+        private UIElement? Alignment()
+        {
+            return TimerPanel.Children.Count > 0 ? TimerPanel.Children[0] : null;
         }
 
         /// <summary>
@@ -78,17 +87,17 @@ namespace Race_timer.UI
         /// <param name="e"></param>
         private void OnClose(object? sender, EventArgs e)
         {
-            if (TimerPanel.Children[0].GetType() == typeof(TimerTop))
+            switch (Alignment())
             {
-                ((TimerTop)TimerPanel.Children[0]).StopTimer();
-            }
-            else if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
-            {
-                ((TimerLeft)TimerPanel.Children[0]).StopTimer();
-            }
-            else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
-            {
-                ((TimerRight)TimerPanel.Children[0]).StopTimer();
+                case TimerTop top:
+                    top.StopTimer();
+                    break;
+                case TimerLeft left:
+                    left.StopTimer();
+                    break;
+                case TimerRight right:
+                    right.StopTimer();
+                    break;
             }
         }
 
@@ -132,17 +141,17 @@ namespace Race_timer.UI
         /// </summary>
         public void OnTimerClick()
         {
-            if (TimerPanel.Children[0].GetType() == typeof(TimerTop))
+            switch (Alignment())
             {
-                ShowClockOrTimer(ref ((TimerTop)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerTop)TimerPanel.Children[0]).MainClockLabel);
-            }
-            else if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
-            {
-                ShowClockOrTimer(ref ((TimerLeft)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerLeft)TimerPanel.Children[0]).MainClockLabel);
-            }
-            else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
-            {
-                ShowClockOrTimer(ref ((TimerRight)TimerPanel.Children[0]).TimerStackPanel, ref ((TimerRight)TimerPanel.Children[0]).MainClockLabel);
+                case TimerTop top:
+                    ShowClockOrTimer(ref top.TimerStackPanel, ref top.MainClockLabel);
+                    break;
+                case TimerLeft left:
+                    ShowClockOrTimer(ref left.TimerStackPanel, ref left.MainClockLabel);
+                    break;
+                case TimerRight right:
+                    ShowClockOrTimer(ref right.TimerStackPanel, ref right.MainClockLabel);
+                    break;
             }
         }
 
@@ -253,17 +262,17 @@ namespace Race_timer.UI
         /// <param name="image">Image to be shown</param>
         public void SetImage(BitmapImage image)
         {
-            if (TimerPanel.Children[0].GetType() == typeof(TimerTop))
+            switch (Alignment())
             {
-                ((TimerTop)TimerPanel.Children[0]).TimerImage.Source = image;
-            }
-            else if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
-            {
-                ((TimerLeft)TimerPanel.Children[0]).TimerImage.Source = image;
-            }
-            else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
-            {
-                ((TimerRight)TimerPanel.Children[0]).TimerImage.Source = image;
+                case TimerTop top:
+                    top.TimerImage.Source = image;
+                    break;
+                case TimerLeft left:
+                    left.TimerImage.Source = image;
+                    break;
+                case TimerRight right:
+                    right.TimerImage.Source = image;
+                    break;
             }
         }
 
@@ -273,13 +282,14 @@ namespace Race_timer.UI
         /// <param name="image">Image/QR code to be shown</param>
         public void SetCodeImage(BitmapSource image)
         {
-            if (TimerPanel.Children[0].GetType() == typeof(TimerLeft))
+            switch (Alignment())
             {
-                ((TimerLeft)TimerPanel.Children[0]).CodeImage.Source = image;
-            }
-            else if (TimerPanel.Children[0].GetType() == typeof(TimerRight))
-            {
-                ((TimerRight)TimerPanel.Children[0]).CodeImage.Source = image;
+                case TimerLeft left:
+                    left.CodeImage.Source = image;
+                    break;
+                case TimerRight right:
+                    right.CodeImage.Source = image;
+                    break;
             }
         }
 

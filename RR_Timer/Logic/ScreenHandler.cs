@@ -114,7 +114,10 @@ namespace Race_timer.Logic
             _screens = Screen.AllScreens;
             _screenNames = new string[_screens.Length];
             SetScreenNames();
+            //replacing ItemsSource clears the selection, keep the screen the user has chosen
+            var previousIndex = _selectedScreenIndex;
             _mainWindow.ScreenComboBox.ItemsSource = _screenNames;
+            _mainWindow.ScreenComboBox.SelectedIndex = previousIndex < _screens.Length ? previousIndex : 0;
         }
 
         /// <summary>
