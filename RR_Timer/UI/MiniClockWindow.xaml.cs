@@ -17,7 +17,15 @@ namespace Race_timer.UI
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private int _showTimerIndex;
 
+        private readonly System.Windows.Threading.DispatcherTimer _nameScrollTimer = new();
+        private int _stateOfScroll = ClockLogic.ScrollBegin;
+        private int _currentTime;
+        private int _currentDelay;
+
         private const int TimerShownForSeconds = 5;
+        private const int ScrollDelay = 500;
+        private const int ScrollTimes = 1;
+        private const int ScrollTimerMillis = 10;
 
         private bool _clockInMiniPanel;
         public MiniContestTimer? Clock { get; set; }
@@ -40,6 +48,9 @@ namespace Race_timer.UI
             Closed += StopTimer;
             _timer.Tick += TimerTick;
             _timer.Interval = new TimeSpan(0, 0, TimerShownForSeconds);
+            _nameScrollTimer.Tick += NameScrollTimerTick;
+            _nameScrollTimer.Interval = new TimeSpan(0, 0, 0, 0, ScrollTimerMillis);
+            _nameScrollTimer.Start();
             TimerTickLogic();
             if (ClockLogic.GetInstance().MiniActiveTimers.Count > 0)
             {
@@ -64,6 +75,51 @@ namespace Race_timer.UI
         private void StopTimer(object? sender, EventArgs e)
         {
             _timer.Stop();
+            _nameScrollTimer.Stop();
+        }
+
+        /// <summary>
+        /// Called by timer, scrolls the event name horizontally when it doesn't fit, waits on beginning and end
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NameScrollTimerTick(object? sender, EventArgs e)
+        {
+            if (EventNameScrollViewer.ScrollableWidth > 0)
+            {
+                if (_currentDelay != ScrollDelay && (_stateOfScroll == ClockLogic.ScrollBegin || _stateOfScroll == ClockLogic.ScrollEnd))
+                {
+                    _currentDelay++;
+                }
+                else
+                {
+                    if (_stateOfScroll == ClockLogic.ScrollBegin)
+                    {
+                        _stateOfScroll = ClockLogic.Scrolling;
+                    }
+                    else if (_stateOfScroll == ClockLogic.Scrolling)
+                    {
+                        if (EventNameScrollViewer.HorizontalOffset >= EventNameScrollViewer.ScrollableWidth)
+                        {
+                            _currentTime = 0;
+                            _stateOfScroll = ClockLogic.ScrollEnd;
+                        }
+                        else
+                        {
+                            _currentTime++;
+                            EventNameScrollViewer.ScrollToHorizontalOffset(_currentTime * ScrollTimes);
+                            EventNameScrollViewer.UpdateLayout();
+                        }
+                    }
+                    else if (_stateOfScroll == ClockLogic.ScrollEnd)
+                    {
+                        EventNameScrollViewer.ScrollToLeftEnd();
+                        EventNameScrollViewer.UpdateLayout();
+                        _stateOfScroll = ClockLogic.ScrollBegin;
+                    }
+                    _currentDelay = 0;
+                }
+            }
         }
 
         /// <summary>

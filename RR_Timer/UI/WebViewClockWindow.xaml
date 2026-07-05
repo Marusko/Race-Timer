@@ -15,7 +15,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <TextBlock x:Name="EventNameMini" Text="EventName" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" FontSize="{DynamicResource ControlFontSize}" MaxWidth="{DynamicResource ControlWidth}" TextWrapping="Wrap"/>
+            <ScrollViewer x:Name="EventNameScrollViewer" HorizontalAlignment="Left" Margin="50,0,0,0" VerticalAlignment="Center" MaxWidth="{DynamicResource ControlWidth}" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" CanContentScroll="False">
+                <TextBlock x:Name="EventNameMini" Text="EventName" FontSize="{DynamicResource ControlFontSize}"/>
+            </ScrollViewer>
             <StackPanel x:Name="TimerStackPanel" Orientation="Vertical" HorizontalAlignment="Right" Margin="0,-10,40,0" VerticalAlignment="Center"/>
             <Image x:Name="TimerImage" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         </Grid>
