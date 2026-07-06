@@ -2,13 +2,13 @@
 Application to show elapsed time from entered start time, with clock or individual starts on user-selected screen. Best used with RaceResult presenter as this app can automatically make the timer smaller, so it can fit over the presenter window without pressing `F11` on the presenter window, or show results directly in the app.
 ### Small timer with WebView RR presenter after the start
 
-![Small timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/smallTimer.png)
+![Small timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/smallTimer.png)
 
 ### Fullscreen timer after the start
-![Fullscreen timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/bigTimer.png)
+![Fullscreen timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/bigTimer.png)
 
 ### Starts window
-![Starts window](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/startsWindow.png)
+![Starts window](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/startsWindow.png)
 
 ## Table of content
 * [Installation](#installation)
@@ -79,7 +79,7 @@ CSV file format is `[Bib];[Name];[Start time]`
 > You NEED to either choose CSV file or provide API link, or the starts will not work
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
  2. Select **Custom** from the left dropdown menu, in the details write or copy `data/list?&fields=Bib,DisplayName,Start.ToD&sort=Start.ToD&listformat=JSON`, and in the label write `starts` :bangbang: **Important** (see the picture)
-![Creating starts API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/startsApi.png)
+![Creating starts API link](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/startsApi.png)
 3. Click the blue icon on this API under the `Link` column on the right, then copy the link and paste it into the `Finish API Timer` tab in the `API link` text box and click `Load` button :bangbang: Only after enabling starts
 
 > The app filters the loaded starts by a Race Result field so it only fetches upcoming/recent participants and auto-refreshes the list. This field defaults to `Start.ToD.Decimal`, but some events use a different field. If your starts don't load or auto-update, change the **Start time filter field** value in `Starts` > `Setup` to match your event's field.
@@ -111,13 +111,13 @@ If you don't time the race with RaceResult or don't want to create links, simply
 
 ### The result:
 
-![All API links created](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/NEWphotos/NEWAPI.png)
+![All API links created](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/allApi.png)
 
 ---
 # Using the app
 [Top](#race-timer)
 ## Left side menu
-![Left side menu](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/left.png)
+![Left side menu](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/left.png)
 
 [Top](#race-timer)
   * **Starts** - Menu for setting up and controlling individual participant starts
@@ -130,7 +130,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
   * *NTP success / NTP fail* - Status of NTP timer synchronization
 
 ## Starts
-![First tab, individual starts, setup](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/startsSetupSecond.png)
+![First tab, individual starts, setup](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/startsSetup.png)
 
 [Top](#race-timer)
   * **Setup** - Tab for setting up the start times
@@ -141,14 +141,14 @@ If you don't time the race with RaceResult or don't want to create links, simply
     * **Delete file** - Delete loaded starts from CSV file
     * **Open Timer** - Opens the starts window on selected screen, disables all tabs and enables **Control**
 
-![First tab, individual starts, control](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/startsControl.png)
+![First tab, individual starts, control](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/startsControl.png)
 
   * **Control** - Tab for controlling the start times window
     * **Close timer** - Closes the starts window and clears the start time list
     * **Start times** - Shows next participants that will be starting
 
 ## Finish timer
-![Second tab, with manual settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/timer.png)
+![Second tab, with manual settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/timer.png)
 
 [Top](#race-timer)
   * **Event name** - Event name that will be displayed with the timer
@@ -159,7 +159,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
   * **Open timer** - Open fullscreen timer, disables all tabs and enables **Timer control**
   
 ## Finish API Timer
-![Third tab, with API settings, API timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/apiTimer321.png)
+![Third tab, with API settings, API timer](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/apiTimer.png)
 
 [Top](#race-timer)
   * **API Timer** - Tab for entering links and setting up the API timer
@@ -175,11 +175,8 @@ If you don't time the race with RaceResult or don't want to create links, simply
     * **Delete image** - Clear the selected image (shared with **Timer**)
     * **Open timer** - Open fullscreen timer, disables all tabs and enables **Timer control**
 
-![Third tab, with API settings, API cheatsheet](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/apiCheatsheet.png)
-  * **API cheat sheet** - Tab with API settings, to quickly find and paste when creating APIs in Race Result
-
 ## Contests
-![Fourth tab, creating and editing contests](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/contests.png)
+![Fourth tab, creating and editing contests](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/contests.png)
 
 [Top](#race-timer)
   * **Add contest** - Adds a new line to the list below
@@ -189,7 +186,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
     * **Remove** - Removes this contest from the list
    
 ## Displaying
-![Fifth tab, with result settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/results2.png)
+![Fifth tab, with result settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/results.png)
 
 [Top](#race-timer)
   * **Results** - Tab for setting up the webview results and info panel
@@ -198,7 +195,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
     * **Enable info panel** - If checked MiniTimer will show info panel with custom information - panel will be shown every 3 minutes for 30 seconds
     * **Information to show** - Here enter the information you want to show, you can show multiple information separated by `;`
 
-![Fifth tab, with QR code settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/qrCode.png)
+![Fifth tab, with QR code settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/qrCode.png)
 
   * **QR code** - Tab for setting up the QR code
     * **Generate QR code** - Here enter the link to convert to a QR code
@@ -210,7 +207,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
 ## Timer control
 > Tab is enabled when the timer is open
 
-![Sixth tab, timer control](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/timerControl.png)
+![Sixth tab, timer control](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/timerControl.png)
 
 [Top](#race-timer)
   * **Reload** - To manually reload WebView, if it is enabled
@@ -225,7 +222,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
   * **Current start times** - Table shows currently set start times
 
 ## Settings
-![Seventh tab, display settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/settings.png)
+![Seventh tab, display settings](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/settings.png)
 
 [Top](#race-timer)
   * **Display setting** - Tab for selecting display to show the timer or starts and timer position
@@ -235,7 +232,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
         * Timer on left - Timer and clock on the left side, logo and QR code on the right side
         * Timer on right - Timer and clock on the right side, logo and QR code on the left side
 
-![Seventh tab, info](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/320photos/info321.png)     
+![Seventh tab, info](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/info.png)     
 
   * **Information** - Tab with informations about the application
 
