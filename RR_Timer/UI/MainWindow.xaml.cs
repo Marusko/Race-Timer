@@ -20,7 +20,7 @@ namespace Race_timer.UI
     public partial class MainWindow
     {
         private const string Author = "Matúš Suský";
-        private const string Version = "3.2.1";
+        private const string Version = "3.3.0";
         private Window? _clockWindow;
         private bool _openedLinkTimer;
         public bool OpenedTimer { get; private set; }
