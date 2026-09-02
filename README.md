@@ -56,8 +56,8 @@ The timer is synchronized with an NTP server (`pool.ntp.org`) so elapsed times s
   
 # Installation
 [Top](#race-timer)
-  1. Download [zip file](https://github.com/Marusko/Race-Timer/releases) and extract
-  2. Double-click on `setup.exe`
+  1. Download [installer](https://download.susky.net/RaceTimerSetup.exe)
+  2. Run the setup
   3. You will get an `Unknown publisher` warning, press install[^1]
   4. That's it!
   
