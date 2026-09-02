@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
@@ -20,7 +21,24 @@ namespace Race_timer.UI
     public partial class MainWindow
     {
         private const string Author = "Matúš Suský";
-        private const string Version = "3.3.0";
+
+        /// <summary>
+        /// Version from the csproj, so it is set in one place. The informational version is used
+        /// because it is the one written there, the assembly version always has the fourth
+        /// component appended. The SDK can add the commit after a +, that is cut off
+        /// </summary>
+        private static string Version
+        {
+            get
+            {
+                var assembly = Assembly.GetExecutingAssembly();
+                var informational = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+                return string.IsNullOrEmpty(informational)
+                    ? assembly.GetName().Version?.ToString() ?? ""
+                    : informational.Split('+')[0];
+            }
+        }
+
         private Window? _clockWindow;
         private bool _openedLinkTimer;
         public bool OpenedTimer { get; private set; }

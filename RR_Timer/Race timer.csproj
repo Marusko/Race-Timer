@@ -11,8 +11,9 @@
          ApplicationHighDpiMode property, but this is a WPF app (WinForms is referenced only for
          System.Windows.Forms.Screen) and WPF reads DPI awareness from the manifest, so the settings must stay -->
     <NoWarn>$(NoWarn);WFAC010;WFO0003</NoWarn>
-    <!-- ClickWrap falls back to the assembly version when the app was not installed by its installer,
-         so keep this in sync with MainWindow.Version and the profile's ApplicationVersion -->
+    <!-- The one place the app version is written: shown in the Information tab, and what ClickWrap
+         falls back to when the app was not installed by its installer. Keep the publish profile's
+         ApplicationVersion in step with it -->
     <Version>3.3.0</Version>
   </PropertyGroup>
   <ItemGroup>
