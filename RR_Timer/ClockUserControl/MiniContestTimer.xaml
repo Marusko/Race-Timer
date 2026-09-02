@@ -10,7 +10,9 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="0" x:Name="ContestNameLabel" Content="Contest" FontSize="{DynamicResource ControlFontSize}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,0,10,-35"/>
+        <ScrollViewer Grid.Column="0" x:Name="ContestNameScrollViewer" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,0,10,-35" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" CanContentScroll="False">
+            <Label x:Name="ContestNameLabel" Content="Contest" FontSize="{DynamicResource ControlFontSize}" Padding="0,5"/>
+        </ScrollViewer>
         <Label Grid.Column="1" x:Name="ContestTimeLabel" Content="00:00:00" FontSize="{DynamicResource ControlFontSize}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,0"/>
     </Grid>
 </UserControl>

@@ -17,15 +17,11 @@ namespace Race_timer.UI
         private readonly System.Windows.Threading.DispatcherTimer _timer = new();
         private int _showTimerIndex;
 
-        private readonly System.Windows.Threading.DispatcherTimer _nameScrollTimer = new();
-        private int _stateOfScroll = ClockLogic.ScrollBegin;
-        private int _currentTime;
-        private int _currentDelay;
+        private NameScroller? _nameScroller;
 
         private const int TimerShownForSeconds = 5;
         private const int ScrollDelay = 500;
         private const int ScrollTimes = 1;
-        private const int ScrollTimerMillis = 10;
 
         private bool _clockInMiniPanel;
         public MiniContestTimer? Clock { get; set; }
@@ -70,9 +66,8 @@ namespace Race_timer.UI
             Closed += StopTimer;
             _timer.Tick += TimerTick;
             _timer.Interval = new TimeSpan(0, 0, TimerShownForSeconds);
-            _nameScrollTimer.Tick += NameScrollTimerTick;
-            _nameScrollTimer.Interval = new TimeSpan(0, 0, 0, 0, ScrollTimerMillis);
-            _nameScrollTimer.Start();
+            _nameScroller = new NameScroller(EventNameScroller, ScrollDelay, ScrollTimes);
+            _nameScroller.Start();
             TimerTickLogic();
             if (ClockLogic.GetInstance().MiniActiveTimers.Count > 0)
             {
@@ -107,6 +102,7 @@ namespace Race_timer.UI
         private void SetEventName(string name)
         {
             EventNameText.Text = name;
+            _nameScroller?.Reset();
         }
 
         /// <summary>
@@ -117,47 +113,7 @@ namespace Race_timer.UI
         private void StopTimer(object? sender, EventArgs e)
         {
             _timer.Stop();
-            _nameScrollTimer.Stop();
-        }
-
-        /// <summary>
-        /// Called by timer, scrolls the event name horizontally when it doesn't fit, waits on beginning and end
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void NameScrollTimerTick(object? sender, EventArgs e)
-        {
-            if (EventNameScroller.ScrollableWidth <= 0) return;
-            if (_currentDelay != ScrollDelay && (_stateOfScroll == ClockLogic.ScrollBegin || _stateOfScroll == ClockLogic.ScrollEnd))
-            {
-                _currentDelay++;
-                return;
-            }
-            if (_stateOfScroll == ClockLogic.ScrollBegin)
-            {
-                _stateOfScroll = ClockLogic.Scrolling;
-            }
-            else if (_stateOfScroll == ClockLogic.Scrolling)
-            {
-                if (EventNameScroller.HorizontalOffset >= EventNameScroller.ScrollableWidth)
-                {
-                    _currentTime = 0;
-                    _stateOfScroll = ClockLogic.ScrollEnd;
-                }
-                else
-                {
-                    _currentTime++;
-                    EventNameScroller.ScrollToHorizontalOffset(_currentTime * ScrollTimes);
-                    EventNameScroller.UpdateLayout();
-                }
-            }
-            else if (_stateOfScroll == ClockLogic.ScrollEnd)
-            {
-                EventNameScroller.ScrollToLeftEnd();
-                EventNameScroller.UpdateLayout();
-                _stateOfScroll = ClockLogic.ScrollBegin;
-            }
-            _currentDelay = 0;
+            _nameScroller?.Stop();
         }
 
         /// <summary>
@@ -175,16 +131,19 @@ namespace Race_timer.UI
         /// </summary>
         public void TimerTickLogic()
         {
-            if (ClockLogic.GetInstance().MiniActiveTimers.Values.Count > 0)
+            var timers = ClockLogic.GetInstance().MiniActiveTimers.Values;
+            if (timers.Count == 0) return;
+            if (_showTimerIndex >= timers.Count)
             {
-                if (_showTimerIndex >= ClockLogic.GetInstance().MiniActiveTimers.Values.Count)
-                {
-                    _showTimerIndex = 0;
-                }
-                TimersPanel.Children.Clear();
-                TimersPanel.Children.Add(ClockLogic.GetInstance().MiniActiveTimers.Values.ElementAt(_showTimerIndex));
-                _showTimerIndex++;
+                _showTimerIndex = 0;
             }
+            var next = timers.ElementAt(_showTimerIndex);
+            _showTimerIndex++;
+            //With a single contest there is nothing to switch to, taking it out and putting it back
+            //would only restart its name scroll every five seconds
+            if (TimersPanel.Children.Count == 1 && ReferenceEquals(TimersPanel.Children[0], next)) return;
+            TimersPanel.Children.Clear();
+            TimersPanel.Children.Add(next);
         }
 
         /// <summary>
