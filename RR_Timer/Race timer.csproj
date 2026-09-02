@@ -11,6 +11,9 @@
          ApplicationHighDpiMode property, but this is a WPF app (WinForms is referenced only for
          System.Windows.Forms.Screen) and WPF reads DPI awareness from the manifest, so the settings must stay -->
     <NoWarn>$(NoWarn);WFAC010;WFO0003</NoWarn>
+    <!-- ClickWrap falls back to the assembly version when the app was not installed by its installer,
+         so keep this in sync with MainWindow.Version and the profile's ApplicationVersion -->
+    <Version>3.3.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="UI\onlyRmini.png" />
@@ -20,6 +23,13 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4022.49" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="QRCoder" Version="1.8.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- ClickWrap update client, built from https://github.com/Marusko/ClickWrap. Referenced as a DLL
+         because it is not published to a NuGet feed -->
+    <Reference Include="ClickWrap.UpdateClient">
+      <HintPath>lib\ClickWrap.UpdateClient.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="UI\onlyRmini.png" />

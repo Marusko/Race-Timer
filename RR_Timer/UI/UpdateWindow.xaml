@@ -1,0 +1,72 @@
+<Window x:Class="Race_timer.UI.UpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Race Timer" Topmost="True"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ResizeMode="NoResize" SizeToContent="WidthAndHeight"
+        ShowInTaskbar="False" IsTabStop="False" UseLayoutRounding="True"
+        FontFamily="Segoe UI" FontSize="13"
+        Foreground="{StaticResource TextPrimaryBrush}"
+        WindowStartupLocation="CenterScreen" Icon="/UI/onlyRmini.png">
+    <!-- Same two layer shape as WarningWindow: an empty border carries the drop shadow,
+         the content border on top renders text crisply with no effect applied. -->
+    <Grid Margin="18">
+        <Border Background="{StaticResource SurfaceBrush}" CornerRadius="12">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="26" ShadowDepth="3" Direction="270" Opacity="0.5" Color="#000000" />
+            </Border.Effect>
+        </Border>
+
+        <Border Width="420" Background="{StaticResource SurfaceBrush}" CornerRadius="12"
+                BorderBrush="{StaticResource BorderSoftBrush}" BorderThickness="1"
+                SnapsToDevicePixels="True">
+            <StackPanel Margin="22">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Width="38" Height="38" CornerRadius="19"
+                            Background="{StaticResource AccentSoftBrush}" Margin="0,0,14,0" VerticalAlignment="Top">
+                        <TextBlock Text="↑" FontSize="18" FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="Update available" FontSize="17" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimaryBrush}" TextWrapping="Wrap" />
+                        <TextBlock x:Name="VersionText" Margin="0,8,0,0" FontSize="14" TextWrapping="Wrap"
+                                   Foreground="{StaticResource TextSecondaryBrush}" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Release notes are optional, the whole block is collapsed when the version has none -->
+                <StackPanel x:Name="NotesPanel" Visibility="Collapsed">
+                    <Border Background="{StaticResource BorderSoftBrush}" Height="1" Margin="0,18,0,0" />
+                    <TextBlock Text="What's new" Style="{StaticResource FieldLabelStyle}" />
+                    <ScrollViewer MaxHeight="160" VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                        <TextBlock x:Name="NotesText" TextWrapping="Wrap"
+                                   Foreground="{StaticResource TextSecondaryBrush}" />
+                    </ScrollViewer>
+                </StackPanel>
+
+                <TextBlock x:Name="NoUpdaterText" Margin="0,16,0,0" TextWrapping="Wrap"
+                           Foreground="{StaticResource WarningBrush}" Visibility="Collapsed"
+                           Text="This copy was not installed by the Race Timer installer, so it cannot update itself. Download the installer again to get the new version." />
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,22,0,0">
+                    <Button x:Name="LaterButton" Content="Later" MinWidth="92" Click="CloseWindow"
+                            Style="{StaticResource SecondaryButtonStyle}" IsCancel="True" />
+                    <Button x:Name="UpdateButton" Content="Update now" MinWidth="92" Margin="10,0,0,0"
+                            Click="Update" IsDefault="True" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

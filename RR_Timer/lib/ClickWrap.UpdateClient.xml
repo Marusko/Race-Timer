@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ClickWrap.UpdateClient</name>
+    </assembly>
+    <members>
+        <member name="T:ClickWrap.InstalledApp">
+            <summary>
+            Reads what the ClickWrap installer recorded about an installed app, and can hand off to that
+            app's updater.
+            </summary>
+            <remarks>
+            The installer writes these values under <c>HKCU\Software\ClickWrap\{appId}</c> after a
+            successful install. An app runs from the ClickOnce store rather than its install folder, so
+            this registration is how it finds its own <c>update.exe</c>.
+            </remarks>
+        </member>
+        <member name="F:ClickWrap.InstalledApp.RootKeyPath">
+            <summary>Root key under HKCU holding one subkey per installed app.</summary>
+        </member>
+        <member name="F:ClickWrap.InstalledApp.VersionValueName">
+            <summary>Version the installer last installed successfully.</summary>
+        </member>
+        <member name="F:ClickWrap.InstalledApp.UpdaterValueName">
+            <summary>Full path to the app's update.exe.</summary>
+        </member>
+        <member name="F:ClickWrap.InstalledApp.InstallFolderValueName">
+            <summary>Folder the ClickOnce publish output was extracted into.</summary>
+        </member>
+        <member name="F:ClickWrap.InstalledApp.DeploymentNameValueName">
+            <summary>The app's ClickOnce deployment manifest file name.</summary>
+        </member>
+        <member name="F:ClickWrap.InstalledApp.ManagedValueName">
+            <summary>1 when the installer created the install folder, 0 when it adopted an existing one.</summary>
+        </member>
+        <member name="M:ClickWrap.InstalledApp.KeyPathFor(System.String)">
+            <summary>Registry key path for one app.</summary>
+        </member>
+        <member name="M:ClickWrap.InstalledApp.GetInstalledVersion(System.String)">
+            <summary>The version the installer last installed, or <c>null</c> if this app was not installed by it.</summary>
+        </member>
+        <member name="M:ClickWrap.InstalledApp.GetInstallFolder(System.String)">
+            <summary>The folder the publish output was extracted into, or <c>null</c> if not recorded.</summary>
+        </member>
+        <member name="M:ClickWrap.InstalledApp.GetUpdaterPath(System.String)">
+            <summary>Path to this app's update.exe, or <c>null</c> when it is not recorded or no longer on disk.</summary>
+        </member>
+        <member name="M:ClickWrap.InstalledApp.GetCurrentVersion(System.String)">
+            <summary>
+            The version to compare against the server: what the installer recorded, falling back to the
+            entry assembly's version.
+            </summary>
+            <remarks>
+            The registry value is preferred because it is the version actually pulled from the server,
+            whereas a ClickOnce <c>ApplicationVersion</c> and an <c>AssemblyVersion</c> drift apart the
+            moment one is bumped without the other — which would leave an app permanently convinced an
+            update is available. The assembly version is the fallback for a build that was never
+            installed through ClickWrap, such as one running from a developer machine.
+            </remarks>
+        </member>
+        <member name="M:ClickWrap.InstalledApp.StartUpdater(System.String)">
+            <summary>
+            Starts this app's updater and leaves the app running, for when it needs to save state or
+            close windows itself before exiting.
+            </summary>
+            <returns><c>false</c> when there is no updater to start; the app is unaffected.</returns>
+        </member>
+        <member name="M:ClickWrap.InstalledApp.UpdateAndExit(System.String,System.Int32)">
+            <summary>
+            Starts this app's updater and immediately exits the app — the whole self-update in one call.
+            </summary>
+            <returns>
+            <c>false</c> when there is no updater to start, leaving the app running. On success this
+            does not return: the process ends.
+            </returns>
+            <remarks>
+            <para>
+            The app must exit. <c>setup.exe</c> launches the app once it has updated it, so an app that
+            stays open ends up running beside a second, newer copy of itself.
+            </para>
+            <para>
+            This exits the process directly, so unsaved state is not flushed and WPF's shutdown does not
+            run. Use <see cref="M:ClickWrap.InstalledApp.StartUpdater(System.String)" /> and close the app yourself when that matters.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:ClickWrap.UpdateClient">
+            <summary>
+            Asks a ClickWrap server whether a newer version of an app has been published.
+            HTTP call plus a version comparison; no UI, no download, no install.
+            </summary>
+        </member>
+        <member name="M:ClickWrap.UpdateClient.#ctor(System.String)">
+            <param name="serverBaseUrl">Base URL of the ClickWrap server, e.g. https://updates.example.com.</param>
+        </member>
+        <member name="M:ClickWrap.UpdateClient.#ctor(System.Net.Http.HttpClient,System.String)">
+            <summary>Use this overload to supply a pooled or pre-configured <see cref="T:System.Net.Http.HttpClient"/>.</summary>
+        </member>
+        <member name="P:ClickWrap.UpdateClient.ServerBaseUrl">
+            <summary>Base URL of the ClickWrap server, without a trailing slash.</summary>
+        </member>
+        <member name="M:ClickWrap.UpdateClient.CheckForUpdateAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Checks for an update using the version this app was installed at, so callers do not have to
+            work out their own version. See <see cref="M:ClickWrap.InstalledApp.GetCurrentVersion(System.String)" />.
+            </summary>
+            <param name="appId">App id as published on the server, e.g. "race-timer".</param>
+            <param name="cancellationToken">Cancels the HTTP call.</param>
+            <exception cref="T:System.Net.Http.HttpRequestException">The server could not be reached or returned an error.</exception>
+        </member>
+        <member name="M:ClickWrap.UpdateClient.CheckForUpdateAsync(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Returns <c>null</c> when the app is already up to date, or when the server has no
+            versions for this app id. Returns an <see cref="T:ClickWrap.UpdateInfo"/> when a newer version exists.
+            </summary>
+            <param name="appId">App id as published on the server, e.g. "race-timer".</param>
+            <param name="currentVersion">
+            The running version. Accepts two to four components; missing components count as zero,
+            so "1.2" and "1.2.0.0" compare equal.
+            </param>
+            <param name="cancellationToken">Cancels the HTTP call.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="currentVersion"/> is not a version number.</exception>
+            <exception cref="T:System.Net.Http.HttpRequestException">The server could not be reached or returned an error.</exception>
+        </member>
+        <member name="M:ClickWrap.UpdateClient.GetLatestAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Returns the newest published version whatever is running locally, or <c>null</c> when the
+            server has nothing for this app id. The installer uses this: it always wants the latest.
+            </summary>
+            <param name="appId">App id as published on the server.</param>
+            <param name="cancellationToken">Cancels the HTTP call.</param>
+            <exception cref="T:System.Net.Http.HttpRequestException">The server could not be reached or returned an error.</exception>
+        </member>
+        <member name="M:ClickWrap.UpdateClient.TryParseVersion(System.String,System.Version@)">
+            <summary>
+            Version.Parse treats "1.2.3" and "1.2.3.0" as different (Revision -1 vs 0), which would
+            make an app reporting three components look permanently out of date. Normalise to four.
+            </summary>
+        </member>
+        <member name="M:ClickWrap.UpdateClient.Dispose">
+            <summary>Disposes the <see cref="T:System.Net.Http.HttpClient"/> only if this instance created it.</summary>
+        </member>
+        <member name="T:ClickWrap.UpdateInfo">
+            <summary>
+            A version published on the server. <see cref="M:ClickWrap.UpdateClient.CheckForUpdateAsync(System.String,System.String,System.Threading.CancellationToken)"/>
+            returns one only when it is newer than what is running; <see cref="M:ClickWrap.UpdateClient.GetLatestAsync(System.String,System.Threading.CancellationToken)"/>
+            returns the newest one regardless.
+            </summary>
+        </member>
+        <member name="P:ClickWrap.UpdateInfo.LatestVersion">
+            <summary>The newest version published on the server.</summary>
+        </member>
+        <member name="P:ClickWrap.UpdateInfo.DownloadUrl">
+            <summary>Absolute URL of the zipped ClickOnce publish folder for that version.</summary>
+        </member>
+        <member name="P:ClickWrap.UpdateInfo.ReleaseNotes">
+            <summary>Release notes entered when the version was published, if any.</summary>
+        </member>
+    </members>
+</doc>

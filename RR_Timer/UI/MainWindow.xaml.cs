@@ -87,7 +87,26 @@ namespace Race_timer.UI
             UsedIndexes = new List<int>();
             StartTimes = new Dictionary<string,string>();
             Closed += ShutDownApp;
+            Loaded += CheckForUpdate;
             SetInfoLabel();
+        }
+
+        /// <summary>
+        /// Called once after the main window is loaded, asks the ClickWrap server for a newer version
+        /// and shows the update window when there is one. Silent when up to date or offline
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void CheckForUpdate(object sender, RoutedEventArgs e)
+        {
+            //Only the first load, the event fires again every time the window is shown after being hidden
+            Loaded -= CheckForUpdate;
+
+            var update = await UpdateChecker.CheckAsync();
+            if (update == null) return;
+
+            var w = new UpdateWindow(update);
+            w.ShowDialog();
         }
 
         /// <summary>
