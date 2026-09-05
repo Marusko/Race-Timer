@@ -14,7 +14,7 @@
     <!-- The one place the app version is written: shown in the Information tab, and what ClickWrap
          falls back to when the app was not installed by its installer. Keep the publish profile's
          ApplicationVersion in step with it -->
-    <Version>3.4.0</Version>
+    <Version>3.4.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="UI\onlyRmini.png" />
