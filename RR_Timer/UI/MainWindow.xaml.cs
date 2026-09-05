@@ -943,5 +943,15 @@ namespace Race_timer.UI
         {
             OpenUrl("https://guerrillantp.machinezoo.com/");
         }
+
+        /// <summary>
+        /// Method called by ClickWrap hyperlink, opens the update library page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenClickWrapPage(object sender, RoutedEventArgs e)
+        {
+            OpenUrl("https://github.com/Marusko/ClickWrap");
+        }
     }
 }

@@ -434,6 +434,7 @@
                                 <TextBlock Margin="10,0"><Hyperlink Click="OpenJsonPage"><Run Text="Newtonsoft.Json" /></Hyperlink></TextBlock>
                                 <TextBlock Margin="10,0"><Hyperlink Click="OpenCodePage"><Run Text="QRCoder" /></Hyperlink></TextBlock>
                                 <TextBlock Margin="10,0"><Hyperlink Click="OpenNptPage"><Run Text="GuerrillaNTP" /></Hyperlink></TextBlock>
+                                <TextBlock Margin="10,0"><Hyperlink Click="OpenClickWrapPage"><Run Text="ClickWrap" /></Hyperlink></TextBlock>
                             </StackPanel>
                         </StackPanel>
                     </TabItem>
