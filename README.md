@@ -176,7 +176,7 @@ If you don't time the race with RaceResult or don't want to create links, simply
 # Using the app
 [Top](#race-timer)
 ## Left side menu
-![Left side menu](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/left.png)
+![Left side menu](https://yhoikcyzjxfcerunfwok.supabase.co/storage/v1/object/public/eventifyePictures/RaceTimer/330photos/left350.png)
 
 [Top](#race-timer)
   * **Starts** - Menu for setting up and controlling individual participant starts
