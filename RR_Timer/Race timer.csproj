@@ -14,7 +14,7 @@
     <!-- The one place the app version is written: shown in the Information tab, and what ClickWrap
          falls back to when the app was not installed by its installer. Keep the publish profile's
          ApplicationVersion in step with it -->
-    <Version>3.4.1</Version>
+    <Version>3.5.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="UI\onlyRmini.png" />
@@ -30,6 +30,12 @@
          because it is not published to a NuGet feed -->
     <Reference Include="ClickWrap.UpdateClient">
       <HintPath>lib\ClickWrap.UpdateClient.dll</HintPath>
+    </Reference>
+    <!-- RaceResult Web API client, built from https://github.com/Marusko/RaceResultClient.NET.
+         Only the "Create API" dialog uses it - the timer itself reads the Simple API links over
+         plain HTTP. Referenced as a DLL because it is not published to a NuGet feed -->
+    <Reference Include="RaceResultClient">
+      <HintPath>lib\RaceResultClient.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
