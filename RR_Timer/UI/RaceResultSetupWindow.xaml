@@ -1,0 +1,175 @@
+﻿<Window x:Class="Race_timer.UI.RaceResultSetupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Create API" Width="440" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" Icon="/UI/onlyRmini.png"
+        FontFamily="Segoe UI" FontSize="13"
+        Background="{StaticResource WindowBackgroundBrush}"
+        Foreground="{StaticResource TextPrimaryBrush}"
+        TextOptions.TextFormattingMode="Ideal" UseLayoutRounding="True"
+        Closed="WindowClosed">
+    <Border Style="{StaticResource CardStyle}" Margin="16" Padding="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <TextBlock Text="Create API" Style="{StaticResource SectionTitleStyle}" />
+                <TextBlock Text="Log in to RaceResult, pick an event and let the app create the API links for you."
+                           Style="{StaticResource SubtitleTextStyle}" Margin="0,4,0,0" />
+            </StackPanel>
+
+            <!-- The three steps share one cell, only one of them is ever visible -->
+            <Grid Grid.Row="1" Margin="0,4,0,0">
+                <!-- Step one: the login -->
+                <StackPanel x:Name="LoginPanel">
+                    <TextBlock Text="Server" Style="{StaticResource FieldLabelStyle}" />
+                    <TextBox x:Name="ServerText" Text="events.raceresult.com"
+                             ToolTip="Server the events are administered on" />
+                    <CheckBox x:Name="HttpsCheckBox" Content="Use HTTPS" IsChecked="True" Margin="0,12,0,0"
+                              ToolTip="Turn off only for an on-premise server without a certificate" />
+                    <TextBlock Text="Turn off only for your own server without a certificate."
+                               Style="{StaticResource SubtitleTextStyle}" Margin="28,3,0,0" />
+
+                    <TextBlock Text="Login method" Style="{StaticResource FieldLabelStyle}" />
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton x:Name="UserLoginRadio" Content="User" GroupName="loginMethod"
+                                     IsChecked="True" Checked="LoginMethodChanged" Margin="0,0,20,0"
+                                     ToolTip="Log in with the RaceResult user and password" />
+                        <RadioButton x:Name="ApiKeyLoginRadio" Content="API key" GroupName="loginMethod"
+                                     Checked="LoginMethodChanged" ToolTip="Log in with a RaceResult API key" />
+                    </StackPanel>
+
+                    <StackPanel x:Name="UserLoginPanel">
+                        <TextBlock Text="User" Style="{StaticResource FieldLabelStyle}" />
+                        <TextBox x:Name="UserText" ToolTip="RaceResult user name" />
+                        <TextBlock Text="Password" Style="{StaticResource FieldLabelStyle}" />
+                        <PasswordBox x:Name="PasswordText" ToolTip="RaceResult password" />
+                    </StackPanel>
+
+                    <StackPanel x:Name="ApiKeyLoginPanel" Visibility="Collapsed">
+                        <TextBlock Text="API key" Style="{StaticResource FieldLabelStyle}" />
+                        <TextBox x:Name="ApiKeyText" ToolTip="RaceResult API key" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Step two: the event. A list rather than a dropdown, and each row carries the
+                     date and the place: the name alone does not tell this year's event from last
+                     year's, or the real one from a test copy -->
+                <Grid x:Name="EventPanel" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" x:Name="AccountText" Style="{StaticResource SubtitleTextStyle}"
+                               Margin="0,12,0,0" />
+                    <TextBlock Grid.Row="1" Text="Event" Style="{StaticResource FieldLabelStyle}" />
+
+                    <!-- Only worth the space once the list is long enough to scroll -->
+                    <StackPanel Grid.Row="2" x:Name="EventFilterPanel" Visibility="Collapsed" Margin="0,0,0,8">
+                        <TextBox x:Name="EventFilterText" TextChanged="EventFilterChanged"
+                                 ToolTip="Search the events by name or place" />
+                        <TextBlock Text="Search by name or place" Style="{StaticResource SubtitleTextStyle}"
+                                   Margin="2,3,0,0" />
+                    </StackPanel>
+
+                    <ListBox Grid.Row="3" x:Name="EventsList" Height="250"
+                             ToolTip="Upcoming events of the account">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Text="{Binding Caption}" Style="{StaticResource SubtitleTextStyle}"
+                                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <TextBlock Grid.Row="3" x:Name="NoEventsText" Visibility="Collapsed"
+                               Style="{StaticResource SubtitleTextStyle}" Margin="2,6,0,0" VerticalAlignment="Top" />
+                </Grid>
+
+                <!-- Step three: the links, copied out and pasted in exactly as a link copied out of
+                     RaceResult by hand -->
+                <StackPanel x:Name="ResultPanel" Visibility="Collapsed">
+                    <TextBlock x:Name="ResultSummaryText" Style="{StaticResource SubtitleTextStyle}" Margin="0,12,0,0" />
+
+                    <TextBlock Text="API link (api)" Style="{StaticResource FieldLabelStyle}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <!-- Wrapped rather than scrolled: the link is copied with the button, but
+                             it is worth seeing the whole of it to tell which event it points at -->
+                        <TextBox Grid.Column="0" x:Name="ApiLinkText" IsReadOnly="True" FontFamily="Consolas"
+                                 FontSize="12" TextWrapping="Wrap" ToolTip="Link that lists all the other APIs" />
+                        <Button Grid.Column="1" Content="Copy" Click="CopyApiLink" Margin="8,0,0,0"
+                                VerticalAlignment="Top" Style="{StaticResource SecondaryButtonStyle}"
+                                ToolTip="Copy the API link" />
+                    </Grid>
+                    <TextBlock Text="Paste it into the Finish API Timer tab, into the API Link box, and press Load."
+                               Style="{StaticResource SubtitleTextStyle}" Margin="2,5,0,0" />
+
+                    <!-- Shown only when the starts were part of this run, the starts are loaded
+                         from their own link and not from the one above -->
+                    <StackPanel x:Name="StartsLinkPanel" Visibility="Collapsed">
+                        <TextBlock Text="Starts API link (starts)" Style="{StaticResource FieldLabelStyle}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" x:Name="StartsLinkText" IsReadOnly="True" FontFamily="Consolas"
+                                     FontSize="12" TextWrapping="Wrap" ToolTip="Link with the individual start times" />
+                            <Button Grid.Column="1" Content="Copy" Click="CopyStartsLink" Margin="8,0,0,0"
+                                    VerticalAlignment="Top" Style="{StaticResource SecondaryButtonStyle}"
+                                    ToolTip="Copy the starts API link" />
+                        </Grid>
+                        <TextBlock Text="With Enable individual starts and Use list from API checked on the Starts tab, paste it into the Only starts API Link box and press Load."
+                                   Style="{StaticResource SubtitleTextStyle}" Margin="2,5,0,0" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+            <!-- The buttons of all three steps share one cell, so the window does not shuffle them
+                 around as it moves from one step to the next -->
+            <Grid Grid.Row="2" Margin="0,20,0,0">
+                <Button x:Name="LoginButton" Content="Log in" Click="Login" HorizontalAlignment="Right"
+                        MinWidth="120" ToolTip="Log in and load the events" />
+
+                <Grid x:Name="EventActions" Visibility="Collapsed">
+                    <Button x:Name="LogoutButton" Content="Log out" Click="Logout" HorizontalAlignment="Left"
+                            Style="{StaticResource SecondaryButtonStyle}" MinWidth="120"
+                            ToolTip="Log out and enter another account" />
+                    <Button x:Name="CreateApiButton" Content="Create API" Click="CreateApi" HorizontalAlignment="Right"
+                            MinWidth="120" ToolTip="Choose and create the APIs on the selected event" />
+                </Grid>
+
+                <Grid x:Name="ResultActions" Visibility="Collapsed">
+                    <Button x:Name="BackButton" Content="Back" Click="BackToEvents" HorizontalAlignment="Left"
+                            Style="{StaticResource SecondaryButtonStyle}" MinWidth="120"
+                            ToolTip="Back to the list of events" />
+                    <Button x:Name="DoneButton" Content="Close" Click="CloseWindow" HorizontalAlignment="Right"
+                            MinWidth="120" ToolTip="Close the window and log out" />
+                </Grid>
+            </Grid>
+
+            <!-- Always present, with room for two lines: a status line that came and went would
+                 resize the window with every step -->
+            <TextBlock Grid.Row="3" x:Name="StatusText" Style="{StaticResource SubtitleTextStyle}"
+                       Margin="0,12,0,0" MinHeight="32" />
+        </Grid>
+    </Border>
+</Window>

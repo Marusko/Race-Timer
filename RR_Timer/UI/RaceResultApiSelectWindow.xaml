@@ -1,0 +1,70 @@
+﻿<Window x:Class="Race_timer.UI.RaceResultApiSelectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:data="clr-namespace:Race_timer.Data"
+        mc:Ignorable="d"
+        Title="Select API" Width="440" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" Icon="/UI/onlyRmini.png"
+        FontFamily="Segoe UI" FontSize="13"
+        Background="{StaticResource WindowBackgroundBrush}"
+        Foreground="{StaticResource TextPrimaryBrush}"
+        TextOptions.TextFormattingMode="Ideal" UseLayoutRounding="True">
+    <Border Style="{StaticResource CardStyle}" Margin="16" Padding="20">
+        <StackPanel>
+            <TextBlock Text="Create API" Style="{StaticResource SectionTitleStyle}" />
+            <TextBlock x:Name="EventNameText" Style="{StaticResource SubtitleTextStyle}" Margin="0,4,0,0" />
+            <TextBlock Text="Choose which APIs to create on the event. APIs that are already there are kept, only what is set up differently is corrected."
+                       Style="{StaticResource SubtitleTextStyle}" Margin="0,8,0,0" />
+
+            <ItemsControl x:Name="ApiList" Margin="0,10,0,0">
+                <ItemsControl.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource FieldLabelStyle}" />
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ItemsControl.GroupStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type data:ApiSelectionItem}">
+                        <!-- The checkbox sits in its own column so the hint below wraps inside the
+                             row instead of being clipped by the checkbox's content -->
+                        <Grid Margin="0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                      IsEnabled="{Binding IsToggleable}" VerticalAlignment="Top" Margin="0,1,8,0" />
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding Title}" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}" />
+                                <TextBlock Text="{Binding LabelText}" Style="{StaticResource SubtitleTextStyle}"
+                                           FontFamily="Consolas" />
+                                <TextBlock Text="{Binding Hint}" Style="{StaticResource SubtitleTextStyle}"
+                                           Visibility="{Binding HintVisibility}" Margin="0,2,0,0" />
+                            </StackPanel>
+                            <Border Grid.Column="2" Background="{StaticResource AccentSoftBrush}" CornerRadius="7"
+                                    Padding="9,2" VerticalAlignment="Top" Margin="8,0,0,0"
+                                    Visibility="{Binding MandatoryVisibility}">
+                                <TextBlock Text="Required" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="{StaticResource AccentBrush}" />
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Grid Margin="0,20,0,0">
+                <Button Content="Cancel" Click="Cancel" HorizontalAlignment="Left" MinWidth="100"
+                        Style="{StaticResource SecondaryButtonStyle}" IsCancel="True" ToolTip="Close without creating anything" />
+                <Button Content="Create" Click="Create" HorizontalAlignment="Right" MinWidth="100"
+                        IsDefault="True" ToolTip="Create the checked APIs on the event" />
+            </Grid>
+        </StackPanel>
+    </Border>
+</Window>

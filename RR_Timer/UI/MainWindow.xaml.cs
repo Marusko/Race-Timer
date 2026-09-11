@@ -896,6 +896,20 @@ namespace Race_timer.UI
         }
 
         /// <summary>
+        /// Method called by the Create API button at the bottom of the left menu, opens the window
+        /// which logs into RaceResult and creates the Simple API entries on the chosen event
+        /// The window only hands out the links, they are pasted in by hand the same way as links
+        /// copied out of RaceResult
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenApiCreator(object sender, RoutedEventArgs e)
+        {
+            var w = new RaceResultSetupWindow { Owner = this };
+            w.ShowDialog();
+        }
+
+        /// <summary>
         /// Opens the link in default browser
         /// </summary>
         /// <param name="url">Link to open</param>
@@ -952,6 +966,16 @@ namespace Race_timer.UI
         private void OpenClickWrapPage(object sender, RoutedEventArgs e)
         {
             OpenUrl("https://github.com/Marusko/ClickWrap");
+        }
+
+        /// <summary>
+        /// Method called by RaceResultClient hyperlink, opens the RaceResult client library page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenRaceResultClientPage(object sender, RoutedEventArgs e)
+        {
+            OpenUrl("https://github.com/Marusko/RaceResultClient.NET");
         }
     }
 }
