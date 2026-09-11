@@ -12,6 +12,7 @@ Application to show elapsed time from entered start time, with clock or individu
 
 ## Table of content
 * [Installation](#installation)
+* [Creating the APIs automatically](#creating-the-apis-automatically)
 * [Preparation](#preparation)
 * [Using the app](#using-the-app)
   * [Left side menu](#left-side-menu)
@@ -31,6 +32,7 @@ Application to show elapsed time from entered start time, with clock or individu
 * Manual switching between big and small timer
 * Show results directly in the app
 * Event name and type can be entered manually or using the RaceResult Simple API link
+* The APIs the app needs can be created in RaceResult by the app itself - log in, pick an event, done
 * When start times are `larger` than the current time, instead of a timer, the clock is shown 
 * When the timer is on fullscreen, you can choose the position of the timer
 * You can import your logo, it best works for a rectangle logo
@@ -62,6 +64,61 @@ The timer is synchronized with an NTP server (`pool.ntp.org`) so elapsed times s
   4. That's it!
   
 ---
+# Creating the APIs automatically
+[Top](#race-timer)
+> Only works with RaceResult Simple API
+
+The app can create the Simple API entries in RaceResult itself, so nothing has to be defined in RaceResult
+by hand and nothing has to be copied out of it. The manual way described in [Preparation](#preparation)
+still works exactly as before.
+
+ 1. Press the **Create API** button at the bottom of the left side menu
+ 2. **Server** - `events.raceresult.com`, change it only for your own (on-premise) server
+ 3. **Use HTTPS** - leave it on, turn it off only for your own server without a certificate
+ 4. **Login method** - **User** (name and password) or **API key**
+ 5. Press **Log in**
+ 6. Pick the **event** from the list - the upcoming events of the account, each with its name, date and place.
+    With more than five events a search box appears above the list
+ 7. Press **Create API** - the API selection window opens
+ 8. **Tick** the APIs to create and press **Create**
+ 9. The links are shown with a **Copy** button next to each of them
+ 10. From here it is the same as with a link copied out of RaceResult - paste it into the right box and press `Load`
+
+## Which APIs
+  * **Required**, ticked and locked - the API timer cannot work without them
+    * **All API list** (`api`) - the link the app loads, it lists all the other APIs
+    * **Event name and type** (`main`)
+  * **Optional**, ticked and can be turned off
+    * **Finished count** (`count`) - without it switching to the small timer is manual
+    * **Contests** (`contest`) - without it contests and their start times have to be added by hand
+    * **Start times** (`starts`) - individual start times, a CSV file can be used instead
+
+## The links
+  * **API link (api)** - always shown. Paste it into the `Finish API Timer` tab, into the **API Link** box, and press `Load`
+  * **Starts API link (starts)** - shown **only when the starts were part of this run**. The individual starts are
+    loaded from their own link, not from the shared one. Paste it into the same box, which is then called
+    **Only starts API Link**, after checking **Enable individual starts** and **Use list from API** on the `Starts` tab
+
+> The links are not filled in anywhere automatically - copy them with the **Copy** button and paste them where they belong.
+> The rest of the app works exactly as it did before.
+
+## What changes on the event
+  * What is **missing** is **created**
+  * What is set up **differently** (a disabled API, another endpoint) is **corrected**, keeping its key - so a link
+    already pasted somewhere else stays valid
+  * What is **correct** is **left alone** - running it again on an event that is already set up changes nothing
+  * The **other APIs** of the event (for example Time Maker's or Trakster's) are left **untouched**
+  * **Nothing is ever deleted** - an API left unticked is simply not created, and if it is already on the event it stays
+
+## Notes
+  * The login lasts only while the Create API window is open, closing it logs the app out of RaceResult
+  * Neither the password nor the API key is stored anywhere
+  * **Back** returns to the event list, so another event can be set up without logging in again
+  * **Log out** allows logging in with another account
+  * With HTTPS turned off the app warns about the insecure connection - the access key travels in the link
+  * If your starts are not kept in a split named `Start`, change the `Start.ToD` field in the created `starts` API
+
+---
 # Preparation
 [Top](#race-timer)
 ## Using the starts
@@ -88,6 +145,8 @@ CSV file format is `[Bib];[Name];[Start time]`
 If you don't time the race with RaceResult or don't want to create links, simply use the `Timer` tab to set up the timer. Automatic switching of timer windows is disabled. You can still manually switch the windows.
 ## Using the API Timer
 > Only works with RaceResult Simple API
+
+> You don't have to create these by hand - see [Creating the APIs automatically](#creating-the-apis-automatically)
 ### Event API link
  1. Open the event in RR website > Main Window > Access Rights/Simple API > Simple API 
  2. Select **Settings** from the left dropdown menu, in the details write or copy `EventName,EventType`, and in the label write `main` :bangbang: **Important** (see the picture)
@@ -127,6 +186,8 @@ If you don't time the race with RaceResult or don't want to create links, simply
   * **Displaying** - Menu for setting up results and QR code
   * **Timer control** - Menu for switching between fullscreen and small timer, closing the timer, refreshing the WebView, and setting new start times
   * **Settings** - Choosing the screen on which the timer will be displayed, choosing the timer layout and informations about the app
+  * **Create API** - Button at the bottom of the menu, opens the window which logs into RaceResult and
+                     [creates the APIs](#creating-the-apis-automatically) on the chosen event
   * *NTP success / NTP fail* - Status of NTP timer synchronization
 
 ## Starts
