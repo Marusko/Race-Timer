@@ -1,4 +1,8 @@
 # Race Timer
+
+> [!WARNING]
+> **Support ended, replaced by MSky Timing**
+
 Application to show elapsed time from entered start time, with clock or individual starts on user-selected screen. Best used with RaceResult presenter as this app can automatically make the timer smaller, so it can fit over the presenter window without pressing `F11` on the presenter window, or show results directly in the app.
 ### Small timer with WebView RR presenter after the start
 
